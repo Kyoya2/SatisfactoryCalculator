@@ -12,7 +12,7 @@ from graph import Graph, Node
 
 
 NATIVECLASS_PREFIX = r"/Script/CoreUObject.Class'/Script/FactoryGame."
-ITEM_REGEX = re.compile(r"""\(ItemClass="[\/\w\.']+\.(\w+)'",Amount=(\d+)""")
+ITEM_REGEX = re.compile(r"""\(ItemClass="[\/\w\.']+\.(\w+)'",Amount=(\d+)\)""")
 
 
 class ConveyorBeltType(Enum):
