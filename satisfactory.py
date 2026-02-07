@@ -98,17 +98,17 @@ flowchart-elk TB
 """
 
 
-def generate_recipe_schematic(all_classes, name, trivial_resources=tuple()):
+def generate_recipe_schematic(all_classes, item_name, trivial_resources=tuple()):
     graph = Graph()
     nodes: dict[str, Node] = {}
 
-    def _generate_recipe_schematic(obj_name: GameObjectName):
+    def _generate_recipe_schematic(item_name: GameObjectName):
         nonlocal trivial_resources, graph, nodes, all_classes
 
-        if (node := nodes.get(obj_name)) is not None:
+        if (node := nodes.get(item_name)) is not None:
             return node
 
-        obj = all_classes[obj_name]
+        obj = all_classes[item_name]
         if 'recipes' not in obj:
             # No recipes
             return None
@@ -119,19 +119,17 @@ def generate_recipe_schematic(all_classes, name, trivial_resources=tuple()):
             # No non-alternate recipes
             return None
 
-        node = graph.create_node(ItemDescriptor(obj_name, recipe.duration, 0, 0))
-        nodes[obj_name] = node
+        node = graph.create_node(ItemDescriptor(item_name, recipe.duration, 0, 0))
+        nodes[item_name] = node
 
-        if obj_name in trivial_resources:
-            return node
-
-        for ingredient in recipe.ingredients:
-            ingredient_node = _generate_recipe_schematic(ingredient.item_name)
-            node.add_blink(ingredient_node, ingredient.amount)
+        if item_name not in trivial_resources:
+            for ingredient in recipe.ingredients:
+                ingredient_node = _generate_recipe_schematic(ingredient.item_name)
+                node.add_blink(ingredient_node, ingredient.amount)
 
         return node
 
-    root_node = _generate_recipe_schematic(name)
+    root_node = _generate_recipe_schematic(item_name)
     root_node.data.total_required_amount = 1
 
     # Fill the "total_required_amount" member of each node
