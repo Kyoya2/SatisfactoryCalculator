@@ -71,10 +71,12 @@ class Node:
         self._add_link(node, link_data, False)
 
     def flinks(self):
-        yield from self._flinks
+        for flink in self._flinks:
+            yield flink._target, flink.data
 
     def blinks(self):
-        yield from self._blinks
+        for blink in self._blinks:
+            yield blink._source, blink.data
 
     def remove(self):
         self._remove_links(self._flinks)

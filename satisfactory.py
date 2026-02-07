@@ -202,19 +202,19 @@ class SatisfactoryCalculator:
 
                 # If we still haven't visited ALL the flinks, skip this node for now.
                 # We will have more chances to visit it in the required state.
-                if any(flink._target not in visited_nodes for flink in node.flinks()):
+                if any(child_node not in visited_nodes for child_node, link_data in node.flinks()):
                     continue
 
                 visited_nodes.add(node)
 
-                for flink in node.flinks():
-                    node.data.total_required_amount += flink._target.data.total_required_amount * flink.data
+                for child_node, link_data in node.flinks():
+                    node.data.total_required_amount += child_node.data.total_required_amount * link_data
 
                 single_machine_production = cycle_duration / node.data.production_duration
                 node.data.total_machines_required = node.data.total_required_amount / single_machine_production
                 machines_required_denominators.add(Fraction(node.data.total_machines_required).limit_denominator().denominator)
 
-                next_round_nodes |= {blink._source for blink in node.blinks()}
+                next_round_nodes |= {parent_node for parent_node, link_data in node.blinks()}
 
             next_round_nodes -= visited_nodes
             if 0 == len(next_round_nodes):
