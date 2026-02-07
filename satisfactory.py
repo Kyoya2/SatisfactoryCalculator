@@ -233,37 +233,31 @@ class SatisfactoryCalculator:
 
     def _process_recipes(self):
         for recipe in self._categorized_objects['FGRecipe'].values():
-            products = self._RECIPE_OBJECT_REGEX.findall(recipe['mProduct'])
-            if 1 != len(products):
-                assert 2 == len(products)
-                continue
-
-            product_name = products[0][0]
-            product_amount = int(products[0][1])
-
-            ingredients = self._RECIPE_OBJECT_REGEX.findall(recipe['mIngredients'])
-            ingredients = [CountedItem(item_name, int(amount) / product_amount) for item_name, amount in ingredients]
-
-            duration = float(recipe['mManufactoringDuration'])
-            duration /= product_amount
-
+            parsed_ingredients = self._RECIPE_OBJECT_REGEX.findall(recipe['mIngredients'])
+            full_duration = float(recipe['mManufactoringDuration'])
             is_alternate = recipe['mDisplayName'].startswith('Alternate: ')
 
-            product_obj = self._all_objects[product_name]
-            recipes = product_obj.get('recipes')
-            if recipes is None:
-                recipes = []
-                product_obj['recipes'] = recipes
+            for product_name, product_amount in self._RECIPE_OBJECT_REGEX.findall(recipe['mProduct']):
+                product_amount = int(product_amount)
 
-            recipes.append(
-                Recipe(
-                    product_name,
-                    ingredients,
-                    duration,
-                    is_alternate,
-                    recipe['ClassName']
+                ingredients = [CountedItem(item_name, int(amount) / product_amount) for item_name, amount in parsed_ingredients]
+                duration = full_duration / product_amount
+
+                product_obj = self._all_objects[product_name]
+                recipes = product_obj.get('recipes')
+                if recipes is None:
+                    recipes = []
+                    product_obj['recipes'] = recipes
+
+                recipes.append(
+                    Recipe(
+                        product_name,
+                        ingredients,
+                        duration,
+                        is_alternate,
+                        recipe['ClassName']
+                    )
                 )
-            )
 
 def main():
     calculator = SatisfactoryCalculator()
