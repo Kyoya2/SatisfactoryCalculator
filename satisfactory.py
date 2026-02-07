@@ -2,7 +2,6 @@ import re
 import math
 import json
 import string
-import functools
 from enum import Enum
 from typing import Any
 from typing import NamedTuple
@@ -10,6 +9,10 @@ from fractions import Fraction
 from dataclasses import dataclass
 
 from graph import Graph, Node
+
+
+# TODOs:
+# - Look at "mAlternativeMaterialRecipes" in the JSON
 
 
 class ConveyorBeltType(Enum):
@@ -108,7 +111,7 @@ flowchart-elk TB
 
 
 class SatisfactoryCalculator:
-    _COMMON_NATIVECLASS_PREFIX = r"/Script/CoreUObject.Class'/Script/FactoryGame."
+    _COMMON_OBJECT_CATEGORY_NAME_PREFIX = r"/Script/CoreUObject.Class'/Script/FactoryGame."
     _RECIPE_OBJECT_REGEX = re.compile(r"""\(ItemClass="[/\w.']+\.(\w+)'",Amount=(\d+)\)""")
 
     def __init__(
@@ -122,16 +125,16 @@ class SatisfactoryCalculator:
         self._categorized_objects: dict[GameObjectCategoryName, dict[GameObjectName, GameObject]] = {}
 
         for game_object_category in data:
-            assert game_object_category['NativeClass'].startswith(self._COMMON_NATIVECLASS_PREFIX)
-            native_class = game_object_category['NativeClass'][len(self._COMMON_NATIVECLASS_PREFIX):].rstrip("'")
+            assert game_object_category['NativeClass'].startswith(self._COMMON_OBJECT_CATEGORY_NAME_PREFIX)
+            category_name = game_object_category['NativeClass'][len(self._COMMON_OBJECT_CATEGORY_NAME_PREFIX):].rstrip("'")
 
-            current_group_classes = {}
+            current_category_objects = {}
             for game_object in game_object_category['Classes']:
                 assert game_object['ClassName'] not in self._all_objects
                 self._all_objects[game_object['ClassName']] = game_object
-                current_group_classes[game_object['ClassName']] = game_object
+                current_category_objects[game_object['ClassName']] = game_object
 
-            self._categorized_objects[native_class] = current_group_classes
+            self._categorized_objects[category_name] = current_category_objects
 
         self._process_recipes()
 
@@ -143,7 +146,7 @@ class SatisfactoryCalculator:
             normalize_required_machine_amounts=True
     ):
         graph = Graph()
-        nodes: dict[str, Node] = {}
+        nodes: dict[GameObjectName, Node] = {}
 
         def _generate_recipe_schematic(item_name: GameObjectName):
             nonlocal trivial_resources, graph, nodes
