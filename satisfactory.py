@@ -22,13 +22,21 @@ class ConveyorBeltType(Enum):
 BEST_UNLOCKED_CONVEYOR_BELT_TYPE = ConveyorBeltType.Mk2
 
 
-# Corresponds to the "ClassName" element in the JSON file
+# Corresponds to the "ClassName" element in the JSON file.
+# For example: "Desc_SpaceElevatorPart_1_C".
 GameObjectName = str
 
-# Corresponds to the "NativeClass" element in the JSON
+# Corresponds to the "NativeClass" element in the JSON.
+# For example: "FGItemDescriptor".
 GameObjectCategoryName = str
 
-# Corresponds to an entry inside the "Classes" member of each top-level entry in the JSON
+# Corresponds to an entry inside the "Classes" member of each top-level entry in the JSON.
+# For example:
+# {
+#   "ClassName": "Desc_AluminumIngot_C",
+#   "mDisplayName": "Aluminum Ingot",
+#   ...
+# }
 GameObject = dict[str, Any]
 
 
