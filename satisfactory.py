@@ -12,14 +12,10 @@ from dataclasses import dataclass
 from graph import Graph, Node
 
 
-
 class ConveyorBeltType(Enum):
     Mk1 = 60
     Mk2 = 120
     Mk3 = 270
-
-
-BEST_UNLOCKED_CONVEYOR_BELT_TYPE = ConveyorBeltType.Mk2
 
 
 # Corresponds to the "ClassName" element in the JSON file.
