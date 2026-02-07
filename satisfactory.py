@@ -113,7 +113,7 @@ flowchart-elk TB
 
 class SatisfactoryCalculator:
     _COMMON_NATIVECLASS_PREFIX = r"/Script/CoreUObject.Class'/Script/FactoryGame."
-    _RECIPE_OBJECT_REGEX = re.compile(r"""\(ItemClass="[\/\w\.']+\.(\w+)'",Amount=(\d+)\)""")
+    _RECIPE_OBJECT_REGEX = re.compile(r"""\(ItemClass="[/\w.']+\.(\w+)'",Amount=(\d+)\)""")
 
     def __init__(
         self,
@@ -139,7 +139,13 @@ class SatisfactoryCalculator:
 
         self._process_recipes()
 
-    def generate_recipe_schematic(self, item_name: GameObjectName, trivial_resources=tuple()):
+    def generate_recipe_schematic(
+            self,
+            item_name: GameObjectName,
+            best_unlocked_conveyor_belt_type: ConveyorBeltType,
+            trivial_resources=tuple(),
+            normalize_required_machine_amounts=True
+    ):
         graph = Graph()
         nodes: dict[str, Node] = {}
 
@@ -160,7 +166,14 @@ class SatisfactoryCalculator:
                 # No non-alternate recipes
                 return None
 
-            node = graph.create_node(ItemDescriptor(item_name, recipe.duration, 0, 0))
+            # Factor in the time it takes to load the ingredients onto the constructor/assembler.
+            # Assuming that ingredients are loaded into the machine as a product is being produced, this
+            # makes a difference only if the load time is higher than the production
+            max_amount_ingredient = max(ingredient.amount for ingredient in recipe.ingredients)
+            ingredient_load_duration = max_amount_ingredient * (60 / best_unlocked_conveyor_belt_type.value)
+            factored_recipe_duration = max(recipe.duration, ingredient_load_duration)
+
+            node = graph.create_node(ItemDescriptor(item_name, factored_recipe_duration, 0, 0))
             nodes[item_name] = node
 
             if item_name not in trivial_resources:
@@ -199,8 +212,7 @@ class SatisfactoryCalculator:
 
                 single_machine_production = cycle_duration / node.data.production_duration
                 node.data.total_machines_required = node.data.total_required_amount / single_machine_production
-                machines_required_denominators.add(
-                    Fraction(node.data.total_machines_required).limit_denominator().denominator)
+                machines_required_denominators.add(Fraction(node.data.total_machines_required).limit_denominator().denominator)
 
                 next_round_nodes |= {blink._source for blink in node.blinks()}
 
@@ -210,12 +222,12 @@ class SatisfactoryCalculator:
 
             current_nodes = next_round_nodes
 
-        # Normalize such that the number of required machines is whole for every item
-        lcm = math.lcm(*machines_required_denominators)
-        if lcm != 1:
-            for node in nodes.values():
-                node.data.total_required_amount *= lcm
-                node.data.total_machines_required *= lcm
+        if normalize_required_machine_amounts:
+            lcm = math.lcm(*machines_required_denominators)
+            if lcm != 1:
+                for node in nodes.values():
+                    node.data.total_required_amount *= lcm
+                    node.data.total_machines_required *= lcm
 
         return root_node
 
@@ -234,14 +246,6 @@ class SatisfactoryCalculator:
 
             duration = float(recipe['mManufactoringDuration'])
             duration /= product_amount
-
-            # Factor in the time it takes to load the ingredients onto the constructor/assembler.
-            # Assuming that ingredients are loaded into the machine as a product is being produced, this
-            # makes a difference only if the load time is higher than the production
-            max_amount_ingredient = max(ingredients, default=CountedItem('', 0),
-                                        key=lambda ingredient: ingredient.amount).amount
-            ingredient_load_duration = max_amount_ingredient * (60 / BEST_UNLOCKED_CONVEYOR_BELT_TYPE.value)
-            duration = max(duration, ingredient_load_duration)
 
             is_alternate = recipe['mDisplayName'].startswith('Alternate: ')
 
@@ -265,7 +269,7 @@ def main():
     calculator = SatisfactoryCalculator()
 
     #root = calculator.generate_recipe_schematic(all_classes, "Desc_SpaceElevatorPart_1_C", trivial_resources=("Desc_IronIngot_C", "Desc_CopperIngot_C"))
-    root = calculator.generate_recipe_schematic("Desc_Rotor_C", trivial_resources=("Desc_IronIngot_C", "Desc_CopperIngot_C"))
+    root = calculator.generate_recipe_schematic("Desc_Rotor_C", ConveyorBeltType.Mk2, trivial_resources=("Desc_IronIngot_C", "Desc_CopperIngot_C"))
 
     print(to_mermaid(calculator._all_objects, root._graph))
 
