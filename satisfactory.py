@@ -179,10 +179,6 @@ def generate_recipe_schematic(all_classes, item_name, trivial_resources=tuple())
     return root_node
 
 
-def generate_optimal_machine_configuration(item_node: Node, trivial_resource_generators: list[ItemDescriptor]):
-    ...
-
-
 def main():
     with open(r"C:\Program Files (x86)\Steam\steamapps\common\Satisfactory\CommunityResources\Docs\en-US.json", 'rb') as f:
         data = json.load(f)
