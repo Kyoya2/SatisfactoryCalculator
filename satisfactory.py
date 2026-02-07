@@ -211,6 +211,7 @@ def main():
         ingredients = [CountedItem(item_name, int(amount)/product_amount) for item_name, amount in ingredients]
 
         duration = float(recipe['mManufactoringDuration'])
+        duration /= product_amount
 
         # Factor in the time it takes to load the ingredients onto the constructor/assembler.
         # Assuming that ingredients are loaded into the machine as a product is being produced, this
@@ -219,8 +220,6 @@ def main():
         ingredient_load_duration = max_amount_ingredient * (60 / BEST_UNLOCKED_CONVEYOR_BELT_TYPE.value)
         duration = max(duration, ingredient_load_duration)
 
-        duration /= product_amount
-        
         is_alternate = recipe['mDisplayName'].startswith('Alternate: ')
 
         product_obj = all_classes[product_name]
