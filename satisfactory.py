@@ -24,6 +24,7 @@ class ConveyorBeltType(Enum):
 BEST_UNLOCKED_CONVEYOR_BELT_TYPE = ConveyorBeltType.Mk2
 
 
+# Corresponds to the "ClassName" element in the JSON file
 GameObjectName = str
 
 
@@ -168,8 +169,7 @@ def generate_recipe_schematic(all_classes, item_name, trivial_resources=tuple())
 
         current_nodes = next_round_nodes
 
-    # Normalize such that the number of required machines in whole
-    # for every item
+    # Normalize such that the number of required machines is whole for every item
     lcm = math.lcm(*machines_required_denominators)
     if lcm != 1:
         for node in nodes.values():
