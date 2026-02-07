@@ -3,10 +3,9 @@ import math
 import json
 import string
 from enum import Enum
-from typing import Any
-from typing import NamedTuple
 from fractions import Fraction
 from dataclasses import dataclass
+from typing import NamedTuple, Any, TypeAlias
 
 from graph import Graph, Node
 
@@ -23,11 +22,11 @@ class ConveyorBeltType(Enum):
 
 # Corresponds to the "ClassName" element in the JSON file.
 # For example: "Desc_SpaceElevatorPart_1_C".
-GameObjectName = str
+GameObjectName: TypeAlias = str
 
 # Corresponds to the "NativeClass" element in the JSON.
 # For example: "FGItemDescriptor".
-GameObjectCategoryName = str
+GameObjectCategoryName: TypeAlias = str
 
 # Corresponds to an entry inside the "Classes" member of each top-level entry in the JSON.
 # For example:
@@ -36,7 +35,7 @@ GameObjectCategoryName = str
 #   "mDisplayName": "Aluminum Ingot",
 #   ...
 # }
-GameObject = dict[str, Any]
+GameObject: TypeAlias = dict[str, Any]
 
 
 class CountedItem(NamedTuple):
