@@ -2,10 +2,11 @@ import re
 import math
 import json
 import string
+from os import path
 from enum import Enum
 from fractions import Fraction
 from dataclasses import dataclass
-from typing import NamedTuple, Any, TypeAlias
+from typing import NamedTuple, Any, TypeAlias, Iterable
 
 from graph import Graph, Node
 
@@ -118,24 +119,26 @@ class SatisfactoryCalculator:
         doc_file_path=r"C:\Program Files (x86)\Steam\steamapps\common\Satisfactory\CommunityResources\Docs\en-US.json"
     ):
         with open(doc_file_path, 'rb') as f:
-            data = json.load(f)
+            game_object_categories = json.load(f)
 
         self._all_objects: dict[GameObjectName, GameObject]= {}
         self._categorized_objects: dict[GameObjectCategoryName, dict[GameObjectName, GameObject]] = {}
 
-        for game_object_category in data:
+        for game_object_category in game_object_categories:
             assert game_object_category['NativeClass'].startswith(self._COMMON_OBJECT_CATEGORY_NAME_PREFIX)
             category_name = game_object_category['NativeClass'][len(self._COMMON_OBJECT_CATEGORY_NAME_PREFIX):].rstrip("'")
 
             current_category_objects = {}
             for game_object in game_object_category['Classes']:
+                game_object['Name'] = game_object.get('mDisplayName', "") or game_object['ClassName']
+
                 assert game_object['ClassName'] not in self._all_objects
                 self._all_objects[game_object['ClassName']] = game_object
                 current_category_objects[game_object['ClassName']] = game_object
 
             self._categorized_objects[category_name] = current_category_objects
 
-        self._process_recipes()
+        self._craftable_objects, self._crafting_objects = self._process_recipes()
 
     def generate_recipe_schematic(
             self,
@@ -144,7 +147,7 @@ class SatisfactoryCalculator:
             trivial_resources=tuple(),
             normalize_required_machine_amounts=True
     ):
-        graph = Graph()
+        graph = Graph[ItemDescriptor, float]()
         nodes: dict[GameObjectName, Node] = {}
 
         def _generate_recipe_schematic(item_name: GameObjectName):
@@ -229,13 +232,34 @@ class SatisfactoryCalculator:
 
         return root_node
 
-    def _process_recipes(self):
+    def as_dict(self):
+        return {
+            'objects': jsonify(self._all_objects),
+            'craftable_objects': self._sort_by_display_name(self._craftable_objects),
+            'crafting_objects': self._sort_by_display_name(self._crafting_objects),
+            'categories': {
+                category_name: list(sorted(objects.keys()))
+                for category_name, objects
+                in self._categorized_objects.items()
+            },
+        }
+
+    def _sort_by_display_name(self, object_names: Iterable[GameObjectName]) -> list[GameObjectName]:
+        return list(sorted(object_names, key=lambda name: self._all_objects[name]['Name']))
+
+    def _process_recipes(self) -> tuple[set[GameObjectName], set[GameObjectName]]:
+        craftable_objects = set()
+        crafting_objects = set()
+
         for recipe in self._categorized_objects['FGRecipe'].values():
             parsed_ingredients = self._RECIPE_OBJECT_REGEX.findall(recipe['mIngredients'])
             full_duration = float(recipe['mManufactoringDuration'])
             is_alternate = recipe['mDisplayName'].startswith('Alternate: ')
 
+            crafting_objects |= {ingredient_name for ingredient_name, amount in parsed_ingredients}
+
             for product_name, product_amount in self._RECIPE_OBJECT_REGEX.findall(recipe['mProduct']):
+                craftable_objects.add(product_name)
                 product_amount = int(product_amount)
 
                 ingredients = [CountedItem(item_name, int(amount) / product_amount) for item_name, amount in parsed_ingredients]
@@ -257,11 +281,54 @@ class SatisfactoryCalculator:
                     )
                 )
 
+        return craftable_objects, crafting_objects
+
+
+def jsonify(obj):
+    if isinstance(obj, (int, float, str, bool)):
+        return obj
+
+    if isinstance(obj, dict):
+        return {
+            k: jsonify(v)
+            for k, v
+            in obj.items()
+        }
+
+    if isinstance(obj, (list, tuple, set)):
+        if isinstance(obj, tuple) and hasattr(obj, '_fields'):
+            return jsonify(obj._asdict())
+        else:
+            return [jsonify(item) for item in obj]
+
+    raise TypeError(f'Unknown type: {type(obj)}')
+
+
+def jsify(obj) -> str:
+    def _jsify(obj):
+        if isinstance(obj, (int, float, str, bool)):
+            return json.dumps(obj)
+
+        if isinstance(obj, dict):
+            return '{' + ','.join(f'{k}:{_jsify(v)}' for k, v in obj.items()) + '}'
+
+        if isinstance(obj, (list, tuple, set)):
+            return '[' + ','.join(_jsify(item) for item in obj) + ']'
+
+        raise TypeError(f'Unknown type: {type(obj)}')
+
+    return _jsify(jsonify(obj))
+
+
 def main():
     calculator = SatisfactoryCalculator()
 
+    with open(path.join(path.dirname(__file__), 'website', 'scripts', 'game_data.auto.js'), 'w') as f:
+        f.write(f"export const game_data = {json.dumps(calculator.as_dict())};")
+
     #root = calculator.generate_recipe_schematic(all_classes, "Desc_SpaceElevatorPart_1_C", trivial_resources=("Desc_IronIngot_C", "Desc_CopperIngot_C"))
-    root = calculator.generate_recipe_schematic("Desc_Rotor_C", ConveyorBeltType.Mk2, trivial_resources=("Desc_IronIngot_C", "Desc_CopperIngot_C"))
+    #root = calculator.generate_recipe_schematic("Desc_Rotor_C", ConveyorBeltType.Mk2, trivial_resources=("Desc_IronIngot_C", "Desc_CopperIngot_C"))
+    root = calculator.generate_recipe_schematic("Desc_IronPlateReinforced_C", ConveyorBeltType.Mk2, trivial_resources=("Desc_IronIngot_C", "Desc_CopperIngot_C"))
 
     print(to_mermaid(calculator._all_objects, root._graph))
 
