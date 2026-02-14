@@ -26,7 +26,8 @@ flowchart-elk TB
 
 def generate_game_data(calculator: SatisfactoryCalculator):
     with open(path.join(path.dirname(__file__), '..', 'website', 'scripts', 'game_data.auto.js'), 'w') as f:
-        f.write(f"export const game_data = {json.dumps(calculator.as_dict())};")
+        f.write(f"const game_data = {json.dumps(calculator.as_dict())};\n"
+                f"export default game_data;")
 
 
 def main():
@@ -38,7 +39,7 @@ def main():
     #root = calculator.generate_recipe_schematic(all_classes, "Desc_SpaceElevatorPart_1_C", trivial_resources=("Desc_IronIngot_C", "Desc_CopperIngot_C"))
     #root = calculator.generate_recipe_schematic("Desc_Rotor_C", ConveyorBeltType.Mk2, trivial_resources=("Desc_IronIngot_C", "Desc_CopperIngot_C"))
     #root = calculator.generate_recipe_schematic("Desc_IronPlateReinforced_C", ConveyorBeltType.Mk2, trivial_resources=("Desc_IronIngot_C", "Desc_CopperIngot_C"))
-    root = calculator.generate_recipe_schematic("Desc_ModularFrame_C", ConveyorBeltType.Mk2, trivial_resources=("Desc_IronIngot_C", "Desc_CopperIngot_C"), normalize_required_machine_amounts=False)
+    root = calculator.generate_recipe_schematic("Desc_ModularFrame_C", ConveyorBeltType.Mk2, trivial_resources=("Desc_IronIngot_C", "Desc_CopperIngot_C"), multiplier=2.5)
 
     print(to_mermaid(calculator._all_objects, root._graph))
 

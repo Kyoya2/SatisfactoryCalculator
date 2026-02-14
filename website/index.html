@@ -2,13 +2,10 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>Satisfactory App</title>
+        <title>Satisfactory Calculator</title>
 
         <!-- Must be before including cytoscape JS files-->
         <link rel="stylesheet" href="style.css">
-
-        <!-- TODO: change "cytoscape.umd.js" to "cytoscape.min.js" on prod-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.33.1/cytoscape.umd.js" integrity="sha512-PWDVOsEbuBhFzLU0vHkNCxLOH0ksW/h/AhnFSI01BimUIHvEU6HYh9ngZmZlaEtd2+p2MMUQLismQ/WkapssTw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
         <link href="https://cdn.jsdelivr.net/npm/tom-select@2.5.1/dist/css/tom-select.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/tom-select@2.5.1/dist/js/tom-select.complete.min.js"></script>
@@ -19,9 +16,9 @@
         <script>0</script>
 
         <div id="sidebar" style="width:29%; float:left">
-            <h3>Item</h3>
+            <h3>Configuration</h3>
 
-            <label for="craftableItemSelect">Object: </label>
+            <label for="craftableItemSelect">Item to craft: </label>
             <select id="craftableItemSelect"></select><br>
 
             <hr>

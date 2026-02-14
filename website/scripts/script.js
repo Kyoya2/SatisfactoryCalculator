@@ -4,7 +4,11 @@
 // https://devhints.io/jsdoc
 // https://tom-select.js.org/docs/
 
-import {game_data} from "./game_data.auto.js"
+import game_data from "./game_data.auto.js"
+
+// TODO: change "cytoscape.umd.js" to "cytoscape.min.js" on prod
+import cytoscape from "https://unpkg.com/cytoscape/dist/cytoscape.esm.mjs"
+import dagre from "https://cdn.skypack.dev/cytoscape-dagre"
 
 /**
  * Game data types:
@@ -151,9 +155,7 @@ function generateGraph() {
 
     globals.graph.json({elements: {nodes: nodes, edges: edges}});
     globals.graph.layout({
-        name: 'breadthfirst', // TODO: dagre
-        directed: true,
-        padding: 30
+        name: 'dagre'
     }).run();
 }
 
@@ -178,11 +180,12 @@ function initCraftableObjectsSelect() {
 }
 
 function initGraph() {
+    cytoscape.use(dagre);
     globals.graph = cytoscape({
         container: globals.htmlElements.graph,
 
-        zoomingEnabled: false, 
-        panningEnabled: false,
+        userZoomingEnabled: false, 
+        userPanningEnabled: false,
         autoungrabify: true,
         autounselectify: false,
 
