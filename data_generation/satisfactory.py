@@ -46,7 +46,6 @@ class CountedItem(NamedTuple):
 
 
 class Recipe(NamedTuple):
-    product_name: GameObjectName
     ingredients: list[CountedItem]
     duration: float
     is_alternate: bool
@@ -274,7 +273,6 @@ class SatisfactoryCalculator:
                     product_obj['recipes'] = recipes
 
                 recipe_data = Recipe(
-                    product_name,
                     ingredients,
                     duration,
                     is_alternate,
