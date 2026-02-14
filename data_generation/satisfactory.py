@@ -128,7 +128,7 @@ class SatisfactoryCalculator:
         item_name: GameObjectName,
         best_unlocked_conveyor_belt_type: ConveyorBeltType,
         trivial_resources=tuple(),
-        normalize_required_machine_amounts=True
+        multiplier=None
     ):
         graph = Graph[ItemDescriptor, float]()
         nodes: dict[GameObjectName, Node] = {}
@@ -206,12 +206,13 @@ class SatisfactoryCalculator:
 
             current_nodes = next_round_nodes
 
-        if normalize_required_machine_amounts:
-            lcm = math.lcm(*machines_required_denominators)
-            if lcm != 1:
-                for node in nodes.values():
-                    node.data.total_required_amount *= lcm
-                    node.data.total_machines_required *= lcm
+        if multiplier is None:
+            multiplier = math.lcm(*machines_required_denominators)
+
+        if multiplier != 1:
+            for node in nodes.values():
+                node.data.total_required_amount *= multiplier
+                node.data.total_machines_required *= multiplier
 
         return root_node
 
