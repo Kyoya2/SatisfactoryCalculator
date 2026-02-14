@@ -31,10 +31,21 @@ import dagre from "https://cdn.skypack.dev/cytoscape-dagre"
  *      total_required_amount: number,
  *      total_machines_required: number
  * }} MyNodeInfo
+ * 
  *  @typedef {{
  *      amount: number
  * }} MyEdgeInfo
- * @typedef {{data: {id: string, display_name: string}, scratch: {_satisfactoryCalculator: MyNodeInfo}}} CyNode
+ * 
+ * @typedef {{
+ *      data: {
+ *          id: string,
+ *          display_name: string,
+ *          icon_url: string
+ *      },
+ *      scratch: {
+ *          _satisfactoryCalculator: MyNodeInfo
+ *      }
+ * }} CyNode
  * @typedef {{data: {id: string, source: string, target: string}, scratch: {_satisfactoryCalculator: MyEdgeInfo}}} CyEdge
  * @typedef {(CyNode|CyEdge)} CyElement
  */
@@ -119,7 +130,11 @@ function generateGraph() {
         const factored_recipe_duration = Math.max(selected_recipe.duration, max_amount_ingredient * conveyor_speed);
 
         nodes.push({
-            data: {id: object_name, display_name: obj.Name},
+            data: {
+                id: object_name,
+                display_name: obj.Name,
+                icon_url: obj.iconPath
+            },
             scratch: {
                 _satisfactoryCalculator: {
                     obj: obj,
@@ -155,7 +170,8 @@ function generateGraph() {
 
     globals.graph.json({elements: {nodes: nodes, edges: edges}});
     globals.graph.layout({
-        name: 'dagre'
+        name: 'dagre',
+        nodeDimensionsIncludeLabels: true
     }).run();
 }
 
@@ -193,8 +209,14 @@ function initGraph() {
             {
                 selector: 'node',
                 style: {
-                    'background-color': '#666',
-                    'label': 'data(display_name)'
+                    'background-color': '#ddd',
+                    'shape': 'rectangle',
+                    'background-image': "data(icon_url)",
+                    'background-fit': 'cover',
+
+                    'label': 'data(display_name)',
+                    'text-valign': "bottom",
+                    'text-halign': "center"
                 }
             },
 
