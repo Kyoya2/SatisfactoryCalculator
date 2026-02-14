@@ -37,7 +37,8 @@ def main():
 
     #root = calculator.generate_recipe_schematic(all_classes, "Desc_SpaceElevatorPart_1_C", trivial_resources=("Desc_IronIngot_C", "Desc_CopperIngot_C"))
     #root = calculator.generate_recipe_schematic("Desc_Rotor_C", ConveyorBeltType.Mk2, trivial_resources=("Desc_IronIngot_C", "Desc_CopperIngot_C"))
-    root = calculator.generate_recipe_schematic("Desc_IronPlateReinforced_C", ConveyorBeltType.Mk2, trivial_resources=("Desc_IronIngot_C", "Desc_CopperIngot_C"))
+    #root = calculator.generate_recipe_schematic("Desc_IronPlateReinforced_C", ConveyorBeltType.Mk2, trivial_resources=("Desc_IronIngot_C", "Desc_CopperIngot_C"))
+    root = calculator.generate_recipe_schematic("Desc_ModularFrame_C", ConveyorBeltType.Mk2, trivial_resources=("Desc_IronIngot_C", "Desc_CopperIngot_C"), normalize_required_machine_amounts=False)
 
     print(to_mermaid(calculator._all_objects, root._graph))
 

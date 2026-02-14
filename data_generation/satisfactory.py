@@ -1,7 +1,6 @@
 import re
 import math
 import json
-import string
 from enum import Enum
 from fractions import Fraction
 from dataclasses import dataclass
@@ -85,6 +84,10 @@ def jsonify(obj):
 class SatisfactoryCalculator:
     _COMMON_OBJECT_CATEGORY_NAME_PREFIX = r"/Script/CoreUObject.Class'/Script/FactoryGame."
     _RECIPE_OBJECT_REGEX = re.compile(r"""\(ItemClass="[/\w.']+\.(\w+)'",Amount=(\d+)\)""")
+    _FIELD_TYPED = {
+        "mSpeed": float,
+        "mManufactoringDuration": float
+    }
 
     def __init__(
         self,
@@ -96,13 +99,21 @@ class SatisfactoryCalculator:
         self._all_objects: dict[GameObjectName, GameObject]= {}
         self._categorized_objects: dict[GameObjectCategoryName, dict[GameObjectName, GameObject]] = {}
 
+        #object_display_names = set()
         for game_object_category in game_object_categories:
             assert game_object_category['NativeClass'].startswith(self._COMMON_OBJECT_CATEGORY_NAME_PREFIX)
             category_name = game_object_category['NativeClass'][len(self._COMMON_OBJECT_CATEGORY_NAME_PREFIX):].rstrip("'")
 
             current_category_objects = {}
             for game_object in game_object_category['Classes']:
-                game_object['Name'] = game_object.get('mDisplayName', "") or game_object['ClassName']
+                # Parse typed fields
+                for attr_name, attr_type in self._FIELD_TYPED.items():
+                    if (attr_value := game_object.get(attr_name)) is not None:
+                        game_object[attr_name] = attr_type(attr_value)
+
+                game_object['Name'] = self._get_object_display_name(game_object)
+                #assert game_object['Name'] not in object_display_names, f"Duplicate name detected: {game_object['Name']}"
+                #object_display_names.add(game_object['Name'])
 
                 assert game_object['ClassName'] not in self._all_objects
                 self._all_objects[game_object['ClassName']] = game_object
@@ -113,11 +124,11 @@ class SatisfactoryCalculator:
         self._craftable_objects, self._crafting_objects = self._process_recipes()
 
     def generate_recipe_schematic(
-            self,
-            item_name: GameObjectName,
-            best_unlocked_conveyor_belt_type: ConveyorBeltType,
-            trivial_resources=tuple(),
-            normalize_required_machine_amounts=True
+        self,
+        item_name: GameObjectName,
+        best_unlocked_conveyor_belt_type: ConveyorBeltType,
+        trivial_resources=tuple(),
+        normalize_required_machine_amounts=True
     ):
         graph = Graph[ItemDescriptor, float]()
         nodes: dict[GameObjectName, Node] = {}
@@ -216,6 +227,24 @@ class SatisfactoryCalculator:
             },
         }
 
+    _OBJECT_NAME_REGEX = re.compile(r"^([a-zA-Z\d]+)_(.+)_C$")
+    _CAMEL_CASE_REGEX = re.compile(r"([a-z])([A-Z])")
+    @classmethod
+    def _get_object_display_name(cls, game_object: GameObject) -> str:
+        if display_name := game_object.get('mDisplayName', ''):
+            return display_name
+
+        # TODO: this yields duplicate names. Need to de-duplicate them by re-adding
+        # the prefix on such scenarios
+
+        display_name = game_object['ClassName']
+        display_name = cls._OBJECT_NAME_REGEX.match(display_name)
+        suffix, display_name = display_name.groups()
+        display_name = display_name.replace('_', ' ')
+        display_name = cls._CAMEL_CASE_REGEX.sub(r'\1 \2', display_name)
+
+        return display_name
+
     def _sort_by_display_name(self, object_names: Iterable[GameObjectName]) -> list[GameObjectName]:
         return list(sorted(object_names, key=lambda name: self._all_objects[name]['Name']))
 
@@ -254,3 +283,7 @@ class SatisfactoryCalculator:
                 )
 
         return craftable_objects, crafting_objects
+
+
+if __name__ == '__main__':
+    SatisfactoryCalculator()
