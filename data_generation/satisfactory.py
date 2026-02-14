@@ -273,15 +273,20 @@ class SatisfactoryCalculator:
                     recipes = []
                     product_obj['recipes'] = recipes
 
-                recipes.append(
-                    Recipe(
-                        product_name,
-                        ingredients,
-                        duration,
-                        is_alternate,
-                        recipe['ClassName']
-                    )
+                recipe_data = Recipe(
+                    product_name,
+                    ingredients,
+                    duration,
+                    is_alternate,
+                    recipe['ClassName']
                 )
+
+                # Insert the recipe such that non-alternate recipes always come before the
+                # alternate recipes
+                if is_alternate:
+                    recipes.append(recipe_data)
+                else:
+                    recipes.insert(0, recipe_data)
 
         return craftable_objects, crafting_objects
 
