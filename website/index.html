@@ -26,9 +26,9 @@
             <label>Additional Options:</label><br>
             
             <input type="checkbox" id="useAletnateRecipes">
-            <label for="useAletnateRecipes"> Use alternate recipes</label><br>
+            <label for="useAletnateRecipes"> Use alternate recipes </label><br>
 
-            <label for="logisticsTierSelect">Logistics Tier:</label>
+            <label for="logisticsTierSelect">Logistics Tier: </label>
             <select id="logisticsTierSelect">
                 <!-- TODO: Generate this automatically (available in game data, under "mSpeed" property)-->
                 <option value="60">Mk.1</option>
@@ -37,6 +37,15 @@
                 <option value="480">Mk.4</option>
                 <option value="780">Mk.5</option>
                 <option value="1200">Mk.6</option>
+            </select><br>
+
+            <label for="maxPowerShardsSelect">Max Power Shards: </label>
+            <select id="maxPowerShardsSelect">
+                <!-- TODO: Generate this automatically (available in game data, under "mSpeed" property)-->
+                <option selected="true">0</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
             </select><br>
 
         </div>

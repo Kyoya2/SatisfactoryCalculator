@@ -83,7 +83,10 @@ def jsonify(obj):
 class SatisfactoryCalculator:
     _COMMON_OBJECT_CATEGORY_NAME_PREFIX = r"/Script/CoreUObject.Class'/Script/FactoryGame."
     _RECIPE_OBJECT_REGEX = re.compile(r"""\(ItemClass="[/\w.']+\.(\w+)'",Amount=(\d+)\)""")
-    _FIELD_TYPED = {
+    _OBJECT_NAME_REGEX = re.compile(r"^([a-zA-Z\d]+)_(.+)_C$")
+    _CAMEL_CASE_REGEX = re.compile(r"([a-z])([A-Z])")
+    _ICON_STRING_REGEX = re.compile(r"Texture2D /Game/FactoryGame/(.*(\w+))\.\2")
+    _TYPED_FIELDS = {
         "mSpeed": float,
         "mManufactoringDuration": float
     }
@@ -106,9 +109,13 @@ class SatisfactoryCalculator:
             current_category_objects = {}
             for game_object in game_object_category['Classes']:
                 # Parse typed fields
-                for attr_name, attr_type in self._FIELD_TYPED.items():
+                for attr_name, attr_type in self._TYPED_FIELDS.items():
                     if (attr_value := game_object.get(attr_name)) is not None:
                         game_object[attr_name] = attr_type(attr_value)
+
+                if ('mSmallIcon' in game_object) and ('None' != game_object['mSmallIcon']):
+                    match = self._ICON_STRING_REGEX.match(game_object['mSmallIcon'])
+                    game_object['iconPath'] = f"./game_assets/{match[1]}.png"
 
                 game_object['Name'] = self._get_object_display_name(game_object)
                 #assert game_object['Name'] not in object_display_names, f"Duplicate name detected: {game_object['Name']}"
@@ -227,8 +234,6 @@ class SatisfactoryCalculator:
             },
         }
 
-    _OBJECT_NAME_REGEX = re.compile(r"^([a-zA-Z\d]+)_(.+)_C$")
-    _CAMEL_CASE_REGEX = re.compile(r"([a-z])([A-Z])")
     @classmethod
     def _get_object_display_name(cls, game_object: GameObject) -> str:
         if display_name := game_object.get('mDisplayName', ''):

@@ -1,6 +1,7 @@
 // @ts-check
 // Docs:
 // https://js.cytoscape.org/
+// https://github.com/cytoscape/cytoscape.js-dagre
 // https://devhints.io/jsdoc
 // https://tom-select.js.org/docs/
 
@@ -171,7 +172,9 @@ function generateGraph() {
     globals.graph.json({elements: {nodes: nodes, edges: edges}});
     globals.graph.layout({
         name: 'dagre',
-        nodeDimensionsIncludeLabels: true
+        nodeDimensionsIncludeLabels: true,
+        edgeSep: 100,
+        randDir: 'TB'
     }).run();
 }
 
@@ -246,3 +249,6 @@ function init() {
 }
 
 init();
+
+// TODO: remove
+globals.craftableItemSelectTom.setValue("Desc_SpaceElevatorPart_1_C");
