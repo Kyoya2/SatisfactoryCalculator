@@ -6,6 +6,7 @@
 
 
 import game_data from "./game_data.auto.mjs"
+import {assert, any} from "./utils.mjs"
 import {Graph, Node, Edge} from "./graph.mjs"
 
 // TODO: change "cytoscape.umd.js" to "cytoscape.min.js" on prod
@@ -56,16 +57,6 @@ globals.htmlElements = Object.create(null);
 globalThis.satisfactoryCalculator = globals;
 
 /**
- * @param {boolean} condition
- * @param {string=} message
- */
-function assert(condition, message) {
-    if (!condition) {
-        throw new Error(message || "Assertion failed");
-    }
-}
-
-/**
  * 
  * @param {Graph<MyNodeInfo, MyEdgeInfo>} graph 
  * @returns {[string, Node<MyNodeInfo, MyEdgeInfo>[], Edge<MyNodeInfo, MyEdgeInfo>[]]}
@@ -112,11 +103,10 @@ function generateSchematic() {
     let nodes = new Map();
 
     /**
-     * 
      * @param {GameObjectName} object_name
      * @returns {Node<MyNodeInfo, MyEdgeInfo>}
      */
-    function _generateGraph(object_name) {
+    function _generateSchematic(object_name) {
         let node = nodes.get(object_name);
         if (undefined !== node)
             return node;
@@ -153,7 +143,7 @@ function generateSchematic() {
             return node;
 
         for (const ingredient of selected_recipe.ingredients) {
-            const ingredient_node = _generateGraph(ingredient.item_name);
+            const ingredient_node = _generateSchematic(ingredient.item_name);
             node.add_blink(
                 ingredient_node,
                 {
@@ -166,8 +156,76 @@ function generateSchematic() {
         return node;
     }
 
-    return _generateGraph(product_name);
+    const product_node = _generateSchematic(product_name);
+    product_node.data.total_required_amount = 1;
+
+    const cycle_duration = product_node.data.factored_recipe_duration;
+
+    /** @type {Set<Node<MyNodeInfo, MyEdgeInfo>>} */
+    let current_nodes = new Set([product_node]);
+
+    /** @type {Set<Node<MyNodeInfo, MyEdgeInfo>>} */
+    let visited_nodes = new Set();
+
+    while (true) {
+        /** @type {Set<Node<MyNodeInfo, MyEdgeInfo>>} */
+        let next_round_nodes = new Set();
+
+        for (const node of current_nodes) {
+            if (visited_nodes.has(node))
+                continue;
+
+            // If we still haven't visited ALL the flinks, skip this node for now.
+            // We will have more chances to visit it in the required state.
+            if (any(node.flinks(), ([target_node, data]) => !visited_nodes.has(target_node)))
+                continue;
+
+            let all_targets_visited = true;
+            let total_required_amount = 0;
+            for (const [target_node, data] of node.flinks()) {
+                if (!visited_nodes.has(target_node)) {
+                    all_targets_visited = false;
+                    break;
+                }
+
+                total_required_amount += target_node.data.total_required_amount * data.amount;
+            }
+
+            if (!all_targets_visited)
+                continue;
+
+            node.data.total_required_amount += total_required_amount;
+            
+    
+            const single_machine_production = cycle_duration / node.data.factored_recipe_duration;
+            node.data.total_machines_required = node.data.total_required_amount / single_machine_production;
+
+            visited_nodes.add(node);
+
+            next_round_nodes = next_round_nodes.union(new Set(Array.from(node.blinks(), ([source_node, data]) => source_node)));
+        }
+
+        next_round_nodes = next_round_nodes.difference(visited_nodes);
+        if (0 == next_round_nodes.size)
+            break;
+
+        current_nodes = next_round_nodes
+    }
+
+    return product_node;
 }
+
+const NODE_OVERLAY_TEMPLATE = `
+    <div class="node-overlay">
+        <label class="node-item-name editable-label"></label>
+        <!-- TODO: add item picture here-->
+        <br/>
+
+        <label>Duration:</label><label class="production-duration-label editable-label"></label><br/>
+        <label>Total required:</label><label class="total-required-label editable-label"></label><br/>
+        <label>Machines required:</label><label class="machines-required-label editable-label"></label><br/>
+    </div>
+`;
 
 async function generateGraph() {
     globals.product_node = generateSchematic();
@@ -177,8 +235,10 @@ async function generateGraph() {
     const [graph_mermaid, ordered_nodes, ordered_edges] = to_mermaid(globals.product_node.graph);
     const render_result = await mermaid.render('graphSvg', graph_mermaid);
 
-    console.debug(render_result.svg);
     globals.htmlElements.graphContainer.innerHTML = render_result.svg;
+
+    return;
+
     globals.htmlElements.graphSvg = globals.htmlElements.graphContainer.querySelector('#graphSvg');
 
     const node_svg_elements = globals.htmlElements.graphSvg.querySelectorAll('.nodes > g.node.default');
@@ -187,10 +247,11 @@ async function generateGraph() {
     assert(node_svg_elements.length == ordered_nodes.length);
     assert(edge_svg_elements.length == ordered_edges.length);
 
+    const node_overlay_template = document.querySelector('#node-overlay-template');
+
     const svg_element = globals.htmlElements.graphSvg;
     for (let i = 0; i < ordered_nodes.length; ++i)
     {
-        /*
         const rect = node_svg_elements[i].getBBox();
         let foreign_obj = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject");
         foreign_obj.setAttribute("x", rect.x);
@@ -198,22 +259,9 @@ async function generateGraph() {
         foreign_obj.setAttribute("width", rect.width);
         foreign_obj.setAttribute("height", rect.height);
 
-        const div = document.createElement("div");
-        //div.innerHTML = htmlContent;
-        div.style.width = "100%";
-        div.style.height = "100%";
-        div.style.backgroundColor = "rgba(0, 0, 0)";
-        div.style.border = "2px solid blue";
-        div.style.boxSizing = "border-box";
-        div.style.display = "flex";
-        div.style.alignItems = "center";
-        div.style.justifyContent = "center";
-        div.style.color = "white";
-        div.style.fontWeight = "bold";
+        foreign_obj.innerHTML = NODE_OVERLAY_TEMPLATE;
 
-        foreign_obj.appendChild(div);
-
-        node_svg_elements[i].appendChild(foreign_obj);*/
+        node_svg_elements[i].appendChild(foreign_obj);
 
         ordered_nodes[i].data.svg_element = node_svg_elements[i];
     }
@@ -281,4 +329,4 @@ function init() {
 init();
 
 // TODO: remove
-globals.craftableItemSelectTom.setValue("BP_EquipmentDescriptorShockShank_C");
+globals.craftableItemSelectTom.setValue("BP_EquipmentDescriptorStunSpear_C");
