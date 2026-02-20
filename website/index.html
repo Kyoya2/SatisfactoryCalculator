@@ -11,46 +11,49 @@
         <script src="https://cdn.jsdelivr.net/npm/tom-select@2.5.1/dist/js/tom-select.complete.min.js"></script>
     </head>
 
-    <body style="overflow:hidden">
+    <body>
         <!-- This apparently fixes a bug that happens in firefox: https://stackoverflow.com/questions/21147149/flash-of-unstyled-content-fouc-in-firefox-only-is-ff-slow-renderer -->
         <script>0</script>
 
-        <div id="sidebar" style="width:29%; float:left">
-            <h3>Configuration</h3>
+        <div id="app">
+            <div id="sidebar">
+                <h3>Configuration</h3>
 
-            <label for="craftableItemSelect">Item to craft: </label>
-            <select id="craftableItemSelect"></select><br>
+                <label for="craftableItemSelect">Item to craft: </label>
+                <select id="craftableItemSelect"></select><br>
 
-            <hr>
+                <hr>
 
-            <label>Additional Options:</label><br>
-            
-            <input type="checkbox" id="useAletnateRecipes">
-            <label for="useAletnateRecipes"> Use alternate recipes </label><br>
+                <label>Additional Options:</label><br>
 
-            <label for="logisticsTierSelect">Logistics Tier: </label>
-            <select id="logisticsTierSelect">
-                <!-- TODO: Generate this automatically (available in game data, under "mSpeed" property)-->
-                <option value="60">Mk.1</option>
-                <option value="120">Mk.2</option>
-                <option value="270">Mk.3</option>
-                <option value="480">Mk.4</option>
-                <option value="780">Mk.5</option>
-                <option value="1200">Mk.6</option>
-            </select><br>
+                <input type="checkbox" id="useAletnateRecipes">
+                <label for="useAletnateRecipes"> Use alternate recipes </label><br>
 
-            <label for="maxPowerShardsSelect">Max Power Shards: </label>
-            <select id="maxPowerShardsSelect">
-                <!-- TODO: Generate this automatically (available in game data, under "mSpeed" property)-->
-                <option selected="true">0</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-            </select><br>
+                <label for="logisticsTierSelect">Logistics Tier: </label>
+                <select id="logisticsTierSelect">
+                    <!-- TODO: Generate this automatically (available in game data, under "mSpeed" property)-->
+                    <option value="60">Mk.1</option>
+                    <option value="120">Mk.2</option>
+                    <option value="270">Mk.3</option>
+                    <option value="480">Mk.4</option>
+                    <option value="780">Mk.5</option>
+                    <option value="1200">Mk.6</option>
+                </select><br>
+
+                <label for="maxPowerShardsSelect">Max Power Shards: </label>
+                <select id="maxPowerShardsSelect">
+                    <!-- TODO: Generate this automatically (available in game data, under "mSpeed" property)-->
+                    <option selected="true">0</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                </select><br>
+
+            </div>
+
+            <div id="graphContainer" class="mermaid" style="float:right; overflow:auto"></div>
 
         </div>
-
-        <div id="graph" style="float:right"></div>
             
         <script src="scripts/script.js" type="module"></script>
     </body>

@@ -1,10 +1,24 @@
 html, body {
-  /*margin: 0;*/
+  margin: 0;
   height: 100%;
+  overflow: hidden;
 }
 
-#graph {
-  width: 70%;
-  height: 100%;
+#app {
+  display: flex;
+  height: 100vh; /* lock layout to viewport */
+  width: 100vw;
+}
+
+#sidebar {
+  width: 400px;
+  margin: 2px;
+  overflow: auto; /* independent scroll */
+}
+
+#graphContainer {
+  flex: 1;
   border-style: solid;
+  position: relative;
+  display: inline-block;
 }

@@ -1,15 +1,16 @@
 // @ts-check
 // Docs:
-// https://js.cytoscape.org/
-// https://github.com/cytoscape/cytoscape.js-dagre
 // https://devhints.io/jsdoc
 // https://tom-select.js.org/docs/
+// https://mermaid.js.org/config/setup/mermaid/interfaces/MermaidConfig.html
 
-import game_data from "./game_data.auto.js"
+
+import game_data from "./game_data.auto.mjs"
+import {Graph, Node, Edge} from "./graph.mjs"
 
 // TODO: change "cytoscape.umd.js" to "cytoscape.min.js" on prod
-import cytoscape from "https://unpkg.com/cytoscape/dist/cytoscape.esm.mjs"
-import dagre from "https://cdn.skypack.dev/cytoscape-dagre"
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@latest/dist/mermaid.esm.min.mjs';
+import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@latest/dist/mermaid-layout-elk.esm.min.mjs"
 
 /**
  * Game data types:
@@ -30,28 +31,23 @@ import dagre from "https://cdn.skypack.dev/cytoscape-dagre"
  *      selected_recipe_index: number,
  *      factored_recipe_duration: number,
  *      total_required_amount: number,
- *      total_machines_required: number
+ *      total_machines_required: number,
+ *      svg_element: *
  * }} MyNodeInfo
  * 
  *  @typedef {{
- *      amount: number
+ *      amount: number,
+ *      svg_element: *
  * }} MyEdgeInfo
- * 
- * @typedef {{
- *      data: {
- *          id: string,
- *          display_name: string,
- *          icon_url: string
- *      },
- *      scratch: {
- *          _satisfactoryCalculator: MyNodeInfo
- *      }
- * }} CyNode
- * @typedef {{data: {id: string, source: string, target: string}, scratch: {_satisfactoryCalculator: MyEdgeInfo}}} CyEdge
- * @typedef {(CyNode|CyEdge)} CyElement
  */
 
-/** @type {{objects: Object.<GameObjectName, GameObject>, craftable_objects: GameObjectName[], crafting_objects: GameObjectName[]}} */
+/** 
+ * @type {{
+ *      objects: Object.<GameObjectName, GameObject>,
+ *      craftable_objects: GameObjectName[],
+ *      crafting_objects: GameObjectName[]
+ * }}
+ */
 game_data;
 
 
@@ -59,22 +55,9 @@ var globals = Object.create(null);
 globals.htmlElements = Object.create(null);
 globalThis.satisfactoryCalculator = globals;
 
-/*
-// Hover behavior
-graph.on('mouseover', 'node', evt => {
-    evt.target.style('background-color', '#22c55e');
-    console.debug("Over");
-});
-
-graph.on('mouseout', 'node', evt => {
-    evt.target.style('background-color', '#4f46e5');
-    console.debug("Out");
-});*/
-
 /**
- * 
  * @param {boolean} condition
- * @param {string} message
+ * @param {string=} message
  */
 function assert(condition, message) {
     if (!condition) {
@@ -82,7 +65,37 @@ function assert(condition, message) {
     }
 }
 
-function generateGraph() {
+/**
+ * 
+ * @param {Graph<MyNodeInfo, MyEdgeInfo>} graph 
+ * @returns {[string, Node<MyNodeInfo, MyEdgeInfo>[], Edge<MyNodeInfo, MyEdgeInfo>[]]}
+ */
+function to_mermaid(graph) {
+    let ordered_nodes = [...graph.nodes()];
+    let ordered_edges = [...graph.links()];
+
+    let result = "flowchart-elk\n";
+
+    for (const node of ordered_nodes) {
+        const data = node.data;
+        result += `${data.obj.ClassName}["${data.obj.Name}<br/>Duration=${data.factored_recipe_duration}<br/>Total required=${data.total_required_amount}<br/>Machined required=${data.total_machines_required}"]\n`;
+    }
+
+    result += '\n';
+
+    for (const edge of ordered_edges) {
+        result += `${edge.source.data.obj.ClassName}--${edge.data.amount}-->${edge.target.data.obj.ClassName}\n`;
+    }
+
+    return [result, ordered_nodes, ordered_edges];
+}
+
+/**
+ * Generates schematics for according to the current configuration.
+ * Returns the root node (product).
+ * @returns {Node<MyNodeInfo, MyEdgeInfo>=}
+ */
+function generateSchematic() {
     // Load state from HTML
     const product_name = globals.htmlElements.craftableItemSelect.value;
     const conveyor_speed = 60 / Number(globals.htmlElements.logisticsTierSelect.value);
@@ -92,26 +105,21 @@ function generateGraph() {
     if ("" == product_name)
         return;
 
-    console.debug(product_name, conveyor_speed, trivial_objects);
+    /** @type {Graph<MyNodeInfo, MyEdgeInfo>} */
+    let graph = new Graph();
 
-    /** @type {Set<GameObjectName>} */
-    let processed_nodes = new Set();
-    
-    /** @type {CyNode[]} */
-    let nodes = [];
-
-    /** @type {CyEdge[]} */
-    let edges = [];
+    /** @type {Map<GameObjectName, Node<MyNodeInfo, MyEdgeInfo>>} */
+    let nodes = new Map();
 
     /**
      * 
      * @param {GameObjectName} object_name
+     * @returns {Node<MyNodeInfo, MyEdgeInfo>}
      */
     function _generateGraph(object_name) {
-        if (processed_nodes.has(object_name))
-            return;
-
-        processed_nodes.add(object_name);
+        let node = nodes.get(object_name);
+        if (undefined !== node)
+            return node;
 
         /** @type {GameObject} */
         const obj = game_data.objects[object_name];
@@ -130,52 +138,90 @@ function generateGraph() {
         const max_amount_ingredient = selected_recipe.ingredients.reduce((max, current) => Math.max(max, current.amount), 0);
         const factored_recipe_duration = Math.max(selected_recipe.duration, max_amount_ingredient * conveyor_speed);
 
-        nodes.push({
-            data: {
-                id: object_name,
-                display_name: obj.Name,
-                icon_url: obj.iconPath
-            },
-            scratch: {
-                _satisfactoryCalculator: {
-                    obj: obj,
-                    selected_recipe_index: selected_recipe_index,
-                    factored_recipe_duration: factored_recipe_duration,
-                    total_required_amount: 0,
-                    total_machines_required: 0
-                }
-            }
-        });
+        node = graph.create_node({
+            obj: obj,
+            selected_recipe_index: selected_recipe_index,
+            factored_recipe_duration: factored_recipe_duration,
+            total_required_amount: 0,
+            total_machines_required: 0,
+            svg_element: null
+        })
+
+        nodes.set(object_name, node)
 
         if (trivial_objects.includes(object_name))
-            return;
+            return node;
 
         for (const ingredient of selected_recipe.ingredients) {
-            _generateGraph(ingredient.item_name);
-            edges.push({
-                data: {
-                    id: "e" + ingredient.item_name + "->" + object_name,
-                    source: ingredient.item_name,
-                    target: object_name
-                },
-                scratch: {
-                    _satisfactoryCalculator: {
-                        amount: ingredient.amount
-                    }
+            const ingredient_node = _generateGraph(ingredient.item_name);
+            node.add_blink(
+                ingredient_node,
+                {
+                    amount: ingredient.amount,
+                    svg_element: null
                 }
-            });
+            );
         }
+
+        return node;
     }
 
-    _generateGraph(product_name);
+    return _generateGraph(product_name);
+}
 
-    globals.graph.json({elements: {nodes: nodes, edges: edges}});
-    globals.graph.layout({
-        name: 'dagre',
-        nodeDimensionsIncludeLabels: true,
-        edgeSep: 100,
-        randDir: 'TB'
-    }).run();
+async function generateGraph() {
+    globals.product_node = generateSchematic();
+    if (!globals.product_node)
+        return;
+
+    const [graph_mermaid, ordered_nodes, ordered_edges] = to_mermaid(globals.product_node.graph);
+    const render_result = await mermaid.render('graphSvg', graph_mermaid);
+
+    console.debug(render_result.svg);
+    globals.htmlElements.graphContainer.innerHTML = render_result.svg;
+    globals.htmlElements.graphSvg = globals.htmlElements.graphContainer.querySelector('#graphSvg');
+
+    const node_svg_elements = globals.htmlElements.graphSvg.querySelectorAll('.nodes > g.node.default');
+    const edge_svg_elements = globals.htmlElements.graphSvg.querySelectorAll('.edges.edgePaths > path');
+
+    assert(node_svg_elements.length == ordered_nodes.length);
+    assert(edge_svg_elements.length == ordered_edges.length);
+
+    const svg_element = globals.htmlElements.graphSvg;
+    for (let i = 0; i < ordered_nodes.length; ++i)
+    {
+        /*
+        const rect = node_svg_elements[i].getBBox();
+        let foreign_obj = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject");
+        foreign_obj.setAttribute("x", rect.x);
+        foreign_obj.setAttribute("y", rect.y);
+        foreign_obj.setAttribute("width", rect.width);
+        foreign_obj.setAttribute("height", rect.height);
+
+        const div = document.createElement("div");
+        //div.innerHTML = htmlContent;
+        div.style.width = "100%";
+        div.style.height = "100%";
+        div.style.backgroundColor = "rgba(0, 0, 0)";
+        div.style.border = "2px solid blue";
+        div.style.boxSizing = "border-box";
+        div.style.display = "flex";
+        div.style.alignItems = "center";
+        div.style.justifyContent = "center";
+        div.style.color = "white";
+        div.style.fontWeight = "bold";
+
+        foreign_obj.appendChild(div);
+
+        node_svg_elements[i].appendChild(foreign_obj);*/
+
+        ordered_nodes[i].data.svg_element = node_svg_elements[i];
+    }
+
+    for (let i = 0; i < ordered_edges.length; ++i)
+        ordered_edges[i].data.svg_element = edge_svg_elements[i];
+
+    //ordered_nodes[0].data.svg_element.addEventListener('click', function(e){console.debug(e);});
 }
 
 function populateCraftableObjects() {
@@ -199,46 +245,30 @@ function initCraftableObjectsSelect() {
 }
 
 function initGraph() {
-    cytoscape.use(dagre);
-    globals.graph = cytoscape({
-        container: globals.htmlElements.graph,
-
-        userZoomingEnabled: false, 
-        userPanningEnabled: false,
-        autoungrabify: true,
-        autounselectify: false,
-
-        style: [
-            {
-                selector: 'node',
-                style: {
-                    'background-color': '#ddd',
-                    'shape': 'rectangle',
-                    'background-image': "data(icon_url)",
-                    'background-fit': 'cover',
-
-                    'label': 'data(display_name)',
-                    'text-valign': "bottom",
-                    'text-halign': "center"
+    mermaid.registerLayoutLoaders(elkLayouts);
+    
+    document.addEventListener(
+        "DOMContentLoaded",
+        function(){
+            mermaid.initialize({
+                //darkMode: true,
+                //theme: "dark"
+                deterministicIds: true,
+                startOnLoad: false,
+                deterministicIDSeed: undefined,
+                //  htmlLabels
+                logLevel: "warn",
+                securityLevel: "loose",
+                flowchart: {
+                    defaultRenderer: "elk"
                 }
-            },
-
-            {
-                selector: 'edge',
-                style: {
-                    'width': 3,
-                    'line-color': '#ccc',
-                    'target-arrow-color': '#ccc',
-                    'target-arrow-shape': 'triangle',
-                    'curve-style': 'bezier'
-                }
-            }
-        ]
-    });
+            });
+        }
+    );
 }
 
 function init() {
-    const HTML_ELEMENT_NAMES = ['craftableItemSelect', 'useAletnateRecipes', 'logisticsTierSelect', 'graph'];
+    const HTML_ELEMENT_NAMES = ['craftableItemSelect', 'useAletnateRecipes', 'logisticsTierSelect', 'graphContainer'];
     for (const name of HTML_ELEMENT_NAMES) {
         globals.htmlElements[name] = document.getElementById(name);
     }
@@ -251,4 +281,4 @@ function init() {
 init();
 
 // TODO: remove
-globals.craftableItemSelectTom.setValue("Desc_SpaceElevatorPart_1_C");
+globals.craftableItemSelectTom.setValue("BP_EquipmentDescriptorShockShank_C");
