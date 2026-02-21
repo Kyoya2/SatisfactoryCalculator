@@ -15,7 +15,6 @@ export class Graph {
              * @param {boolean} roots
              */
             function(roots) {
-                console.log("AAA");
                 return [...this._getRootsOrLeaves(roots)];
             }
         );

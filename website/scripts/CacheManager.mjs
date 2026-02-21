@@ -1,8 +1,11 @@
 // @ts-check
 import {assert} from "./utils.mjs"
 
-/** @typedef {((...args: *[]) => *)} AnyFunc */
+/** @typedef {(([arg]: *) => *)} AnyFunc */
 
+/**
+ * Only supports caching of functions with 1 or 0 primitive arguments.
+ */
 export default class CacheManager {
     constructor() {
         /** 
@@ -13,7 +16,7 @@ export default class CacheManager {
     }
 
     /**
-    * @template {(...args: any[]) => any} F
+    * @template {([arg]: *) => any} F
     * @param {F} func 
     * @returns {F}
     */
@@ -26,9 +29,8 @@ export default class CacheManager {
         this._cache.set(func, cache);
 
         /** @this {CacheManager} */
-        return function(...args) {
-            const args_arr = [...args];
-            const cached_value = cache.get(args_arr);
+        return function(arg) {
+            const cached_value = cache.get(arg);
             if (undefined !== cached_value) {
                 console.log(`Cache hit for ${func.name}`);
                 return cached_value;
@@ -36,8 +38,8 @@ export default class CacheManager {
 
             console.log(`Cache miss for ${func.name}`);
 
-            const result = func.apply(this, args_arr);
-            cache.set(args_arr, result)
+            const result = func.call(this, arg);
+            cache.set(arg, result)
             return result;
         }
     }
@@ -45,10 +47,10 @@ export default class CacheManager {
     /**
      * 
      * @param {AnyFunc} [func] 
-     * @param {*[]} [args] 
+     * @param {*} [arg] 
      * @returns 
      */
-    purge(func, args) {
+    purge(func, arg) {
         console.log("Purging cache");
 
         // Clear all cache
@@ -63,12 +65,12 @@ export default class CacheManager {
         assert(undefined !== func_cache, "Function isn't cached");
 
         // Clear all cache of "fun"
-        if (undefined === args) {
+        if (undefined === arg) {
             func_cache.clear();
             return;
         }
 
         // Clear cache of "fun(...args)"
-        func_cache.delete(args);
+        func_cache.delete(arg);
     }
 }

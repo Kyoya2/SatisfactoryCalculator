@@ -38,6 +38,8 @@ import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@late
  * 
  *  @typedef {{
  *      amount: number,
+ *      total_amount: number,
+ *      total_fraction: number,
  *      svg_element: *
  * }} MyEdgeInfo
  */
@@ -75,7 +77,7 @@ function to_mermaid(graph) {
     result += '\n';
 
     for (const edge of ordered_edges) {
-        result += `${edge.source.data.obj.ClassName}--${edge.data.amount}-->${edge.target.data.obj.ClassName}\n`;
+        result += `${edge.source.data.obj.ClassName}--${edge.data.amount}<br/>${edge.data.total_amount}<br/>${edge.data.total_fraction * 100}%-->${edge.target.data.obj.ClassName}\n`;
     }
 
     return [result, ordered_nodes, ordered_edges];
@@ -148,6 +150,8 @@ function generateSchematic() {
                 ingredient_node,
                 {
                     amount: ingredient.amount,
+                    total_amount: 0,
+                    total_fraction: 0,
                     svg_element: null
                 }
             );
@@ -161,13 +165,16 @@ function generateSchematic() {
 
     const cycle_duration = product_node.data.factored_recipe_duration;
 
+    // Breadth-first search starting from the product
     for (const node of product_node.graph.smartBreadthFirst(false)) {
-        // The total number of required machines is the sum of
-        node.data.total_required_amount += reduce(
-            node.flinks(),
-            (accumulator, [target_node, data]) => accumulator + target_node.data.total_required_amount * data.amount,
-            0
-        );
+        for (const [target_node, data] of node.flinks()) {
+            data.total_amount = target_node.data.total_required_amount * data.amount;
+            node.data.total_required_amount += data.total_amount;
+        }
+
+        for (const [target_node, data] of node.flinks()) {
+            data.total_fraction = data.total_amount / node.data.total_required_amount;
+        }
 
         const single_machine_production = cycle_duration / node.data.factored_recipe_duration;
         node.data.total_machines_required = node.data.total_required_amount / single_machine_production;
