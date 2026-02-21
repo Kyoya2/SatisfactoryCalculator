@@ -6,7 +6,7 @@
 
 
 import game_data from "./game_data.auto.mjs"
-import {assert, any} from "./utils.mjs"
+import {assert, any, reduce} from "./utils.mjs"
 import {Graph, Node, Edge} from "./graph.mjs"
 
 // TODO: change "cytoscape.umd.js" to "cytoscape.min.js" on prod
@@ -69,7 +69,7 @@ function to_mermaid(graph) {
 
     for (const node of ordered_nodes) {
         const data = node.data;
-        result += `${data.obj.ClassName}["${data.obj.Name}<br/>Duration=${data.factored_recipe_duration}<br/>Total required=${data.total_required_amount}<br/>Machined required=${data.total_machines_required}"]\n`;
+        result += `${data.obj.ClassName}["${data.obj.Name}<br/>Duration=${data.factored_recipe_duration}<br/>Total required=${data.total_required_amount}<br/>Machines required=${data.total_machines_required}"]\n`;
     }
 
     result += '\n';
@@ -128,7 +128,7 @@ function generateSchematic() {
         const max_amount_ingredient = selected_recipe.ingredients.reduce((max, current) => Math.max(max, current.amount), 0);
         const factored_recipe_duration = Math.max(selected_recipe.duration, max_amount_ingredient * conveyor_speed);
 
-        node = graph.create_node({
+        node = graph.createNode({
             obj: obj,
             selected_recipe_index: selected_recipe_index,
             factored_recipe_duration: factored_recipe_duration,
@@ -161,71 +161,49 @@ function generateSchematic() {
 
     const cycle_duration = product_node.data.factored_recipe_duration;
 
-    /** @type {Set<Node<MyNodeInfo, MyEdgeInfo>>} */
-    let current_nodes = new Set([product_node]);
+    for (const node of product_node.graph.smartBreadthFirst(false)) {
+        // The total number of required machines is the sum of
+        node.data.total_required_amount += reduce(
+            node.flinks(),
+            (accumulator, [target_node, data]) => accumulator + target_node.data.total_required_amount * data.amount,
+            0
+        );
 
-    /** @type {Set<Node<MyNodeInfo, MyEdgeInfo>>} */
-    let visited_nodes = new Set();
-
-    while (true) {
-        /** @type {Set<Node<MyNodeInfo, MyEdgeInfo>>} */
-        let next_round_nodes = new Set();
-
-        for (const node of current_nodes) {
-            if (visited_nodes.has(node))
-                continue;
-
-            // If we still haven't visited ALL the flinks, skip this node for now.
-            // We will have more chances to visit it in the required state.
-            if (any(node.flinks(), ([target_node, data]) => !visited_nodes.has(target_node)))
-                continue;
-
-            let all_targets_visited = true;
-            let total_required_amount = 0;
-            for (const [target_node, data] of node.flinks()) {
-                if (!visited_nodes.has(target_node)) {
-                    all_targets_visited = false;
-                    break;
-                }
-
-                total_required_amount += target_node.data.total_required_amount * data.amount;
-            }
-
-            if (!all_targets_visited)
-                continue;
-
-            node.data.total_required_amount += total_required_amount;
-            
-    
-            const single_machine_production = cycle_duration / node.data.factored_recipe_duration;
-            node.data.total_machines_required = node.data.total_required_amount / single_machine_production;
-
-            visited_nodes.add(node);
-
-            next_round_nodes = next_round_nodes.union(new Set(Array.from(node.blinks(), ([source_node, data]) => source_node)));
-        }
-
-        next_round_nodes = next_round_nodes.difference(visited_nodes);
-        if (0 == next_round_nodes.size)
-            break;
-
-        current_nodes = next_round_nodes
+        const single_machine_production = cycle_duration / node.data.factored_recipe_duration;
+        node.data.total_machines_required = node.data.total_required_amount / single_machine_production;
     }
 
     return product_node;
 }
 
-const NODE_OVERLAY_TEMPLATE = `
-    <div class="node-overlay">
-        <label class="node-item-name editable-label"></label>
-        <!-- TODO: add item picture here-->
-        <br/>
+/**
+ * 
+ * @param {SVGGElement} node_svg_element 
+ * @param {Node<MyNodeInfo, MyEdgeInfo>} node 
+ * @returns {SVGForeignObjectElement}
+ */
+function createNodeOverlay(node_svg_element, node) {
+    const rect = node_svg_element.getBBox();
+    let foreign_obj = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject");
+    foreign_obj.setAttribute("x", rect.x);
+    foreign_obj.setAttribute("y", rect.y);
+    foreign_obj.setAttribute("width", rect.width);
+    foreign_obj.setAttribute("height", rect.height);
 
-        <label>Duration:</label><label class="production-duration-label editable-label"></label><br/>
-        <label>Total required:</label><label class="total-required-label editable-label"></label><br/>
-        <label>Machines required:</label><label class="machines-required-label editable-label"></label><br/>
-    </div>
-`;
+    foreign_obj.innerHTML = `
+        <div class="node-overlay">
+            <p>
+                ${node.data.obj.Name}<br/>
+                Total required=${node.data.total_required_amount}<br/>
+                Machines required=${node.data.total_machines_required}
+            </p>
+        </div>
+    `;
+
+    node_svg_element.appendChild(foreign_obj);
+
+    return foreign_obj;
+}
 
 async function generateGraph() {
     globals.product_node = generateSchematic();
