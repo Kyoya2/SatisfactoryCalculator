@@ -7,7 +7,7 @@
 
 import game_data from "./game_data.auto.mjs"
 import {assert, any, reduce} from "./utils.mjs"
-import {Graph, Node, Edge} from "./graph.mjs"
+import {Graph, Node, Edge} from "./Graph.mjs"
 
 // TODO: change "cytoscape.umd.js" to "cytoscape.min.js" on prod
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@latest/dist/mermaid.esm.min.mjs';
