@@ -39,7 +39,7 @@ GameObject: TypeAlias = dict[str, Any]
 
 class CountedItem(NamedTuple):
     item_name: GameObjectName
-    amount: float
+    amount: Fraction
 
     def __repr__(self):
         return f"{self.item_name} [{self.amount}]"
@@ -47,7 +47,7 @@ class CountedItem(NamedTuple):
 
 class Recipe(NamedTuple):
     ingredients: list[CountedItem]
-    duration: float
+    duration: Fraction
     is_alternate: bool
     recipe_name: GameObjectName
 
@@ -61,6 +61,9 @@ class ItemDescriptor:
 
 
 def jsonify(obj):
+    if isinstance(obj, Fraction):
+        return {'n': obj.numerator, 'd': obj.denominator}
+
     if isinstance(obj, (int, float, str, bool)):
         return obj
 
@@ -259,14 +262,14 @@ class SatisfactoryCalculator:
 
         for recipe in self._categorized_objects['FGRecipe'].values():
             parsed_ingredients = self._RECIPE_OBJECT_REGEX.findall(recipe['mIngredients'])
-            full_duration = float(recipe['mManufactoringDuration'])
+            full_duration = Fraction(float(recipe['mManufactoringDuration']))
             is_alternate = recipe['mDisplayName'].startswith('Alternate: ')
 
             crafting_objects |= {ingredient_name for ingredient_name, amount in parsed_ingredients}
 
             for product_name, product_amount in self._RECIPE_OBJECT_REGEX.findall(recipe['mProduct']):
                 craftable_objects.add(product_name)
-                product_amount = int(product_amount)
+                product_amount = Fraction(int(product_amount))
 
                 ingredients = [CountedItem(item_name, int(amount) / product_amount) for item_name, amount in parsed_ingredients]
                 duration = full_duration / product_amount

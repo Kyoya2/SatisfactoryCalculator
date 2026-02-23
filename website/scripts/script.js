@@ -12,15 +12,16 @@ import {Graph, Node, Edge} from "./Graph.mjs"
 // TODO: change "cytoscape.umd.js" to "cytoscape.min.js" on prod
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@latest/dist/mermaid.esm.min.mjs';
 import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@latest/dist/mermaid-layout-elk.esm.min.mjs"
+import {fraction, add, subtract, multiply, divide, smaller, format} from 'https://cdn.jsdelivr.net/npm/mathjs/+esm'
 
 /**
  * Game data types:
  * @typedef {string} GameObjectName
- * @typedef {{item_name: GameObjectName, amount: number}} CountedItem
+ * @typedef {{item_name: GameObjectName, amount: fraction}} CountedItem
  * @typedef {{
  *      product_name: GameObjectName,
  *      ingredients: CountedItem[],
- *      duration: number,
+ *      duration: fraction,
  *      is_alternate: boolean,
  *      recipe_name: GameObjectName
  * }} Recipe
@@ -30,16 +31,16 @@ import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@late
  * @typedef {{
  *      obj: GameObject,
  *      selected_recipe_index: number,
- *      factored_recipe_duration: number,
- *      total_required_amount: number,
- *      total_machines_required: number,
+ *      factored_recipe_duration: fraction,
+ *      total_required_amount: fraction,
+ *      total_machines_required: fraction,
  *      svg_element: *
  * }} MyNodeInfo
  * 
  *  @typedef {{
- *      amount: number,
- *      total_amount: number,
- *      total_fraction: number,
+ *      amount: fraction,
+ *      total_amount: fraction,
+ *      total_fraction: fraction,
  *      svg_element: *
  * }} MyEdgeInfo
  */
@@ -58,8 +59,28 @@ var globals = Object.create(null);
 globals.htmlElements = Object.create(null);
 globalThis.satisfactoryCalculator = globals;
 
+
+/**
+ * @param {fraction} a 
+ * @param {fraction} b 
+ * @returns {fraction}
+ */
+function fractionMax(a, b) {
+    if (smaller(a, b))
+        return b;
+    return a;
+}
+
 /**
  * 
+ * @param {fraction} frac 
+ * @returns {string}
+ */
+function formatFrac(frac) {
+    return format(frac, { fraction: 'ratio' })
+}
+
+/**
  * @param {Graph<MyNodeInfo, MyEdgeInfo>} graph 
  * @returns {[string, Node<MyNodeInfo, MyEdgeInfo>[], Edge<MyNodeInfo, MyEdgeInfo>[]]}
  */
@@ -71,13 +92,13 @@ function to_mermaid(graph) {
 
     for (const node of ordered_nodes) {
         const data = node.data;
-        result += `${data.obj.ClassName}["${data.obj.Name}<br/>Duration=${data.factored_recipe_duration}<br/>Total required=${data.total_required_amount}<br/>Machines required=${data.total_machines_required}"]\n`;
+        result += `${data.obj.ClassName}["${data.obj.Name}<br/>Duration=${formatFrac(data.factored_recipe_duration)}<br/>Total required=${formatFrac(data.total_required_amount)}<br/>Machines required=${formatFrac(data.total_machines_required)}"]\n`;
     }
 
     result += '\n';
 
     for (const edge of ordered_edges) {
-        result += `${edge.source.data.obj.ClassName}--${edge.data.amount}<br/>${edge.data.total_amount}<br/>${edge.data.total_fraction * 100}%-->${edge.target.data.obj.ClassName}\n`;
+        result += `${edge.source.data.obj.ClassName}--${formatFrac(edge.data.amount)}<br/>${formatFrac(edge.data.total_amount)}<br/>${formatFrac(edge.data.total_fraction)}-->${edge.target.data.obj.ClassName}\n`;
     }
 
     return [result, ordered_nodes, ordered_edges];
@@ -91,7 +112,7 @@ function to_mermaid(graph) {
 function generateSchematic() {
     // Load state from HTML
     const product_name = globals.htmlElements.craftableItemSelect.value;
-    const conveyor_speed = 60 / Number(globals.htmlElements.logisticsTierSelect.value);
+    const conveyor_speed = fraction(60, Number(globals.htmlElements.logisticsTierSelect.value));
     const trivial_objects = ["Desc_IronIngot_C", "Desc_CopperIngot_C"]; // TODO: make configurable
 
     // Don't do anything if selection is cleared
@@ -127,8 +148,8 @@ function generateSchematic() {
         // Factor in the time it takes to load the ingredients onto the constructor/assembler.
         // Assuming that ingredients are loaded into the machine as a product is being produced,
         // this makes a difference only if the load time is higher than the production
-        const max_amount_ingredient = selected_recipe.ingredients.reduce((max, current) => Math.max(max, current.amount), 0);
-        const factored_recipe_duration = Math.max(selected_recipe.duration, max_amount_ingredient * conveyor_speed);
+        const max_amount_ingredient = selected_recipe.ingredients.reduce((max, current) => fractionMax(max, current.amount), fraction(0));
+        const factored_recipe_duration = fractionMax(selected_recipe.duration, multiply(max_amount_ingredient, conveyor_speed));
 
         node = graph.createNode({
             obj: obj,
@@ -168,16 +189,16 @@ function generateSchematic() {
     // Breadth-first search starting from the product
     for (const node of product_node.graph.smartBreadthFirst(false)) {
         for (const [target_node, data] of node.flinks()) {
-            data.total_amount = target_node.data.total_required_amount * data.amount;
-            node.data.total_required_amount += data.total_amount;
+            data.total_amount = multiply(target_node.data.total_required_amount, data.amount);
+            node.data.total_required_amount = add(node.data.total_required_amount, data.total_amount);
         }
 
         for (const [target_node, data] of node.flinks()) {
-            data.total_fraction = data.total_amount / node.data.total_required_amount;
+            data.total_fraction = divide(data.total_amount, node.data.total_required_amount);
         }
 
-        const single_machine_production = cycle_duration / node.data.factored_recipe_duration;
-        node.data.total_machines_required = node.data.total_required_amount / single_machine_production;
+        const single_machine_production = divide(cycle_duration, node.data.factored_recipe_duration);
+        node.data.total_machines_required = divide(node.data.total_required_amount, single_machine_production);
     }
 
     return product_node;
@@ -309,6 +330,19 @@ function init() {
     initCraftableObjectsSelect();
 
     initGraph();
+
+    // Transform information to fraction objects
+    for (const game_obj of Object.values(game_data.objects)) {
+        if (!game_obj.hasOwnProperty('recipes'))
+            continue;
+
+        for (const recipe of game_obj.recipes) {
+            recipe.duration = fraction(recipe.duration.n, recipe.duration.d);
+            for (const ingredient of recipe.ingredients) {
+                ingredient.amount = fraction(ingredient.amount.n, ingredient.amount.d);
+            }
+        }
+    }
 }
 
 init();
