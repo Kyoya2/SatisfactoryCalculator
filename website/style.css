@@ -1,13 +1,13 @@
 html, body {
-  margin: 0;
-  height: 100%;
-  overflow: hidden;
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
 }
 
 #app {
-  display: flex;
-  height: 100vh; /* lock layout to viewport */
-  width: 100vw;
+    display: flex;
+    height: 100vh; /* lock layout to viewport */
+    width: 100vw;
 }
 
 #sidebar {
@@ -17,8 +17,35 @@ html, body {
 }
 
 #graphContainer {
-  flex: 1;
-  border-style: solid;
-  position: relative;
-  display: inline-block;
+    flex: 1;
+    border-style: solid;
+    position: relative;
+    display: inline-block;
+}
+
+.node-overlay {
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+    padding: 2px;
+    border: 3px solid black;
+    box-sizing: border-box;
+    background-color: wheat;
+}
+
+.node-alternate-recipes {
+    display: flex;
+    width: 100%;
+}
+
+.node-alternate-recipes > .recipe-label {
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.node-alternate-recipes > select {
+    flex: 0 1 auto; /* Don't grow, do shrink, base on content */
+    min-width: 0;
+    max-width: 100%;
+    width: auto;
 }

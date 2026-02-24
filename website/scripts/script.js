@@ -34,7 +34,7 @@ import {fraction, add, subtract, multiply, divide, smaller, format} from 'https:
  *      factored_recipe_duration: fraction,
  *      total_required_amount: fraction,
  *      total_machines_required: fraction,
- *      svg_element: *
+ *      html: HTMLDivElement | null
  * }} MyNodeInfo
  * 
  *  @typedef {{
@@ -55,8 +55,14 @@ import {fraction, add, subtract, multiply, divide, smaller, format} from 'https:
 game_data;
 
 
+/**
+ * @type {{
+ *      html_elements: Object.<string, HTMLElement>,
+ *      product_node: Node<MyNodeInfo, MyEdgeInfo>
+ * }}
+ */
 var globals = Object.create(null);
-globals.htmlElements = Object.create(null);
+globals.html_elements = Object.create(null);
 globalThis.satisfactoryCalculator = globals;
 
 
@@ -92,13 +98,13 @@ function to_mermaid(graph) {
 
     for (const node of ordered_nodes) {
         const data = node.data;
-        result += `${data.obj.ClassName}["${data.obj.Name}<br/>Duration=${formatFrac(data.factored_recipe_duration)}<br/>Total required=${formatFrac(data.total_required_amount)}<br/>Machines required=${formatFrac(data.total_machines_required)}"]\n`;
+        result += `${data.obj.ClassName}["${data.obj.Name}<br/>Duration=${(data.factored_recipe_duration)}<br/>Total required=${(data.total_required_amount)}<br/>Machines required=${(data.total_machines_required)}"]\n`;
     }
 
     result += '\n';
 
     for (const edge of ordered_edges) {
-        result += `${edge.source.data.obj.ClassName}--${formatFrac(edge.data.amount)}<br/>${formatFrac(edge.data.total_amount)}<br/>${formatFrac(edge.data.total_fraction)}-->${edge.target.data.obj.ClassName}\n`;
+        result += `${edge.source.data.obj.ClassName}--${(edge.data.amount)}<br/>${(edge.data.total_amount)}<br/>${formatFrac(edge.data.total_fraction)}-->${edge.target.data.obj.ClassName}\n`;
     }
 
     return [result, ordered_nodes, ordered_edges];
@@ -111,8 +117,9 @@ function to_mermaid(graph) {
  */
 function generateSchematic() {
     // Load state from HTML
-    const product_name = globals.htmlElements.craftableItemSelect.value;
-    const conveyor_speed = fraction(60, Number(globals.htmlElements.logisticsTierSelect.value));
+    // TODO: store these in a global to avoid loading each time
+    const product_name = globals.html_elements.craftableItemSelect.value;
+    const conveyor_speed = fraction(60, Number(globals.html_elements.logisticsTierSelect.value));
     const trivial_objects = ["Desc_IronIngot_C", "Desc_CopperIngot_C"]; // TODO: make configurable
 
     // Don't do anything if selection is cleared
@@ -157,7 +164,7 @@ function generateSchematic() {
             factored_recipe_duration: factored_recipe_duration,
             total_required_amount: 0,
             total_machines_required: 0,
-            svg_element: null
+            html: null
         })
 
         nodes.set(object_name, node)
@@ -208,29 +215,51 @@ function generateSchematic() {
  * 
  * @param {SVGGElement} node_svg_element 
  * @param {Node<MyNodeInfo, MyEdgeInfo>} node 
- * @returns {SVGForeignObjectElement}
+ * @returns {HTMLDivElement}
  */
 function createNodeOverlay(node_svg_element, node) {
-    const rect = node_svg_element.getBBox();
-    let foreign_obj = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject");
-    foreign_obj.setAttribute("x", rect.x);
-    foreign_obj.setAttribute("y", rect.y);
-    foreign_obj.setAttribute("width", rect.width);
-    foreign_obj.setAttribute("height", rect.height);
+    // Clone the template
+    const clone = globals.html_elements.nodeOverlayTemplate.content.cloneNode(true);
+    assert(1 == clone.childElementCount);
+    const node_overlay = clone.firstChild;
 
-    foreign_obj.innerHTML = `
-        <div class="node-overlay">
-            <p>
-                ${node.data.obj.Name}<br/>
-                Total required=${node.data.total_required_amount}<br/>
-                Machines required=${node.data.total_machines_required}
-            </p>
-        </div>
-    `;
+    // Initialize the overlay
+    node_overlay.querySelector('.node-item-name').textContent = node.data.obj.Name;
+
+    // Initialize alternate recipes select, or remove if there are none
+    if (node.data.obj.recipes.length <= 1) {
+        node_overlay.querySelector(".node-alternate-recipes").remove();
+    } else {
+        const ALTERNATE_RECIPE_NAME_PREFIX = "Alternate: ";
+        /** @type {HTMLSelectElement} */
+        const alternate_recipes_select = node_overlay.querySelector(".node-alternate-recipes > select");
+        for (let i = 0; i < node.data.obj.recipes.length; ++i) {
+            /** @type {string} */
+            let recipe_name = game_data.objects[node.data.obj.recipes[i].recipe_name].Name;
+
+            // Remove the "Alternate: " suffix from recipe names
+            if (recipe_name.startsWith(ALTERNATE_RECIPE_NAME_PREFIX)) {
+                recipe_name = recipe_name.substring(ALTERNATE_RECIPE_NAME_PREFIX.length);
+            }
+
+            alternate_recipes_select.add(new Option(recipe_name, i.toString()))
+        }
+    }
+
+    // Inject a "foreignObject" element into the node
+    const foreign_obj = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject");
+    foreign_obj.appendChild(node_overlay);
+    
+    // Position the "foregnObject" over the node
+    const rect = node_svg_element.getBBox({fill: true, stroke: true, markers: true, clipped: false});
+    foreign_obj.setAttribute("x", rect.x-2);
+    foreign_obj.setAttribute("y", rect.y-2);
+    foreign_obj.setAttribute("width", rect.width+4);
+    foreign_obj.setAttribute("height", rect.height+4);
 
     node_svg_element.appendChild(foreign_obj);
 
-    return foreign_obj;
+    return node_overlay;
 }
 
 async function generateGraph() {
@@ -238,44 +267,30 @@ async function generateGraph() {
     if (!globals.product_node)
         return;
 
+    // TODO: this function relies on the assumption that the SVG elements appear in the order that
+    //       they were declared in the Mermaid string. Check this!
     const [graph_mermaid, ordered_nodes, ordered_edges] = to_mermaid(globals.product_node.graph);
     const render_result = await mermaid.render('graphSvg', graph_mermaid);
 
-    globals.htmlElements.graphContainer.innerHTML = render_result.svg;
+    globals.html_elements.graphContainer.innerHTML = render_result.svg;
 
-    return;
+    /** @type {SVGElement} */
+    const graph_svg = globals.html_elements.graphContainer.querySelector('#graphSvg');
 
-    globals.htmlElements.graphSvg = globals.htmlElements.graphContainer.querySelector('#graphSvg');
-
-    const node_svg_elements = globals.htmlElements.graphSvg.querySelectorAll('.nodes > g.node.default');
-    const edge_svg_elements = globals.htmlElements.graphSvg.querySelectorAll('.edges.edgePaths > path');
+    const node_svg_elements = graph_svg.querySelectorAll('.nodes > g.node.default');
+    const edge_svg_elements = graph_svg.querySelectorAll('.edges.edgePaths > path');
 
     assert(node_svg_elements.length == ordered_nodes.length);
     assert(edge_svg_elements.length == ordered_edges.length);
 
-    const node_overlay_template = document.querySelector('#node-overlay-template');
-
-    const svg_element = globals.htmlElements.graphSvg;
     for (let i = 0; i < ordered_nodes.length; ++i)
     {
-        const rect = node_svg_elements[i].getBBox();
-        let foreign_obj = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject");
-        foreign_obj.setAttribute("x", rect.x);
-        foreign_obj.setAttribute("y", rect.y);
-        foreign_obj.setAttribute("width", rect.width);
-        foreign_obj.setAttribute("height", rect.height);
-
-        foreign_obj.innerHTML = NODE_OVERLAY_TEMPLATE;
-
-        node_svg_elements[i].appendChild(foreign_obj);
-
-        ordered_nodes[i].data.svg_element = node_svg_elements[i];
+        const current_node = ordered_nodes[i];
+        current_node.data.html = createNodeOverlay(node_svg_elements[i], current_node)
     }
 
     for (let i = 0; i < ordered_edges.length; ++i)
         ordered_edges[i].data.svg_element = edge_svg_elements[i];
-
-    //ordered_nodes[0].data.svg_element.addEventListener('click', function(e){console.debug(e);});
 }
 
 function populateCraftableObjects() {
@@ -286,7 +301,7 @@ function populateCraftableObjects() {
 
 function initCraftableObjectsSelect() {
     globals.craftableItemSelectTom = new TomSelect(
-        globals.htmlElements.craftableItemSelect,
+        globals.html_elements.craftableItemSelect,
         {
             searchField: "text",
             maxOptions: null,
@@ -322,9 +337,9 @@ function initGraph() {
 }
 
 function init() {
-    const HTML_ELEMENT_NAMES = ['craftableItemSelect', 'useAletnateRecipes', 'logisticsTierSelect', 'graphContainer'];
+    const HTML_ELEMENT_NAMES = ['craftableItemSelect', 'useAletnateRecipes', 'logisticsTierSelect', 'graphContainer', 'nodeOverlayTemplate'];
     for (const name of HTML_ELEMENT_NAMES) {
-        globals.htmlElements[name] = document.getElementById(name);
+        globals.html_elements[name] = document.getElementById(name);
     }
 
     initCraftableObjectsSelect();

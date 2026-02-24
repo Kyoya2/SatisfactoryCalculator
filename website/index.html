@@ -53,6 +53,21 @@
             <div id="graphContainer" class="mermaid" style="float:right; overflow:auto"></div>
 
         </div>
+
+        <template id="nodeOverlayTemplate"><div class="node-overlay">
+            <label class="node-item-name editable-label"></label>
+            <!-- TODO: add item picture here-->
+            <br/><br/>
+
+            <div class="node-alternate-recipes">
+                <label class="recipe-label">Recipe:&nbsp</label>
+                <select></select><br>
+            </div>
+
+            <label>Duration:</label><label class="production-duration-label editable-label"></label><br/>
+            <label>Total required:</label><label class="total-required-label editable-label"></label><br/>
+            <label>Machines required:</label><label class="machines-required-label editable-label"></label><br/>
+        </div></template>
             
         <script src="scripts/script.js" type="module"></script>
     </body>
