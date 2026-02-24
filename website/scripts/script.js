@@ -334,6 +334,19 @@ async function generateGraph() {
         ordered_edges[i].data.svg_element = edge_svg_elements[i];
 }
 
+function resetAlternateRecipes() {
+    // Re-render only if a non-alternate recipe is currently selected
+    const should_re_render_graph = any(
+        globals.config.alternate_recipes.entries(),
+        ([obj_name, selected_recipe_index]) => game_data.objects[obj_name].recipes[selected_recipe_index].is_alternate
+    );
+
+    globals.config.alternate_recipes.clear();
+
+    if (should_re_render_graph)
+        generateGraph();
+}
+
 function populateCraftableObjects() {
     globals.craftableItemSelectTom.clear(true);
     globals.craftableItemSelectTom.clearOptions();
@@ -386,6 +399,8 @@ function init() {
     initCraftableObjectsSelect();
 
     initGraph();
+
+    document.getElementById("resetAlternateRecipesButton").onclick = resetAlternateRecipes;
 
     // Transform information to fraction objects
     for (const game_obj of Object.values(game_data.objects)) {
