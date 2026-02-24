@@ -58,11 +58,20 @@ game_data;
 /**
  * @type {{
  *      html_elements: Object.<string, HTMLElement>,
- *      product_node: Node<MyNodeInfo, MyEdgeInfo>
+ *      product_node: Node<MyNodeInfo, MyEdgeInfo> | null,
+ *      config: {
+ *          alternate_recipes: Map<GameObjectName, number>
+ *      }
  * }}
  */
-var globals = Object.create(null);
-globals.html_elements = Object.create(null);
+var globals = {
+    html_elements: Object.create(null),
+    product_node: null,
+    config: {
+        alternate_recipes: new Map()
+    }
+};
+
 globalThis.satisfactoryCalculator = globals;
 
 
@@ -111,6 +120,77 @@ function to_mermaid(graph) {
 }
 
 /**
+ * 
+ * @param {SVGGElement} node_svg_element 
+ * @param {Node<MyNodeInfo, MyEdgeInfo>} node 
+ * @returns {HTMLDivElement}
+ */
+function createNodeOverlay(node_svg_element, node) {
+    // Clone the template
+    const clone = globals.html_elements.nodeOverlayTemplate.content.cloneNode(true);
+    assert(1 == clone.childElementCount);
+    const node_overlay = clone.firstChild;
+
+    const obj = node.data.obj;
+
+    // Initialize the overlay
+    node_overlay.querySelector('.node-item-name').textContent = obj.Name;
+
+    // Initialize alternate recipes select, or remove if there are none
+    if (obj.recipes.length <= 1) {
+        node_overlay.querySelector(".node-alternate-recipes").remove();
+    } else {
+        let recipe_index = globals.config.alternate_recipes.get(obj.ClassName);
+        if (undefined === recipe_index)
+            recipe_index = 0;
+
+        const ALTERNATE_RECIPE_NAME_PREFIX = "Alternate: ";
+
+        /** @type {HTMLSelectElement} */
+        const alternate_recipes_select = node_overlay.querySelector(".node-alternate-recipes > select");
+        for (let i = 0; i < obj.recipes.length; ++i) {
+            /** @type {string} */
+            let recipe_name = game_data.objects[obj.recipes[i].recipe_name].Name;
+
+            // Remove the "Alternate: " suffix from recipe names
+            if (recipe_name.startsWith(ALTERNATE_RECIPE_NAME_PREFIX)) {
+                recipe_name = recipe_name.substring(ALTERNATE_RECIPE_NAME_PREFIX.length);
+            }
+
+            alternate_recipes_select.add(
+                new Option(
+                    recipe_name,
+                    undefined,
+                    false,
+                    i == node.data.selected_recipe_index
+                )
+            );
+        }
+        
+        alternate_recipes_select.oninput = function(e) {
+            console.log(obj.ClassName, e.target.selectedIndex);
+            globals.config.alternate_recipes.set(obj.ClassName, e.target.selectedIndex);
+            generateGraph();
+        };
+    }
+
+    // Inject a "foreignObject" element into the node
+    const foreign_obj = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject");
+    foreign_obj.appendChild(node_overlay);
+    
+    // Position the "foregnObject" over the node
+    const rect = node_svg_element.getBBox({fill: true, stroke: true, markers: true, clipped: false});
+    foreign_obj.setAttribute("x", rect.x-2);
+    foreign_obj.setAttribute("y", rect.y-2);
+    foreign_obj.setAttribute("width", rect.width+4);
+    foreign_obj.setAttribute("height", rect.height+4);
+
+    node_svg_element.appendChild(foreign_obj);
+
+    return node_overlay;
+}
+
+/**
  * Generates schematics for according to the current configuration.
  * Returns the root node (product).
  * @returns {Node<MyNodeInfo, MyEdgeInfo>=}
@@ -120,7 +200,8 @@ function generateSchematic() {
     // TODO: store these in a global to avoid loading each time
     const product_name = globals.html_elements.craftableItemSelect.value;
     const conveyor_speed = fraction(60, Number(globals.html_elements.logisticsTierSelect.value));
-    const trivial_objects = ["Desc_IronIngot_C", "Desc_CopperIngot_C"]; // TODO: make configurable
+    //const trivial_objects = ["Desc_IronIngot_C", "Desc_CopperIngot_C", "Desc_SteelIngot_C"]; // TODO: make configurable
+    const trivial_objects = ["Desc_OreIron_C", "Desc_OreCopper_C", "Desc_Coal_C"]; // TODO: make configurable
 
     // Don't do anything if selection is cleared
     if ("" == product_name)
@@ -144,11 +225,20 @@ function generateSchematic() {
         /** @type {GameObject} */
         const obj = game_data.objects[object_name];
 
+        let selected_recipe_index = globals.config.alternate_recipes.get(object_name);
+        if (undefined === selected_recipe_index) {
+            // "game_data" is generated such that non-alternate recipes are always before
+            // alternate recipes.
+            assert(obj.recipes.findIndex(recipe => !recipe.is_alternate) <= 0);
+            selected_recipe_index = 0;
+        }
+
         // By default, choose the first non-alternate recipe.
         // If only alternate recipes are available, choose the 1st one.
-        let selected_recipe_index = obj.recipes.findIndex(recipe => !recipe.is_alternate);
-        if (-1 == selected_recipe_index)
-            selected_recipe_index = 0;
+        //if (obj.recipes === undefined) debugger;
+        //let selected_recipe_index = obj.recipes.findIndex(recipe => !recipe.is_alternate);
+        //if (-1 == selected_recipe_index)
+        //    selected_recipe_index = 0;
 
         const selected_recipe = obj.recipes[selected_recipe_index];
 
@@ -211,57 +301,6 @@ function generateSchematic() {
     return product_node;
 }
 
-/**
- * 
- * @param {SVGGElement} node_svg_element 
- * @param {Node<MyNodeInfo, MyEdgeInfo>} node 
- * @returns {HTMLDivElement}
- */
-function createNodeOverlay(node_svg_element, node) {
-    // Clone the template
-    const clone = globals.html_elements.nodeOverlayTemplate.content.cloneNode(true);
-    assert(1 == clone.childElementCount);
-    const node_overlay = clone.firstChild;
-
-    // Initialize the overlay
-    node_overlay.querySelector('.node-item-name').textContent = node.data.obj.Name;
-
-    // Initialize alternate recipes select, or remove if there are none
-    if (node.data.obj.recipes.length <= 1) {
-        node_overlay.querySelector(".node-alternate-recipes").remove();
-    } else {
-        const ALTERNATE_RECIPE_NAME_PREFIX = "Alternate: ";
-        /** @type {HTMLSelectElement} */
-        const alternate_recipes_select = node_overlay.querySelector(".node-alternate-recipes > select");
-        for (let i = 0; i < node.data.obj.recipes.length; ++i) {
-            /** @type {string} */
-            let recipe_name = game_data.objects[node.data.obj.recipes[i].recipe_name].Name;
-
-            // Remove the "Alternate: " suffix from recipe names
-            if (recipe_name.startsWith(ALTERNATE_RECIPE_NAME_PREFIX)) {
-                recipe_name = recipe_name.substring(ALTERNATE_RECIPE_NAME_PREFIX.length);
-            }
-
-            alternate_recipes_select.add(new Option(recipe_name, i.toString()))
-        }
-    }
-
-    // Inject a "foreignObject" element into the node
-    const foreign_obj = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject");
-    foreign_obj.appendChild(node_overlay);
-    
-    // Position the "foregnObject" over the node
-    const rect = node_svg_element.getBBox({fill: true, stroke: true, markers: true, clipped: false});
-    foreign_obj.setAttribute("x", rect.x-2);
-    foreign_obj.setAttribute("y", rect.y-2);
-    foreign_obj.setAttribute("width", rect.width+4);
-    foreign_obj.setAttribute("height", rect.height+4);
-
-    node_svg_element.appendChild(foreign_obj);
-
-    return node_overlay;
-}
-
 async function generateGraph() {
     globals.product_node = generateSchematic();
     if (!globals.product_node)
@@ -273,6 +312,8 @@ async function generateGraph() {
     const render_result = await mermaid.render('graphSvg', graph_mermaid);
 
     globals.html_elements.graphContainer.innerHTML = render_result.svg;
+
+    //return;
 
     /** @type {SVGElement} */
     const graph_svg = globals.html_elements.graphContainer.querySelector('#graphSvg');
