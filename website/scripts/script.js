@@ -157,15 +157,10 @@ function createNodeOverlay(node_svg_element, node) {
                 recipe_name = recipe_name.substring(ALTERNATE_RECIPE_NAME_PREFIX.length);
             }
 
-            alternate_recipes_select.add(
-                new Option(
-                    recipe_name,
-                    undefined,
-                    false,
-                    i == node.data.selected_recipe_index
-                )
-            );
+            alternate_recipes_select.add(new Option(recipe_name));
         }
+
+        alternate_recipes_select.selectedIndex = node.data.selected_recipe_index;
         
         alternate_recipes_select.oninput = function(e) {
             console.log(obj.ClassName, e.target.selectedIndex);
