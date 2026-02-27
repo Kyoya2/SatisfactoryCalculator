@@ -19,10 +19,31 @@
             <div id="sidebar">
                 <h3>Configuration</h3>
 
-                <label for="craftableItemSelect">Item to craft: </label>
+                <label for="craftableItemSelect">Item to craft:</label>
                 <select id="craftableItemSelect"></select><br>
 
                 <hr>
+
+                <!-------------------------------------------------------------------->
+
+                <label>Trivial resources</label>
+                <input type="text" id="trivialResourceSearch" placeholder="Search..." style="float:right"><br/><br/>
+                <div id="trivialResourcesTableContainer">
+                    <table id="trivialResourcesTable">
+                        <thead>
+                            <tr>
+                                <th>Resource name</th>
+                                <th>Prod/m</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div><br>
+
+                <button type="button" id="updateTrivialResourcesButton">Update</button>
+                <hr>
+
+                <!-------------------------------------------------------------------->
 
                 <label>Additional Options:</label><br>
 

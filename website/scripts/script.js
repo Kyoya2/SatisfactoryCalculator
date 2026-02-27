@@ -60,7 +60,8 @@ game_data;
  *      html_elements: Object.<string, HTMLElement>,
  *      product_node: Node<MyNodeInfo, MyEdgeInfo> | null,
  *      config: {
- *          alternate_recipes: Map<GameObjectName, number>
+ *          alternate_recipes: Map<GameObjectName, number>,
+ *          trivial_resources: Map<GameObjectName, fraction>
  *      }
  * }}
  */
@@ -68,11 +69,14 @@ var globals = {
     html_elements: Object.create(null),
     product_node: null,
     config: {
-        alternate_recipes: new Map()
+        alternate_recipes: new Map(),
+        trivial_resources: new Map()
     }
 };
 
 globalThis.satisfactoryCalculator = globals;
+
+const ALTERNATE_RECIPE_NAME_PREFIX = "Alternate: ";
 
 
 /**
@@ -143,8 +147,6 @@ function createNodeOverlay(node_svg_element, node) {
         let recipe_index = globals.config.alternate_recipes.get(obj.ClassName);
         if (undefined === recipe_index)
             recipe_index = 0;
-
-        const ALTERNATE_RECIPE_NAME_PREFIX = "Alternate: ";
 
         /** @type {HTMLSelectElement} */
         const alternate_recipes_select = node_overlay.querySelector(".node-alternate-recipes > select");
@@ -227,13 +229,6 @@ function generateSchematic() {
             assert(obj.recipes.findIndex(recipe => !recipe.is_alternate) <= 0);
             selected_recipe_index = 0;
         }
-
-        // By default, choose the first non-alternate recipe.
-        // If only alternate recipes are available, choose the 1st one.
-        //if (obj.recipes === undefined) debugger;
-        //let selected_recipe_index = obj.recipes.findIndex(recipe => !recipe.is_alternate);
-        //if (-1 == selected_recipe_index)
-        //    selected_recipe_index = 0;
 
         const selected_recipe = obj.recipes[selected_recipe_index];
 
@@ -342,12 +337,6 @@ function resetAlternateRecipes() {
         generateGraph();
 }
 
-function populateCraftableObjects() {
-    globals.craftableItemSelectTom.clear(true);
-    globals.craftableItemSelectTom.clearOptions();
-    globals.craftableItemSelectTom.addOptions(game_data.craftable_objects.map((obj_name) => ({value: obj_name, text: game_data.objects[obj_name].Name})));
-}
-
 function initCraftableObjectsSelect() {
     globals.craftableItemSelectTom = new TomSelect(
         globals.html_elements.craftableItemSelect,
@@ -359,7 +348,7 @@ function initCraftableObjectsSelect() {
         }
     );
 
-    populateCraftableObjects();
+    globals.craftableItemSelectTom.addOptions(game_data.craftable_objects.map((obj_name) => ({value: obj_name, text: game_data.objects[obj_name].Name})));
 }
 
 function initGraph() {
@@ -385,18 +374,69 @@ function initGraph() {
     );
 }
 
-function init() {
-    const HTML_ELEMENT_NAMES = ['craftableItemSelect', 'useAletnateRecipes', 'logisticsTierSelect', 'graphContainer', 'nodeOverlayTemplate'];
-    for (const name of HTML_ELEMENT_NAMES) {
-        globals.html_elements[name] = document.getElementById(name);
+/** @param {InputEvent} e */
+function numberInputFilter(e) { e.target.value = e.target.value.replace(/[^0-9]+/g, ''); }
+
+function initTrivialResources() {
+    /** @type {HTMLTableSectionElement} */
+    const tbody = document.querySelector("#trivialResourcesTable > tbody");
+
+    /** @type {Map<string, HTMLTableRowElement>} */
+    const rows = new Map();
+
+    /** @type {Map<GameObjectName, HTMLInputElement>} */
+    const textboxes = new Map();
+
+    for (const crafting_obj_name of game_data.crafting_objects) {
+        /** @type {GameObject} */
+        const obj = game_data.objects[crafting_obj_name];
+        const row = tbody.insertRow();
+
+        row.insertCell().innerHTML = `<label>${obj.Name}</label>`;
+        
+        const text_box = document.createElement("input");
+        text_box.setAttribute("type", "text");
+        text_box.setAttribute("size", "7");
+        text_box.setAttribute("placeholder", "Prod/m");
+        text_box.classList.add("trivialResourceProdInput");
+        text_box.oninput = numberInputFilter;
+
+        row.insertCell().appendChild(text_box);
+
+        rows.set(obj.Name.toLowerCase(), row);
+        textboxes.set(crafting_obj_name, text_box);
     }
 
-    initCraftableObjectsSelect();
+    /** @type {HTMLInputElement} */
+    const search = document.getElementById("trivialResourceSearch");
 
-    initGraph();
+    /** @param {InputEvent} e */
+    search.oninput = function(e) {
+        const text = e.target.value;
+        for (const [obj_name, row] of rows.entries()) {
+            row.style.display = obj_name.includes(text) ? "" : "none";
+        }
+    };
 
-    document.getElementById("resetAlternateRecipesButton").onclick = resetAlternateRecipes;
+    /** @type {HTMLButtonElement} */
+    const update_button = document.getElementById("updateTrivialResourcesButton");
+    update_button.onclick = function() {
+        globals.config.trivial_resources.clear();
+        for (const [crafting_obj_name, text_box] of textboxes.entries()) {
+            if ("" == text_box.value)
+                continue;
 
+            globals.config.trivial_resources.set(
+                crafting_obj_name,
+                fraction(parseInt(text_box.value), 60)
+            )
+        }
+
+        console.debug(globals.config.trivial_resources);
+    }
+}
+
+function init() {
     // Transform information to fraction objects
     for (const game_obj of Object.values(game_data.objects)) {
         if (!game_obj.hasOwnProperty('recipes'))
@@ -409,6 +449,20 @@ function init() {
             }
         }
     }
+
+    const HTML_ELEMENT_NAMES = ['craftableItemSelect', 'useAletnateRecipes', 'logisticsTierSelect', 'graphContainer', 'nodeOverlayTemplate'];
+    for (const name of HTML_ELEMENT_NAMES) {
+        globals.html_elements[name] = document.getElementById(name);
+    }
+
+    initCraftableObjectsSelect();
+
+    initTrivialResources();
+
+    document.getElementById("resetAlternateRecipesButton").onclick = resetAlternateRecipes;
+
+    initGraph();
+
 }
 
 init();
