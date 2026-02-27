@@ -225,17 +225,47 @@ class SatisfactoryCalculator:
 
         return root_node
 
-    def as_dict(self):
-        return {
+    def serialize(self):
+        # TODO: return only object data used by the website
+        data = {
             'objects': jsonify(self._all_objects),
             'craftable_objects': self._sort_by_display_name(self._craftable_objects),
             'crafting_objects': self._sort_by_display_name(self._crafting_objects),
-            'categories': {
-                category_name: list(sorted(objects.keys()))
-                for category_name, objects
-                in self._categorized_objects.items()
-            },
+            #'categories': {
+            #    category_name: list(sorted(objects.keys()))
+            #    for category_name, objects
+            #    in self._categorized_objects.items()
+            #},
         }
+
+        return \
+f"""
+// @ts-check
+
+/**
+ * Game data types:
+ * @typedef {{string}} GameObjectName
+ * @typedef {{{{item_name: GameObjectName, amount: fraction}}}} CountedItem
+ * @typedef {{{{
+ *       product_name: GameObjectName,
+ *      ingredients: CountedItem[],
+ *      duration: fraction,
+ *      is_alternate: boolean,
+ *      recipe_name: GameObjectName
+ * }}}} Recipe
+ * @typedef {{{{ClassName: GameObjectName, Name: string, recipes: Recipe[]}}}} GameObject
+ */
+
+/**
+ * @type {{{{
+ *      objects: Object.<GameObjectName, GameObject>,
+ *      craftable_objects: GameObjectName[],
+ *      crafting_objects: GameObjectName[]
+ *  }}}}
+ */
+const game_data = {json.dumps(data, indent=4)};
+export default game_data;
+"""
 
     @classmethod
     def _get_object_display_name(cls, game_object: GameObject) -> str:

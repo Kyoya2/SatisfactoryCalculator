@@ -9,25 +9,14 @@ import game_data from "./game_data.auto.mjs"
 import {assert, any, reduce} from "./utils.mjs"
 import {Graph, Node, Edge} from "./Graph.mjs"
 
+/** @import { GameObjectName, CountedItem, Recipe, GameObject } from "./game_data.auto.mjs" */
+
 // TODO: change "cytoscape.umd.js" to "cytoscape.min.js" on prod
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@latest/dist/mermaid.esm.min.mjs';
 import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@latest/dist/mermaid-layout-elk.esm.min.mjs"
 import {fraction, add, subtract, multiply, divide, smaller, format} from 'https://cdn.jsdelivr.net/npm/mathjs/+esm'
 
 /**
- * Game data types:
- * @typedef {string} GameObjectName
- * @typedef {{item_name: GameObjectName, amount: fraction}} CountedItem
- * @typedef {{
- *      product_name: GameObjectName,
- *      ingredients: CountedItem[],
- *      duration: fraction,
- *      is_alternate: boolean,
- *      recipe_name: GameObjectName
- * }} Recipe
- * @typedef {{ClassName: GameObjectName, Name: string, recipes: Recipe[]}} GameObject
- * 
- * Program types:
  * @typedef {{
  *      obj: GameObject,
  *      selected_recipe_index: number,
@@ -44,16 +33,6 @@ import {fraction, add, subtract, multiply, divide, smaller, format} from 'https:
  *      svg_element: *
  * }} MyEdgeInfo
  */
-
-/** 
- * @type {{
- *      objects: Object.<GameObjectName, GameObject>,
- *      craftable_objects: GameObjectName[],
- *      crafting_objects: GameObjectName[]
- * }}
- */
-game_data;
-
 
 /**
  * @type {{
@@ -196,7 +175,7 @@ function generateSchematic() {
     // Load state from HTML
     // TODO: store these in a global to avoid loading each time
     const product_name = globals.html_elements.craftableItemSelect.value;
-    const conveyor_speed = fraction(60, Number(globals.html_elements.logisticsTierSelect.value));
+    const conveyor_speed = fraction(60, parseInt(globals.html_elements.logisticsTierSelect.value));
     //const trivial_objects = ["Desc_IronIngot_C", "Desc_CopperIngot_C", "Desc_SteelIngot_C"]; // TODO: make configurable
     const trivial_objects = ["Desc_OreIron_C", "Desc_OreCopper_C", "Desc_Coal_C"]; // TODO: make configurable
 
@@ -302,8 +281,6 @@ async function generateGraph() {
     const render_result = await mermaid.render('graphSvg', graph_mermaid);
 
     globals.html_elements.graphContainer.innerHTML = render_result.svg;
-
-    //return;
 
     /** @type {SVGElement} */
     const graph_svg = globals.html_elements.graphContainer.querySelector('#graphSvg');
