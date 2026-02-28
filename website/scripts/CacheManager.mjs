@@ -16,10 +16,10 @@ export default class CacheManager {
     }
 
     /**
-    * @template {([arg]: *) => any} F
-    * @param {F} func 
-    * @returns {F}
-    */
+     * @template {(this: *, arg: *) => any} F
+     * @param {F} func 
+     * @returns {F}
+     */
     cacheFunc(func) {
         assert("Function" == func.constructor.name, "Can only cache functions (not generators)");
         assert(!this._cache.has(func), "Function already cached");
@@ -28,7 +28,7 @@ export default class CacheManager {
         let cache = new Map();
         this._cache.set(func, cache);
 
-        /** @this {CacheManager} */
+        /** @type {F} */
         return function(arg) {
             const cached_value = cache.get(arg);
             if (undefined !== cached_value) {

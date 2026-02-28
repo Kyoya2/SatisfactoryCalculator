@@ -1,20 +1,23 @@
 // @ts-check
+
 // Docs:
 // https://devhints.io/jsdoc
 // https://tom-select.js.org/docs/
 // https://mermaid.js.org/config/setup/mermaid/interfaces/MermaidConfig.html
+// https://mathjs.org/docs/datatypes/fractions.html
 
 
 import game_data from "./game_data.auto.mjs"
 import {assert, any, reduce} from "./utils.mjs"
 import {Graph, Node, Edge} from "./Graph.mjs"
+import Config from "./Config.mjs"
 
 /** @import { GameObjectName, CountedItem, Recipe, GameObject } from "./game_data.auto.mjs" */
 
 // TODO: change "cytoscape.umd.js" to "cytoscape.min.js" on prod
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@latest/dist/mermaid.esm.min.mjs';
 import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@latest/dist/mermaid-layout-elk.esm.min.mjs"
-import {fraction, add, subtract, multiply, divide, smaller, format} from 'https://cdn.jsdelivr.net/npm/mathjs/+esm'
+import {fraction, add, subtract, multiply, divide, smaller, format, number} from 'https://cdn.jsdelivr.net/npm/mathjs/+esm'
 
 /**
  * @typedef {{
@@ -38,22 +41,16 @@ import {fraction, add, subtract, multiply, divide, smaller, format} from 'https:
  * @type {{
  *      html_elements: Object.<string, HTMLElement>,
  *      product_node: Node<MyNodeInfo, MyEdgeInfo> | null,
- *      config: {
- *          alternate_recipes: Map<GameObjectName, number>,
- *          trivial_resources: Map<GameObjectName, fraction>
- *      }
+ *      config: Config
  * }}
  */
-var globals = {
+var g_ = {
     html_elements: Object.create(null),
     product_node: null,
-    config: {
-        alternate_recipes: new Map(),
-        trivial_resources: new Map()
-    }
+    config: new Config()
 };
 
-globalThis.satisfactoryCalculator = globals;
+globalThis.satisfactoryCalculator = g_;
 
 const ALTERNATE_RECIPE_NAME_PREFIX = "Alternate: ";
 
@@ -110,7 +107,7 @@ function to_mermaid(graph) {
  */
 function createNodeOverlay(node_svg_element, node) {
     // Clone the template
-    const clone = globals.html_elements.nodeOverlayTemplate.content.cloneNode(true);
+    const clone = g_.html_elements.nodeOverlayTemplate.content.cloneNode(true);
     assert(1 == clone.childElementCount);
     const node_overlay = clone.firstChild;
 
@@ -123,7 +120,7 @@ function createNodeOverlay(node_svg_element, node) {
     if (obj.recipes.length <= 1) {
         node_overlay.querySelector(".node-alternate-recipes").remove();
     } else {
-        let recipe_index = globals.config.alternate_recipes.get(obj.ClassName);
+        let recipe_index = g_.config.alternate_recipes.get(obj.ClassName);
         if (undefined === recipe_index)
             recipe_index = 0;
 
@@ -145,7 +142,7 @@ function createNodeOverlay(node_svg_element, node) {
         
         alternate_recipes_select.oninput = function(e) {
             console.log(obj.ClassName, e.target.selectedIndex);
-            globals.config.alternate_recipes.set(obj.ClassName, e.target.selectedIndex);
+            g_.config.alternate_recipes.set(obj.ClassName, e.target.selectedIndex);
             generateGraph();
         };
     }
@@ -172,15 +169,8 @@ function createNodeOverlay(node_svg_element, node) {
  * @returns {Node<MyNodeInfo, MyEdgeInfo>=}
  */
 function generateSchematic() {
-    // Load state from HTML
-    // TODO: store these in a global to avoid loading each time
-    const product_name = globals.html_elements.craftableItemSelect.value;
-    const conveyor_speed = fraction(60, parseInt(globals.html_elements.logisticsTierSelect.value));
-    //const trivial_objects = ["Desc_IronIngot_C", "Desc_CopperIngot_C", "Desc_SteelIngot_C"]; // TODO: make configurable
-    const trivial_objects = ["Desc_OreIron_C", "Desc_OreCopper_C", "Desc_Coal_C"]; // TODO: make configurable
-
     // Don't do anything if selection is cleared
-    if ("" == product_name)
+    if ("" == g_.config.product_name)
         return;
 
     /** @type {Graph<MyNodeInfo, MyEdgeInfo>} */
@@ -201,7 +191,7 @@ function generateSchematic() {
         /** @type {GameObject} */
         const obj = game_data.objects[object_name];
 
-        let selected_recipe_index = globals.config.alternate_recipes.get(object_name);
+        let selected_recipe_index = g_.config.alternate_recipes.get(object_name);
         if (undefined === selected_recipe_index) {
             // "game_data" is generated such that non-alternate recipes are always before
             // alternate recipes.
@@ -215,7 +205,7 @@ function generateSchematic() {
         // Assuming that ingredients are loaded into the machine as a product is being produced,
         // this makes a difference only if the load time is higher than the production
         const max_amount_ingredient = selected_recipe.ingredients.reduce((max, current) => fractionMax(max, current.amount), fraction(0));
-        const factored_recipe_duration = fractionMax(selected_recipe.duration, multiply(max_amount_ingredient, conveyor_speed));
+        const factored_recipe_duration = fractionMax(selected_recipe.duration, multiply(max_amount_ingredient, g_.config.conveyor_speed));
 
         node = graph.createNode({
             obj: obj,
@@ -228,7 +218,10 @@ function generateSchematic() {
 
         nodes.set(object_name, node)
 
-        if (trivial_objects.includes(object_name))
+        const trivial_prod = g_.config.trivial_resources.get(object_name);
+
+        // TODO
+        if (undefined !== trivial_prod)
             return node;
 
         for (const ingredient of selected_recipe.ingredients) {
@@ -247,7 +240,7 @@ function generateSchematic() {
         return node;
     }
 
-    const product_node = _generateSchematic(product_name);
+    const product_node = _generateSchematic(g_.config.product_name);
     product_node.data.total_required_amount = 1;
 
     const cycle_duration = product_node.data.factored_recipe_duration;
@@ -271,19 +264,19 @@ function generateSchematic() {
 }
 
 async function generateGraph() {
-    globals.product_node = generateSchematic();
-    if (!globals.product_node)
+    g_.product_node = generateSchematic();
+    if (!g_.product_node)
         return;
 
     // TODO: this function relies on the assumption that the SVG elements appear in the order that
     //       they were declared in the Mermaid string. Check this!
-    const [graph_mermaid, ordered_nodes, ordered_edges] = to_mermaid(globals.product_node.graph);
+    const [graph_mermaid, ordered_nodes, ordered_edges] = to_mermaid(g_.product_node.graph);
     const render_result = await mermaid.render('graphSvg', graph_mermaid);
 
-    globals.html_elements.graphContainer.innerHTML = render_result.svg;
+    g_.html_elements.graphContainer.innerHTML = render_result.svg;
 
     /** @type {SVGElement} */
-    const graph_svg = globals.html_elements.graphContainer.querySelector('#graphSvg');
+    const graph_svg = g_.html_elements.graphContainer.querySelector('#graphSvg');
 
     const node_svg_elements = graph_svg.querySelectorAll('.nodes > g.node.default');
     const edge_svg_elements = graph_svg.querySelectorAll('.edges.edgePaths > path');
@@ -304,55 +297,54 @@ async function generateGraph() {
 function resetAlternateRecipes() {
     // Re-render only if a non-alternate recipe is currently selected
     const should_re_render_graph = any(
-        globals.config.alternate_recipes.entries(),
+        g_.config.alternate_recipes.entries(),
         ([obj_name, selected_recipe_index]) => game_data.objects[obj_name].recipes[selected_recipe_index].is_alternate
     );
 
-    globals.config.alternate_recipes.clear();
+    g_.config.alternate_recipes.clear();
+    g_.config.notifyChange();
 
     if (should_re_render_graph)
         generateGraph();
 }
 
+/** @param {InputEvent} e */
+function numberInputFilter(e) { e.target.value = e.target.value.replace(/[^0-9/.]+/g, ''); }
+
+
+function initGameData() {
+    // Transform information to fraction objects
+    for (const game_obj of Object.values(game_data.objects)) {
+        if (!game_obj.hasOwnProperty('recipes'))
+            continue;
+
+        for (const recipe of game_obj.recipes) {
+            recipe.duration = fraction(recipe.duration);
+            for (const ingredient of recipe.ingredients) {
+                ingredient.amount = fraction(ingredient.amount);
+            }
+        }
+    }
+}
+
 function initCraftableObjectsSelect() {
-    globals.craftableItemSelectTom = new TomSelect(
-        globals.html_elements.craftableItemSelect,
+    g_.craftableItemSelectTom = new TomSelect(
+        g_.html_elements.craftableItemSelect,
         {
+            options: game_data.craftable_objects.map((obj_name) => ({value: obj_name, text: game_data.objects[obj_name].Name})),
             searchField: "text",
             maxOptions: null,
             placeholder: "Select an item...",
-            onChange: generateGraph
-        }
-    );
 
-    globals.craftableItemSelectTom.addOptions(game_data.craftable_objects.map((obj_name) => ({value: obj_name, text: game_data.objects[obj_name].Name})));
-}
-
-function initGraph() {
-    mermaid.registerLayoutLoaders(elkLayouts);
-    
-    document.addEventListener(
-        "DOMContentLoaded",
-        function(){
-            mermaid.initialize({
-                //darkMode: true,
-                //theme: "dark"
-                deterministicIds: true,
-                startOnLoad: false,
-                deterministicIDSeed: undefined,
-                //  htmlLabels
-                logLevel: "warn",
-                securityLevel: "loose",
-                flowchart: {
-                    defaultRenderer: "elk"
-                }
-            });
+            /** @param {string} product_name */
+            onChange: function(product_name) {
+                g_.config.product_name = product_name;
+                g_.config.notifyChange();
+                generateGraph();
+            }
         }
     );
 }
-
-/** @param {InputEvent} e */
-function numberInputFilter(e) { e.target.value = e.target.value.replace(/[^0-9]+/g, ''); }
 
 function initTrivialResources() {
     /** @type {HTMLTableSectionElement} */
@@ -378,8 +370,12 @@ function initTrivialResources() {
         text_box.classList.add("trivialResourceProdInput");
         text_box.oninput = numberInputFilter;
 
-        row.insertCell().appendChild(text_box);
+        let prod = g_.config.trivial_resources.get(crafting_obj_name);
+        if (undefined !== prod) {
+            text_box.setAttribute("value", format(multiply(prod, 60), { fraction: 'ratio' })); // Prod/s -> Prod/m
+        }
 
+        row.insertCell().appendChild(text_box);
         rows.set(obj.Name.toLowerCase(), row);
         textboxes.set(crafting_obj_name, text_box);
     }
@@ -398,38 +394,61 @@ function initTrivialResources() {
     /** @type {HTMLButtonElement} */
     const update_button = document.getElementById("updateTrivialResourcesButton");
     update_button.onclick = function() {
-        globals.config.trivial_resources.clear();
+        g_.config.trivial_resources.clear();
         for (const [crafting_obj_name, text_box] of textboxes.entries()) {
             if ("" == text_box.value)
                 continue;
 
-            globals.config.trivial_resources.set(
+            g_.config.trivial_resources.set(
                 crafting_obj_name,
-                fraction(parseInt(text_box.value), 60)
+                divide(fraction(text_box.value), 60)
             )
         }
 
-        console.debug(globals.config.trivial_resources);
+        g_.config.notifyChange();
     }
 }
 
-function init() {
-    // Transform information to fraction objects
-    for (const game_obj of Object.values(game_data.objects)) {
-        if (!game_obj.hasOwnProperty('recipes'))
-            continue;
-
-        for (const recipe of game_obj.recipes) {
-            recipe.duration = fraction(recipe.duration.n, recipe.duration.d);
-            for (const ingredient of recipe.ingredients) {
-                ingredient.amount = fraction(ingredient.amount.n, ingredient.amount.d);
-            }
-        }
+function initLogisticsTierSelect() {
+    /** @type {HTMLSelectElement} */
+    const logistics_tier_select = document.getElementById("logisticsTierSelect");
+    logistics_tier_select.value = `60/${number(divide(60, g_.config.conveyor_speed))}`;
+    logistics_tier_select.oninput = function(e) {
+        g_.config.conveyor_speed = fraction(e.target.value);
+        g_.config.notifyChange();
+        generateGraph();
     }
+}
 
-    const HTML_ELEMENT_NAMES = ['craftableItemSelect', 'useAletnateRecipes', 'logisticsTierSelect', 'graphContainer', 'nodeOverlayTemplate'];
+function initGraph() {
+    mermaid.registerLayoutLoaders(elkLayouts);
+    
+    document.addEventListener(
+        "DOMContentLoaded",
+        function(){
+            mermaid.initialize({
+                //darkMode: true,
+                //theme: "dark"
+                deterministicIds: true,
+                startOnLoad: false,
+                deterministicIDSeed: undefined,
+                //  htmlLabels
+                logLevel: "warn",
+                securityLevel: "loose",
+                flowchart: {
+                    defaultRenderer: "elk"
+                }
+            });
+        }
+    );
+}
+
+function init() {
+    initGameData();
+
+    const HTML_ELEMENT_NAMES = ['craftableItemSelect', 'graphContainer', 'nodeOverlayTemplate'];
     for (const name of HTML_ELEMENT_NAMES) {
-        globals.html_elements[name] = document.getElementById(name);
+        g_.html_elements[name] = document.getElementById(name);
     }
 
     initCraftableObjectsSelect();
@@ -438,11 +457,14 @@ function init() {
 
     document.getElementById("resetAlternateRecipesButton").onclick = resetAlternateRecipes;
 
+    initLogisticsTierSelect();
+
     initGraph();
 
+    g_.craftableItemSelectTom.setValue(g_.config.product_name);
 }
 
 init();
 
 // TODO: remove
-globals.craftableItemSelectTom.setValue("BP_EquipmentDescriptorStunSpear_C");
+//g_.craftableItemSelectTom.setValue("BP_EquipmentDescriptorStunSpear_C");
