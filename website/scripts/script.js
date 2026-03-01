@@ -15,24 +15,24 @@ import Config from "./Config.mjs"
 /** @import { GameObjectName, CountedItem, Recipe, GameObject } from "./game_data.auto.mjs" */
 
 // TODO: change "cytoscape.umd.js" to "cytoscape.min.js" on prod
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@latest/dist/mermaid.esm.min.mjs';
-import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@latest/dist/mermaid-layout-elk.esm.min.mjs"
-import {fraction, add, subtract, multiply, divide, smaller, format, number} from 'https://cdn.jsdelivr.net/npm/mathjs/+esm'
+import mermaid from "mermaid";
+import elkLayouts from '@mermaid-js/layout-elk';
+import {fraction, add, subtract, multiply, divide, smaller, format, number, Fraction} from 'mathjs'
 
 /**
  * @typedef {{
  *      obj: GameObject,
  *      selected_recipe_index: number,
- *      factored_recipe_duration: fraction,
- *      total_required_amount: fraction,
- *      total_machines_required: fraction,
+ *      factored_recipe_duration: Fraction,
+ *      total_required_amount: Fraction,
+ *      total_machines_required: Fraction,
  *      html: HTMLDivElement | null
  * }} MyNodeInfo
  * 
  *  @typedef {{
- *      amount: fraction,
- *      total_amount: fraction,
- *      total_fraction: fraction,
+ *      amount: Fraction,
+ *      total_amount: Fraction,
+ *      total_fraction: Fraction,
  *      svg_element: *
  * }} MyEdgeInfo
  */
@@ -56,9 +56,9 @@ const ALTERNATE_RECIPE_NAME_PREFIX = "Alternate: ";
 
 
 /**
- * @param {fraction} a 
- * @param {fraction} b 
- * @returns {fraction}
+ * @param {Fraction} a 
+ * @param {Fraction} b 
+ * @returns {Fraction}
  */
 function fractionMax(a, b) {
     if (smaller(a, b))
@@ -68,7 +68,7 @@ function fractionMax(a, b) {
 
 /**
  * 
- * @param {fraction} frac 
+ * @param {Fraction} frac 
  * @returns {string}
  */
 function formatFrac(frac) {

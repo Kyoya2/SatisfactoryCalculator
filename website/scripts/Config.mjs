@@ -1,6 +1,6 @@
 // @ts-check
 
-import {fraction, multiply, format} from 'https://cdn.jsdelivr.net/npm/mathjs/+esm'
+import {fraction, multiply, format, Fraction} from 'mathjs';
 
 /** @import { GameObjectName, CountedItem, Recipe, GameObject } from "./game_data.auto.mjs" */
 
@@ -17,7 +17,7 @@ export default class Config {
         /** @type {GameObjectName} */
         this.product_name = search_params.get("productName") ?? Config.#_DEFAULT_PRODUCT;
 
-        /** @type {fraction} */
+        /** @type {Fraction} */
         this.conveyor_speed = fraction(search_params.get("conveyorSpeed") ?? Config.#_DEFAULT_CONVEYOR_SPEED);
 
         /** @type {Map<GameObjectName, number>} */
@@ -30,7 +30,7 @@ export default class Config {
             }
         }
 
-        /** @type {Map<GameObjectName, fraction>} */
+        /** @type {Map<GameObjectName, Fraction>} */
         this.trivial_resources = new Map();
         const trivial_resources = search_params.get("trivialResources") ?? Config.#_DEFAULT_TRIVIAL_RESOURCES;
         if (trivial_resources) {

@@ -1,0 +1,31 @@
+{
+  "name": "satisfactory-calculator",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/Kyoya2/SatisfactoryCalculator#readme",
+  "bugs": {
+    "url": "https://github.com/Kyoya2/SatisfactoryCalculator/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kyoya2/SatisfactoryCalculator.git"
+  },
+  "license": "ISC",
+  "author": "Kyoya2",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@mermaid-js/layout-elk": "^0.2.0",
+    "mathjs": "^15.1.1",
+    "mermaid": "^11.12.3"
+  },
+  "devDependencies": {
+    "vite": "^7.3.1"
+  }
+}
