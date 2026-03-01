@@ -17,7 +17,7 @@ import Config from "./Config.mjs"
 // TODO: change "cytoscape.umd.js" to "cytoscape.min.js" on prod
 import mermaid from "mermaid";
 import elkLayouts from '@mermaid-js/layout-elk';
-import {fraction, add, subtract, multiply, divide, smaller, format, number, Fraction} from 'mathjs'
+import {fraction, add, subtract, multiply, divide, smaller, format, number, Fraction} from 'mathjs';
 
 /**
  * @typedef {{
@@ -331,7 +331,7 @@ function initCraftableObjectsSelect() {
     g_.craftableItemSelectTom = new TomSelect(
         g_.html_elements.craftableItemSelect,
         {
-            options: game_data.craftable_objects.map((obj_name) => ({value: obj_name, text: game_data.objects[obj_name].Name})),
+            options: game_data.crafting_products.map((obj_name) => ({value: obj_name, text: game_data.objects[obj_name].Name})),
             searchField: "text",
             maxOptions: null,
             placeholder: "Select an item...",
@@ -356,7 +356,7 @@ function initTrivialResources() {
     /** @type {Map<GameObjectName, HTMLInputElement>} */
     const textboxes = new Map();
 
-    for (const crafting_obj_name of game_data.crafting_objects) {
+    for (const crafting_obj_name of game_data.crafting_ingredients) {
         /** @type {GameObject} */
         const obj = game_data.objects[crafting_obj_name];
         const row = tbody.insertRow();

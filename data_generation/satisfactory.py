@@ -94,6 +94,12 @@ class SatisfactoryCalculator:
         "mManufactoringDuration": float
     }
 
+    _FIELDS_TO_SERIALIZE = {
+        'ClassName',
+        'recipes',
+        'Name'
+    }
+
     def __init__(
         self,
         doc_file_path=r"C:\Program Files (x86)\Steam\steamapps\common\Satisfactory\CommunityResources\Docs\en-US.json"
@@ -130,7 +136,7 @@ class SatisfactoryCalculator:
 
             self._categorized_objects[category_name] = current_category_objects
 
-        self._craftable_objects, self._crafting_objects = self._process_recipes()
+        self._crafting_products, self._crafting_ingredients = self._process_recipes()
 
     def generate_recipe_schematic(
         self,
@@ -153,8 +159,11 @@ class SatisfactoryCalculator:
                 # No recipes
                 return None
 
-            # Use the first non-alternate recipe
-            recipe = next((recipe for recipe in obj['recipes'] if not recipe.is_alternate), None)
+            if False and item_name == 'Desc_IronIngot_C':
+                recipe = obj['recipes'][4]
+            else:
+                # Use the first non-alternate recipe
+                recipe = next((recipe for recipe in obj['recipes'] if not recipe.is_alternate), None)
             if recipe is None:
                 # No non-alternate recipes
                 return None
@@ -226,30 +235,37 @@ class SatisfactoryCalculator:
         return root_node
 
     def serialize(self):
-        # TODO: return only object data used by the website
+        # 1. Serialize the following objects:
+        #       - Objects that are produced from crafting
+        #       - Objects that are used as ingredients for crafting
+        #       - Recipe objects
+        # 2. Serialize only attributes listed in "self._FIELDS_TO_SERIALIZE"
+        objs_to_serialize = self._crafting_products | self._crafting_ingredients | self._recipes
         data = {
-            'objects': jsonify(self._all_objects),
-            'craftable_objects': self._sort_by_display_name(self._craftable_objects),
-            'crafting_objects': self._sort_by_display_name(self._crafting_objects),
-            #'categories': {
-            #    category_name: list(sorted(objects.keys()))
-            #    for category_name, objects
-            #    in self._categorized_objects.items()
-            #},
+            'objects': jsonify({
+                obj_name: {attr_name: attr for attr_name, attr in self._all_objects[obj_name].items() if attr_name in self._FIELDS_TO_SERIALIZE}
+                for obj_name
+                in objs_to_serialize
+            }),
+            'crafting_products': self._sort_by_display_name(self._crafting_products),
+            'crafting_ingredients': self._sort_by_display_name(self._crafting_ingredients),
         }
 
         return \
 f"""
 // @ts-check
 
+/* This file is auto-generated! */
+
+/** @import {{Fraction}} from "mathjs" */
+
 /**
- * Game data types:
  * @typedef {{string}} GameObjectName
- * @typedef {{{{item_name: GameObjectName, amount: fraction}}}} CountedItem
+ * @typedef {{{{item_name: GameObjectName, amount: Fraction}}}} CountedItem
  * @typedef {{{{
- *       product_name: GameObjectName,
+ *      product_name: GameObjectName,
  *      ingredients: CountedItem[],
- *      duration: fraction,
+ *      duration: Fraction,
  *      is_alternate: boolean,
  *      recipe_name: GameObjectName
  * }}}} Recipe
@@ -259,8 +275,8 @@ f"""
 /**
  * @type {{{{
  *      objects: Object.<GameObjectName, GameObject>,
- *      craftable_objects: GameObjectName[],
- *      crafting_objects: GameObjectName[]
+ *      crafting_products: GameObjectName[],
+ *      crafting_ingredients: GameObjectName[]
  *  }}}}
  */
 const game_data = {json.dumps(data, indent=4)};
@@ -290,7 +306,11 @@ export default game_data;
         craftable_objects = set()
         crafting_objects = set()
 
-        for recipe in self._categorized_objects['FGRecipe'].values():
+        self._recipes = set()
+
+        for recipe_name, recipe in self._categorized_objects['FGRecipe'].items():
+            self._recipes.add(recipe_name)
+
             parsed_ingredients = self._RECIPE_OBJECT_REGEX.findall(recipe['mIngredients'])
             full_duration = Fraction(float(recipe['mManufactoringDuration']))
             is_alternate = recipe['mDisplayName'].startswith('Alternate: ')
@@ -314,7 +334,7 @@ export default game_data;
                     ingredients,
                     duration,
                     is_alternate,
-                    recipe['ClassName']
+                    recipe_name
                 )
 
                 # Insert the recipe such that non-alternate recipes always come before the
