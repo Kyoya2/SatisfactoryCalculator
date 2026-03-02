@@ -90,14 +90,14 @@ class SatisfactoryCalculator:
     _CAMEL_CASE_REGEX = re.compile(r"([a-z])([A-Z])")
     _ICON_STRING_REGEX = re.compile(r"Texture2D /Game/FactoryGame/(.*(\w+))\.\2")
     _TYPED_FIELDS = {
-        "mSpeed": float,
         "mManufactoringDuration": float
     }
 
     _FIELDS_TO_SERIALIZE = {
         'ClassName',
         'recipes',
-        'Name'
+        'Name',
+        'speed'
     }
 
     def __init__(
@@ -137,6 +137,8 @@ class SatisfactoryCalculator:
             self._categorized_objects[category_name] = current_category_objects
 
         self._crafting_products, self._crafting_ingredients = self._process_recipes()
+        self._conveyor_belts, self._pipelines = self._process_movers()
+        a=1
 
     def generate_recipe_schematic(
         self,
@@ -239,8 +241,12 @@ class SatisfactoryCalculator:
         #       - Objects that are produced from crafting
         #       - Objects that are used as ingredients for crafting
         #       - Recipe objects
+        #       - Movers:
+        #           - Conveyor belts
+        #           - Pipelines
         # 2. Serialize only attributes listed in "self._FIELDS_TO_SERIALIZE"
-        objs_to_serialize = self._crafting_products | self._crafting_ingredients | self._recipes
+        objs_to_serialize = (self._crafting_products | self._crafting_ingredients | self._recipes |
+                             set(self._conveyor_belts) | set(self._pipelines))
         data = {
             'objects': jsonify({
                 obj_name: {attr_name: attr for attr_name, attr in self._all_objects[obj_name].items() if attr_name in self._FIELDS_TO_SERIALIZE}
@@ -249,6 +255,10 @@ class SatisfactoryCalculator:
             }),
             'crafting_products': self._sort_by_display_name(self._crafting_products),
             'crafting_ingredients': self._sort_by_display_name(self._crafting_ingredients),
+            'movers': {
+                'conveyor_belts': self._conveyor_belts,
+                'pipelines': self._pipelines,
+            }
         }
 
         return \
@@ -276,7 +286,11 @@ f"""
  * @type {{{{
  *      objects: Object.<GameObjectName, GameObject>,
  *      crafting_products: GameObjectName[],
- *      crafting_ingredients: GameObjectName[]
+ *      crafting_ingredients: GameObjectName[],
+ *      movers: {{
+ *          conveyor_belts: GameObjectName[],
+ *          pipelines: GameObjectName[]
+ *      }},
  *  }}}}
  */
 const game_data = {json.dumps(data, indent=4)};
@@ -345,6 +359,43 @@ export default game_data;
                     recipes.insert(0, recipe_data)
 
         return craftable_objects, crafting_objects
+
+    def _process_movers(self):
+        conveyor_belts = self._categorized_objects['FGBuildableConveyorBelt']
+        for conveyor_belt in conveyor_belts.values():
+            # For some reason, the "mSpeed" value is twice as large as the actual items/minute speed.
+            speed = float(conveyor_belt['mSpeed']) / 2
+            assert speed.is_integer()
+
+            # The number of seconds it takes to move 1 item
+            conveyor_belt['speed'] = Fraction(60, int(speed))
+
+        pipelines = self._categorized_objects['FGBuildablePipeline']
+        for pipeline in pipelines.values():
+            flow_limit = float(pipeline['mFlowLimit'])
+            assert flow_limit.is_integer()
+
+            # The number of seconds it takes to move 1 cubic meter of liquid
+            # TODO: It might not work like this, need to check
+            pipeline['speed'] = Fraction(1, int(flow_limit))
+
+        return (
+            list(sorted(
+                conveyor_belts.keys(),
+                key = lambda b: conveyor_belts[b]['speed'],
+                reverse = True
+            )),
+
+            list(sorted(
+                # Filter-out the pipelines that don't have indicators, since they're essentially duplicates for our purposes
+                filter(
+                    lambda p: '_NoIndicator_' not in p,
+                    pipelines.keys()
+                ),
+                key = lambda p: pipelines[p]['speed'],
+                reverse = True
+            ))
+        )
 
 
 if __name__ == '__main__':

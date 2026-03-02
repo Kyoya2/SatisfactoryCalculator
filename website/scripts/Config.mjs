@@ -7,7 +7,8 @@ import {fraction, multiply, format, Fraction} from 'mathjs';
 
 export default class Config {
     static #_DEFAULT_PRODUCT = "BP_EquipmentDescriptorStunSpear_C";
-    static #_DEFAULT_CONVEYOR_SPEED = "60/60";
+    static #_DEFAULT_CONVEYOR_INDEX = "0";
+    static #_DEFAULT_PIPELINE_INDEX = "0";
     static #_DEFAULT_ALTERNATE_RECIPES = "";
     static #_DEFAULT_TRIVIAL_RESOURCES = "Desc_OreIron_C=1,Desc_OreCopper_C=1,Desc_Coal_C=1";
 
@@ -17,8 +18,11 @@ export default class Config {
         /** @type {GameObjectName} */
         this.product_name = search_params.get("productName") ?? Config.#_DEFAULT_PRODUCT;
 
-        /** @type {Fraction} */
-        this.conveyor_speed = fraction(search_params.get("conveyorSpeed") ?? Config.#_DEFAULT_CONVEYOR_SPEED);
+        /** @type {number} */
+        this.conveyor_speed_index = parseInt(search_params.get("conveyorSpeed") ?? Config.#_DEFAULT_CONVEYOR_INDEX)
+        
+        /** @type {number} */
+        this.pipeline_speed_index = parseInt(search_params.get("pipelineSpeed") ?? Config.#_DEFAULT_PIPELINE_INDEX);
 
         /** @type {Map<GameObjectName, number>} */
         this.alternate_recipes = new Map();
@@ -47,7 +51,8 @@ export default class Config {
     notifyChange() {
         const search_params = new URLSearchParams({
             productName: this.product_name,
-            conveyorSpeed: format(this.conveyor_speed, { fraction: 'ratio' }),
+            conveyorSpeed: this.conveyor_speed_index.toString(),
+            pipelineSpeed: this.pipeline_speed_index.toString(),
             alternateRecipes: [...this.alternate_recipes.entries()].map((kv) => kv.join('=')).join(','),
             trivialResources: [...this.trivial_resources.entries()].map(([k,v]) => `${k}=${format(v, { fraction: 'ratio' })}`).join(','),
         });

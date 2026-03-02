@@ -173,6 +173,12 @@ function generateSchematic() {
     if ("" == g_.config.product_name)
         return;
 
+    /** @type {Fraction} */
+    const conveyor_speed = game_data.objects[game_data.movers.conveyor_belts[g_.config.conveyor_speed_index]].speed;
+
+    /** @type {Fraction} */
+    const pipeline_speed = game_data.objects[game_data.movers.pipelines[g_.config.pipeline_speed_index]].speed;
+
     /** @type {Graph<MyNodeInfo, MyEdgeInfo>} */
     let graph = new Graph();
 
@@ -205,7 +211,7 @@ function generateSchematic() {
         // Assuming that ingredients are loaded into the machine as a product is being produced,
         // this makes a difference only if the load time is higher than the production
         const max_amount_ingredient = selected_recipe.ingredients.reduce((max, current) => fractionMax(max, current.amount), fraction(0));
-        const factored_recipe_duration = fractionMax(selected_recipe.duration, multiply(max_amount_ingredient, g_.config.conveyor_speed));
+        const factored_recipe_duration = fractionMax(selected_recipe.duration, multiply(max_amount_ingredient, conveyor_speed));
 
         node = graph.createNode({
             obj: obj,
@@ -311,18 +317,20 @@ function resetAlternateRecipes() {
 /** @param {InputEvent} e */
 function numberInputFilter(e) { e.target.value = e.target.value.replace(/[^0-9/.]+/g, ''); }
 
-
 function initGameData() {
     // Transform information to fraction objects
     for (const game_obj of Object.values(game_data.objects)) {
-        if (!game_obj.hasOwnProperty('recipes'))
-            continue;
-
-        for (const recipe of game_obj.recipes) {
-            recipe.duration = fraction(recipe.duration);
-            for (const ingredient of recipe.ingredients) {
-                ingredient.amount = fraction(ingredient.amount);
+        if (game_obj.hasOwnProperty('recipes')) {
+            for (const recipe of game_obj.recipes) {
+                recipe.duration = fraction(recipe.duration);
+                for (const ingredient of recipe.ingredients) {
+                    ingredient.amount = fraction(ingredient.amount);
+                }
             }
+        }
+            
+        if (game_obj.hasOwnProperty('speed')) {
+            game_obj.speed = fraction(game_obj.speed);
         }
     }
 }
@@ -409,14 +417,33 @@ function initTrivialResources() {
     }
 }
 
-function initLogisticsTierSelect() {
-    /** @type {HTMLSelectElement} */
-    const logistics_tier_select = document.getElementById("logisticsTierSelect");
-    logistics_tier_select.value = `60/${number(divide(60, g_.config.conveyor_speed))}`;
-    logistics_tier_select.oninput = function(e) {
-        g_.config.conveyor_speed = fraction(e.target.value);
-        g_.config.notifyChange();
-        generateGraph();
+function initMoversSelects() {
+    const MOVERS = [
+        ["unlockedConveyorBeltSelect",  "conveyor_belts",   "Conveyor Belt ",   "conveyor_speed_index"],
+        ["unlockedPipelineSelect",      "pipelines",        "Pipeline ",        "pipeline_speed_index"],
+    ]
+    
+    for (const [select_id, data_name, name_prefix, config_field] of MOVERS) {
+        /** @type {HTMLSelectElement} */
+        const select_element = document.getElementById(select_id);
+
+        for (const mover_obj_id of game_data.movers[data_name]) {
+            /** @type {string} */
+            let name = game_data.objects[mover_obj_id].Name;
+
+            // Remove prefix
+            assert(name.startsWith(name_prefix));
+            name = name.substring(name_prefix.length);
+
+            select_element.add(new Option(name));
+        }
+
+        select_element.selectedIndex = g_.config[config_field];
+        select_element.oninput = function(e) {
+            g_.config[config_field] = parseInt(e.target.selectedIndex);
+            g_.config.notifyChange();
+            generateGraph();
+        }
     }
 }
 
@@ -457,7 +484,7 @@ function init() {
 
     document.getElementById("resetAlternateRecipesButton").onclick = resetAlternateRecipes;
 
-    initLogisticsTierSelect();
+    initMoversSelects();
 
     initGraph();
 
