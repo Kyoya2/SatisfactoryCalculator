@@ -25,6 +25,7 @@ import {fraction, add, subtract, multiply, divide, smaller, format, number, Frac
  *      production_duration: Fraction,
  *      total_required_amount: Fraction,
  *      total_machines_required: Fraction,
+ *      trivial_prod: Fraction?,
  *      html: HTMLDivElement?
  * }} MyNodeInfo
  * 
@@ -115,16 +116,11 @@ function createNodeOverlay(node_svg_element, node) {
 
     const obj = node.data.obj;
 
-    let prod_per_sec = g_.config.trivial_resources.get(obj.id);
-    const is_trivial = undefined !== prod_per_sec;
-
-    if (is_trivial) {
+    if (undefined !== node.data.trivial_prod) {
         overlay.style.backgroundColor = 'lightblue';
     }
-    else {
-        if (g_.product_node == node) {
-            overlay.style.backgroundColor = 'pink';
-        }
+    else if (g_.product_node == node){
+        overlay.style.backgroundColor = 'pink';
     }
 
     //
@@ -132,17 +128,17 @@ function createNodeOverlay(node_svg_element, node) {
     //
     overlay.querySelector('.node-item-name').textContent = obj.name;
     
-    prod_per_sec = multiply(divide(1, node.data.production_duration), node.data.total_machines_required);
+    const prod_per_sec = multiply(divide(1, node.data.production_duration), node.data.total_machines_required);
     overlay.querySelector('.production-rate-label').textContent = `${formatFrac(multiply(prod_per_sec, 60), false)}/m`;
     
-    if (!is_trivial) {
+    if (undefined === node.data.trivial_prod) {
         overlay.querySelector('.machines-required-label').textContent = formatFrac(node.data.total_machines_required, false);
     }
 
     //
     // Initialize alternate recipes select, or remove if there are none
     //
-    if (is_trivial || obj.recipes.length <= 1) {
+    if ((undefined !== node.data.trivial_prod) || (obj.recipes.length <= 1)) {
         overlay.querySelector(".node-alternate-recipes").remove();
     } else {
         let recipe_index = g_.config.alternate_recipes.get(obj.id);
@@ -290,6 +286,7 @@ function generateSchematic() {
             production_duration: production_duration,
             total_required_amount: 0,
             total_machines_required: 0,
+            trivial_prod: trivial_prod,
             html: null
         })
 
@@ -376,7 +373,7 @@ async function generateGraph() {
     for (let i = 0; i < ordered_edges.length; ++i) {
         const current_edge = ordered_edges[i];
         current_edge.data.path_element = edge_path_svg_elements[i];
-        current_edge.data.html = createEdgeOverlay(edge_label_svg_elements[i], current_edge);
+        createEdgeOverlay(edge_label_svg_elements[i], current_edge);
     }
 }
 
