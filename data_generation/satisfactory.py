@@ -3,6 +3,7 @@ import json
 from fractions import Fraction
 from dataclasses import dataclass
 from os import path
+from types import NoneType
 from typing import NamedTuple, Any, TypeAlias, Iterable
 
 # TODO: "mForm": "(?!RF_LIQUID|RF_SOLID|RF_GAS|RF_INVALID)
@@ -40,6 +41,7 @@ class Recipe(NamedTuple):
     ingredients: list[CountedItem]
     duration: Fraction
     is_alternate: bool
+    produced_in: str  # TODO: enum
 
 
 class CraftingObject(NamedTuple):
@@ -67,7 +69,7 @@ def jsonify(obj):
     if isinstance(obj, Fraction):
         return {'n': obj.numerator, 'd': obj.denominator}
 
-    if isinstance(obj, (int, float, str, bool)):
+    if isinstance(obj, (int, float, str, bool, NoneType)):
         return obj
 
     if isinstance(obj, dict):
@@ -91,6 +93,8 @@ _RECIPE_OBJECT_REGEX = re.compile(r"""\(ItemClass="[/\w.']+\.(\w+)'",Amount=(\d+
 _OBJECT_NAME_REGEX = re.compile(r"^([a-zA-Z\d]+)_(.+)_C$")
 _CAMEL_CASE_REGEX = re.compile(r"([a-z])([A-Z])")
 _ICON_STRING_REGEX = re.compile(r"Texture2D /Game/FactoryGame/(.*(\w+))\.\2")
+_PRODUCED_IN_REGEX = re.compile(r'/\w+\.(\w+)"\)$')
+_ALTERNATE_RECIPE_NAME_PREFIX = "Alternate: "
 
 
 def _get_object_display_name(game_object: GameObject) -> str:
@@ -145,24 +149,40 @@ def main(doc_file_path=r"C:\Program Files (x86)\Steam\steamapps\common\Satisfact
 
         crafting_ingredients |= {ingredient_name for ingredient_name, amount in parsed_ingredients}
 
-        for product_name, product_amount in _RECIPE_OBJECT_REGEX.findall(recipe['mProduct']):
-            crafting_products.add(product_name)
+        for product_id, product_amount in _RECIPE_OBJECT_REGEX.findall(recipe['mProduct']):
+            crafting_products.add(product_id)
             product_amount = Fraction(int(product_amount))
 
             ingredients = [CountedItem(item_name, int(amount) / product_amount) for item_name, amount in parsed_ingredients]
             duration = full_duration / product_amount
 
-            product_obj = all_objects[product_name]
+            product_obj = all_objects[product_id]
             recipes = product_obj.get('recipes')
             if recipes is None:
                 recipes = []
                 product_obj['recipes'] = recipes
 
+            produced_in = _PRODUCED_IN_REGEX.search(recipe['mProducedIn'])
+            if produced_in is not None:
+                produced_in = produced_in[1]
+
+            recipe_name = recipe['name']
+
+            # Force build converted recipes to be alternate, and update the recipe name accordingly
+            if "Build_Converter_C" == produced_in:
+                is_alternate = True
+                recipe_name = f"Build converter: {recipe_name}"
+
+            # Strip common prefix for alternate recipes
+            elif recipe_name.startswith(_ALTERNATE_RECIPE_NAME_PREFIX):
+                recipe_name = recipe_name[len(_ALTERNATE_RECIPE_NAME_PREFIX):]
+
             recipe_data = Recipe(
-                recipe['name'],
+                recipe_name,
                 ingredients,
                 duration,
-                is_alternate
+                is_alternate,
+                produced_in
             )
 
             # Insert the recipe such that non-alternate recipes always come before the
@@ -241,7 +261,8 @@ f"""
  *      name: GameObjectId,
  *      ingredients: CountedItem[],
  *      duration: Fraction,
- *      is_alternate: boolean
+ *      is_alternate: boolean,
+ *      produced_in: string
  * }}}} Recipe
  *
  * @typedef {{{{

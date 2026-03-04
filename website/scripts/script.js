@@ -51,8 +51,6 @@ var g_ = {
 
 globalThis.satisfactoryCalculator = g_;
 
-const ALTERNATE_RECIPE_NAME_PREFIX = "Alternate: ";
-
 
 /**
  * @param {Fraction} a 
@@ -126,15 +124,8 @@ function createNodeOverlay(node_svg_element, node) {
         /** @type {HTMLSelectElement} */
         const alternate_recipes_select = node_overlay.querySelector(".node-alternate-recipes > select");
         for (let i = 0; i < obj.recipes.length; ++i) {
-            /** @type {string} */
-            let recipe_name = obj.recipes[i].name;
 
-            // Remove the "Alternate: " suffix from recipe names
-            if (recipe_name.startsWith(ALTERNATE_RECIPE_NAME_PREFIX)) {
-                recipe_name = recipe_name.substring(ALTERNATE_RECIPE_NAME_PREFIX.length);
-            }
-
-            alternate_recipes_select.add(new Option(recipe_name));
+            alternate_recipes_select.add(new Option(obj.recipes[i].name));
         }
 
         alternate_recipes_select.selectedIndex = node.data.selected_recipe_index;
@@ -203,6 +194,7 @@ function generateSchematic() {
                 ingredients: [],
                 duration: fraction(1),
                 is_alternate: false,
+                produced_in: '_dummy'
             }]
         }
         
@@ -343,6 +335,23 @@ function initGameData() {
         for (const transporter of transporters) {
             transporter.speed = fraction(transporter.speed);
         }
+    }
+
+    // If no trivial resources are selected, generate them:
+    if (0 == g_.config.trivial_resources.size) {
+        for (const ingredient_id of game_data.crafting_ingredients) {
+            /** @type {CraftingObject} */
+            const ingredient = game_data.crafting_objects[ingredient_id];
+
+            // If the ingredient has no recipes, or only has alternate recipes, then it should
+            // be trivial by default.
+            // Note: The 2nd check relies on the fact that the recipes are generated such that
+            //       non-alternate recipes always come first.
+            if (0 == ingredient.recipes.length || ingredient.recipes[0].is_alternate) {
+                g_.config.trivial_resources.set(ingredient_id, fraction(1));
+            }
+        }
+        g_.config.notifyChange();
     }
 }
 
@@ -499,6 +508,7 @@ function init() {
 
     initGraph();
 
+    // This will trigger the generation of the graph
     g_.craftableItemSelectTom.setValue(g_.config.product_name);
 }
 

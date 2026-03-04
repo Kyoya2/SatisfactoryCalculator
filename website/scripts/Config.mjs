@@ -10,7 +10,7 @@ export default class Config {
     static #_DEFAULT_CONVEYOR_INDEX = "0";
     static #_DEFAULT_PIPELINE_INDEX = "0";
     static #_DEFAULT_ALTERNATE_RECIPES = "";
-    static #_DEFAULT_TRIVIAL_RESOURCES = "Desc_OreIron_C=1,Desc_OreCopper_C=1,Desc_Coal_C=1";
+    static #_DEFAULT_TRIVIAL_RESOURCES = "";
 
     constructor() {
         const search_params = new URLSearchParams(window.location.search);
