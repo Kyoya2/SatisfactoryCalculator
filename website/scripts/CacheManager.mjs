@@ -32,11 +32,8 @@ export default class CacheManager {
         return function(arg) {
             const cached_value = cache.get(arg);
             if (undefined !== cached_value) {
-                console.log(`Cache hit for ${func.name}`);
                 return cached_value;
             }
-
-            console.log(`Cache miss for ${func.name}`);
 
             const result = func.call(this, arg);
             cache.set(arg, result)
@@ -51,8 +48,6 @@ export default class CacheManager {
      * @returns 
      */
     purge(func, arg) {
-        console.log("Purging cache");
-
         // Clear all cache
         if (undefined === func) {
             for (let cache of this._cache.values())
