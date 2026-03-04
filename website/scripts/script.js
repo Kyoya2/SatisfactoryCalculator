@@ -67,10 +67,11 @@ function fractionMax(a, b) {
 /**
  * 
  * @param {Fraction} frac 
+ * @param {boolean} as_ratio?
  * @returns {string}
  */
-function formatFrac(frac) {
-    return format(frac, { fraction: 'ratio' })
+function formatFrac(frac, as_ratio=true) {
+    return format(frac, { fraction: as_ratio ? 'ratio' : 'decimal' });
 }
 
 /**
@@ -91,41 +92,65 @@ function to_mermaid(graph) {
     result += '\n';
 
     for (const edge of ordered_edges) {
-        result += `${edge.source.data.obj.id}--${(edge.data.amount)}<br/>${(edge.data.total_amount)}<br/>${formatFrac(edge.data.total_fraction)}-->${edge.target.data.obj.id}\n`;
+        //result += `${edge.source.data.obj.id}--${(edge.data.amount)}<br/>${(edge.data.total_amount)}<br/>${formatFrac(edge.data.total_fraction)}-->${edge.target.data.obj.id}\n`;
+        //result += `${edge.source.data.obj.id}--${formatFrac(edge.data.total_fraction)}-->${edge.target.data.obj.id}\n`;
+        result += `${edge.source.data.obj.id}--AAAAAAAAAAAAAAAAAA</br>AAAAAAAAAAAAAAAAAA-->${edge.target.data.obj.id}\n`;
     }
 
     return [result, ordered_nodes, ordered_edges];
 }
 
 /**
- * 
  * @param {SVGGElement} node_svg_element 
- * @param {Node<MyNodeInfo, MyEdgeInfo>} node 
- * @returns {HTMLDivElement}
+ * @param {Node<MyNodeInfo, MyEdgeInfo>} node
  */
 function createNodeOverlay(node_svg_element, node) {
     // Clone the template
     const clone = g_.html_elements.nodeOverlayTemplate.content.cloneNode(true);
     assert(1 == clone.childElementCount);
-    const node_overlay = clone.firstChild;
+
+    /** @type {HTMLDivElement} */
+    const overlay = clone.firstChild;
+    node.data.html = overlay;
 
     const obj = node.data.obj;
 
-    // Initialize the overlay
-    node_overlay.querySelector('.node-item-name').textContent = obj.name;
+    let prod_per_sec = g_.config.trivial_resources.get(obj.id);
+    const is_trivial = undefined !== prod_per_sec;
 
+    if (is_trivial) {
+        overlay.style.backgroundColor = 'lightblue';
+    }
+    else {
+        if (g_.product_node == node) {
+            overlay.style.backgroundColor = 'pink';
+        }
+
+        prod_per_sec = multiply(divide(1, node.data.factored_recipe_duration), node.data.total_machines_required);
+    }
+
+    //
+    // Initialize labels
+    //
+    overlay.querySelector('.node-item-name').textContent = obj.name;
+
+    overlay.querySelector('.production-rate-label').textContent = `${formatFrac(multiply(prod_per_sec, 60), false)}/m`;
+    
+    overlay.querySelector('.machines-required-label').textContent = formatFrac(node.data.total_machines_required, false);
+
+    //
     // Initialize alternate recipes select, or remove if there are none
-    if (obj.recipes.length <= 1) {
-        node_overlay.querySelector(".node-alternate-recipes").remove();
+    //
+    if (is_trivial || obj.recipes.length <= 1) {
+        overlay.querySelector(".node-alternate-recipes").remove();
     } else {
         let recipe_index = g_.config.alternate_recipes.get(obj.id);
         if (undefined === recipe_index)
             recipe_index = 0;
 
         /** @type {HTMLSelectElement} */
-        const alternate_recipes_select = node_overlay.querySelector(".node-alternate-recipes > select");
+        const alternate_recipes_select = overlay.querySelector(".node-alternate-recipes > select");
         for (let i = 0; i < obj.recipes.length; ++i) {
-
             alternate_recipes_select.add(new Option(obj.recipes[i].name));
         }
 
@@ -140,7 +165,7 @@ function createNodeOverlay(node_svg_element, node) {
 
     // Inject a "foreignObject" element into the node
     const foreign_obj = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject");
-    foreign_obj.appendChild(node_overlay);
+    foreign_obj.appendChild(overlay);
     
     // Position the "foregnObject" over the node
     const rect = node_svg_element.getBBox({fill: true, stroke: true, markers: true, clipped: false});
@@ -150,8 +175,25 @@ function createNodeOverlay(node_svg_element, node) {
     foreign_obj.setAttribute("height", rect.height+4);
 
     node_svg_element.appendChild(foreign_obj);
+}
 
-    return node_overlay;
+/**
+ * @param {SVGForeignObjectElement} edge_label_element 
+ * @param {Edge<MyNodeInfo, MyEdgeInfo>} edge
+ */
+function createEdgeOverlay(edge_label_element, edge) {
+    // Clone the template
+    const clone = g_.html_elements.edgeOverlayTemplate.content.cloneNode(true);
+    assert(1 == clone.childElementCount);
+
+    /** @type {HTMLDivElement} */
+    const overlay = clone.firstChild;
+    edge.data.html = overlay;
+
+    // Initialize the overlay
+    overlay.querySelector('.edge-ratio-label').textContent = formatFrac(edge.data.total_fraction);
+
+    edge_label_element.replaceChildren(overlay);
 }
 
 /**
@@ -190,6 +232,7 @@ function generateSchematic() {
 
         // Temp solution
         if (0 == obj.recipes.length) {
+            assert(false);
             obj.recipes = [{
                 name: '_dummy',
                 ingredients: [],
@@ -209,13 +252,25 @@ function generateSchematic() {
 
         const selected_recipe = obj.recipes[selected_recipe_index];
 
-        // Factor in the time it takes to load the ingredients onto the constructor/assembler.
+        // Factor in the time it takes to load the ingredients onto the machine.
         // Assuming that ingredients are loaded into the machine as a product is being produced,
         // this makes a difference only if the load time is higher than the production
-        const max_amount_ingredient = selected_recipe.ingredients.reduce((max, current) => fractionMax(max, current.amount), fraction(0));
+        let slowest_loaded_ingredient = {index: null, load_time: fraction(0)};
+        for (let i = 0; i < selected_recipe.ingredients.length; ++i) {
+            const ingredient = selected_recipe.ingredients[i];
+            // The time it takes to load 1 unit
+            const load_1_time = ('SOLID' == game_data.crafting_objects[ingredient.item_name].form) ? conveyor_speed : pipeline_speed;
 
-        // TODO: use "conveyor_speed" or "pipeline_speed" according to the material type!
-        const factored_recipe_duration = fractionMax(selected_recipe.duration, multiply(max_amount_ingredient, conveyor_speed));
+            // The time it takes to load the number of units that are required for the product
+            const total_load_time = multiply(ingredient.amount, load_1_time);
+
+            if (smaller(slowest_loaded_ingredient.load_time, total_load_time)) {
+                slowest_loaded_ingredient.load_time = total_load_time;
+                slowest_loaded_ingredient.index = i;
+            }
+        }
+
+        const factored_recipe_duration = fractionMax(selected_recipe.duration, slowest_loaded_ingredient.load_time);
 
         node = graph.createNode({
             obj: obj,
@@ -267,7 +322,9 @@ function generateSchematic() {
             data.total_fraction = divide(data.total_amount, node.data.total_required_amount);
         }
 
+        // Number of products that a single machine produces in a single cycle
         const single_machine_production = divide(cycle_duration, node.data.factored_recipe_duration);
+
         node.data.total_machines_required = divide(node.data.total_required_amount, single_machine_production);
     }
 
@@ -275,9 +332,11 @@ function generateSchematic() {
 }
 
 async function generateGraph() {
-    g_.product_node = generateSchematic();
-    if (!g_.product_node)
+    const product_node = generateSchematic();
+    if (null == product_node)
         return;
+
+    g_.product_node = product_node;
 
     // TODO: this function relies on the assumption that the SVG elements appear in the order that
     //       they were declared in the Mermaid string. Check this!
@@ -303,13 +362,13 @@ async function generateGraph() {
     assert(edge_label_svg_elements.length == ordered_edges.length);
 
     for (let i = 0; i < ordered_nodes.length; ++i) {
-        const current_node = ordered_nodes[i];
-        current_node.data.html = createNodeOverlay(node_svg_elements[i], current_node)
+        createNodeOverlay(node_svg_elements[i], ordered_nodes[i])
     }
 
     for (let i = 0; i < ordered_edges.length; ++i) {
-        ordered_edges[i].data.path_element = edge_path_svg_elements[i];
-        ordered_edges[i].data.html = edge_label_svg_elements[i];
+        const current_edge = ordered_edges[i];
+        current_edge.data.path_element = edge_path_svg_elements[i];
+        current_edge.data.html = createEdgeOverlay(edge_label_svg_elements[i], current_edge);
     }
 }
 
@@ -507,7 +566,7 @@ function initGraph() {
 function init() {
     initGameData();
 
-    const HTML_ELEMENT_NAMES = ['craftableItemSelect', 'graphContainer', 'nodeOverlayTemplate'];
+    const HTML_ELEMENT_NAMES = ['craftableItemSelect', 'graphContainer', 'nodeOverlayTemplate', 'edgeOverlayTemplate'];
     for (const name of HTML_ELEMENT_NAMES) {
         g_.html_elements[name] = document.getElementById(name);
     }
