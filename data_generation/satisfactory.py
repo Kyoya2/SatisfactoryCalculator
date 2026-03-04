@@ -1,27 +1,17 @@
 import re
-import math
 import json
-from enum import Enum
 from fractions import Fraction
 from dataclasses import dataclass
+from os import path
 from typing import NamedTuple, Any, TypeAlias, Iterable
 
-from graph import Graph, Node
-
-
-# TODOs:
-# - Look at "mAlternativeMaterialRecipes" in the JSON
-
-
-class ConveyorBeltType(Enum):
-    Mk1 = 60
-    Mk2 = 120
-    Mk3 = 270
+# TODO: "mForm": "(?!RF_LIQUID|RF_SOLID|RF_GAS|RF_INVALID)
+# TODO: Look at "mAlternativeMaterialRecipes" in the JSON
 
 
 # Corresponds to the "ClassName" element in the JSON file.
 # For example: "Desc_SpaceElevatorPart_1_C".
-GameObjectName: TypeAlias = str
+GameObjectId: TypeAlias = str
 
 # Corresponds to the "NativeClass" element in the JSON.
 # For example: "FGItemDescriptor".
@@ -38,7 +28,7 @@ GameObject: TypeAlias = dict[str, Any]
 
 
 class CountedItem(NamedTuple):
-    item_name: GameObjectName
+    item_name: GameObjectId
     amount: Fraction
 
     def __repr__(self):
@@ -46,15 +36,28 @@ class CountedItem(NamedTuple):
 
 
 class Recipe(NamedTuple):
+    name: str
     ingredients: list[CountedItem]
     duration: Fraction
     is_alternate: bool
-    recipe_name: GameObjectName
+
+
+class CraftingObject(NamedTuple):
+    id: str
+    name: str
+    recipes: list[Recipe]
+    # Type: 'solid' | 'liquid' | 'gas'
+
+
+# Either a belt or a pipeline
+class Transporter(NamedTuple):
+    name: str
+    speed: Fraction
 
 
 @dataclass
 class ItemDescriptor:
-    item_name: GameObjectName
+    item_name: GameObjectId
     production_duration: float
     total_required_amount: float
     total_machines_required: float
@@ -83,185 +86,147 @@ def jsonify(obj):
     raise TypeError(f'Unknown type: {type(obj)}')
 
 
-class SatisfactoryCalculator:
-    _COMMON_OBJECT_CATEGORY_NAME_PREFIX = r"/Script/CoreUObject.Class'/Script/FactoryGame."
-    _RECIPE_OBJECT_REGEX = re.compile(r"""\(ItemClass="[/\w.']+\.(\w+)'",Amount=(\d+)\)""")
-    _OBJECT_NAME_REGEX = re.compile(r"^([a-zA-Z\d]+)_(.+)_C$")
-    _CAMEL_CASE_REGEX = re.compile(r"([a-z])([A-Z])")
-    _ICON_STRING_REGEX = re.compile(r"Texture2D /Game/FactoryGame/(.*(\w+))\.\2")
-    _TYPED_FIELDS = {
-        "mManufactoringDuration": float
-    }
+_COMMON_OBJECT_CATEGORY_NAME_PREFIX = r"/Script/CoreUObject.Class'/Script/FactoryGame."
+_RECIPE_OBJECT_REGEX = re.compile(r"""\(ItemClass="[/\w.']+\.(\w+)'",Amount=(\d+)\)""")
+_OBJECT_NAME_REGEX = re.compile(r"^([a-zA-Z\d]+)_(.+)_C$")
+_CAMEL_CASE_REGEX = re.compile(r"([a-z])([A-Z])")
+_ICON_STRING_REGEX = re.compile(r"Texture2D /Game/FactoryGame/(.*(\w+))\.\2")
 
-    _FIELDS_TO_SERIALIZE = {
-        'ClassName',
-        'recipes',
-        'Name',
-        'speed'
-    }
 
-    def __init__(
-        self,
-        doc_file_path=r"C:\Program Files (x86)\Steam\steamapps\common\Satisfactory\CommunityResources\Docs\en-US.json"
-    ):
-        with open(doc_file_path, 'rb') as f:
-            game_object_categories = json.load(f)
+def _get_object_display_name(game_object: GameObject) -> str:
+    if display_name := game_object.get('mDisplayName', ''):
+        return display_name
 
-        self._all_objects: dict[GameObjectName, GameObject]= {}
-        self._categorized_objects: dict[GameObjectCategoryName, dict[GameObjectName, GameObject]] = {}
+    # TODO: this yields duplicate names. Need to de-duplicate them by re-adding
+    # the prefix on such scenarios
 
-        #object_display_names = set()
-        for game_object_category in game_object_categories:
-            assert game_object_category['NativeClass'].startswith(self._COMMON_OBJECT_CATEGORY_NAME_PREFIX)
-            category_name = game_object_category['NativeClass'][len(self._COMMON_OBJECT_CATEGORY_NAME_PREFIX):].rstrip("'")
+    display_name = game_object['id']
+    display_name = _OBJECT_NAME_REGEX.match(display_name)
+    suffix, display_name = display_name.groups()
+    display_name = display_name.replace('_', ' ')
+    display_name = _CAMEL_CASE_REGEX.sub(r'\1 \2', display_name)
 
-            current_category_objects = {}
-            for game_object in game_object_category['Classes']:
-                # Parse typed fields
-                for attr_name, attr_type in self._TYPED_FIELDS.items():
-                    if (attr_value := game_object.get(attr_name)) is not None:
-                        game_object[attr_name] = attr_type(attr_value)
+    return display_name
 
-                if ('mSmallIcon' in game_object) and ('None' != game_object['mSmallIcon']):
-                    match = self._ICON_STRING_REGEX.match(game_object['mSmallIcon'])
-                    game_object['iconPath'] = f"./game_assets/{match[1]}.png"
 
-                game_object['Name'] = self._get_object_display_name(game_object)
-                #assert game_object['Name'] not in object_display_names, f"Duplicate name detected: {game_object['Name']}"
-                #object_display_names.add(game_object['Name'])
+def main(doc_file_path=r"C:\Program Files (x86)\Steam\steamapps\common\Satisfactory\CommunityResources\Docs\en-US.json"):
+    with open(doc_file_path, 'rb') as f:
+        game_object_categories = json.load(f)
 
-                assert game_object['ClassName'] not in self._all_objects
-                self._all_objects[game_object['ClassName']] = game_object
-                current_category_objects[game_object['ClassName']] = game_object
+    all_objects: dict[GameObjectId, GameObject]= {}
+    categorized_objects: dict[GameObjectCategoryName, dict[GameObjectId, GameObject]] = {}
 
-            self._categorized_objects[category_name] = current_category_objects
+    for game_object_category in game_object_categories:
+        assert game_object_category['NativeClass'].startswith(_COMMON_OBJECT_CATEGORY_NAME_PREFIX)
+        category_name = game_object_category['NativeClass'][len(_COMMON_OBJECT_CATEGORY_NAME_PREFIX):].rstrip("'")
 
-        self._crafting_products, self._crafting_ingredients = self._process_recipes()
-        self._conveyor_belts, self._pipelines = self._process_movers()
-        a=1
+        current_category_objects = {}
+        for game_object in game_object_category['Classes']:
+            #if ('mSmallIcon' in game_object) and ('None' != game_object['mSmallIcon']):
+            #    match = self._ICON_STRING_REGEX.match(game_object['mSmallIcon'])
+            #    game_object['iconPath'] = f"./game_assets/{match[1]}.png"
 
-    def generate_recipe_schematic(
-        self,
-        item_name: GameObjectName,
-        best_unlocked_conveyor_belt_type: ConveyorBeltType,
-        trivial_resources=tuple(),
-        multiplier=None
-    ):
-        graph = Graph[ItemDescriptor, float]()
-        nodes: dict[GameObjectName, Node] = {}
+            game_object['id'] = game_object['ClassName']
+            game_object['name'] = _get_object_display_name(game_object)
 
-        def _generate_recipe_schematic(item_name: GameObjectName):
-            nonlocal trivial_resources, graph, nodes
+            assert game_object['id'] not in all_objects
+            all_objects[game_object['id']] = game_object
+            current_category_objects[game_object['id']] = game_object
 
-            if (node := nodes.get(item_name)) is not None:
-                return node
+        categorized_objects[category_name] = current_category_objects
 
-            obj = self._all_objects[item_name]
-            if 'recipes' not in obj:
-                # No recipes
-                return None
+    crafting_ingredients: set[GameObjectId] = set()
+    crafting_products: set[GameObjectId] = set()
 
-            if False and item_name == 'Desc_IronIngot_C':
-                recipe = obj['recipes'][4]
+    for recipe_id, recipe in categorized_objects['FGRecipe'].items():
+        parsed_ingredients = _RECIPE_OBJECT_REGEX.findall(recipe['mIngredients'])
+        full_duration = Fraction(float(recipe['mManufactoringDuration']))
+        is_alternate = recipe['mDisplayName'].startswith('Alternate: ')
+
+        crafting_ingredients |= {ingredient_name for ingredient_name, amount in parsed_ingredients}
+
+        for product_name, product_amount in _RECIPE_OBJECT_REGEX.findall(recipe['mProduct']):
+            crafting_products.add(product_name)
+            product_amount = Fraction(int(product_amount))
+
+            ingredients = [CountedItem(item_name, int(amount) / product_amount) for item_name, amount in parsed_ingredients]
+            duration = full_duration / product_amount
+
+            product_obj = all_objects[product_name]
+            recipes = product_obj.get('recipes')
+            if recipes is None:
+                recipes = []
+                product_obj['recipes'] = recipes
+
+            recipe_data = Recipe(
+                recipe['name'],
+                ingredients,
+                duration,
+                is_alternate
+            )
+
+            # Insert the recipe such that non-alternate recipes always come before the
+            # alternate recipes
+            if is_alternate:
+                recipes.append(recipe_data)
             else:
-                # Use the first non-alternate recipe
-                recipe = next((recipe for recipe in obj['recipes'] if not recipe.is_alternate), None)
-            if recipe is None:
-                # No non-alternate recipes
-                return None
+                recipes.insert(0, recipe_data)
 
-            # Factor in the time it takes to load the ingredients onto the constructor/assembler.
-            # Assuming that ingredients are loaded into the machine as a product is being produced, this
-            # makes a difference only if the load time is higher than the production
-            max_amount_ingredient = max(ingredient.amount for ingredient in recipe.ingredients)
-            ingredient_load_duration = max_amount_ingredient * (60 / best_unlocked_conveyor_belt_type.value)
-            factored_recipe_duration = max(recipe.duration, ingredient_load_duration)
+    crafting_objects: dict[GameObjectId, CraftingObject] = {}
+    for crafting_obj_id in crafting_ingredients | crafting_products:
+        obj = all_objects[crafting_obj_id]
+        if 'recipes' not in obj:
+            obj['recipes'] = []
 
-            node = graph.create_node(ItemDescriptor(item_name, factored_recipe_duration, 0, 0))
-            nodes[item_name] = node
+        crafting_objects[crafting_obj_id] = CraftingObject(
+            obj['id'],
+            obj['name'],
+            obj['recipes']
+        )
 
-            if item_name not in trivial_resources:
-                for ingredient in recipe.ingredients:
-                    ingredient_node = _generate_recipe_schematic(ingredient.item_name)
-                    node.add_blink(ingredient_node, ingredient.amount)
+    conveyor_belts = []
+    for conveyor_belt in categorized_objects['FGBuildableConveyorBelt'].values():
+        # For some reason, the "mSpeed" value is twice as large as the actual items/minute speed.
+        speed = float(conveyor_belt['mSpeed']) / 2
+        assert speed.is_integer()
 
-            return node
+        # The number of seconds it takes to move 1 item
+        speed = Fraction(60, int(speed))
 
-        root_node = _generate_recipe_schematic(item_name)
-        root_node.data.total_required_amount = 1
+        conveyor_belts.append(Transporter(conveyor_belt['name'], speed))
 
-        # Fill the "total_required_amount" member of each node
-        # Requires BFS iteration, since this number can be determined for node A
-        # only after it has been determined for ALL its children.
-        cycle_duration = root_node.data.production_duration
+    conveyor_belts.sort(key=lambda b: b.speed, reverse=True)
 
-        current_nodes = {root_node}
-        visited_nodes = set()
-        machines_required_denominators = set()
-        while True:
-            next_round_nodes = set()
-            for node in current_nodes:
-                if node in visited_nodes:
-                    continue
+    pipelines = []
+    for pipeline in categorized_objects['FGBuildablePipeline'].values():
+        # Filter-out the pipelines that don't have indicators, since they're essentially duplicates for our purposes
+        if '_NoIndicator_' in pipeline['id']:
+            continue
 
-                # If we still haven't visited ALL the flinks, skip this node for now.
-                # We will have more chances to visit it in the required state.
-                if any(child_node not in visited_nodes for child_node, link_data in node.flinks()):
-                    continue
+        flow_limit = float(pipeline['mFlowLimit'])
+        assert flow_limit.is_integer()
 
-                visited_nodes.add(node)
+        # The number of seconds it takes to move 1 cubic meter of liquid
+        # TODO: It might not work like this, need to check
+        speed = Fraction(1, int(flow_limit))
 
-                for child_node, link_data in node.flinks():
-                    node.data.total_required_amount += child_node.data.total_required_amount * link_data
+        pipelines.append(Transporter(pipeline['name'], speed))
 
-                single_machine_production = cycle_duration / node.data.production_duration
-                node.data.total_machines_required = node.data.total_required_amount / single_machine_production
-                machines_required_denominators.add(Fraction(node.data.total_machines_required).limit_denominator().denominator)
+    pipelines.sort(key=lambda p: p.speed, reverse=True)
 
-                next_round_nodes |= {parent_node for parent_node, link_data in node.blinks()}
+    def sort_by_display_name(object_ids: Iterable[GameObjectId]) -> list[GameObjectId]:
+        return list(sorted(object_ids, key=lambda name: crafting_objects[name].name))
 
-            next_round_nodes -= visited_nodes
-            if 0 == len(next_round_nodes):
-                break
-
-            current_nodes = next_round_nodes
-
-        if multiplier is None:
-            multiplier = math.lcm(*machines_required_denominators)
-
-        if multiplier != 1:
-            for node in nodes.values():
-                node.data.total_required_amount *= multiplier
-                node.data.total_machines_required *= multiplier
-
-        return root_node
-
-    def serialize(self):
-        # 1. Serialize the following objects:
-        #       - Objects that are produced from crafting
-        #       - Objects that are used as ingredients for crafting
-        #       - Recipe objects
-        #       - Movers:
-        #           - Conveyor belts
-        #           - Pipelines
-        # 2. Serialize only attributes listed in "self._FIELDS_TO_SERIALIZE"
-        objs_to_serialize = (self._crafting_products | self._crafting_ingredients | self._recipes |
-                             set(self._conveyor_belts) | set(self._pipelines))
-        data = {
-            'objects': jsonify({
-                obj_name: {attr_name: attr for attr_name, attr in self._all_objects[obj_name].items() if attr_name in self._FIELDS_TO_SERIALIZE}
-                for obj_name
-                in objs_to_serialize
-            }),
-            'crafting_products': self._sort_by_display_name(self._crafting_products),
-            'crafting_ingredients': self._sort_by_display_name(self._crafting_ingredients),
-            'movers': {
-                'conveyor_belts': self._conveyor_belts,
-                'pipelines': self._pipelines,
-            }
+    data = jsonify({
+        'crafting_objects': crafting_objects,
+        'crafting_products': sort_by_display_name(crafting_products),
+        'crafting_ingredients': sort_by_display_name(crafting_ingredients),
+        'transporters': {
+            'conveyor_belts': conveyor_belts,
+            'pipelines': pipelines,
         }
-
-        return \
+    })
+    return \
 f"""
 // @ts-check
 
@@ -270,133 +235,43 @@ f"""
 /** @import {{Fraction}} from "mathjs" */
 
 /**
- * @typedef {{string}} GameObjectName
- * @typedef {{{{item_name: GameObjectName, amount: Fraction}}}} CountedItem
+ * @typedef {{string}} GameObjectId
+ * @typedef {{{{item_name: GameObjectId, amount: Fraction}}}} CountedItem
  * @typedef {{{{
- *      product_name: GameObjectName,
+ *      name: GameObjectId,
  *      ingredients: CountedItem[],
  *      duration: Fraction,
- *      is_alternate: boolean,
- *      recipe_name: GameObjectName
+ *      is_alternate: boolean
  * }}}} Recipe
- * @typedef {{{{ClassName: GameObjectName, Name: string, recipes: Recipe[]}}}} GameObject
+ *
+ * @typedef {{{{
+ *      name: string,
+ *      speed: Fraction
+ * }}}} Transporter
+ *
+ * @typedef {{{{
+ *      id: string,
+ *      name: string,
+ *      recipes: Recipe[]
+ * }}}} CraftingObject
  */
 
 /**
  * @type {{{{
- *      objects: Object.<GameObjectName, GameObject>,
- *      crafting_products: GameObjectName[],
- *      crafting_ingredients: GameObjectName[],
- *      movers: {{
- *          conveyor_belts: GameObjectName[],
- *          pipelines: GameObjectName[]
+ *      crafting_objects: Object.<GameObjectId, CraftingObject>,
+ *      crafting_products: GameObjectId[],
+ *      crafting_ingredients: GameObjectId[],
+ *      transporters: {{
+ *          conveyor_belts: Transporter[],
+ *          pipelines: Transporter[]
  *      }},
  *  }}}}
  */
-const game_data = {json.dumps(data, indent=4)};
+const game_data = {json.dumps(data, indent=4, sort_keys=True)};
 export default game_data;
 """
 
-    @classmethod
-    def _get_object_display_name(cls, game_object: GameObject) -> str:
-        if display_name := game_object.get('mDisplayName', ''):
-            return display_name
-
-        # TODO: this yields duplicate names. Need to de-duplicate them by re-adding
-        # the prefix on such scenarios
-
-        display_name = game_object['ClassName']
-        display_name = cls._OBJECT_NAME_REGEX.match(display_name)
-        suffix, display_name = display_name.groups()
-        display_name = display_name.replace('_', ' ')
-        display_name = cls._CAMEL_CASE_REGEX.sub(r'\1 \2', display_name)
-
-        return display_name
-
-    def _sort_by_display_name(self, object_names: Iterable[GameObjectName]) -> list[GameObjectName]:
-        return list(sorted(object_names, key=lambda name: self._all_objects[name]['Name']))
-
-    def _process_recipes(self) -> tuple[set[GameObjectName], set[GameObjectName]]:
-        craftable_objects = set()
-        crafting_objects = set()
-
-        self._recipes = set()
-
-        for recipe_name, recipe in self._categorized_objects['FGRecipe'].items():
-            self._recipes.add(recipe_name)
-
-            parsed_ingredients = self._RECIPE_OBJECT_REGEX.findall(recipe['mIngredients'])
-            full_duration = Fraction(float(recipe['mManufactoringDuration']))
-            is_alternate = recipe['mDisplayName'].startswith('Alternate: ')
-
-            crafting_objects |= {ingredient_name for ingredient_name, amount in parsed_ingredients}
-
-            for product_name, product_amount in self._RECIPE_OBJECT_REGEX.findall(recipe['mProduct']):
-                craftable_objects.add(product_name)
-                product_amount = Fraction(int(product_amount))
-
-                ingredients = [CountedItem(item_name, int(amount) / product_amount) for item_name, amount in parsed_ingredients]
-                duration = full_duration / product_amount
-
-                product_obj = self._all_objects[product_name]
-                recipes = product_obj.get('recipes')
-                if recipes is None:
-                    recipes = []
-                    product_obj['recipes'] = recipes
-
-                recipe_data = Recipe(
-                    ingredients,
-                    duration,
-                    is_alternate,
-                    recipe_name
-                )
-
-                # Insert the recipe such that non-alternate recipes always come before the
-                # alternate recipes
-                if is_alternate:
-                    recipes.append(recipe_data)
-                else:
-                    recipes.insert(0, recipe_data)
-
-        return craftable_objects, crafting_objects
-
-    def _process_movers(self):
-        conveyor_belts = self._categorized_objects['FGBuildableConveyorBelt']
-        for conveyor_belt in conveyor_belts.values():
-            # For some reason, the "mSpeed" value is twice as large as the actual items/minute speed.
-            speed = float(conveyor_belt['mSpeed']) / 2
-            assert speed.is_integer()
-
-            # The number of seconds it takes to move 1 item
-            conveyor_belt['speed'] = Fraction(60, int(speed))
-
-        pipelines = self._categorized_objects['FGBuildablePipeline']
-        for pipeline in pipelines.values():
-            flow_limit = float(pipeline['mFlowLimit'])
-            assert flow_limit.is_integer()
-
-            # The number of seconds it takes to move 1 cubic meter of liquid
-            # TODO: It might not work like this, need to check
-            pipeline['speed'] = Fraction(1, int(flow_limit))
-
-        return (
-            list(sorted(
-                conveyor_belts.keys(),
-                key = lambda b: conveyor_belts[b]['speed'],
-                reverse = True
-            )),
-
-            list(sorted(
-                # Filter-out the pipelines that don't have indicators, since they're essentially duplicates for our purposes
-                filter(
-                    lambda p: '_NoIndicator_' not in p,
-                    pipelines.keys()
-                ),
-                key = lambda p: pipelines[p]['speed'],
-                reverse = True
-            ))
-        )
-
 
 if __name__ == '__main__':
-    SatisfactoryCalculator()
+    with open(path.join(path.dirname(__file__), '..', 'website', 'scripts', 'game_data.auto.mjs'), 'w') as f:
+        f.write(main())
