@@ -314,7 +314,8 @@ f"""
  * @typedef {{{{
  *      id: string,
  *      name: string,
- *      recipes: Recipe[]
+ *      recipes: Recipe[],
+ *      form: "SOLID" | "LIQUID" | "GAS"
  * }}}} CraftingObject
  */
 
