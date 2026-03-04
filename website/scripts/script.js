@@ -26,15 +26,15 @@ import {fraction, add, subtract, multiply, divide, smaller, format, number, Frac
  *      total_required_amount: Fraction,
  *      total_machines_required: Fraction,
  *      trivial_prod: Fraction?,
- *      html: HTMLDivElement?
+ *      html: HTMLDivElement
  * }} MyNodeInfo
  * 
  *  @typedef {{
  *      amount: Fraction,
  *      total_amount: Fraction,
  *      total_fraction: Fraction,
- *      path_element: SVGPathElement?,
- *      html: HTMLDivElement?
+ *      path_element: SVGPathElement,
+ *      html: HTMLDivElement
  * }} MyEdgeInfo
  */
 
@@ -119,7 +119,7 @@ function createNodeOverlay(node_svg_element, node) {
     if (undefined !== node.data.trivial_prod) {
         overlay.style.backgroundColor = 'lightblue';
     }
-    else if (g_.product_node == node){
+    else if (g_.product_node == node) {
         overlay.style.backgroundColor = 'pink';
     }
 
@@ -127,13 +127,6 @@ function createNodeOverlay(node_svg_element, node) {
     // Initialize labels
     //
     overlay.querySelector('.node-item-name').textContent = obj.name;
-    
-    const prod_per_sec = multiply(divide(1, node.data.production_duration), node.data.total_machines_required);
-    overlay.querySelector('.production-rate-label').textContent = `${formatFrac(multiply(prod_per_sec, 60), false)}/m`;
-    
-    if (undefined === node.data.trivial_prod) {
-        overlay.querySelector('.machines-required-label').textContent = formatFrac(node.data.total_machines_required, false);
-    }
 
     //
     // Initialize alternate recipes select, or remove if there are none
@@ -336,6 +329,22 @@ function generateSchematic() {
     return product_node;
 }
 
+function updateOverlay() {
+    const graph = g_.product_node.graph;
+    for (const node of graph.nodes()) {
+        const prod_per_sec = multiply(divide(1, node.data.production_duration), node.data.total_machines_required);
+        node.data.html.querySelector('.production-rate-label').textContent = `${formatFrac(multiply(prod_per_sec, 60), false)}/m`;
+    
+        if (undefined === node.data.trivial_prod) {
+            node.data.html.querySelector('.machines-required-label').textContent = formatFrac(node.data.total_machines_required, false);
+        }
+    }
+
+    for (const edge of graph.links()) {
+        edge.data.html.querySelector('.edge-ratio-label').textContent = formatFrac(edge.data.total_fraction);
+    }
+}
+
 async function generateGraph() {
     const product_node = generateSchematic();
     if (null == product_node)
@@ -375,6 +384,8 @@ async function generateGraph() {
         current_edge.data.path_element = edge_path_svg_elements[i];
         createEdgeOverlay(edge_label_svg_elements[i], current_edge);
     }
+
+    updateOverlay();
 }
 
 function resetAlternateRecipes() {
