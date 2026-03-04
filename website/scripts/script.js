@@ -22,7 +22,7 @@ import {fraction, add, subtract, multiply, divide, smaller, format, number, Frac
  * @typedef {{
  *      obj: CraftingObject,
  *      selected_recipe_index: number,
- *      factored_recipe_duration: Fraction,
+ *      production_duration: Fraction,
  *      total_required_amount: Fraction,
  *      total_machines_required: Fraction,
  *      html: HTMLDivElement?
@@ -86,7 +86,7 @@ function to_mermaid(graph) {
 
     for (const node of ordered_nodes) {
         const data = node.data;
-        result += `${data.obj.id}["${data.obj.name}<br/>Duration=${(data.factored_recipe_duration)}<br/>Total required=${(data.total_required_amount)}<br/>Machines required=${(data.total_machines_required)}"]\n`;
+        result += `${data.obj.id}["${data.obj.name}<br/>Duration=${(data.production_duration)}<br/>Total required=${(data.total_required_amount)}<br/>Machines required=${(data.total_machines_required)}"]\n`;
     }
 
     result += '\n';
@@ -125,18 +125,19 @@ function createNodeOverlay(node_svg_element, node) {
         if (g_.product_node == node) {
             overlay.style.backgroundColor = 'pink';
         }
-
-        prod_per_sec = multiply(divide(1, node.data.factored_recipe_duration), node.data.total_machines_required);
     }
 
     //
     // Initialize labels
     //
     overlay.querySelector('.node-item-name').textContent = obj.name;
-
+    
+    prod_per_sec = multiply(divide(1, node.data.production_duration), node.data.total_machines_required);
     overlay.querySelector('.production-rate-label').textContent = `${formatFrac(multiply(prod_per_sec, 60), false)}/m`;
     
-    overlay.querySelector('.machines-required-label').textContent = formatFrac(node.data.total_machines_required, false);
+    if (!is_trivial) {
+        overlay.querySelector('.machines-required-label').textContent = formatFrac(node.data.total_machines_required, false);
+    }
 
     //
     // Initialize alternate recipes select, or remove if there are none
@@ -241,41 +242,52 @@ function generateSchematic() {
                 produced_in: []
             }]
         }
-        
-        let selected_recipe_index = g_.config.alternate_recipes.get(object_id);
-        if (undefined === selected_recipe_index) {
-            // "game_data" is generated such that non-alternate recipes are always before
-            // alternate recipes.
-            assert(obj.recipes.findIndex(recipe => !recipe.is_alternate) <= 0);
-            selected_recipe_index = 0;
-        }
 
-        const selected_recipe = obj.recipes[selected_recipe_index];
-
-        // Factor in the time it takes to load the ingredients onto the machine.
-        // Assuming that ingredients are loaded into the machine as a product is being produced,
-        // this makes a difference only if the load time is higher than the production
-        let slowest_loaded_ingredient = {index: null, load_time: fraction(0)};
-        for (let i = 0; i < selected_recipe.ingredients.length; ++i) {
-            const ingredient = selected_recipe.ingredients[i];
-            // The time it takes to load 1 unit
-            const load_1_time = ('SOLID' == game_data.crafting_objects[ingredient.item_name].form) ? conveyor_speed : pipeline_speed;
-
-            // The time it takes to load the number of units that are required for the product
-            const total_load_time = multiply(ingredient.amount, load_1_time);
-
-            if (smaller(slowest_loaded_ingredient.load_time, total_load_time)) {
-                slowest_loaded_ingredient.load_time = total_load_time;
-                slowest_loaded_ingredient.index = i;
+        const trivial_prod = g_.config.trivial_resources.get(object_id);
+        let selected_recipe_index = -1;
+        let production_duration;
+        let selected_recipe;
+        if (undefined === trivial_prod) {
+            selected_recipe_index = g_.config.alternate_recipes.get(object_id);
+            if (undefined === selected_recipe_index) {
+                // "game_data" is generated such that non-alternate recipes are always before
+                // alternate recipes.
+                assert(obj.recipes.findIndex(recipe => !recipe.is_alternate) <= 0);
+                selected_recipe_index = 0;
             }
-        }
 
-        const factored_recipe_duration = fractionMax(selected_recipe.duration, slowest_loaded_ingredient.load_time);
+            selected_recipe = obj.recipes[selected_recipe_index];
+
+            // Factor in the time it takes to load the ingredients onto the machine.
+            // Assuming that ingredients are loaded into the machine as a product is being produced,
+            // this makes a difference only if the load time is higher than the production
+            let slowest_loaded_ingredient = {index: null, load_time: fraction(0)};
+            for (let i = 0; i < selected_recipe.ingredients.length; ++i) {
+                const ingredient = selected_recipe.ingredients[i];
+                
+                // The time it takes to load 1 unit
+                const load_1_time = ('SOLID' == game_data.crafting_objects[ingredient.item_name].form) ? conveyor_speed : pipeline_speed;
+
+                // The time it takes to load the number of units that are required for the product
+                const total_load_time = multiply(ingredient.amount, load_1_time);
+
+                if (smaller(slowest_loaded_ingredient.load_time, total_load_time)) {
+                    slowest_loaded_ingredient.load_time = total_load_time;
+                    slowest_loaded_ingredient.index = i;
+                }
+            }
+
+            production_duration = fractionMax(selected_recipe.duration, slowest_loaded_ingredient.load_time);
+        }
+        else {
+            // Note: this value doesn't matter
+            production_duration = fraction(1);
+        }
 
         node = graph.createNode({
             obj: obj,
             selected_recipe_index: selected_recipe_index,
-            factored_recipe_duration: factored_recipe_duration,
+            production_duration: production_duration,
             total_required_amount: 0,
             total_machines_required: 0,
             html: null
@@ -283,24 +295,20 @@ function generateSchematic() {
 
         nodes.set(object_id, node)
 
-        const trivial_prod = g_.config.trivial_resources.get(object_id);
-
-        // TODO
-        if (undefined !== trivial_prod)
-            return node;
-
-        for (const ingredient of selected_recipe.ingredients) {
-            const ingredient_node = _generateSchematic(ingredient.item_name);
-            node.add_blink(
-                ingredient_node,
-                {
-                    amount: ingredient.amount,
-                    total_amount: 0,
-                    total_fraction: 0,
-                    path_element: null,
-                    html: null
-                }
-            );
+        if (undefined === trivial_prod) {
+            for (const ingredient of selected_recipe.ingredients) {
+                const ingredient_node = _generateSchematic(ingredient.item_name);
+                node.add_blink(
+                    ingredient_node,
+                    {
+                        amount: ingredient.amount,
+                        total_amount: 0,
+                        total_fraction: 0,
+                        path_element: null,
+                        html: null
+                    }
+                );
+            }
         }
 
         return node;
@@ -309,7 +317,7 @@ function generateSchematic() {
     const product_node = _generateSchematic(g_.config.product_name);
     product_node.data.total_required_amount = fraction(1);
 
-    const cycle_duration = product_node.data.factored_recipe_duration;
+    const cycle_duration = product_node.data.production_duration;
 
     // Breadth-first search starting from the product
     for (const node of product_node.graph.smartBreadthFirst(false)) {
@@ -323,7 +331,7 @@ function generateSchematic() {
         }
 
         // Number of products that a single machine produces in a single cycle
-        const single_machine_production = divide(cycle_duration, node.data.factored_recipe_duration);
+        const single_machine_production = divide(cycle_duration, node.data.production_duration);
 
         node.data.total_machines_required = divide(node.data.total_required_amount, single_machine_production);
     }
@@ -507,6 +515,7 @@ function initTrivialResources() {
         }
 
         g_.config.notifyChange();
+        generateGraph();
     }
 }
 
