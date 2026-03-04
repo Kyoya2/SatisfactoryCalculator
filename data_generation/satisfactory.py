@@ -2,6 +2,7 @@ import re
 import json
 from fractions import Fraction
 from dataclasses import dataclass
+from functools import reduce
 from os import path
 from types import NoneType
 from typing import NamedTuple, Any, TypeAlias, Iterable
@@ -41,14 +42,14 @@ class Recipe(NamedTuple):
     ingredients: list[CountedItem]
     duration: Fraction
     is_alternate: bool
-    produced_in: str  # TODO: enum
+    produced_in: set[str]  # TODO: enum
 
 
 class CraftingObject(NamedTuple):
     id: str
     name: str
     recipes: list[Recipe]
-    # Type: 'solid' | 'liquid' | 'gas'
+    form: str
 
 
 # Either a belt or a pipeline
@@ -93,7 +94,7 @@ _RECIPE_OBJECT_REGEX = re.compile(r"""\(ItemClass="[/\w.']+\.(\w+)'",Amount=(\d+
 _OBJECT_NAME_REGEX = re.compile(r"^([a-zA-Z\d]+)_(.+)_C$")
 _CAMEL_CASE_REGEX = re.compile(r"([a-z])([A-Z])")
 _ICON_STRING_REGEX = re.compile(r"Texture2D /Game/FactoryGame/(.*(\w+))\.\2")
-_PRODUCED_IN_REGEX = re.compile(r'/\w+\.(\w+)"\)$')
+_PRODUCED_IN_REGEX = re.compile(r'\"[^,]+\.(\w+)\"')
 _ALTERNATE_RECIPE_NAME_PREFIX = "Alternate: "
 
 
@@ -151,30 +152,47 @@ def main(doc_file_path=r"C:\Program Files (x86)\Steam\steamapps\common\Satisfact
 
         for product_id, product_amount in _RECIPE_OBJECT_REGEX.findall(recipe['mProduct']):
             crafting_products.add(product_id)
-            product_amount = Fraction(int(product_amount))
-
-            ingredients = [CountedItem(item_name, int(amount) / product_amount) for item_name, amount in parsed_ingredients]
-            duration = full_duration / product_amount
 
             product_obj = all_objects[product_id]
+
+            product_amount = Fraction(int(product_amount))
+
+            # For some reason, liquid amounts are multiplied by 1000 in the game data
+            # TODO: Gas too?
+            if 'RF_LIQUID' == product_obj['mForm']:
+                product_amount /= 1000
+
+            ingredients = [
+                CountedItem(
+                    ingredient_id,
+                    # For some reason, liquid amounts are multiplied by 1000 in the game data
+                    # TODO: Gas too?
+                    Fraction(int(amount), 1000 if 'RF_LIQUID' == all_objects[ingredient_id]['mForm'] else 1) / product_amount
+                )
+                for ingredient_id, amount
+                in parsed_ingredients
+            ]
+            duration = full_duration / product_amount
+
             recipes = product_obj.get('recipes')
             if recipes is None:
                 recipes = []
                 product_obj['recipes'] = recipes
 
-            produced_in = _PRODUCED_IN_REGEX.search(recipe['mProducedIn'])
-            if produced_in is not None:
-                produced_in = produced_in[1]
-
+            produced_in = set(_PRODUCED_IN_REGEX.findall(recipe['mProducedIn']))
             recipe_name = recipe['name']
 
             # Force build converted recipes to be alternate, and update the recipe name accordingly
-            if "Build_Converter_C" == produced_in:
+            if "Build_Converter_C" in produced_in:
                 is_alternate = True
                 recipe_name = f"Build converter: {recipe_name}"
 
+            # Force "unpackage" recipes to be alternate
+            if "Build_Packager_C" in produced_in and "Unpackage" in recipe['id']:
+                is_alternate = True
+
             # Strip common prefix for alternate recipes
-            elif recipe_name.startswith(_ALTERNATE_RECIPE_NAME_PREFIX):
+            if recipe_name.startswith(_ALTERNATE_RECIPE_NAME_PREFIX):
                 recipe_name = recipe_name[len(_ALTERNATE_RECIPE_NAME_PREFIX):]
 
             recipe_data = Recipe(
@@ -198,10 +216,33 @@ def main(doc_file_path=r"C:\Program Files (x86)\Steam\steamapps\common\Satisfact
         if 'recipes' not in obj:
             obj['recipes'] = []
 
+        # If there's a recipe whose name is just the name of the product, consider it the "main" recipe, even if it
+        # is currently marked as an alternate recipe
+        for i, recipe in enumerate(obj['recipes'][1:], 1):
+            if recipe.name == obj['name']:
+                recipe_dict = recipe._asdict()
+                recipe_dict['is_alternate'] = False
+                new_recipe = Recipe(**recipe_dict)
+                del obj['recipes'][i]
+                obj['recipes'].insert(0, new_recipe)
+                break
+
+        produced_in = reduce(lambda value, recipe: value | recipe.produced_in, obj['recipes'], set())
+
+        # Exclude things whose production can't be automated
+        if (obj["mForm"] == "RF_INVALID") or (len(produced_in) > 0 and produced_in <= {'BP_BuildGun_C', 'FGBuildGun'}):
+            crafting_ingredients.discard(crafting_obj_id)
+            crafting_products.discard(crafting_obj_id)
+            continue
+
+        assert obj["mForm"] in ("RF_LIQUID", "RF_SOLID", "RF_GAS")
+        form = obj["mForm"][len('RF_'):]
+
         crafting_objects[crafting_obj_id] = CraftingObject(
             obj['id'],
             obj['name'],
-            obj['recipes']
+            obj['recipes'],
+            form
         )
 
     conveyor_belts = []
@@ -262,7 +303,7 @@ f"""
  *      ingredients: CountedItem[],
  *      duration: Fraction,
  *      is_alternate: boolean,
- *      produced_in: string
+ *      produced_in: string[]
  * }}}} Recipe
  *
  * @typedef {{{{

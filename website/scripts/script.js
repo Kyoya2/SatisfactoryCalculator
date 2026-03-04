@@ -25,14 +25,15 @@ import {fraction, add, subtract, multiply, divide, smaller, format, number, Frac
  *      factored_recipe_duration: Fraction,
  *      total_required_amount: Fraction,
  *      total_machines_required: Fraction,
- *      html: HTMLDivElement | null
+ *      html: HTMLDivElement?
  * }} MyNodeInfo
  * 
  *  @typedef {{
  *      amount: Fraction,
  *      total_amount: Fraction,
  *      total_fraction: Fraction,
- *      svg_element: *
+ *      path_element: SVGPathElement?,
+ *      html: HTMLDivElement?
  * }} MyEdgeInfo
  */
 
@@ -167,7 +168,7 @@ function generateSchematic() {
     const conveyor_speed = game_data.transporters.conveyor_belts[g_.config.conveyor_speed_index].speed;
 
     /** @type {Fraction} */
-    const pipeline_speed = game_data.transporters.pipelines[g_.config.conveyor_speed_index].speed;
+    const pipeline_speed = game_data.transporters.pipelines[g_.config.pipeline_speed_index].speed;
 
     /** @type {Graph<MyNodeInfo, MyEdgeInfo>} */
     let graph = new Graph();
@@ -188,13 +189,13 @@ function generateSchematic() {
         const obj = game_data.crafting_objects[object_id];
 
         // Temp solution
-        if (undefined === obj.recipes) {
+        if (0 == obj.recipes.length) {
             obj.recipes = [{
                 name: '_dummy',
                 ingredients: [],
                 duration: fraction(1),
                 is_alternate: false,
-                produced_in: '_dummy'
+                produced_in: []
             }]
         }
         
@@ -241,7 +242,8 @@ function generateSchematic() {
                     amount: ingredient.amount,
                     total_amount: 0,
                     total_fraction: 0,
-                    svg_element: null
+                    path_element: null,
+                    html: null
                 }
             );
         }
@@ -250,7 +252,7 @@ function generateSchematic() {
     }
 
     const product_node = _generateSchematic(g_.config.product_name);
-    product_node.data.total_required_amount = 1;
+    product_node.data.total_required_amount = fraction(1);
 
     const cycle_duration = product_node.data.factored_recipe_duration;
 
@@ -287,20 +289,28 @@ async function generateGraph() {
     /** @type {SVGElement} */
     const graph_svg = g_.html_elements.graphContainer.querySelector('#graphSvg');
 
+    /** @type {NodeListOf<SVGGElement>} */
     const node_svg_elements = graph_svg.querySelectorAll('.nodes > g.node.default');
-    const edge_svg_elements = graph_svg.querySelectorAll('.edges.edgePaths > path');
+
+    /** @type {NodeListOf<SVGPathElement>} */
+    const edge_path_svg_elements = graph_svg.querySelectorAll('.edges.edgePaths > path');
+
+    /** @type {NodeListOf<SVGForeignObjectElement>} */
+    const edge_label_svg_elements = graph_svg.querySelectorAll('.edgeLabels > g > g > foreignObject');
 
     assert(node_svg_elements.length == ordered_nodes.length);
-    assert(edge_svg_elements.length == ordered_edges.length);
+    assert(edge_path_svg_elements.length == ordered_edges.length);
+    assert(edge_label_svg_elements.length == ordered_edges.length);
 
-    for (let i = 0; i < ordered_nodes.length; ++i)
-    {
+    for (let i = 0; i < ordered_nodes.length; ++i) {
         const current_node = ordered_nodes[i];
         current_node.data.html = createNodeOverlay(node_svg_elements[i], current_node)
     }
 
-    for (let i = 0; i < ordered_edges.length; ++i)
-        ordered_edges[i].data.svg_element = edge_svg_elements[i];
+    for (let i = 0; i < ordered_edges.length; ++i) {
+        ordered_edges[i].data.path_element = edge_path_svg_elements[i];
+        ordered_edges[i].data.html = edge_label_svg_elements[i];
+    }
 }
 
 function resetAlternateRecipes() {
@@ -351,6 +361,10 @@ function initGameData() {
                 g_.config.trivial_resources.set(ingredient_id, fraction(1));
             }
         }
+
+        // Water is a byproduct of a bunch of things, so it won't be detected by the algorithm above
+        g_.config.trivial_resources.set("Desc_Water_C", fraction(1));
+
         g_.config.notifyChange();
     }
 }
