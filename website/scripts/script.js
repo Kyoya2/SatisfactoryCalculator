@@ -329,11 +329,19 @@ function generateSchematic() {
     return product_node;
 }
 
+/**
+ * 
+ * @param {MyNodeInfo} node
+ * @returns {Fraction}
+ */
+function getNodeProductionPerMinute(node) {
+    return multiply(multiply(divide(1, node.production_duration), node.total_machines_required), 60);
+}
+
 function updateOverlay() {
     const graph = g_.product_node.graph;
     for (const node of graph.nodes()) {
-        const prod_per_sec = multiply(divide(1, node.data.production_duration), node.data.total_machines_required);
-        node.data.html.querySelector('.production-rate-label').textContent = `${formatFrac(multiply(prod_per_sec, 60), false)}/m`;
+        node.data.html.querySelector('.production-rate-label').textContent = `${formatFrac(getNodeProductionPerMinute(node.data), false)}/m`;
     
         if (undefined === node.data.trivial_prod) {
             node.data.html.querySelector('.machines-required-label').textContent = formatFrac(node.data.total_machines_required, false);
@@ -342,6 +350,10 @@ function updateOverlay() {
 
     for (const edge of graph.links()) {
         edge.data.html.querySelector('.edge-ratio-label').textContent = formatFrac(edge.data.total_fraction);
+
+        const parent_prod_per_min = getNodeProductionPerMinute(edge.source.data);
+        const input_prod = multiply(parent_prod_per_min, edge.data.total_fraction);
+        edge.data.html.querySelector('.edge-production-label').textContent = `${formatFrac(input_prod, false)}/m`;
     }
 }
 
