@@ -1,13 +1,13 @@
 import re
 import json
-from fractions import Fraction
-from dataclasses import dataclass
-from functools import reduce
+import shutil
 from os import path
 from types import NoneType
+from functools import reduce
+from fractions import Fraction
+from dataclasses import dataclass
 from typing import NamedTuple, Any, TypeAlias, Iterable
 
-# TODO: "mForm": "(?!RF_LIQUID|RF_SOLID|RF_GAS|RF_INVALID)
 # TODO: Look at "mAlternativeMaterialRecipes" in the JSON
 
 
@@ -93,7 +93,7 @@ _COMMON_OBJECT_CATEGORY_NAME_PREFIX = r"/Script/CoreUObject.Class'/Script/Factor
 _RECIPE_OBJECT_REGEX = re.compile(r"""\(ItemClass="[/\w.']+\.(\w+)'",Amount=(\d+)\)""")
 _OBJECT_NAME_REGEX = re.compile(r"^([a-zA-Z\d]+)_(.+)_C$")
 _CAMEL_CASE_REGEX = re.compile(r"([a-z])([A-Z])")
-_ICON_STRING_REGEX = re.compile(r"Texture2D /Game/FactoryGame/(.*(\w+))\.\2")
+_ICON_STRING_REGEX = re.compile(r"Texture2D /Game/(.*(\w+))\.\2")
 _PRODUCED_IN_REGEX = re.compile(r'\"[^,]+\.(\w+)\"')
 _ALTERNATE_RECIPE_NAME_PREFIX = "Alternate: "
 
@@ -114,7 +114,24 @@ def _get_object_display_name(game_object: GameObject) -> str:
     return display_name
 
 
-def main(doc_file_path=r"C:\Program Files (x86)\Steam\steamapps\common\Satisfactory\CommunityResources\Docs\en-US.json"):
+# To extract the icons:
+# - Follow the guide in "https://docs.ficsit.app/satisfactory-modding/latest/Development/ExtractGameFiles.html" up to
+#   (and including) the "Specify Custom Version and Mapping" section.
+# - In the "Archives" tab, open "FactoryGame-windows.utoc"
+# - Ctrl+Shift+F > search for the string "/UI/"
+# - Ctrl+A > Right Click > "Save Texture"
+# - This will save most of the textures, but not all of them.
+# - To find the other missing textures, uncomment the lines in the script which print the "mSmallIcon" member
+#   of each object if it doesn't contain the string "/UI/".
+# - Manually extract these one by one (there should be around 5 files in total).
+# Note: Alternatively, it's possible to extract all the textures in teh game, but it will take a lot of time
+#       and a lot of disk space.
+# - Run this function with "fmodel_output_dir_path" set to FModel's "Output" directory (which is atomatically created
+#   next to "FModel.exe"
+def main(
+    doc_file_path=r"C:\Program Files (x86)\Steam\steamapps\common\Satisfactory\CommunityResources\Docs\en-US.json",
+    fmodel_output_dir_path=None
+):
     with open(doc_file_path, 'rb') as f:
         game_object_categories = json.load(f)
 
@@ -235,6 +252,12 @@ def main(doc_file_path=r"C:\Program Files (x86)\Steam\steamapps\common\Satisfact
             crafting_products.discard(crafting_obj_id)
             continue
 
+        #if '/UI/' not in obj['mSmallIcon']:
+        #    print(obj['mSmallIcon'])
+        #if ('mSmallIcon' in obj) and ('None' != game_object['mSmallIcon']):
+        #   match = self._ICON_STRING_REGEX.match(game_object['mSmallIcon'])
+        #   game_object['iconPath'] = f"./game_assets/{match[1]}.png"
+
         assert obj["mForm"] in ("RF_LIQUID", "RF_SOLID", "RF_GAS")
         form = obj["mForm"][len('RF_'):]
 
@@ -274,6 +297,19 @@ def main(doc_file_path=r"C:\Program Files (x86)\Steam\steamapps\common\Satisfact
         pipelines.append(Transporter(pipeline['name'], speed))
 
     pipelines.sort(key=lambda p: p.speed, reverse=True)
+
+    # Process extracted assets
+    if fmodel_output_dir_path is not None:
+        asserts_base_path = path.join(fmodel_output_dir_path, 'Exports', 'FactoryGame', 'Content')
+        target_base_path = path.join(path.dirname(__file__), '..', 'website', 'images', 'game_icons')
+        for crafting_obj_id in crafting_objects:
+            obj = all_objects[crafting_obj_id]
+
+            match = _ICON_STRING_REGEX.match(obj['mSmallIcon'])
+            shutil.copyfile(
+                path.join(asserts_base_path, f'{match[1]}.png'),
+                path.join(target_base_path, f'{crafting_obj_id}.png')
+            )
 
     def sort_by_display_name(object_ids: Iterable[GameObjectId]) -> list[GameObjectId]:
         return list(sorted(object_ids, key=lambda name: crafting_objects[name].name))
@@ -336,5 +372,6 @@ export default game_data;
 
 
 if __name__ == '__main__':
+    data = main()
     with open(path.join(path.dirname(__file__), '..', 'website', 'scripts', 'game_data.auto.mjs'), 'w') as f:
-        f.write(main())
+        f.write(data)
