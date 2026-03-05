@@ -45,16 +45,27 @@
 
                 <!-------------------------------------------------------------------->
 
-                <label>Additional Options:</label><br>
+                <label>Additional Options:</label>
+                <br/>
+
+                <label for="displayMultiplierInput">Multiplier: </label>
+                <input type="text" id="displayMultiplierInput">
+                <button type="button" id="updateDisplayMultiplier">Update</button>
+                <button type="button" id="updateDisplayMultiplierAuto" title="Calculate the optimal multiplier">Auto</button>
+                <br/>
+
 
                 <input type="checkbox" id="useAletnateRecipes">
-                <label for="useAletnateRecipes"> Use alternate recipes </label><br>
+                <label for="useAletnateRecipes"> Use alternate recipes </label>
+                <br/>
 
                 <label for="unlockedConveyorBeltSelect">Unlocked Conveyor Belt: </label>
-                <select id="unlockedConveyorBeltSelect"></select><br>
+                <select id="unlockedConveyorBeltSelect"></select>
+                <br/>
 
                 <label for="unlockedPipelineSelect">Unlocked Pipeline: </label>
-                <select id="unlockedPipelineSelect"></select><br>
+                <select id="unlockedPipelineSelect"></select>
+                <br/>
 
                 <label for="maxPowerShardsSelect">Max Power Shards: </label>
                 <select id="maxPowerShardsSelect">
@@ -62,7 +73,8 @@
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
-                </select><br>
+                </select>
+                <br/>
 
                 <button type="button" id="resetAlternateRecipesButton">Reset alternate recipes</button>
             </div>

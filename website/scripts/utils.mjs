@@ -68,3 +68,15 @@ export function reduce(iterable, callback, initial_value) {
     
     return value;
 }
+
+/**
+ * @template T, U
+ * @param {Iterable<T>} iterable 
+ * @param {(item: T) => U} callback 
+ * @returns {IterableIterator<U>}
+ */
+export function* map(iterable, callback) {
+    for (const item of iterable) {
+        yield callback(item);
+    }
+}

@@ -8,7 +8,7 @@
 
 
 import game_data from "./game_data.auto.mjs"
-import {assert, any, reduce} from "./utils.mjs"
+import {assert, any, reduce, map} from "./utils.mjs"
 import {Graph, Node, Edge} from "./Graph.mjs"
 import Config from "./Config.mjs"
 
@@ -16,7 +16,7 @@ import Config from "./Config.mjs"
 
 import mermaid from "mermaid";
 import elkLayouts from '@mermaid-js/layout-elk';
-import {fraction, add, subtract, multiply, divide, smaller, format, number, Fraction} from 'mathjs';
+import {fraction, add, subtract, multiply, divide, smaller, format, number, Fraction, lcm} from 'mathjs';
 
 /**
  * @typedef {{
@@ -83,7 +83,7 @@ function to_mermaid(graph) {
     let ordered_nodes = [...graph.nodes()];
     let ordered_edges = [...graph.links()];
 
-    let result = "flowchart-elk\n";
+    let result = "flowchart-elk TD\n";
 
     for (const node of ordered_nodes) {
         const data = node.data;
@@ -127,7 +127,7 @@ function createNodeOverlay(node_svg_element, node) {
     overlay.querySelector('.node-item-name').textContent = obj.name;
 
     // Initialize image
-    overlay.querySelector('.node-icon').setAttribute("src", `images/game_icons/${node.data.obj.id}.png`)
+    overlay.querySelector('.node-icon').src = `images/game_icons/${node.data.obj.id}.png`;
 
     //
     // Initialize alternate recipes select, or remove if there are none
@@ -180,9 +180,6 @@ function createEdgeOverlay(edge_label_element, edge) {
     /** @type {HTMLDivElement} */
     const overlay = clone.firstChild;
     edge.data.html = overlay;
-
-    // Initialize the overlay
-    overlay.querySelector('.edge-ratio-label').textContent = formatFrac(edge.data.total_fraction);
 
     edge_label_element.replaceChildren(overlay);
 }
@@ -330,22 +327,28 @@ function generateSchematic() {
     return product_node;
 }
 
+function applyDisplayMultiplier(frac) {
+    return multiply(frac, g_.config.display_multiplier);
+}
+
 /**
  * 
  * @param {MyNodeInfo} node
  * @returns {Fraction}
  */
 function getNodeProductionPerMinute(node) {
-    return multiply(multiply(divide(1, node.production_duration), node.total_machines_required), 60);
+    const single_machine_prod_per_sec = divide(1, node.production_duration);
+    const all_machines_prod_per_sec = multiply(single_machine_prod_per_sec, node.total_machines_required);
+    return multiply(all_machines_prod_per_sec, 60);
 }
 
 function updateOverlay() {
     const graph = g_.product_node.graph;
     for (const node of graph.nodes()) {
-        node.data.html.querySelector('.production-rate-label').textContent = `${formatFrac(getNodeProductionPerMinute(node.data), false)}/m`;
+        node.data.html.querySelector('.production-rate-label').textContent = `${formatFrac(applyDisplayMultiplier(getNodeProductionPerMinute(node.data)), false)}/m`;
     
         if (undefined === node.data.trivial_prod) {
-            node.data.html.querySelector('.machines-required-label').textContent = formatFrac(node.data.total_machines_required, false);
+            node.data.html.querySelector('.machines-required-label').textContent = formatFrac(applyDisplayMultiplier(node.data.total_machines_required), false);
         }
     }
 
@@ -354,7 +357,7 @@ function updateOverlay() {
 
         const parent_prod_per_min = getNodeProductionPerMinute(edge.source.data);
         const input_prod = multiply(parent_prod_per_min, edge.data.total_fraction);
-        edge.data.html.querySelector('.edge-production-label').textContent = `${formatFrac(input_prod, false)}/m`;
+        edge.data.html.querySelector('.edge-production-label').textContent = `${formatFrac(applyDisplayMultiplier(input_prod), false)}/m`;
     }
 }
 
@@ -398,7 +401,9 @@ async function generateGraph() {
         createEdgeOverlay(edge_label_svg_elements[i], current_edge);
     }
 
-    updateOverlay();
+    updateDisplayMultiplierAuto();
+    // Called by "updateDisplayMultiplierAuto"
+    //updateOverlay();
 }
 
 function resetAlternateRecipes() {
@@ -417,6 +422,23 @@ function resetAlternateRecipes() {
 
 /** @param {InputEvent} e */
 function numberInputFilter(e) { e.target.value = e.target.value.replace(/[^0-9/.]+/g, ''); }
+
+function updateDisplayMultiplier() {
+    g_.config.display_multiplier = fraction(g_.html_elements.displayMultiplierInput.value);
+    g_.config.notifyChange();
+    updateOverlay();
+}
+
+function updateDisplayMultiplierAuto() {
+    // Calculate the LCM of the denominators of all machines required
+    const computed_lcm = lcm(...map(
+        g_.product_node?.graph.nodes(),
+        (node) => node.data.total_machines_required.d
+    ))
+
+    g_.html_elements.displayMultiplierInput.value = computed_lcm.toString();
+    updateDisplayMultiplier();
+}
 
 function initGameData() {
     // Transform information to fraction objects
@@ -493,16 +515,17 @@ function initTrivialResources() {
 
         row.insertCell().innerHTML = `<label>${obj.name}</label>`;
         
+        /** @type {HTMLInputElement} */
         const text_box = document.createElement("input");
-        text_box.setAttribute("type", "text");
-        text_box.setAttribute("size", "7");
-        text_box.setAttribute("placeholder", "Prod/m");
+        text_box.type = "text";
+        text_box.size = 7;
+        text_box.placeholder = "Prod/m";
         text_box.classList.add("trivialResourceProdInput");
         text_box.oninput = numberInputFilter;
 
         let prod = g_.config.trivial_resources.get(ingredient_id);
         if (undefined !== prod) {
-            text_box.setAttribute("value", format(multiply(prod, 60), { fraction: 'ratio' })); // Prod/s -> Prod/m
+            text_box.value = format(multiply(prod, 60), { fraction: 'ratio' }); // Prod/s -> Prod/m
         }
 
         row.insertCell().appendChild(text_box);
@@ -538,6 +561,19 @@ function initTrivialResources() {
         g_.config.notifyChange();
         generateGraph();
     }
+}
+
+function initDisplayMultiplier() {
+    g_.html_elements.displayMultiplierInput.size = 3;
+    g_.html_elements.displayMultiplierInput.value = formatFrac(g_.config.display_multiplier, false);
+
+    /** @type {HTMLInputElement} */
+    const update_button = document.getElementById("updateDisplayMultiplier");
+    update_button.onclick = updateDisplayMultiplier
+
+    /** @type {HTMLInputElement} */
+    const auto_button = document.getElementById("updateDisplayMultiplierAuto");
+    auto_button.onclick = updateDisplayMultiplierAuto;
 }
 
 function initMoversSelects() {
@@ -596,7 +632,7 @@ function initGraph() {
 function init() {
     initGameData();
 
-    const HTML_ELEMENT_NAMES = ['craftableItemSelect', 'graphContainer', 'nodeOverlayTemplate', 'edgeOverlayTemplate'];
+    const HTML_ELEMENT_NAMES = ['craftableItemSelect', 'displayMultiplierInput', 'graphContainer', 'nodeOverlayTemplate', 'edgeOverlayTemplate'];
     for (const name of HTML_ELEMENT_NAMES) {
         g_.html_elements[name] = document.getElementById(name);
     }
@@ -608,6 +644,8 @@ function init() {
     document.getElementById("resetAlternateRecipesButton").onclick = resetAlternateRecipes;
 
     initMoversSelects();
+
+    initDisplayMultiplier();
 
     initGraph();
 

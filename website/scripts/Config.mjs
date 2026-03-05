@@ -9,6 +9,7 @@ export default class Config {
     static #_DEFAULT_PRODUCT = "BP_EquipmentDescriptorStunSpear_C";
     static #_DEFAULT_CONVEYOR_INDEX = "0";
     static #_DEFAULT_PIPELINE_INDEX = "0";
+    static #_DEFAULT_DISPLAY_MULTIPLIER = "1";
     static #_DEFAULT_ALTERNATE_RECIPES = "";
     static #_DEFAULT_TRIVIAL_RESOURCES = "";
 
@@ -23,6 +24,9 @@ export default class Config {
         
         /** @type {number} */
         this.pipeline_speed_index = parseInt(search_params.get("pipelineSpeed") ?? Config.#_DEFAULT_PIPELINE_INDEX);
+
+        /** @type {Fraction} */
+        this.display_multiplier = fraction(search_params.get("displayMultiplier") ?? Config.#_DEFAULT_DISPLAY_MULTIPLIER);
 
         /** @type {Map<GameObjectId, number>} */
         this.alternate_recipes = new Map();
@@ -53,6 +57,7 @@ export default class Config {
             productName: this.product_name,
             conveyorSpeed: this.conveyor_speed_index.toString(),
             pipelineSpeed: this.pipeline_speed_index.toString(),
+            displayMultiplier: format(this.display_multiplier, { fraction: 'decimal' }),
             alternateRecipes: [...this.alternate_recipes.entries()].map((kv) => kv.join('=')).join(','),
             trivialResources: [...this.trivial_resources.entries()].map(([k,v]) => `${k}=${format(v, { fraction: 'ratio' })}`).join(','),
         });
