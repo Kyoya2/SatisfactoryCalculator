@@ -123,10 +123,11 @@ function createNodeOverlay(node_svg_element, node) {
         overlay.style.backgroundColor = 'pink';
     }
 
-    //
     // Initialize labels
-    //
     overlay.querySelector('.node-item-name').textContent = obj.name;
+
+    // Initialize image
+    overlay.querySelector('.node-icon').setAttribute("src", `images/game_icons/${node.data.obj.id}.png`)
 
     //
     // Initialize alternate recipes select, or remove if there are none

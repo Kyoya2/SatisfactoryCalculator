@@ -59,6 +59,12 @@ html, body {
     width: auto;
 }
 
+.node-icon {
+    height: 48px;
+    width: 48px;
+    float: right;
+}
+
 .edge-overlay {
     height: 100%;
     width: 100%;
