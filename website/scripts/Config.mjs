@@ -2,7 +2,7 @@
 
 import {fraction, multiply, format, Fraction} from 'mathjs';
 
-/** @import { GameObjectName, CountedItem, Recipe, GameObject } from "./game_data.auto.mjs" */
+/** @import { GameObjectId, CountedItem, Recipe, CraftingObject } from "./game_data.auto.mjs" */
 
 
 export default class Config {
@@ -15,7 +15,7 @@ export default class Config {
     constructor() {
         const search_params = new URLSearchParams(window.location.search);
 
-        /** @type {GameObjectName} */
+        /** @type {GameObjectId} */
         this.product_name = search_params.get("productName") ?? Config.#_DEFAULT_PRODUCT;
 
         /** @type {number} */
@@ -24,7 +24,7 @@ export default class Config {
         /** @type {number} */
         this.pipeline_speed_index = parseInt(search_params.get("pipelineSpeed") ?? Config.#_DEFAULT_PIPELINE_INDEX);
 
-        /** @type {Map<GameObjectName, number>} */
+        /** @type {Map<GameObjectId, number>} */
         this.alternate_recipes = new Map();
         const alternate_recipes = search_params.get("alternateRecipes") ?? Config.#_DEFAULT_ALTERNATE_RECIPES;
         if (alternate_recipes) {
@@ -34,7 +34,7 @@ export default class Config {
             }
         }
 
-        /** @type {Map<GameObjectName, Fraction>} */
+        /** @type {Map<GameObjectId, Fraction>} */
         this.trivial_resources = new Map();
         const trivial_resources = search_params.get("trivialResources") ?? Config.#_DEFAULT_TRIVIAL_RESOURCES;
         if (trivial_resources) {
