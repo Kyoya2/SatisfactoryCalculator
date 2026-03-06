@@ -22,16 +22,14 @@ import {fraction, add, subtract, multiply, divide, smaller, format, number, Frac
  * @typedef {Object} MyNodeInfo
  * @property {CraftingObject} obj - The associated crafting object
  * @property {number} selected_recipe_index - The index of the recipe in `obj.recipes` that's currently used
- * @property {Fraction} production_duration - The number of seconds it takes to produce 1 unit of this object
- * @property {Fraction} total_required_amount - The number of this object's units that are needed to produce the final product
- * @property {Fraction} total_machines_required - The total number of machines producing the current object using the selected
+ * @property {Fraction} total_production_required - The total required production per second of this unit's resource to fully supply its target nodes
  *  recipe that are required for optimally producing the final product
  * @property {Fraction?} trivial_prod - If it's a trivial resource, contains its production per second
  * @property {HTMLDivElement} html - The HTML overlay of the node
  * 
  * @typedef {Object} MyEdgeInfo
  * @property {Fraction} amount - The number of units of the source node that are required to produce 1 unit of the target node
- * @property {Fraction} total_amount - The number of the source node's units that are needed to produce `total_amount` units of the target node
+ * @property {Fraction} production_required - 
  * @property {Fraction} total_fraction - The part of units of the source node that should be supplied to the target node
  * @property {number} minimal_transporter_index - The index of the minimal transporter that's required for optiomally supplying the source node's
  *  output into the target node's input
@@ -94,7 +92,7 @@ function to_mermaid(graph) {
     result += '\n';
 
     for (const edge of ordered_edges) {
-        result += `${edge.source.data.obj.id}--AAAAAAAAAAAAAAAAAA</br>AAAAAAAAAAAAAAAAAA-->${edge.target.data.obj.id}\n`;
+        result += `${edge.source.data.obj.id}--AAAAAAAAA</br>AAAAAAAAA-->${edge.target.data.obj.id}\n`;
     }
 
     return [result, ordered_nodes, ordered_edges];
@@ -183,6 +181,16 @@ function createEdgeOverlay(edge_label_element, edge) {
 }
 
 /**
+ * Returns the selected recipe of the given node
+ * @param {MyNodeInfo} node 
+ * @returns {Recipe}
+ */
+function selectedRecipe(node) {
+    assert(undefined !== node);
+    return node.obj.recipes[node.selected_recipe_index];
+}
+
+/**
  * Regenerates the entire graph. Should only be called if the structure of the graph was changed.
  */
 async function generateGraphPhase1() {
@@ -226,9 +234,7 @@ async function generateGraphPhase1() {
         node = graph.createNode({
             obj: obj,
             selected_recipe_index: selected_recipe_index,
-            production_duration: 0,
-            total_required_amount: 0,
-            total_machines_required: 0,
+            total_production_required: fraction(0),
             trivial_prod: trivial_prod,
             html: null
         });
@@ -242,7 +248,7 @@ async function generateGraphPhase1() {
                     ingredient_node,
                     {
                         amount: ingredient.amount,
-                        total_amount: 0,
+                        production_required: 0,
                         total_fraction: 0,
                         minimal_transporter_index: -1,
                         path_element: null,
@@ -302,23 +308,18 @@ async function generateGraphPhase1() {
  * Should only be called if some configuration that doesn't affect the graph's structure was changed.
  */
 function generateGraphPhase2() {
-    g_.product_node.data.total_required_amount = fraction(1);
-
-    /** @type {Fraction} */
-    const conveyor_speed = game_data.transporters.conveyor_belts[g_.config.conveyor_speed_index].speed;
-
-    /** @type {Fraction} */
-    const pipeline_speed = game_data.transporters.pipelines[g_.config.pipeline_speed_index].speed;
-
-    let cycle_duration = null;
+    // Set the required production to the production of one machine
+    g_.product_node.data.total_production_required = singleMachineProduction(g_.product_node.data);
 
     // Breadth-first search starting from the product
     for (const node of g_.product_node.graph.smartBreadthFirst(false)) {
+        /*
         if (null === node.data.trivial_prod) {
-            // TODO: instead of calculating the recipe duration according to the user configuration, calculate
-            // the optimal required configuration (belt+pipe speeds). 
-            const selected_recipe = node.data.obj.recipes[node.data.selected_recipe_index];
+            /** @type {Fraction}
+            const conveyor_speed = game_data.transporters.conveyor_belts[g_.config.conveyor_speed_index].speed;
 
+            /** @type {Fraction}
+            const pipeline_speed = game_data.transporters.pipelines[g_.config.pipeline_speed_index].speed;
             // Factor in the time it takes to load the ingredients onto the machine.
             // Assuming that ingredients are loaded into the machine as a product is being produced,
             // this makes a difference only if the load time is higher than the production
@@ -339,30 +340,26 @@ function generateGraphPhase2() {
             }
 
             node.data.production_duration = fractionMax(selected_recipe.duration, slowest_loaded_ingredient.load_time);
+        }
+        */
 
-            // TODO
-            if (null === cycle_duration) {
-                cycle_duration = node.data.production_duration;
+        // Since we're doing a smart search, we know that we already visited all the target nodes.
+        // So, we can reliably calculate the total required production.
+        for (const [target_node, data] of node.flinks()) {
+            node.data.total_production_required = add(node.data.total_production_required, data.production_required);
+        }
+
+        for (const [target_node, data] of node.flinks()) {
+            assert(0 != node.data.total_production_required.n);
+            data.total_fraction = divide(data.production_required, node.data.total_production_required);
+        }
+
+        if (null === node.data.trivial_prod) {
+            // Calculate the required production rate of each input
+            for (const [source_node, data] of node.blinks()) {
+                data.production_required = multiply(node.data.total_production_required, data.amount);
             }
-                
         }
-        else {
-            node.data.production_duration = fraction(1);
-        }
-
-        for (const [target_node, data] of node.flinks()) {
-            data.total_amount = multiply(target_node.data.total_required_amount, data.amount);
-            node.data.total_required_amount = add(node.data.total_required_amount, data.total_amount);
-        }
-
-        for (const [target_node, data] of node.flinks()) {
-            data.total_fraction = divide(data.total_amount, node.data.total_required_amount);
-        }
-
-        // Number of products that a single machine produces in a single cycle
-        const single_machine_production = divide(cycle_duration, node.data.production_duration);
-
-        node.data.total_machines_required = divide(node.data.total_required_amount, single_machine_production);
     }
 
     updateDisplayMultiplierAuto();
@@ -400,9 +397,24 @@ function applyDisplayMultiplier(frac) {
  * @returns {Fraction}
  */
 function getNodeProductionPerMinute(node) {
-    const single_machine_prod_per_sec = divide(1, node.production_duration);
-    const all_machines_prod_per_sec = multiply(single_machine_prod_per_sec, node.total_machines_required);
-    return multiply(all_machines_prod_per_sec, 60);
+    return multiply(node.total_production_required, 60);
+}
+
+/**
+ * @param {MyNodeInfo} node 
+ * @returns {Fraction}
+ */
+function singleMachineProduction(node) {
+    assert(null === node.trivial_prod);
+    return divide(1, selectedRecipe(node).duration);
+}
+
+/**
+ * @param {MyNodeInfo} node 
+ * @returns {Fraction}
+ */
+function machinesRequired(node) {
+    return divide(node.total_production_required, singleMachineProduction(node));
 }
 
 function updateOverlay() {
@@ -411,16 +423,13 @@ function updateOverlay() {
         node.data.html.querySelector('.production-rate-label').textContent = `${formatFrac(applyDisplayMultiplier(getNodeProductionPerMinute(node.data)), false)}/m`;
     
         if (null === node.data.trivial_prod) {
-            node.data.html.querySelector('.machines-required-label').textContent = formatFrac(applyDisplayMultiplier(node.data.total_machines_required), false);
+            node.data.html.querySelector('.machines-required-label').textContent = formatFrac(applyDisplayMultiplier(machinesRequired(node.data)), false);
         }
     }
 
     for (const edge of graph.links()) {
         edge.data.html.querySelector('.edge-ratio-label').textContent = formatFrac(edge.data.total_fraction);
-
-        const parent_prod_per_min = getNodeProductionPerMinute(edge.source.data);
-        const input_prod = multiply(parent_prod_per_min, edge.data.total_fraction);
-        edge.data.html.querySelector('.edge-production-label').textContent = `${formatFrac(applyDisplayMultiplier(input_prod), false)}/m`;
+        edge.data.html.querySelector('.edge-production-label').textContent = `${formatFrac(applyDisplayMultiplier(multiply(edge.data.production_required, 60)), false)}/m`;
     }
 }
 
@@ -452,8 +461,8 @@ function updateDisplayMultiplierAuto() {
     // This will yield a multiplier that, when applied, makes the "machines required" of all nodes
     // into a whole number.
     const computed_lcm = lcm(...map(
-        g_.product_node?.graph.nodes(),
-        (node) => node.data.total_machines_required.d
+        g_.product_node.graph.nodes(),
+        (node) => (null === node.data.trivial_prod) ? machinesRequired(node.data).d : 1
     ))
 
     g_.html_elements.displayMultiplierInput.value = computed_lcm.toString();
