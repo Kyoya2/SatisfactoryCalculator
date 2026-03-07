@@ -135,19 +135,17 @@ def main(
     with open(doc_file_path, 'rb') as f:
         game_object_categories = json.load(f)
 
+    #
+    # Base processing for all objects
+    #
     all_objects: dict[GameObjectId, GameObject]= {}
     categorized_objects: dict[GameObjectCategoryName, dict[GameObjectId, GameObject]] = {}
-
     for game_object_category in game_object_categories:
         assert game_object_category['NativeClass'].startswith(_COMMON_OBJECT_CATEGORY_NAME_PREFIX)
         category_name = game_object_category['NativeClass'][len(_COMMON_OBJECT_CATEGORY_NAME_PREFIX):].rstrip("'")
 
         current_category_objects = {}
         for game_object in game_object_category['Classes']:
-            #if ('mSmallIcon' in game_object) and ('None' != game_object['mSmallIcon']):
-            #    match = self._ICON_STRING_REGEX.match(game_object['mSmallIcon'])
-            #    game_object['iconPath'] = f"./game_assets/{match[1]}.png"
-
             game_object['id'] = game_object['ClassName']
             game_object['name'] = _get_object_display_name(game_object)
 
@@ -157,9 +155,11 @@ def main(
 
         categorized_objects[category_name] = current_category_objects
 
+    #
+    # Process recipes
+    #
     crafting_ingredients: set[GameObjectId] = set()
     crafting_products: set[GameObjectId] = set()
-
     for recipe_id, recipe in categorized_objects['FGRecipe'].items():
         parsed_ingredients = _RECIPE_OBJECT_REGEX.findall(recipe['mIngredients'])
         full_duration = Fraction(float(recipe['mManufactoringDuration']))
@@ -167,7 +167,9 @@ def main(
 
         crafting_ingredients |= {ingredient_name for ingredient_name, amount in parsed_ingredients}
 
-        for product_id, product_amount in _RECIPE_OBJECT_REGEX.findall(recipe['mProduct']):
+        recipe_products = _RECIPE_OBJECT_REGEX.findall(recipe['mProduct'])
+
+        for product_id, product_amount in recipe_products:
             crafting_products.add(product_id)
 
             product_obj = all_objects[product_id]
@@ -227,6 +229,9 @@ def main(
             else:
                 recipes.insert(0, recipe_data)
 
+    #
+    # Process crafting objects
+    #
     crafting_objects: dict[GameObjectId, CraftingObject] = {}
     for crafting_obj_id in crafting_ingredients | crafting_products:
         obj = all_objects[crafting_obj_id]
@@ -254,9 +259,6 @@ def main(
 
         #if '/UI/' not in obj['mSmallIcon']:
         #    print(obj['mSmallIcon'])
-        #if ('mSmallIcon' in obj) and ('None' != game_object['mSmallIcon']):
-        #   match = self._ICON_STRING_REGEX.match(game_object['mSmallIcon'])
-        #   game_object['iconPath'] = f"./game_assets/{match[1]}.png"
 
         assert obj["mForm"] in ("RF_LIQUID", "RF_SOLID", "RF_GAS")
         form = obj["mForm"][len('RF_'):]
@@ -268,6 +270,9 @@ def main(
             form
         )
 
+    #
+    # Process transporters (belts+pipelines)
+    #
     conveyor_belts = []
     for conveyor_belt in categorized_objects['FGBuildableConveyorBelt'].values():
         # For some reason, the "mSpeed" value is twice as large as the actual items/minute speed.
@@ -278,7 +283,6 @@ def main(
         speed = Fraction(60, int(speed))
 
         conveyor_belts.append(Transporter(conveyor_belt['name'], speed))
-
     conveyor_belts.sort(key=lambda b: b.speed, reverse=True)
 
     pipelines = []
@@ -295,10 +299,11 @@ def main(
         speed = Fraction(1, int(flow_limit))
 
         pipelines.append(Transporter(pipeline['name'], speed))
-
     pipelines.sort(key=lambda p: p.speed, reverse=True)
 
+    #
     # Process extracted assets
+    #
     if fmodel_output_dir_path is not None:
         asserts_base_path = path.join(fmodel_output_dir_path, 'Exports', 'FactoryGame', 'Content')
         target_base_path = path.join(path.dirname(__file__), '..', 'website', 'images', 'game_icons')
