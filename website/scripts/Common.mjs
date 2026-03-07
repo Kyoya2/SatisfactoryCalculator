@@ -6,7 +6,9 @@
 export function assert(condition, message) {
     if (!condition) {
         debugger;
-        throw new Error(message || "Assertion failed");
+        message = message || "Assertion failed";
+        alert(message)
+        throw new Error(message);
     }
 }
 
