@@ -7,12 +7,12 @@
 // https://mathjs.org/docs/datatypes/fractions.html
 
 
-import game_data from "./game_data.auto.mjs"
-import {assert, any, reduce, map} from "./utils.mjs"
+import game_data from "./GameData.auto.mjs"
+import {assert, any, reduce, map} from "./Common.mjs"
 import {Graph, Node, Edge} from "./Graph.mjs"
 import Config from "./Config.mjs"
 
-/** @import { GameObjectId, CountedItem, Recipe, CraftingObject } from "./game_data.auto.mjs" */
+/** @import { GameObjectId, CountedItem, Recipe, CraftingObject } from "./GameData.auto.mjs" */
 
 import mermaid from "mermaid";
 import elkLayouts from '@mermaid-js/layout-elk';

@@ -378,5 +378,5 @@ export default game_data;
 
 if __name__ == '__main__':
     data = main()
-    with open(path.join(path.dirname(__file__), '..', 'website', 'scripts', 'game_data.auto.mjs'), 'w') as f:
+    with open(path.join(path.dirname(__file__), '..', 'website', 'scripts', 'GameData.auto.mjs'), 'w') as f:
         f.write(data)

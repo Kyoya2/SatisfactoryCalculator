@@ -1,5 +1,5 @@
 // @ts-check
-import {assert} from "./utils.mjs"
+import {assert} from "./Common.mjs"
 
 /** @typedef {(([arg]: *) => *)} AnyFunc */
 
