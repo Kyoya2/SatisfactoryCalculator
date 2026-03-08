@@ -330,8 +330,6 @@ def main(
     })
     return \
 f"""
-// @ts-check
-
 /* This file is auto-generated! */
 
 /** @import {{Fraction}} from "mathjs" */

@@ -1,5 +1,3 @@
-// @ts-check
-
 import {Fraction, smaller, format} from 'mathjs';
 
 /**

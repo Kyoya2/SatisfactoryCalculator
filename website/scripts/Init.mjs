@@ -1,15 +1,17 @@
-// @ts-check
+import {g_, machinesRequired} from "@/Common.mjs"
+import {assert, formatFrac} from "@/Utils.mjs";
+import Config from "@/Config.mjs"
+import game_data from "@/GameData.auto.mjs"
+/** @import { GameObjectId, CountedItem, Recipe, CraftingObject } from "@/GameData.auto.mjs" */
 
-import {g_, machinesRequired} from "./Common.mjs"
-import { assert, formatFrac } from "./Utils.mjs";
-import game_data from "./GameData.auto.mjs"
-import {generateGraphPhase1, generateGraphPhase2, resetAlternateRecipes, updateDisplayMultiplier, updateDisplayMultiplierAuto} from "./Main.mjs"
-/** @import { GameObjectId, CountedItem, Recipe, CraftingObject } from "./GameData.auto.mjs" */
-
+import TomSelect from "tom-select"
 import * as mathjs from 'mathjs';
 import {fraction, Fraction} from 'mathjs';
 import mermaid from "mermaid";
 import elkLayouts from '@mermaid-js/layout-elk';
+
+// Must be imported last!!!
+import {generateGraphPhase1, generateGraphPhase2, resetAlternateRecipes, updateDisplayMultiplier, updateDisplayMultiplierAuto} from "@/Main.mjs"
 
 
 function initGameData() {
@@ -52,11 +54,11 @@ function initGameData() {
 }
 
 function initCraftableObjectsSelect() {
-    g_.craftableItemSelectTom = new TomSelect( // TODO: install as an NPM module!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        g_.html_elements.craftableItemSelect,
+    return new TomSelect(
+        "#craftableItemSelect",
         {
             options: game_data.crafting_products.map((obj_id) => ({value: obj_id, text: game_data.crafting_objects[obj_id].name})),
-            searchField: "text",
+            searchField: ["text"],
             maxOptions: null,
             placeholder: "Select an item...",
 
@@ -205,14 +207,20 @@ function initGraph() {
 }
 
 export default function initApp() {
+    // This was a bug that I presumably fixed
+    assert(null === g_.config, "Module already initialized");
+    
+    // Must be first!
+    g_.config = new Config();
+
     initGameData();
 
-    const HTML_ELEMENT_NAMES = ['craftableItemSelect', 'displayMultiplierInput', 'graphContainer', 'nodeOverlayTemplate', 'edgeOverlayTemplate'];
+    const HTML_ELEMENT_NAMES = ['displayMultiplierInput', 'graphContainer', 'nodeOverlayTemplate', 'edgeOverlayTemplate'];
     for (const name of HTML_ELEMENT_NAMES) {
         g_.html_elements[name] = document.getElementById(name);
     }
 
-    initCraftableObjectsSelect();
+    const craftable_objects_select = initCraftableObjectsSelect();
 
     initTrivialResources();
 
@@ -225,5 +233,5 @@ export default function initApp() {
     initGraph();
 
     // This will trigger the generation of the graph
-    g_.craftableItemSelectTom.setValue(g_.config.product_name);
+    craftable_objects_select.setValue(g_.config.product_name);
 }

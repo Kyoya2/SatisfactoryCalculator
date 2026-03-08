@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+
+    "baseUrl": ".",
+
+    "paths": {
+      "@/*": ["scripts/*"]
+    },
+
+    "checkJs": true
+  },
+
+  "include": ["scripts/*"]
+}

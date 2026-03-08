@@ -1,9 +1,7 @@
-// @ts-check
-
-import Config from "./Config.mjs"
-import {assert} from "./Utils.mjs"
-/** @import { GameObjectId, CountedItem, Recipe, CraftingObject } from "./GameData.auto.mjs" */
-/** @import { Graph, Node, Edge } from "./Graph.mjs" */
+import Config from "@/Config.mjs"
+import {assert} from "@/Utils.mjs"
+/** @import { GameObjectId, CountedItem, Recipe, CraftingObject } from "@/GameData.auto.mjs" */
+/** @import { Graph, Node, Edge } from "@/Graph.mjs" */
 
 import * as mathjs from 'mathjs';
 import {fraction, Fraction} from 'mathjs';
@@ -37,7 +35,7 @@ import {fraction, Fraction} from 'mathjs';
 export var g_ = {
     html_elements: Object.create(null),
     product_node: null,
-    config: new Config()
+    config: null
 };
 
 // For debugging

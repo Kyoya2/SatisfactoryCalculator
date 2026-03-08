@@ -1,19 +1,15 @@
-// @ts-check
-
 // Docs:
 // https://devhints.io/jsdoc
 // https://tom-select.js.org/docs/
 // https://mermaid.js.org/config/setup/mermaid/interfaces/MermaidConfig.html
 // https://mathjs.org/docs/datatypes/fractions.html
+import game_data from "@/GameData.auto.mjs";
+import {assert, any, reduce, map, fractionMax, formatFrac} from "@/Utils.mjs";
+import {Graph, Node, Edge} from "@/Graph.mjs";
+import {g_, selectedRecipe, singleMachineProduction, machinesRequired, getNodeProductionPerMinute} from "@/Common.mjs";
 
-
-import game_data from "./GameData.auto.mjs";
-import {assert, any, reduce, map, fractionMax, formatFrac} from "./Utils.mjs";
-import {Graph, Node, Edge} from "./Graph.mjs";
-import {g_, selectedRecipe, singleMachineProduction, machinesRequired, getNodeProductionPerMinute} from "./Common.mjs";
-import initApp from "./Init.mjs";
-/** @import { GameObjectId, CountedItem, Recipe, CraftingObject } from "./GameData.auto.mjs" */
-/** @import { MyNodeInfo, MyEdgeInfo } from "./Common.mjs" */
+/** @import { GameObjectId, CountedItem, Recipe, CraftingObject } from "@/GameData.auto.mjs" */
+/** @import { MyNodeInfo, MyEdgeInfo } from "@/Common.mjs" */
 
 import mermaid from "mermaid";
 import * as mathjs from 'mathjs';
@@ -374,4 +370,6 @@ export function updateDisplayMultiplierAuto() {
     updateDisplayMultiplier();
 }
 
+// Must be last
+import initApp from "@/Init.mjs";
 initApp();
