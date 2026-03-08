@@ -30,11 +30,11 @@ GameObject: TypeAlias = dict[str, Any]
 
 
 class CountedItem(NamedTuple):
-    item_name: GameObjectId
+    id: GameObjectId
     amount: Fraction
 
     def __repr__(self):
-        return f"{self.item_name} [{self.amount}]"
+        return f"{self.id} [{self.amount}]"
 
 
 class Recipe(NamedTuple):
@@ -56,14 +56,6 @@ class CraftingObject(NamedTuple):
 class Transporter(NamedTuple):
     name: str
     speed: Fraction
-
-
-@dataclass
-class ItemDescriptor:
-    item_name: GameObjectId
-    production_duration: float
-    total_required_amount: float
-    total_machines_required: float
 
 
 def jsonify(obj):
@@ -342,7 +334,7 @@ f"""/* This file is auto-generated! */
 
 /**
  * @typedef {{string}} GameObjectId
- * @typedef {{{{item_name: GameObjectId, amount: Fraction}}}} CountedItem
+ * @typedef {{{{id: GameObjectId, amount: Fraction}}}} CountedItem
  * @typedef {{{{
  *      name: GameObjectId,
  *      ingredients: CountedItem[],

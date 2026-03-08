@@ -174,7 +174,7 @@ export async function generateGraphPhase1() {
 
         if (undefined !== selected_recipe) {
             for (const ingredient of selected_recipe.ingredients) {
-                const ingredient_node = _generateGraphLayout(ingredient.item_name);
+                const ingredient_node = _generateGraphLayout(ingredient.id);
                 node.add_blink(
                     ingredient_node,
                     {
@@ -259,7 +259,7 @@ export function generateGraphPhase2() {
                 const ingredient = selected_recipe.ingredients[i];
 
                 // The time it takes to load 1 unit
-                const load_1_time = ('SOLID' == game_data.crafting_objects[ingredient.item_name].form) ? conveyor_speed : pipeline_speed;
+                const load_1_time = ('SOLID' == game_data.crafting_objects[ingredient.id].form) ? conveyor_speed : pipeline_speed;
 
                 // The time it takes to load the number of units that are required for the product
                 const total_load_time = multiply(ingredient.amount, load_1_time);

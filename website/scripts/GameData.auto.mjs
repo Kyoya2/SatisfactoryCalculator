@@ -4,7 +4,7 @@
 
 /**
  * @typedef {string} GameObjectId
- * @typedef {{item_name: GameObjectId, amount: Fraction}} CountedItem
+ * @typedef {{id: GameObjectId, amount: Fraction}} CountedItem
  * @typedef {{
  *      name: GameObjectId,
  *      ingredients: CountedItem[],
@@ -208,28 +208,28 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "BP_EquipmentDescriptorShockShank_C"
+                            "id": "BP_EquipmentDescriptorShockShank_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 30
                             },
-                            "item_name": "Desc_HighSpeedWire_C"
+                            "id": "Desc_HighSpeedWire_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_IronRod_C"
+                            "id": "Desc_IronRod_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 10
                             },
-                            "item_name": "Desc_Cable_C"
+                            "id": "Desc_Cable_C"
                         }
                     ],
                     "is_alternate": false,
@@ -256,21 +256,21 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "BP_EquipmentDescriptorShockShank_C"
+                            "id": "BP_EquipmentDescriptorShockShank_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 25
                             },
-                            "item_name": "Desc_CandyCane_C"
+                            "id": "Desc_CandyCane_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 15
                             },
-                            "item_name": "Desc_Gift_C"
+                            "id": "Desc_Gift_C"
                         }
                     ],
                     "is_alternate": false,
@@ -297,21 +297,21 @@ const game_data = {
                                 "d": 1,
                                 "n": 50
                             },
-                            "item_name": "Desc_Fabric_C"
+                            "id": "Desc_Fabric_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 10
                             },
-                            "item_name": "Desc_CopperSheet_C"
+                            "id": "Desc_CopperSheet_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 10
                             },
-                            "item_name": "Desc_SteelPipe_C"
+                            "id": "Desc_SteelPipe_C"
                         }
                     ],
                     "is_alternate": false,
@@ -338,28 +338,28 @@ const game_data = {
                                 "d": 1,
                                 "n": 50
                             },
-                            "item_name": "Desc_Rubber_C"
+                            "id": "Desc_Rubber_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 50
                             },
-                            "item_name": "Desc_Plastic_C"
+                            "id": "Desc_Plastic_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 50
                             },
-                            "item_name": "Desc_AluminumPlate_C"
+                            "id": "Desc_AluminumPlate_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 50
                             },
-                            "item_name": "Desc_Fabric_C"
+                            "id": "Desc_Fabric_C"
                         }
                     ],
                     "is_alternate": false,
@@ -386,28 +386,28 @@ const game_data = {
                                 "d": 1,
                                 "n": 8
                             },
-                            "item_name": "Desc_Motor_C"
+                            "id": "Desc_Motor_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_ModularFrameHeavy_C"
+                            "id": "Desc_ModularFrameHeavy_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 8
                             },
-                            "item_name": "Desc_Computer_C"
+                            "id": "Desc_Computer_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 40
                             },
-                            "item_name": "Desc_AluminumPlate_C"
+                            "id": "Desc_AluminumPlate_C"
                         }
                     ],
                     "is_alternate": false,
@@ -434,28 +434,28 @@ const game_data = {
                                 "d": 1,
                                 "n": 5
                             },
-                            "item_name": "Desc_Motor_C"
+                            "id": "Desc_Motor_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 10
                             },
-                            "item_name": "Desc_SteelPipe_C"
+                            "id": "Desc_SteelPipe_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 25
                             },
-                            "item_name": "Desc_IronPlate_C"
+                            "id": "Desc_IronPlate_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 50
                             },
-                            "item_name": "Desc_Wire_C"
+                            "id": "Desc_Wire_C"
                         }
                     ],
                     "is_alternate": false,
@@ -482,21 +482,21 @@ const game_data = {
                                 "d": 1,
                                 "n": 20
                             },
-                            "item_name": "Desc_Silica_C"
+                            "id": "Desc_Silica_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_ModularFrame_C"
+                            "id": "Desc_ModularFrame_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_Rotor_C"
+                            "id": "Desc_Rotor_C"
                         }
                     ],
                     "is_alternate": false,
@@ -523,21 +523,21 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "BP_EquipmentDescriptorObjectScanner_C"
+                            "id": "BP_EquipmentDescriptorObjectScanner_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 10
                             },
-                            "item_name": "Desc_SteelPlate_C"
+                            "id": "Desc_SteelPlate_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 50
                             },
-                            "item_name": "Desc_Cable_C"
+                            "id": "Desc_Cable_C"
                         }
                     ],
                     "is_alternate": false,
@@ -564,21 +564,21 @@ const game_data = {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_IronPlateReinforced_C"
+                            "id": "Desc_IronPlateReinforced_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 20
                             },
-                            "item_name": "Desc_Wire_C"
+                            "id": "Desc_Wire_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 50
                             },
-                            "item_name": "Desc_IronScrew_C"
+                            "id": "Desc_IronScrew_C"
                         }
                     ],
                     "is_alternate": false,
@@ -605,28 +605,28 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_Motor_C"
+                            "id": "Desc_Motor_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 10
                             },
-                            "item_name": "Desc_Rubber_C"
+                            "id": "Desc_Rubber_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 25
                             },
-                            "item_name": "Desc_SteelPipe_C"
+                            "id": "Desc_SteelPipe_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 250
                             },
-                            "item_name": "Desc_IronScrew_C"
+                            "id": "Desc_IronScrew_C"
                         }
                     ],
                     "is_alternate": false,
@@ -653,28 +653,28 @@ const game_data = {
                                 "d": 1,
                                 "n": 10
                             },
-                            "item_name": "Desc_IronRod_C"
+                            "id": "Desc_IronRod_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_IronPlateReinforced_C"
+                            "id": "Desc_IronPlateReinforced_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 15
                             },
-                            "item_name": "Desc_Cable_C"
+                            "id": "Desc_Cable_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 50
                             },
-                            "item_name": "Desc_Wire_C"
+                            "id": "Desc_Wire_C"
                         }
                     ],
                     "is_alternate": false,
@@ -701,28 +701,28 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "BP_EquipmentDescriptorShockShank_C"
+                            "id": "BP_EquipmentDescriptorShockShank_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 5
                             },
-                            "item_name": "Desc_ModularFrame_C"
+                            "id": "Desc_ModularFrame_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 25
                             },
-                            "item_name": "Desc_IronRod_C"
+                            "id": "Desc_IronRod_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 500
                             },
-                            "item_name": "Desc_Wire_C"
+                            "id": "Desc_Wire_C"
                         }
                     ],
                     "is_alternate": false,
@@ -749,14 +749,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_IronPlate_C"
+                            "id": "Desc_IronPlate_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_IronRod_C"
+                            "id": "Desc_IronRod_C"
                         }
                     ],
                     "is_alternate": false,
@@ -776,14 +776,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_SteelPipe_C"
+                            "id": "Desc_SteelPipe_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_IronPlate_C"
+                            "id": "Desc_IronPlate_C"
                         }
                     ],
                     "is_alternate": true,
@@ -810,7 +810,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_AlienProtein_C"
+                            "id": "Desc_AlienProtein_C"
                         }
                     ],
                     "is_alternate": false,
@@ -839,28 +839,28 @@ const game_data = {
                                 "d": 1,
                                 "n": 5
                             },
-                            "item_name": "Desc_SAMFluctuator_C"
+                            "id": "Desc_SAMFluctuator_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_CrystalShard_C"
+                            "id": "Desc_CrystalShard_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_QuantumOscillator_C"
+                            "id": "Desc_QuantumOscillator_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 24000
                             },
-                            "item_name": "Desc_QuantumEnergy_C"
+                            "id": "Desc_QuantumEnergy_C"
                         }
                     ],
                     "is_alternate": false,
@@ -887,7 +887,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_HatcherParts_C"
+                            "id": "Desc_HatcherParts_C"
                         }
                     ],
                     "is_alternate": false,
@@ -909,7 +909,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_StingerParts_C"
+                            "id": "Desc_StingerParts_C"
                         }
                     ],
                     "is_alternate": false,
@@ -931,7 +931,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_SpitterParts_C"
+                            "id": "Desc_SpitterParts_C"
                         }
                     ],
                     "is_alternate": false,
@@ -953,7 +953,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_HogParts_C"
+                            "id": "Desc_HogParts_C"
                         }
                     ],
                     "is_alternate": false,
@@ -982,14 +982,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_OreBauxite_C"
+                            "id": "Desc_OreBauxite_C"
                         },
                         {
                             "amount": {
                                 "d": 2,
                                 "n": 3
                             },
-                            "item_name": "Desc_Water_C"
+                            "id": "Desc_Water_C"
                         }
                     ],
                     "is_alternate": false,
@@ -1009,7 +1009,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_PackagedAlumina_C"
+                            "id": "Desc_PackagedAlumina_C"
                         }
                     ],
                     "is_alternate": true,
@@ -1029,14 +1029,14 @@ const game_data = {
                                 "d": 6,
                                 "n": 5
                             },
-                            "item_name": "Desc_OreBauxite_C"
+                            "id": "Desc_OreBauxite_C"
                         },
                         {
                             "amount": {
                                 "d": 6,
                                 "n": 5
                             },
-                            "item_name": "Desc_Water_C"
+                            "id": "Desc_Water_C"
                         }
                     ],
                     "is_alternate": true,
@@ -1063,7 +1063,7 @@ const game_data = {
                                 "d": 2,
                                 "n": 3
                             },
-                            "item_name": "Desc_AluminumIngot_C"
+                            "id": "Desc_AluminumIngot_C"
                         }
                     ],
                     "is_alternate": false,
@@ -1085,14 +1085,14 @@ const game_data = {
                                 "d": 3,
                                 "n": 4
                             },
-                            "item_name": "Desc_AluminumIngot_C"
+                            "id": "Desc_AluminumIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 3,
                                 "n": 2
                             },
-                            "item_name": "Desc_CopperIngot_C"
+                            "id": "Desc_CopperIngot_C"
                         }
                     ],
                     "is_alternate": true,
@@ -1119,14 +1119,14 @@ const game_data = {
                                 "d": 2,
                                 "n": 3
                             },
-                            "item_name": "Desc_AluminumScrap_C"
+                            "id": "Desc_AluminumScrap_C"
                         },
                         {
                             "amount": {
                                 "d": 4,
                                 "n": 5
                             },
-                            "item_name": "Desc_Silica_C"
+                            "id": "Desc_Silica_C"
                         }
                     ],
                     "is_alternate": false,
@@ -1147,7 +1147,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_AluminumScrap_C"
+                            "id": "Desc_AluminumScrap_C"
                         }
                     ],
                     "is_alternate": true,
@@ -1174,14 +1174,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 5
                             },
-                            "item_name": "Desc_AluminumPlate_C"
+                            "id": "Desc_AluminumPlate_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_CopperSheet_C"
+                            "id": "Desc_CopperSheet_C"
                         }
                     ],
                     "is_alternate": false,
@@ -1203,14 +1203,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_AluminumCasing_C"
+                            "id": "Desc_AluminumCasing_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_Rubber_C"
+                            "id": "Desc_Rubber_C"
                         }
                     ],
                     "is_alternate": true,
@@ -1237,14 +1237,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_AluminumIngot_C"
+                            "id": "Desc_AluminumIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 3,
                                 "n": 1
                             },
-                            "item_name": "Desc_CopperIngot_C"
+                            "id": "Desc_CopperIngot_C"
                         }
                     ],
                     "is_alternate": false,
@@ -1273,14 +1273,14 @@ const game_data = {
                                 "d": 3,
                                 "n": 2
                             },
-                            "item_name": "Desc_AluminaSolution_C"
+                            "id": "Desc_AluminaSolution_C"
                         },
                         {
                             "amount": {
                                 "d": 3,
                                 "n": 1
                             },
-                            "item_name": "Desc_Coal_C"
+                            "id": "Desc_Coal_C"
                         }
                     ],
                     "is_alternate": false,
@@ -1300,14 +1300,14 @@ const game_data = {
                                 "d": 5,
                                 "n": 3
                             },
-                            "item_name": "Desc_AluminaSolution_C"
+                            "id": "Desc_AluminaSolution_C"
                         },
                         {
                             "amount": {
                                 "d": 5,
                                 "n": 1
                             },
-                            "item_name": "Desc_PetroleumCoke_C"
+                            "id": "Desc_PetroleumCoke_C"
                         }
                     ],
                     "is_alternate": true,
@@ -1327,28 +1327,28 @@ const game_data = {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_OreBauxite_C"
+                            "id": "Desc_OreBauxite_C"
                         },
                         {
                             "amount": {
                                 "d": 3,
                                 "n": 1
                             },
-                            "item_name": "Desc_Coal_C"
+                            "id": "Desc_Coal_C"
                         },
                         {
                             "amount": {
                                 "d": 6,
                                 "n": 1
                             },
-                            "item_name": "Desc_SulfuricAcid_C"
+                            "id": "Desc_SulfuricAcid_C"
                         },
                         {
                             "amount": {
                                 "d": 5,
                                 "n": 1
                             },
-                            "item_name": "Desc_Water_C"
+                            "id": "Desc_Water_C"
                         }
                     ],
                     "is_alternate": true,
@@ -1375,21 +1375,21 @@ const game_data = {
                                 "d": 2,
                                 "n": 5
                             },
-                            "item_name": "Desc_SulfuricAcid_C"
+                            "id": "Desc_SulfuricAcid_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_AluminaSolution_C"
+                            "id": "Desc_AluminaSolution_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_AluminumCasing_C"
+                            "id": "Desc_AluminumCasing_C"
                         }
                     ],
                     "is_alternate": false,
@@ -1409,28 +1409,28 @@ const game_data = {
                                 "d": 2,
                                 "n": 3
                             },
-                            "item_name": "Desc_Sulfur_C"
+                            "id": "Desc_Sulfur_C"
                         },
                         {
                             "amount": {
                                 "d": 4,
                                 "n": 7
                             },
-                            "item_name": "Desc_AluminumPlate_C"
+                            "id": "Desc_AluminumPlate_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_Plastic_C"
+                            "id": "Desc_Plastic_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_Wire_C"
+                            "id": "Desc_Wire_C"
                         }
                     ],
                     "is_alternate": true,
@@ -1463,7 +1463,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_GenericBiomass_C"
+                            "id": "Desc_GenericBiomass_C"
                         }
                     ],
                     "is_alternate": false,
@@ -1492,7 +1492,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_Wire_C"
+                            "id": "Desc_Wire_C"
                         }
                     ],
                     "is_alternate": false,
@@ -1514,14 +1514,14 @@ const game_data = {
                                 "d": 9,
                                 "n": 5
                             },
-                            "item_name": "Desc_Wire_C"
+                            "id": "Desc_Wire_C"
                         },
                         {
                             "amount": {
                                 "d": 9,
                                 "n": 2
                             },
-                            "item_name": "Desc_HeavyOilResidue_C"
+                            "id": "Desc_HeavyOilResidue_C"
                         }
                     ],
                     "is_alternate": true,
@@ -1541,14 +1541,14 @@ const game_data = {
                                 "d": 11,
                                 "n": 3
                             },
-                            "item_name": "Desc_HighSpeedWire_C"
+                            "id": "Desc_HighSpeedWire_C"
                         },
                         {
                             "amount": {
                                 "d": 11,
                                 "n": 2
                             },
-                            "item_name": "Desc_Rubber_C"
+                            "id": "Desc_Rubber_C"
                         }
                     ],
                     "is_alternate": true,
@@ -1568,14 +1568,14 @@ const game_data = {
                                 "d": 20,
                                 "n": 9
                             },
-                            "item_name": "Desc_Wire_C"
+                            "id": "Desc_Wire_C"
                         },
                         {
                             "amount": {
                                 "d": 10,
                                 "n": 3
                             },
-                            "item_name": "Desc_Rubber_C"
+                            "id": "Desc_Rubber_C"
                         }
                     ],
                     "is_alternate": true,
@@ -1602,7 +1602,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_Gift_C"
+                            "id": "Desc_Gift_C"
                         }
                     ],
                     "is_alternate": false,
@@ -1629,21 +1629,21 @@ const game_data = {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_CartridgeStandard_C"
+                            "id": "Desc_CartridgeStandard_C"
                         },
                         {
                             "amount": {
                                 "d": 50,
                                 "n": 3
                             },
-                            "item_name": "Desc_AluminumCasing_C"
+                            "id": "Desc_AluminumCasing_C"
                         },
                         {
                             "amount": {
                                 "d": 50,
                                 "n": 3
                             },
-                            "item_name": "Desc_TurboFuel_C"
+                            "id": "Desc_TurboFuel_C"
                         }
                     ],
                     "is_alternate": false,
@@ -1664,21 +1664,21 @@ const game_data = {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_CartridgeStandard_C"
+                            "id": "Desc_CartridgeStandard_C"
                         },
                         {
                             "amount": {
                                 "d": 50,
                                 "n": 3
                             },
-                            "item_name": "Desc_AluminumCasing_C"
+                            "id": "Desc_AluminumCasing_C"
                         },
                         {
                             "amount": {
                                 "d": 50,
                                 "n": 3
                             },
-                            "item_name": "Desc_LiquidTurboFuel_C"
+                            "id": "Desc_LiquidTurboFuel_C"
                         }
                     ],
                     "is_alternate": false,
@@ -1705,14 +1705,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_CartridgeStandard_C"
+                            "id": "Desc_CartridgeStandard_C"
                         },
                         {
                             "amount": {
                                 "d": 10,
                                 "n": 1
                             },
-                            "item_name": "Desc_HighSpeedConnector_C"
+                            "id": "Desc_HighSpeedConnector_C"
                         }
                     ],
                     "is_alternate": false,
@@ -1740,14 +1740,14 @@ const game_data = {
                                 "d": 5,
                                 "n": 1
                             },
-                            "item_name": "Desc_CopperSheet_C"
+                            "id": "Desc_CopperSheet_C"
                         },
                         {
                             "amount": {
                                 "d": 15,
                                 "n": 2
                             },
-                            "item_name": "Desc_GunpowderMK2_C"
+                            "id": "Desc_GunpowderMK2_C"
                         }
                     ],
                     "is_alternate": false,
@@ -1775,7 +1775,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_Stone_C"
+                            "id": "Desc_Stone_C"
                         }
                     ],
                     "is_alternate": false,
@@ -1797,14 +1797,14 @@ const game_data = {
                                 "d": 2,
                                 "n": 3
                             },
-                            "item_name": "Desc_Stone_C"
+                            "id": "Desc_Stone_C"
                         },
                         {
                             "amount": {
                                 "d": 4,
                                 "n": 5
                             },
-                            "item_name": "Desc_Water_C"
+                            "id": "Desc_Water_C"
                         }
                     ],
                     "is_alternate": true,
@@ -1824,14 +1824,14 @@ const game_data = {
                                 "d": 9,
                                 "n": 10
                             },
-                            "item_name": "Desc_Stone_C"
+                            "id": "Desc_Stone_C"
                         },
                         {
                             "amount": {
                                 "d": 9,
                                 "n": 2
                             },
-                            "item_name": "Desc_Rubber_C"
+                            "id": "Desc_Rubber_C"
                         }
                     ],
                     "is_alternate": true,
@@ -1851,14 +1851,14 @@ const game_data = {
                                 "d": 10,
                                 "n": 3
                             },
-                            "item_name": "Desc_Silica_C"
+                            "id": "Desc_Silica_C"
                         },
                         {
                             "amount": {
                                 "d": 5,
                                 "n": 6
                             },
-                            "item_name": "Desc_Stone_C"
+                            "id": "Desc_Stone_C"
                         }
                     ],
                     "is_alternate": true,
@@ -1885,28 +1885,28 @@ const game_data = {
                                 "d": 1,
                                 "n": 5
                             },
-                            "item_name": "Desc_IronPlateReinforced_C"
+                            "id": "Desc_IronPlateReinforced_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 25
                             },
-                            "item_name": "Desc_IronRod_C"
+                            "id": "Desc_IronRod_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 160
                             },
-                            "item_name": "Desc_IronScrew_C"
+                            "id": "Desc_IronScrew_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 15
                             },
-                            "item_name": "Desc_Cable_C"
+                            "id": "Desc_Cable_C"
                         }
                     ],
                     "is_alternate": false,
@@ -1933,14 +1933,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 5
                             },
-                            "item_name": "Desc_CopperSheet_C"
+                            "id": "Desc_CopperSheet_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 20
                             },
-                            "item_name": "Desc_HighSpeedWire_C"
+                            "id": "Desc_HighSpeedWire_C"
                         }
                     ],
                     "is_alternate": false,
@@ -1962,14 +1962,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 15
                             },
-                            "item_name": "Desc_HighSpeedWire_C"
+                            "id": "Desc_HighSpeedWire_C"
                         },
                         {
                             "amount": {
                                 "d": 2,
                                 "n": 7
                             },
-                            "item_name": "Desc_Plastic_C"
+                            "id": "Desc_Plastic_C"
                         }
                     ],
                     "is_alternate": true,
@@ -1996,14 +1996,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_CopperSheet_C"
+                            "id": "Desc_CopperSheet_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_Plastic_C"
+                            "id": "Desc_Plastic_C"
                         }
                     ],
                     "is_alternate": false,
@@ -2025,14 +2025,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_Rubber_C"
+                            "id": "Desc_Rubber_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 8
                             },
-                            "item_name": "Desc_PetroleumCoke_C"
+                            "id": "Desc_PetroleumCoke_C"
                         }
                     ],
                     "is_alternate": true,
@@ -2052,14 +2052,14 @@ const game_data = {
                                 "d": 7,
                                 "n": 10
                             },
-                            "item_name": "Desc_Plastic_C"
+                            "id": "Desc_Plastic_C"
                         },
                         {
                             "amount": {
                                 "d": 7,
                                 "n": 30
                             },
-                            "item_name": "Desc_HighSpeedWire_C"
+                            "id": "Desc_HighSpeedWire_C"
                         }
                     ],
                     "is_alternate": true,
@@ -2079,14 +2079,14 @@ const game_data = {
                                 "d": 5,
                                 "n": 11
                             },
-                            "item_name": "Desc_CopperSheet_C"
+                            "id": "Desc_CopperSheet_C"
                         },
                         {
                             "amount": {
                                 "d": 5,
                                 "n": 11
                             },
-                            "item_name": "Desc_Silica_C"
+                            "id": "Desc_Silica_C"
                         }
                     ],
                     "is_alternate": true,
@@ -2113,14 +2113,14 @@ const game_data = {
                                 "d": 12,
                                 "n": 1
                             },
-                            "item_name": "Desc_SAMIngot_C"
+                            "id": "Desc_SAMIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 2,
                                 "n": 3
                             },
-                            "item_name": "Desc_OreIron_C"
+                            "id": "Desc_OreIron_C"
                         }
                     ],
                     "is_alternate": true,
@@ -2140,14 +2140,14 @@ const game_data = {
                                 "d": 12,
                                 "n": 1
                             },
-                            "item_name": "Desc_SAMIngot_C"
+                            "id": "Desc_SAMIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_Stone_C"
+                            "id": "Desc_Stone_C"
                         }
                     ],
                     "is_alternate": true,
@@ -2167,7 +2167,7 @@ const game_data = {
                                 "d": 10,
                                 "n": 1
                             },
-                            "item_name": "Desc_Wood_C"
+                            "id": "Desc_Wood_C"
                         }
                     ],
                     "is_alternate": true,
@@ -2187,7 +2187,7 @@ const game_data = {
                                 "d": 6,
                                 "n": 5
                             },
-                            "item_name": "Desc_GenericBiomass_C"
+                            "id": "Desc_GenericBiomass_C"
                         }
                     ],
                     "is_alternate": true,
@@ -2214,14 +2214,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_Coal_C"
+                            "id": "Desc_Coal_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_Sulfur_C"
+                            "id": "Desc_Sulfur_C"
                         }
                     ],
                     "is_alternate": false,
@@ -2241,14 +2241,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 8000
                             },
-                            "item_name": "Desc_RocketFuel_C"
+                            "id": "Desc_RocketFuel_C"
                         },
                         {
                             "amount": {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_CrystalShard_C"
+                            "id": "Desc_CrystalShard_C"
                         }
                     ],
                     "is_alternate": false,
@@ -2268,14 +2268,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 6
                             },
-                            "item_name": "Desc_LiquidTurboFuel_C"
+                            "id": "Desc_LiquidTurboFuel_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_NitricAcid_C"
+                            "id": "Desc_NitricAcid_C"
                         }
                     ],
                     "is_alternate": false,
@@ -2295,28 +2295,28 @@ const game_data = {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_LiquidFuel_C"
+                            "id": "Desc_LiquidFuel_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 3000
                             },
-                            "item_name": "Desc_NitrogenGas_C"
+                            "id": "Desc_NitrogenGas_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_Sulfur_C"
+                            "id": "Desc_Sulfur_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_Coal_C"
+                            "id": "Desc_Coal_C"
                         }
                     ],
                     "is_alternate": true,
@@ -2336,14 +2336,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 6
                             },
-                            "item_name": "Desc_PackagedRocketFuel_C"
+                            "id": "Desc_PackagedRocketFuel_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_DarkMatter_C"
+                            "id": "Desc_DarkMatter_C"
                         }
                     ],
                     "is_alternate": true,
@@ -2370,28 +2370,28 @@ const game_data = {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_Computer_C"
+                            "id": "Desc_Computer_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_CircuitBoardHighSpeed_C"
+                            "id": "Desc_CircuitBoardHighSpeed_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_HighSpeedConnector_C"
+                            "id": "Desc_HighSpeedConnector_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 28
                             },
-                            "item_name": "Desc_Plastic_C"
+                            "id": "Desc_Plastic_C"
                         }
                     ],
                     "is_alternate": false,
@@ -2413,28 +2413,28 @@ const game_data = {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_Computer_C"
+                            "id": "Desc_Computer_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_ElectromagneticControlRod_C"
+                            "id": "Desc_ElectromagneticControlRod_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 10
                             },
-                            "item_name": "Desc_Battery_C"
+                            "id": "Desc_Battery_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 25
                             },
-                            "item_name": "Desc_Wire_C"
+                            "id": "Desc_Wire_C"
                         }
                     ],
                     "is_alternate": true,
@@ -2454,14 +2454,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_ModularFrameLightweight_C"
+                            "id": "Desc_ModularFrameLightweight_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_CoolingSystem_C"
+                            "id": "Desc_CoolingSystem_C"
                         }
                     ],
                     "is_alternate": true,
@@ -2488,21 +2488,21 @@ const game_data = {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_CircuitBoard_C"
+                            "id": "Desc_CircuitBoard_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 8
                             },
-                            "item_name": "Desc_Cable_C"
+                            "id": "Desc_Cable_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 16
                             },
-                            "item_name": "Desc_Plastic_C"
+                            "id": "Desc_Plastic_C"
                         }
                     ],
                     "is_alternate": false,
@@ -2524,14 +2524,14 @@ const game_data = {
                                 "d": 2,
                                 "n": 3
                             },
-                            "item_name": "Desc_CircuitBoard_C"
+                            "id": "Desc_CircuitBoard_C"
                         },
                         {
                             "amount": {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_CrystalOscillator_C"
+                            "id": "Desc_CrystalOscillator_C"
                         }
                     ],
                     "is_alternate": true,
@@ -2551,21 +2551,21 @@ const game_data = {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_CircuitBoard_C"
+                            "id": "Desc_CircuitBoard_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 14
                             },
-                            "item_name": "Desc_HighSpeedWire_C"
+                            "id": "Desc_HighSpeedWire_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 6
                             },
-                            "item_name": "Desc_Rubber_C"
+                            "id": "Desc_Rubber_C"
                         }
                     ],
                     "is_alternate": true,
@@ -2592,28 +2592,28 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_AluminumPlateReinforced_C"
+                            "id": "Desc_AluminumPlateReinforced_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_Rubber_C"
+                            "id": "Desc_Rubber_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 5
                             },
-                            "item_name": "Desc_Water_C"
+                            "id": "Desc_Water_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 25000
                             },
-                            "item_name": "Desc_NitrogenGas_C"
+                            "id": "Desc_NitrogenGas_C"
                         }
                     ],
                     "is_alternate": false,
@@ -2633,21 +2633,21 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_AluminumPlateReinforced_C"
+                            "id": "Desc_AluminumPlateReinforced_C"
                         },
                         {
                             "amount": {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_Motor_C"
+                            "id": "Desc_Motor_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 12000
                             },
-                            "item_name": "Desc_NitrogenGas_C"
+                            "id": "Desc_NitrogenGas_C"
                         }
                     ],
                     "is_alternate": true,
@@ -2674,7 +2674,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 6
                             },
-                            "item_name": "Desc_CopperIngot_C"
+                            "id": "Desc_CopperIngot_C"
                         }
                     ],
                     "is_alternate": false,
@@ -2703,7 +2703,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_OreCopper_C"
+                            "id": "Desc_OreCopper_C"
                         }
                     ],
                     "is_alternate": false,
@@ -2725,14 +2725,14 @@ const game_data = {
                                 "d": 5,
                                 "n": 2
                             },
-                            "item_name": "Desc_OreCopper_C"
+                            "id": "Desc_OreCopper_C"
                         },
                         {
                             "amount": {
                                 "d": 15,
                                 "n": 4
                             },
-                            "item_name": "Desc_Water_C"
+                            "id": "Desc_Water_C"
                         }
                     ],
                     "is_alternate": true,
@@ -2752,14 +2752,14 @@ const game_data = {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_OreCopper_C"
+                            "id": "Desc_OreCopper_C"
                         },
                         {
                             "amount": {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_OreIron_C"
+                            "id": "Desc_OreIron_C"
                         }
                     ],
                     "is_alternate": true,
@@ -2779,14 +2779,14 @@ const game_data = {
                                 "d": 12,
                                 "n": 5
                             },
-                            "item_name": "Desc_OreCopper_C"
+                            "id": "Desc_OreCopper_C"
                         },
                         {
                             "amount": {
                                 "d": 3,
                                 "n": 2
                             },
-                            "item_name": "Desc_PetroleumCoke_C"
+                            "id": "Desc_PetroleumCoke_C"
                         }
                     ],
                     "is_alternate": true,
@@ -2806,14 +2806,14 @@ const game_data = {
                                 "d": 22,
                                 "n": 9
                             },
-                            "item_name": "Desc_OreCopper_C"
+                            "id": "Desc_OreCopper_C"
                         },
                         {
                             "amount": {
                                 "d": 22,
                                 "n": 5
                             },
-                            "item_name": "Desc_SulfuricAcid_C"
+                            "id": "Desc_SulfuricAcid_C"
                         }
                     ],
                     "is_alternate": true,
@@ -2840,7 +2840,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_CopperIngot_C"
+                            "id": "Desc_CopperIngot_C"
                         }
                     ],
                     "is_alternate": false,
@@ -2862,14 +2862,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_CopperIngot_C"
+                            "id": "Desc_CopperIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_Water_C"
+                            "id": "Desc_Water_C"
                         }
                     ],
                     "is_alternate": true,
@@ -2896,21 +2896,21 @@ const game_data = {
                                 "d": 1,
                                 "n": 18
                             },
-                            "item_name": "Desc_QuartzCrystal_C"
+                            "id": "Desc_QuartzCrystal_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 14
                             },
-                            "item_name": "Desc_Cable_C"
+                            "id": "Desc_Cable_C"
                         },
                         {
                             "amount": {
                                 "d": 2,
                                 "n": 5
                             },
-                            "item_name": "Desc_IronPlateReinforced_C"
+                            "id": "Desc_IronPlateReinforced_C"
                         }
                     ],
                     "is_alternate": false,
@@ -2932,21 +2932,21 @@ const game_data = {
                                 "d": 1,
                                 "n": 10
                             },
-                            "item_name": "Desc_QuartzCrystal_C"
+                            "id": "Desc_QuartzCrystal_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 7
                             },
-                            "item_name": "Desc_Rubber_C"
+                            "id": "Desc_Rubber_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_CircuitBoardHighSpeed_C"
+                            "id": "Desc_CircuitBoardHighSpeed_C"
                         }
                     ],
                     "is_alternate": true,
@@ -2973,7 +2973,7 @@ const game_data = {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_Crystal_mk2_C"
+                            "id": "Desc_Crystal_mk2_C"
                         }
                     ],
                     "is_alternate": false,
@@ -2995,7 +2995,7 @@ const game_data = {
                                 "d": 5,
                                 "n": 1
                             },
-                            "item_name": "Desc_Crystal_mk3_C"
+                            "id": "Desc_Crystal_mk3_C"
                         }
                     ],
                     "is_alternate": false,
@@ -3017,28 +3017,28 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_TimeCrystal_C"
+                            "id": "Desc_TimeCrystal_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_DarkMatter_C"
+                            "id": "Desc_DarkMatter_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 12
                             },
-                            "item_name": "Desc_QuartzCrystal_C"
+                            "id": "Desc_QuartzCrystal_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 12000
                             },
-                            "item_name": "Desc_QuantumEnergy_C"
+                            "id": "Desc_QuantumEnergy_C"
                         }
                     ],
                     "is_alternate": false,
@@ -3058,7 +3058,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_Crystal_C"
+                            "id": "Desc_Crystal_C"
                         }
                     ],
                     "is_alternate": false,
@@ -3105,28 +3105,28 @@ const game_data = {
                                 "d": 6000,
                                 "n": 1
                             },
-                            "item_name": "Desc_TimeCrystal_C"
+                            "id": "Desc_TimeCrystal_C"
                         },
                         {
                             "amount": {
                                 "d": 6000,
                                 "n": 1
                             },
-                            "item_name": "Desc_DarkMatter_C"
+                            "id": "Desc_DarkMatter_C"
                         },
                         {
                             "amount": {
                                 "d": 1000,
                                 "n": 1
                             },
-                            "item_name": "Desc_QuartzCrystal_C"
+                            "id": "Desc_QuartzCrystal_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_QuantumEnergy_C"
+                            "id": "Desc_QuantumEnergy_C"
                         }
                     ],
                     "is_alternate": false,
@@ -3146,28 +3146,28 @@ const game_data = {
                                 "d": 4800,
                                 "n": 1
                             },
-                            "item_name": "Desc_SAMFluctuator_C"
+                            "id": "Desc_SAMFluctuator_C"
                         },
                         {
                             "amount": {
                                 "d": 8000,
                                 "n": 1
                             },
-                            "item_name": "Desc_CrystalShard_C"
+                            "id": "Desc_CrystalShard_C"
                         },
                         {
                             "amount": {
                                 "d": 8000,
                                 "n": 1
                             },
-                            "item_name": "Desc_QuantumOscillator_C"
+                            "id": "Desc_QuantumOscillator_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_QuantumEnergy_C"
+                            "id": "Desc_QuantumEnergy_C"
                         }
                     ],
                     "is_alternate": false,
@@ -3187,28 +3187,28 @@ const game_data = {
                                 "d": 10000,
                                 "n": 1
                             },
-                            "item_name": "Desc_Ficsonium_C"
+                            "id": "Desc_Ficsonium_C"
                         },
                         {
                             "amount": {
                                 "d": 10000,
                                 "n": 1
                             },
-                            "item_name": "Desc_ElectromagneticControlRod_C"
+                            "id": "Desc_ElectromagneticControlRod_C"
                         },
                         {
                             "amount": {
                                 "d": 500,
                                 "n": 1
                             },
-                            "item_name": "Desc_FicsiteMesh_C"
+                            "id": "Desc_FicsiteMesh_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_QuantumEnergy_C"
+                            "id": "Desc_QuantumEnergy_C"
                         }
                     ],
                     "is_alternate": false,
@@ -3228,28 +3228,28 @@ const game_data = {
                                 "d": 25000,
                                 "n": 1
                             },
-                            "item_name": "Desc_SpaceElevatorPart_6_C"
+                            "id": "Desc_SpaceElevatorPart_6_C"
                         },
                         {
                             "amount": {
                                 "d": 25000,
                                 "n": 1
                             },
-                            "item_name": "Desc_TemporalProcessor_C"
+                            "id": "Desc_TemporalProcessor_C"
                         },
                         {
                             "amount": {
                                 "d": 25000,
                                 "n": 1
                             },
-                            "item_name": "Desc_QuantumOscillator_C"
+                            "id": "Desc_QuantumOscillator_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_QuantumEnergy_C"
+                            "id": "Desc_QuantumEnergy_C"
                         }
                     ],
                     "is_alternate": false,
@@ -3269,28 +3269,28 @@ const game_data = {
                                 "d": 5000,
                                 "n": 1
                             },
-                            "item_name": "Desc_TimeCrystal_C"
+                            "id": "Desc_TimeCrystal_C"
                         },
                         {
                             "amount": {
                                 "d": 25000,
                                 "n": 1
                             },
-                            "item_name": "Desc_ComputerSuper_C"
+                            "id": "Desc_ComputerSuper_C"
                         },
                         {
                             "amount": {
                                 "d": 5000,
                                 "n": 3
                             },
-                            "item_name": "Desc_FicsiteMesh_C"
+                            "id": "Desc_FicsiteMesh_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_QuantumEnergy_C"
+                            "id": "Desc_QuantumEnergy_C"
                         }
                     ],
                     "is_alternate": false,
@@ -3310,28 +3310,28 @@ const game_data = {
                                 "d": 12500,
                                 "n": 3
                             },
-                            "item_name": "Desc_DarkMatter_C"
+                            "id": "Desc_DarkMatter_C"
                         },
                         {
                             "amount": {
                                 "d": 25000,
                                 "n": 1
                             },
-                            "item_name": "Desc_CrystalOscillator_C"
+                            "id": "Desc_CrystalOscillator_C"
                         },
                         {
                             "amount": {
                                 "d": 25000,
                                 "n": 9
                             },
-                            "item_name": "Desc_AluminumPlate_C"
+                            "id": "Desc_AluminumPlate_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_QuantumEnergy_C"
+                            "id": "Desc_QuantumEnergy_C"
                         }
                     ],
                     "is_alternate": false,
@@ -3351,7 +3351,7 @@ const game_data = {
                                 "d": 2000,
                                 "n": 1
                             },
-                            "item_name": "Desc_SAMIngot_C"
+                            "id": "Desc_SAMIngot_C"
                         }
                     ],
                     "is_alternate": true,
@@ -3378,14 +3378,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_Diamond_C"
+                            "id": "Desc_Diamond_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 5000
                             },
-                            "item_name": "Desc_DarkEnergy_C"
+                            "id": "Desc_DarkEnergy_C"
                         }
                     ],
                     "is_alternate": false,
@@ -3405,14 +3405,14 @@ const game_data = {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_TimeCrystal_C"
+                            "id": "Desc_TimeCrystal_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2500
                             },
-                            "item_name": "Desc_DarkEnergy_C"
+                            "id": "Desc_DarkEnergy_C"
                         }
                     ],
                     "is_alternate": true,
@@ -3432,7 +3432,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 10000
                             },
-                            "item_name": "Desc_DarkEnergy_C"
+                            "id": "Desc_DarkEnergy_C"
                         }
                     ],
                     "is_alternate": true,
@@ -3459,7 +3459,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 20
                             },
-                            "item_name": "Desc_Coal_C"
+                            "id": "Desc_Coal_C"
                         }
                     ],
                     "is_alternate": false,
@@ -3479,14 +3479,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 10
                             },
-                            "item_name": "Desc_Coal_C"
+                            "id": "Desc_Coal_C"
                         },
                         {
                             "amount": {
                                 "d": 3,
                                 "n": 2
                             },
-                            "item_name": "Desc_TurboFuel_C"
+                            "id": "Desc_TurboFuel_C"
                         }
                     ],
                     "is_alternate": true,
@@ -3506,14 +3506,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 8
                             },
-                            "item_name": "Desc_Coal_C"
+                            "id": "Desc_Coal_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_QuartzCrystal_C"
+                            "id": "Desc_QuartzCrystal_C"
                         }
                     ],
                     "is_alternate": true,
@@ -3533,7 +3533,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 24
                             },
-                            "item_name": "Desc_PetroleumCoke_C"
+                            "id": "Desc_PetroleumCoke_C"
                         }
                     ],
                     "is_alternate": true,
@@ -3553,7 +3553,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 5
                             },
-                            "item_name": "Desc_LiquidOil_C"
+                            "id": "Desc_LiquidOil_C"
                         }
                     ],
                     "is_alternate": true,
@@ -3573,14 +3573,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 12
                             },
-                            "item_name": "Desc_Coal_C"
+                            "id": "Desc_Coal_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 24
                             },
-                            "item_name": "Desc_Stone_C"
+                            "id": "Desc_Stone_C"
                         }
                     ],
                     "is_alternate": true,
@@ -3607,14 +3607,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_RawQuartz_C"
+                            "id": "Desc_RawQuartz_C"
                         },
                         {
                             "amount": {
                                 "d": 6,
                                 "n": 1
                             },
-                            "item_name": "Desc_NitricAcid_C"
+                            "id": "Desc_NitricAcid_C"
                         }
                     ],
                     "is_alternate": true,
@@ -3641,14 +3641,14 @@ const game_data = {
                                 "d": 2,
                                 "n": 3
                             },
-                            "item_name": "Desc_Stator_C"
+                            "id": "Desc_Stator_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_CircuitBoardHighSpeed_C"
+                            "id": "Desc_CircuitBoardHighSpeed_C"
                         }
                     ],
                     "is_alternate": false,
@@ -3670,14 +3670,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_Stator_C"
+                            "id": "Desc_Stator_C"
                         },
                         {
                             "amount": {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_HighSpeedConnector_C"
+                            "id": "Desc_HighSpeedConnector_C"
                         }
                     ],
                     "is_alternate": true,
@@ -3704,14 +3704,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_Mycelia_C"
+                            "id": "Desc_Mycelia_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 5
                             },
-                            "item_name": "Desc_GenericBiomass_C"
+                            "id": "Desc_GenericBiomass_C"
                         }
                     ],
                     "is_alternate": false,
@@ -3733,14 +3733,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_PolymerResin_C"
+                            "id": "Desc_PolymerResin_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_Water_C"
+                            "id": "Desc_Water_C"
                         }
                     ],
                     "is_alternate": true,
@@ -3767,14 +3767,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_SAMIngot_C"
+                            "id": "Desc_SAMIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 24
                             },
-                            "item_name": "Desc_IronIngot_C"
+                            "id": "Desc_IronIngot_C"
                         }
                     ],
                     "is_alternate": true,
@@ -3794,14 +3794,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_SAMIngot_C"
+                            "id": "Desc_SAMIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_AluminumIngot_C"
+                            "id": "Desc_AluminumIngot_C"
                         }
                     ],
                     "is_alternate": true,
@@ -3821,14 +3821,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_SAMIngot_C"
+                            "id": "Desc_SAMIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_GoldIngot_C"
+                            "id": "Desc_GoldIngot_C"
                         }
                     ],
                     "is_alternate": true,
@@ -3855,7 +3855,7 @@ const game_data = {
                                 "d": 3,
                                 "n": 1
                             },
-                            "item_name": "Desc_FicsiteIngot_C"
+                            "id": "Desc_FicsiteIngot_C"
                         }
                     ],
                     "is_alternate": false,
@@ -3883,28 +3883,28 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_Ficsonium_C"
+                            "id": "Desc_Ficsonium_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_ElectromagneticControlRod_C"
+                            "id": "Desc_ElectromagneticControlRod_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 40
                             },
-                            "item_name": "Desc_FicsiteMesh_C"
+                            "id": "Desc_FicsiteMesh_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 20000
                             },
-                            "item_name": "Desc_QuantumEnergy_C"
+                            "id": "Desc_QuantumEnergy_C"
                         }
                     ],
                     "is_alternate": false,
@@ -3931,21 +3931,21 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_PlutoniumWaste_C"
+                            "id": "Desc_PlutoniumWaste_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_SingularityCell_C"
+                            "id": "Desc_SingularityCell_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 20000
                             },
-                            "item_name": "Desc_DarkEnergy_C"
+                            "id": "Desc_DarkEnergy_C"
                         }
                     ],
                     "is_alternate": false,
@@ -3972,21 +3972,21 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_Fabric_C"
+                            "id": "Desc_Fabric_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_Coal_C"
+                            "id": "Desc_Coal_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_IronPlate_C"
+                            "id": "Desc_IronPlate_C"
                         }
                     ],
                     "is_alternate": false,
@@ -4014,14 +4014,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 6
                             },
-                            "item_name": "Desc_XmasBranch_C"
+                            "id": "Desc_XmasBranch_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_CandyCane_C"
+                            "id": "Desc_CandyCane_C"
                         }
                     ],
                     "is_alternate": false,
@@ -4049,14 +4049,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_XmasBranch_C"
+                            "id": "Desc_XmasBranch_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_XmasBow_C"
+                            "id": "Desc_XmasBow_C"
                         }
                     ],
                     "is_alternate": false,
@@ -4084,14 +4084,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_XmasBranch_C"
+                            "id": "Desc_XmasBranch_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_Snow_C"
+                            "id": "Desc_Snow_C"
                         }
                     ],
                     "is_alternate": false,
@@ -4119,7 +4119,7 @@ const game_data = {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_Plastic_C"
+                            "id": "Desc_Plastic_C"
                         }
                     ],
                     "is_alternate": false,
@@ -4141,7 +4141,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_TurboFuel_C"
+                            "id": "Desc_TurboFuel_C"
                         }
                     ],
                     "is_alternate": true,
@@ -4161,7 +4161,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_SteelIngot_C"
+                            "id": "Desc_SteelIngot_C"
                         }
                     ],
                     "is_alternate": true,
@@ -4181,7 +4181,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_PackagedBiofuel_C"
+                            "id": "Desc_PackagedBiofuel_C"
                         }
                     ],
                     "is_alternate": true,
@@ -4201,7 +4201,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_Fuel_C"
+                            "id": "Desc_Fuel_C"
                         }
                     ],
                     "is_alternate": true,
@@ -4221,7 +4221,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_PackagedOil_C"
+                            "id": "Desc_PackagedOil_C"
                         }
                     ],
                     "is_alternate": true,
@@ -4241,7 +4241,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_PackagedOilResidue_C"
+                            "id": "Desc_PackagedOilResidue_C"
                         }
                     ],
                     "is_alternate": true,
@@ -4261,7 +4261,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_PackagedWater_C"
+                            "id": "Desc_PackagedWater_C"
                         }
                     ],
                     "is_alternate": true,
@@ -4281,7 +4281,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_PackagedAlumina_C"
+                            "id": "Desc_PackagedAlumina_C"
                         }
                     ],
                     "is_alternate": true,
@@ -4301,14 +4301,14 @@ const game_data = {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_IronPlate_C"
+                            "id": "Desc_IronPlate_C"
                         },
                         {
                             "amount": {
                                 "d": 4,
                                 "n": 1
                             },
-                            "item_name": "Desc_CopperSheet_C"
+                            "id": "Desc_CopperSheet_C"
                         }
                     ],
                     "is_alternate": true,
@@ -4328,7 +4328,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_PackagedSulfuricAcid_C"
+                            "id": "Desc_PackagedSulfuricAcid_C"
                         }
                     ],
                     "is_alternate": true,
@@ -4355,14 +4355,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_LiquidFuel_C"
+                            "id": "Desc_LiquidFuel_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_FluidCanister_C"
+                            "id": "Desc_FluidCanister_C"
                         }
                     ],
                     "is_alternate": false,
@@ -4382,14 +4382,14 @@ const game_data = {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_HeavyOilResidue_C"
+                            "id": "Desc_HeavyOilResidue_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_PackagedWater_C"
+                            "id": "Desc_PackagedWater_C"
                         }
                     ],
                     "is_alternate": true,
@@ -4416,7 +4416,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_AluminumIngot_C"
+                            "id": "Desc_AluminumIngot_C"
                         }
                     ],
                     "is_alternate": false,
@@ -4437,7 +4437,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_PackagedRocketFuel_C"
+                            "id": "Desc_PackagedRocketFuel_C"
                         }
                     ],
                     "is_alternate": true,
@@ -4457,7 +4457,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_PackagedIonizedFuel_C"
+                            "id": "Desc_PackagedIonizedFuel_C"
                         }
                     ],
                     "is_alternate": true,
@@ -4477,7 +4477,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_PackagedNitricAcid_C"
+                            "id": "Desc_PackagedNitricAcid_C"
                         }
                     ],
                     "is_alternate": true,
@@ -4497,7 +4497,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_PackagedNitrogenGas_C"
+                            "id": "Desc_PackagedNitrogenGas_C"
                         }
                     ],
                     "is_alternate": true,
@@ -4524,7 +4524,7 @@ const game_data = {
                                 "d": 5,
                                 "n": 1
                             },
-                            "item_name": "Desc_Wood_C"
+                            "id": "Desc_Wood_C"
                         }
                     ],
                     "is_alternate": false,
@@ -4546,7 +4546,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_Leaves_C"
+                            "id": "Desc_Leaves_C"
                         }
                     ],
                     "is_alternate": false,
@@ -4568,7 +4568,7 @@ const game_data = {
                                 "d": 100,
                                 "n": 1
                             },
-                            "item_name": "Desc_AlienProtein_C"
+                            "id": "Desc_AlienProtein_C"
                         }
                     ],
                     "is_alternate": false,
@@ -4590,7 +4590,7 @@ const game_data = {
                                 "d": 10,
                                 "n": 1
                             },
-                            "item_name": "Desc_Mycelia_C"
+                            "id": "Desc_Mycelia_C"
                         }
                     ],
                     "is_alternate": false,
@@ -4625,7 +4625,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_OreGold_C"
+                            "id": "Desc_OreGold_C"
                         }
                     ],
                     "is_alternate": false,
@@ -4646,14 +4646,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_OreGold_C"
+                            "id": "Desc_OreGold_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_Water_C"
+                            "id": "Desc_Water_C"
                         }
                     ],
                     "is_alternate": true,
@@ -4673,14 +4673,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_OreGold_C"
+                            "id": "Desc_OreGold_C"
                         },
                         {
                             "amount": {
                                 "d": 3,
                                 "n": 2
                             },
-                            "item_name": "Desc_PetroleumCoke_C"
+                            "id": "Desc_PetroleumCoke_C"
                         }
                     ],
                     "is_alternate": true,
@@ -4700,14 +4700,14 @@ const game_data = {
                                 "d": 2,
                                 "n": 3
                             },
-                            "item_name": "Desc_OreGold_C"
+                            "id": "Desc_OreGold_C"
                         },
                         {
                             "amount": {
                                 "d": 6,
                                 "n": 5
                             },
-                            "item_name": "Desc_SulfuricAcid_C"
+                            "id": "Desc_SulfuricAcid_C"
                         }
                     ],
                     "is_alternate": true,
@@ -4734,21 +4734,21 @@ const game_data = {
                                 "d": 1,
                                 "n": 15
                             },
-                            "item_name": "Desc_GoldIngot_C"
+                            "id": "Desc_GoldIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_IronRod_C"
+                            "id": "Desc_IronRod_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_Rotor_C"
+                            "id": "Desc_Rotor_C"
                         }
                     ],
                     "is_alternate": false,
@@ -4775,21 +4775,21 @@ const game_data = {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_IronPlateReinforced_C"
+                            "id": "Desc_IronPlateReinforced_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_IronRod_C"
+                            "id": "Desc_IronRod_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_Rotor_C"
+                            "id": "Desc_Rotor_C"
                         }
                     ],
                     "is_alternate": false,
@@ -4816,14 +4816,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_Gunpowder_C"
+                            "id": "Desc_Gunpowder_C"
                         },
                         {
                             "amount": {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_HeavyOilResidue_C"
+                            "id": "Desc_HeavyOilResidue_C"
                         }
                     ],
                     "is_alternate": false,
@@ -4850,14 +4850,14 @@ const game_data = {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_Coal_C"
+                            "id": "Desc_Coal_C"
                         },
                         {
                             "amount": {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_Sulfur_C"
+                            "id": "Desc_Sulfur_C"
                         }
                     ],
                     "is_alternate": false,
@@ -4878,14 +4878,14 @@ const game_data = {
                                 "d": 6,
                                 "n": 1
                             },
-                            "item_name": "Desc_Sulfur_C"
+                            "id": "Desc_Sulfur_C"
                         },
                         {
                             "amount": {
                                 "d": 3,
                                 "n": 1
                             },
-                            "item_name": "Desc_CompactedCoal_C"
+                            "id": "Desc_CompactedCoal_C"
                         }
                     ],
                     "is_alternate": true,
@@ -4918,21 +4918,21 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_Filter_C"
+                            "id": "Desc_Filter_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 8
                             },
-                            "item_name": "Desc_HighSpeedWire_C"
+                            "id": "Desc_HighSpeedWire_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_AluminumCasing_C"
+                            "id": "Desc_AluminumCasing_C"
                         }
                     ],
                     "is_alternate": false,
@@ -4960,7 +4960,7 @@ const game_data = {
                                 "d": 4,
                                 "n": 3
                             },
-                            "item_name": "Desc_LiquidOil_C"
+                            "id": "Desc_LiquidOil_C"
                         }
                     ],
                     "is_alternate": false,
@@ -4980,7 +4980,7 @@ const game_data = {
                                 "d": 2,
                                 "n": 3
                             },
-                            "item_name": "Desc_LiquidOil_C"
+                            "id": "Desc_LiquidOil_C"
                         }
                     ],
                     "is_alternate": false,
@@ -5000,7 +5000,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_LiquidOil_C"
+                            "id": "Desc_LiquidOil_C"
                         }
                     ],
                     "is_alternate": false,
@@ -5020,7 +5020,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_PackagedOilResidue_C"
+                            "id": "Desc_PackagedOilResidue_C"
                         }
                     ],
                     "is_alternate": true,
@@ -5040,7 +5040,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_LiquidOil_C"
+                            "id": "Desc_LiquidOil_C"
                         }
                     ],
                     "is_alternate": true,
@@ -5067,21 +5067,21 @@ const game_data = {
                                 "d": 1,
                                 "n": 56
                             },
-                            "item_name": "Desc_HighSpeedWire_C"
+                            "id": "Desc_HighSpeedWire_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 10
                             },
-                            "item_name": "Desc_Cable_C"
+                            "id": "Desc_Cable_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_CircuitBoard_C"
+                            "id": "Desc_CircuitBoard_C"
                         }
                     ],
                     "is_alternate": false,
@@ -5103,21 +5103,21 @@ const game_data = {
                                 "d": 1,
                                 "n": 30
                             },
-                            "item_name": "Desc_HighSpeedWire_C"
+                            "id": "Desc_HighSpeedWire_C"
                         },
                         {
                             "amount": {
                                 "d": 2,
                                 "n": 25
                             },
-                            "item_name": "Desc_Silica_C"
+                            "id": "Desc_Silica_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_CircuitBoard_C"
+                            "id": "Desc_CircuitBoard_C"
                         }
                     ],
                     "is_alternate": true,
@@ -5144,7 +5144,7 @@ const game_data = {
                                 "d": 5,
                                 "n": 1
                             },
-                            "item_name": "Desc_GoldIngot_C"
+                            "id": "Desc_GoldIngot_C"
                         }
                     ],
                     "is_alternate": false,
@@ -5166,14 +5166,14 @@ const game_data = {
                                 "d": 12,
                                 "n": 1
                             },
-                            "item_name": "Desc_GoldIngot_C"
+                            "id": "Desc_GoldIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 12,
                                 "n": 5
                             },
-                            "item_name": "Desc_CopperIngot_C"
+                            "id": "Desc_CopperIngot_C"
                         }
                     ],
                     "is_alternate": true,
@@ -5206,14 +5206,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_RocketFuel_C"
+                            "id": "Desc_RocketFuel_C"
                         },
                         {
                             "amount": {
                                 "d": 16000,
                                 "n": 1
                             },
-                            "item_name": "Desc_CrystalShard_C"
+                            "id": "Desc_CrystalShard_C"
                         }
                     ],
                     "is_alternate": false,
@@ -5233,14 +5233,14 @@ const game_data = {
                                 "d": 2500,
                                 "n": 3
                             },
-                            "item_name": "Desc_PackagedRocketFuel_C"
+                            "id": "Desc_PackagedRocketFuel_C"
                         },
                         {
                             "amount": {
                                 "d": 2500,
                                 "n": 1
                             },
-                            "item_name": "Desc_DarkMatter_C"
+                            "id": "Desc_DarkMatter_C"
                         }
                     ],
                     "is_alternate": true,
@@ -5260,7 +5260,7 @@ const game_data = {
                                 "d": 2000,
                                 "n": 1
                             },
-                            "item_name": "Desc_PackagedIonizedFuel_C"
+                            "id": "Desc_PackagedIonizedFuel_C"
                         }
                     ],
                     "is_alternate": true,
@@ -5287,7 +5287,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_OreIron_C"
+                            "id": "Desc_OreIron_C"
                         }
                     ],
                     "is_alternate": false,
@@ -5309,14 +5309,14 @@ const game_data = {
                                 "d": 13,
                                 "n": 7
                             },
-                            "item_name": "Desc_OreIron_C"
+                            "id": "Desc_OreIron_C"
                         },
                         {
                             "amount": {
                                 "d": 13,
                                 "n": 4
                             },
-                            "item_name": "Desc_Water_C"
+                            "id": "Desc_Water_C"
                         }
                     ],
                     "is_alternate": true,
@@ -5336,14 +5336,14 @@ const game_data = {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_OreIron_C"
+                            "id": "Desc_OreIron_C"
                         },
                         {
                             "amount": {
                                 "d": 10,
                                 "n": 1
                             },
-                            "item_name": "Desc_SulfuricAcid_C"
+                            "id": "Desc_SulfuricAcid_C"
                         }
                     ],
                     "is_alternate": true,
@@ -5363,14 +5363,14 @@ const game_data = {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_OreIron_C"
+                            "id": "Desc_OreIron_C"
                         },
                         {
                             "amount": {
                                 "d": 5,
                                 "n": 4
                             },
-                            "item_name": "Desc_Stone_C"
+                            "id": "Desc_Stone_C"
                         }
                     ],
                     "is_alternate": true,
@@ -5390,14 +5390,14 @@ const game_data = {
                                 "d": 15,
                                 "n": 8
                             },
-                            "item_name": "Desc_OreIron_C"
+                            "id": "Desc_OreIron_C"
                         },
                         {
                             "amount": {
                                 "d": 15,
                                 "n": 2
                             },
-                            "item_name": "Desc_OreCopper_C"
+                            "id": "Desc_OreCopper_C"
                         }
                     ],
                     "is_alternate": true,
@@ -5424,14 +5424,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 6
                             },
-                            "item_name": "Desc_IronPlate_C"
+                            "id": "Desc_IronPlate_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 12
                             },
-                            "item_name": "Desc_IronScrew_C"
+                            "id": "Desc_IronScrew_C"
                         }
                     ],
                     "is_alternate": false,
@@ -5453,14 +5453,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_IronPlate_C"
+                            "id": "Desc_IronPlate_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_Rubber_C"
+                            "id": "Desc_Rubber_C"
                         }
                     ],
                     "is_alternate": true,
@@ -5480,14 +5480,14 @@ const game_data = {
                                 "d": 3,
                                 "n": 10
                             },
-                            "item_name": "Desc_IronPlate_C"
+                            "id": "Desc_IronPlate_C"
                         },
                         {
                             "amount": {
                                 "d": 3,
                                 "n": 20
                             },
-                            "item_name": "Desc_Wire_C"
+                            "id": "Desc_Wire_C"
                         }
                     ],
                     "is_alternate": true,
@@ -5507,14 +5507,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 6
                             },
-                            "item_name": "Desc_IronPlate_C"
+                            "id": "Desc_IronPlate_C"
                         },
                         {
                             "amount": {
                                 "d": 3,
                                 "n": 50
                             },
-                            "item_name": "Desc_IronScrew_C"
+                            "id": "Desc_IronScrew_C"
                         }
                     ],
                     "is_alternate": true,
@@ -5541,7 +5541,7 @@ const game_data = {
                                 "d": 2,
                                 "n": 3
                             },
-                            "item_name": "Desc_IronIngot_C"
+                            "id": "Desc_IronIngot_C"
                         }
                     ],
                     "is_alternate": false,
@@ -5563,14 +5563,14 @@ const game_data = {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_IronIngot_C"
+                            "id": "Desc_IronIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 10,
                                 "n": 1
                             },
-                            "item_name": "Desc_Plastic_C"
+                            "id": "Desc_Plastic_C"
                         }
                     ],
                     "is_alternate": true,
@@ -5590,14 +5590,14 @@ const game_data = {
                                 "d": 3,
                                 "n": 1
                             },
-                            "item_name": "Desc_IronIngot_C"
+                            "id": "Desc_IronIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 3,
                                 "n": 1
                             },
-                            "item_name": "Desc_SteelIngot_C"
+                            "id": "Desc_SteelIngot_C"
                         }
                     ],
                     "is_alternate": true,
@@ -5624,7 +5624,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_IronIngot_C"
+                            "id": "Desc_IronIngot_C"
                         }
                     ],
                     "is_alternate": false,
@@ -5646,7 +5646,7 @@ const game_data = {
                                 "d": 4,
                                 "n": 1
                             },
-                            "item_name": "Desc_SteelIngot_C"
+                            "id": "Desc_SteelIngot_C"
                         }
                     ],
                     "is_alternate": true,
@@ -5666,7 +5666,7 @@ const game_data = {
                                 "d": 7,
                                 "n": 1
                             },
-                            "item_name": "Desc_AluminumIngot_C"
+                            "id": "Desc_AluminumIngot_C"
                         }
                     ],
                     "is_alternate": true,
@@ -5693,7 +5693,7 @@ const game_data = {
                                 "d": 4,
                                 "n": 1
                             },
-                            "item_name": "Desc_IronRod_C"
+                            "id": "Desc_IronRod_C"
                         }
                     ],
                     "is_alternate": false,
@@ -5715,7 +5715,7 @@ const game_data = {
                                 "d": 52,
                                 "n": 1
                             },
-                            "item_name": "Desc_SteelPlate_C"
+                            "id": "Desc_SteelPlate_C"
                         }
                     ],
                     "is_alternate": true,
@@ -5735,7 +5735,7 @@ const game_data = {
                                 "d": 4,
                                 "n": 1
                             },
-                            "item_name": "Desc_IronIngot_C"
+                            "id": "Desc_IronIngot_C"
                         }
                     ],
                     "is_alternate": true,
@@ -5768,14 +5768,14 @@ const game_data = {
                                 "d": 2,
                                 "n": 3
                             },
-                            "item_name": "Desc_Biofuel_C"
+                            "id": "Desc_Biofuel_C"
                         },
                         {
                             "amount": {
                                 "d": 4,
                                 "n": 3
                             },
-                            "item_name": "Desc_Water_C"
+                            "id": "Desc_Water_C"
                         }
                     ],
                     "is_alternate": false,
@@ -5795,7 +5795,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_PackagedBiofuel_C"
+                            "id": "Desc_PackagedBiofuel_C"
                         }
                     ],
                     "is_alternate": true,
@@ -5822,7 +5822,7 @@ const game_data = {
                                 "d": 2,
                                 "n": 3
                             },
-                            "item_name": "Desc_LiquidOil_C"
+                            "id": "Desc_LiquidOil_C"
                         }
                     ],
                     "is_alternate": false,
@@ -5842,7 +5842,7 @@ const game_data = {
                                 "d": 2,
                                 "n": 3
                             },
-                            "item_name": "Desc_HeavyOilResidue_C"
+                            "id": "Desc_HeavyOilResidue_C"
                         }
                     ],
                     "is_alternate": false,
@@ -5862,7 +5862,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_Fuel_C"
+                            "id": "Desc_Fuel_C"
                         }
                     ],
                     "is_alternate": true,
@@ -5882,14 +5882,14 @@ const game_data = {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_HeavyOilResidue_C"
+                            "id": "Desc_HeavyOilResidue_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_Water_C"
+                            "id": "Desc_Water_C"
                         }
                     ],
                     "is_alternate": true,
@@ -5916,7 +5916,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_PackagedOil_C"
+                            "id": "Desc_PackagedOil_C"
                         }
                     ],
                     "is_alternate": true,
@@ -5943,14 +5943,14 @@ const game_data = {
                                 "d": 5,
                                 "n": 6
                             },
-                            "item_name": "Desc_LiquidFuel_C"
+                            "id": "Desc_LiquidFuel_C"
                         },
                         {
                             "amount": {
                                 "d": 5,
                                 "n": 4
                             },
-                            "item_name": "Desc_CompactedCoal_C"
+                            "id": "Desc_CompactedCoal_C"
                         }
                     ],
                     "is_alternate": false,
@@ -5970,7 +5970,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_TurboFuel_C"
+                            "id": "Desc_TurboFuel_C"
                         }
                     ],
                     "is_alternate": true,
@@ -5990,14 +5990,14 @@ const game_data = {
                                 "d": 4,
                                 "n": 5
                             },
-                            "item_name": "Desc_HeavyOilResidue_C"
+                            "id": "Desc_HeavyOilResidue_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_CompactedCoal_C"
+                            "id": "Desc_CompactedCoal_C"
                         }
                     ],
                     "is_alternate": true,
@@ -6017,28 +6017,28 @@ const game_data = {
                                 "d": 3,
                                 "n": 1
                             },
-                            "item_name": "Desc_LiquidFuel_C"
+                            "id": "Desc_LiquidFuel_C"
                         },
                         {
                             "amount": {
                                 "d": 3,
                                 "n": 2
                             },
-                            "item_name": "Desc_HeavyOilResidue_C"
+                            "id": "Desc_HeavyOilResidue_C"
                         },
                         {
                             "amount": {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_Sulfur_C"
+                            "id": "Desc_Sulfur_C"
                         },
                         {
                             "amount": {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_PetroleumCoke_C"
+                            "id": "Desc_PetroleumCoke_C"
                         }
                     ],
                     "is_alternate": true,
@@ -6065,21 +6065,21 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_Shroom_C"
+                            "id": "Desc_Shroom_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_Berry_C"
+                            "id": "Desc_Berry_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 5
                             },
-                            "item_name": "Desc_Nut_C"
+                            "id": "Desc_Nut_C"
                         }
                     ],
                     "is_alternate": false,
@@ -6099,14 +6099,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 10
                             },
-                            "item_name": "Desc_Mycelia_C"
+                            "id": "Desc_Mycelia_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 5
                             },
-                            "item_name": "Desc_Berry_C"
+                            "id": "Desc_Berry_C"
                         }
                     ],
                     "is_alternate": false,
@@ -6126,21 +6126,21 @@ const game_data = {
                                 "d": 1,
                                 "n": 15
                             },
-                            "item_name": "Desc_Mycelia_C"
+                            "id": "Desc_Mycelia_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_AlienProtein_C"
+                            "id": "Desc_AlienProtein_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_Shroom_C"
+                            "id": "Desc_Shroom_C"
                         }
                     ],
                     "is_alternate": false,
@@ -6160,14 +6160,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_AlienProtein_C"
+                            "id": "Desc_AlienProtein_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 10
                             },
-                            "item_name": "Desc_Nut_C"
+                            "id": "Desc_Nut_C"
                         }
                     ],
                     "is_alternate": false,
@@ -6194,21 +6194,21 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_ModularFrameHeavy_C"
+                            "id": "Desc_ModularFrameHeavy_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 50
                             },
-                            "item_name": "Desc_AluminumCasing_C"
+                            "id": "Desc_AluminumCasing_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 25000
                             },
-                            "item_name": "Desc_NitrogenGas_C"
+                            "id": "Desc_NitrogenGas_C"
                         }
                     ],
                     "is_alternate": false,
@@ -6228,28 +6228,28 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_ModularFrameHeavy_C"
+                            "id": "Desc_ModularFrameHeavy_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 50
                             },
-                            "item_name": "Desc_AluminumIngot_C"
+                            "id": "Desc_AluminumIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 8
                             },
-                            "item_name": "Desc_NitricAcid_C"
+                            "id": "Desc_NitricAcid_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 10
                             },
-                            "item_name": "Desc_LiquidFuel_C"
+                            "id": "Desc_LiquidFuel_C"
                         }
                     ],
                     "is_alternate": true,
@@ -6276,28 +6276,28 @@ const game_data = {
                                 "d": 1,
                                 "n": 5
                             },
-                            "item_name": "Desc_ModularFrame_C"
+                            "id": "Desc_ModularFrame_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 20
                             },
-                            "item_name": "Desc_SteelPipe_C"
+                            "id": "Desc_SteelPipe_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 5
                             },
-                            "item_name": "Desc_SteelPlateReinforced_C"
+                            "id": "Desc_SteelPlateReinforced_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 120
                             },
-                            "item_name": "Desc_IronScrew_C"
+                            "id": "Desc_IronScrew_C"
                         }
                     ],
                     "is_alternate": false,
@@ -6319,28 +6319,28 @@ const game_data = {
                                 "d": 1,
                                 "n": 5
                             },
-                            "item_name": "Desc_ModularFrame_C"
+                            "id": "Desc_ModularFrame_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_SteelPlateReinforced_C"
+                            "id": "Desc_SteelPlateReinforced_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 20
                             },
-                            "item_name": "Desc_Rubber_C"
+                            "id": "Desc_Rubber_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 104
                             },
-                            "item_name": "Desc_IronScrew_C"
+                            "id": "Desc_IronScrew_C"
                         }
                     ],
                     "is_alternate": true,
@@ -6360,28 +6360,28 @@ const game_data = {
                                 "d": 3,
                                 "n": 8
                             },
-                            "item_name": "Desc_ModularFrame_C"
+                            "id": "Desc_ModularFrame_C"
                         },
                         {
                             "amount": {
                                 "d": 3,
                                 "n": 10
                             },
-                            "item_name": "Desc_SteelPlateReinforced_C"
+                            "id": "Desc_SteelPlateReinforced_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 12
                             },
-                            "item_name": "Desc_SteelPipe_C"
+                            "id": "Desc_SteelPipe_C"
                         },
                         {
                             "amount": {
                                 "d": 3,
                                 "n": 22
                             },
-                            "item_name": "Desc_Cement_C"
+                            "id": "Desc_Cement_C"
                         }
                     ],
                     "is_alternate": true,
@@ -6408,21 +6408,21 @@ const game_data = {
                                 "d": 1,
                                 "n": 16
                             },
-                            "item_name": "Desc_AluminumCasing_C"
+                            "id": "Desc_AluminumCasing_C"
                         },
                         {
                             "amount": {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_CrystalOscillator_C"
+                            "id": "Desc_CrystalOscillator_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_Computer_C"
+                            "id": "Desc_Computer_C"
                         }
                     ],
                     "is_alternate": false,
@@ -6444,28 +6444,28 @@ const game_data = {
                                 "d": 3,
                                 "n": 1
                             },
-                            "item_name": "Desc_CrystalOscillator_C"
+                            "id": "Desc_CrystalOscillator_C"
                         },
                         {
                             "amount": {
                                 "d": 3,
                                 "n": 10
                             },
-                            "item_name": "Desc_CircuitBoard_C"
+                            "id": "Desc_CircuitBoard_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 20
                             },
-                            "item_name": "Desc_AluminumCasing_C"
+                            "id": "Desc_AluminumCasing_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 10
                             },
-                            "item_name": "Desc_Rubber_C"
+                            "id": "Desc_Rubber_C"
                         }
                     ],
                     "is_alternate": true,
@@ -6485,21 +6485,21 @@ const game_data = {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_AluminumPlateReinforced_C"
+                            "id": "Desc_AluminumPlateReinforced_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_HighSpeedConnector_C"
+                            "id": "Desc_HighSpeedConnector_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 12
                             },
-                            "item_name": "Desc_QuartzCrystal_C"
+                            "id": "Desc_QuartzCrystal_C"
                         }
                     ],
                     "is_alternate": true,
@@ -6526,14 +6526,14 @@ const game_data = {
                                 "d": 2,
                                 "n": 3
                             },
-                            "item_name": "Desc_IronPlateReinforced_C"
+                            "id": "Desc_IronPlateReinforced_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 6
                             },
-                            "item_name": "Desc_IronRod_C"
+                            "id": "Desc_IronRod_C"
                         }
                     ],
                     "is_alternate": false,
@@ -6555,14 +6555,14 @@ const game_data = {
                                 "d": 2,
                                 "n": 3
                             },
-                            "item_name": "Desc_IronPlateReinforced_C"
+                            "id": "Desc_IronPlateReinforced_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 28
                             },
-                            "item_name": "Desc_IronScrew_C"
+                            "id": "Desc_IronScrew_C"
                         }
                     ],
                     "is_alternate": true,
@@ -6582,14 +6582,14 @@ const game_data = {
                                 "d": 3,
                                 "n": 2
                             },
-                            "item_name": "Desc_IronPlateReinforced_C"
+                            "id": "Desc_IronPlateReinforced_C"
                         },
                         {
                             "amount": {
                                 "d": 3,
                                 "n": 10
                             },
-                            "item_name": "Desc_SteelPipe_C"
+                            "id": "Desc_SteelPipe_C"
                         }
                     ],
                     "is_alternate": true,
@@ -6616,28 +6616,28 @@ const game_data = {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_CoolingSystem_C"
+                            "id": "Desc_CoolingSystem_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_ModularFrameLightweight_C"
+                            "id": "Desc_ModularFrameLightweight_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_Motor_C"
+                            "id": "Desc_Motor_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 24
                             },
-                            "item_name": "Desc_Rubber_C"
+                            "id": "Desc_Rubber_C"
                         }
                     ],
                     "is_alternate": false,
@@ -6659,28 +6659,28 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_Motor_C"
+                            "id": "Desc_Motor_C"
                         },
                         {
                             "amount": {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_PressureConversionCube_C"
+                            "id": "Desc_PressureConversionCube_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 12
                             },
-                            "item_name": "Desc_PackagedNitrogenGas_C"
+                            "id": "Desc_PackagedNitrogenGas_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_Stator_C"
+                            "id": "Desc_Stator_C"
                         }
                     ],
                     "is_alternate": true,
@@ -6700,28 +6700,28 @@ const game_data = {
                                 "d": 3,
                                 "n": 7
                             },
-                            "item_name": "Desc_Motor_C"
+                            "id": "Desc_Motor_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_ModularFrameLightweight_C"
+                            "id": "Desc_ModularFrameLightweight_C"
                         },
                         {
                             "amount": {
                                 "d": 3,
                                 "n": 5
                             },
-                            "item_name": "Desc_ElectromagneticControlRod_C"
+                            "id": "Desc_ElectromagneticControlRod_C"
                         },
                         {
                             "amount": {
                                 "d": 3,
                                 "n": 7
                             },
-                            "item_name": "Desc_Rotor_C"
+                            "id": "Desc_Rotor_C"
                         }
                     ],
                     "is_alternate": true,
@@ -6748,14 +6748,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_Rotor_C"
+                            "id": "Desc_Rotor_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_Stator_C"
+                            "id": "Desc_Stator_C"
                         }
                     ],
                     "is_alternate": false,
@@ -6777,14 +6777,14 @@ const game_data = {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_ElectromagneticControlRod_C"
+                            "id": "Desc_ElectromagneticControlRod_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_Rotor_C"
+                            "id": "Desc_Rotor_C"
                         }
                     ],
                     "is_alternate": true,
@@ -6804,21 +6804,21 @@ const game_data = {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_Rotor_C"
+                            "id": "Desc_Rotor_C"
                         },
                         {
                             "amount": {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_Stator_C"
+                            "id": "Desc_Stator_C"
                         },
                         {
                             "amount": {
                                 "d": 6,
                                 "n": 1
                             },
-                            "item_name": "Desc_CrystalOscillator_C"
+                            "id": "Desc_CrystalOscillator_C"
                         }
                     ],
                     "is_alternate": true,
@@ -6851,21 +6851,21 @@ const game_data = {
                                 "d": 1,
                                 "n": 4000
                             },
-                            "item_name": "Desc_NitrogenGas_C"
+                            "id": "Desc_NitrogenGas_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_Water_C"
+                            "id": "Desc_Water_C"
                         },
                         {
                             "amount": {
                                 "d": 3,
                                 "n": 1
                             },
-                            "item_name": "Desc_IronPlate_C"
+                            "id": "Desc_IronPlate_C"
                         }
                     ],
                     "is_alternate": false,
@@ -6885,7 +6885,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_PackagedNitricAcid_C"
+                            "id": "Desc_PackagedNitricAcid_C"
                         }
                     ],
                     "is_alternate": true,
@@ -6912,14 +6912,14 @@ const game_data = {
                                 "d": 12000,
                                 "n": 1
                             },
-                            "item_name": "Desc_SAMIngot_C"
+                            "id": "Desc_SAMIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 1200,
                                 "n": 1
                             },
-                            "item_name": "Desc_OreBauxite_C"
+                            "id": "Desc_OreBauxite_C"
                         }
                     ],
                     "is_alternate": true,
@@ -6939,14 +6939,14 @@ const game_data = {
                                 "d": 12000,
                                 "n": 1
                             },
-                            "item_name": "Desc_SAMIngot_C"
+                            "id": "Desc_SAMIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 1000,
                                 "n": 1
                             },
-                            "item_name": "Desc_OreGold_C"
+                            "id": "Desc_OreGold_C"
                         }
                     ],
                     "is_alternate": true,
@@ -6966,7 +6966,7 @@ const game_data = {
                                 "d": 4000,
                                 "n": 1
                             },
-                            "item_name": "Desc_PackagedNitrogenGas_C"
+                            "id": "Desc_PackagedNitrogenGas_C"
                         }
                     ],
                     "is_alternate": true,
@@ -6993,14 +6993,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_NobeliskExplosive_C"
+                            "id": "Desc_NobeliskExplosive_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_GunpowderMK2_C"
+                            "id": "Desc_GunpowderMK2_C"
                         }
                     ],
                     "is_alternate": false,
@@ -7028,14 +7028,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_Gunpowder_C"
+                            "id": "Desc_Gunpowder_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_SteelPipe_C"
+                            "id": "Desc_SteelPipe_C"
                         }
                     ],
                     "is_alternate": false,
@@ -7063,14 +7063,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_NobeliskExplosive_C"
+                            "id": "Desc_NobeliskExplosive_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 10
                             },
-                            "item_name": "Desc_GenericBiomass_C"
+                            "id": "Desc_GenericBiomass_C"
                         }
                     ],
                     "is_alternate": false,
@@ -7098,28 +7098,28 @@ const game_data = {
                                 "d": 1,
                                 "n": 5
                             },
-                            "item_name": "Desc_NobeliskExplosive_C"
+                            "id": "Desc_NobeliskExplosive_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 20
                             },
-                            "item_name": "Desc_UraniumCell_C"
+                            "id": "Desc_UraniumCell_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 10
                             },
-                            "item_name": "Desc_GunpowderMK2_C"
+                            "id": "Desc_GunpowderMK2_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 6
                             },
-                            "item_name": "Desc_CircuitBoardHighSpeed_C"
+                            "id": "Desc_CircuitBoardHighSpeed_C"
                         }
                     ],
                     "is_alternate": false,
@@ -7147,14 +7147,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_NobeliskExplosive_C"
+                            "id": "Desc_NobeliskExplosive_C"
                         },
                         {
                             "amount": {
                                 "d": 5,
                                 "n": 1
                             },
-                            "item_name": "Desc_CrystalOscillator_C"
+                            "id": "Desc_CrystalOscillator_C"
                         }
                     ],
                     "is_alternate": false,
@@ -7182,21 +7182,21 @@ const game_data = {
                                 "d": 1,
                                 "n": 50
                             },
-                            "item_name": "Desc_UraniumCell_C"
+                            "id": "Desc_UraniumCell_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_SteelPlateReinforced_C"
+                            "id": "Desc_SteelPlateReinforced_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 5
                             },
-                            "item_name": "Desc_ElectromagneticControlRod_C"
+                            "id": "Desc_ElectromagneticControlRod_C"
                         }
                     ],
                     "is_alternate": false,
@@ -7216,28 +7216,28 @@ const game_data = {
                                 "d": 3,
                                 "n": 100
                             },
-                            "item_name": "Desc_UraniumCell_C"
+                            "id": "Desc_UraniumCell_C"
                         },
                         {
                             "amount": {
                                 "d": 3,
                                 "n": 10
                             },
-                            "item_name": "Desc_ElectromagneticControlRod_C"
+                            "id": "Desc_ElectromagneticControlRod_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_CrystalOscillator_C"
+                            "id": "Desc_CrystalOscillator_C"
                         },
                         {
                             "amount": {
                                 "d": 3,
                                 "n": 10
                             },
-                            "item_name": "Desc_Rotor_C"
+                            "id": "Desc_Rotor_C"
                         }
                     ],
                     "is_alternate": true,
@@ -7276,14 +7276,14 @@ const game_data = {
                                 "d": 12,
                                 "n": 1
                             },
-                            "item_name": "Desc_SAMIngot_C"
+                            "id": "Desc_SAMIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 4,
                                 "n": 5
                             },
-                            "item_name": "Desc_OreGold_C"
+                            "id": "Desc_OreGold_C"
                         }
                     ],
                     "is_alternate": true,
@@ -7303,14 +7303,14 @@ const game_data = {
                                 "d": 12,
                                 "n": 1
                             },
-                            "item_name": "Desc_SAMIngot_C"
+                            "id": "Desc_SAMIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 2,
                                 "n": 3
                             },
-                            "item_name": "Desc_OreCopper_C"
+                            "id": "Desc_OreCopper_C"
                         }
                     ],
                     "is_alternate": true,
@@ -7337,14 +7337,14 @@ const game_data = {
                                 "d": 12,
                                 "n": 1
                             },
-                            "item_name": "Desc_SAMIngot_C"
+                            "id": "Desc_SAMIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 6,
                                 "n": 5
                             },
-                            "item_name": "Desc_RawQuartz_C"
+                            "id": "Desc_RawQuartz_C"
                         }
                     ],
                     "is_alternate": true,
@@ -7364,14 +7364,14 @@ const game_data = {
                                 "d": 12,
                                 "n": 1
                             },
-                            "item_name": "Desc_SAMIngot_C"
+                            "id": "Desc_SAMIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_Sulfur_C"
+                            "id": "Desc_Sulfur_C"
                         }
                     ],
                     "is_alternate": true,
@@ -7398,14 +7398,14 @@ const game_data = {
                                 "d": 12,
                                 "n": 1
                             },
-                            "item_name": "Desc_SAMIngot_C"
+                            "id": "Desc_SAMIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 4,
                                 "n": 5
                             },
-                            "item_name": "Desc_OreCopper_C"
+                            "id": "Desc_OreCopper_C"
                         }
                     ],
                     "is_alternate": true,
@@ -7425,14 +7425,14 @@ const game_data = {
                                 "d": 12,
                                 "n": 1
                             },
-                            "item_name": "Desc_SAMIngot_C"
+                            "id": "Desc_SAMIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_RawQuartz_C"
+                            "id": "Desc_RawQuartz_C"
                         }
                     ],
                     "is_alternate": true,
@@ -7459,14 +7459,14 @@ const game_data = {
                                 "d": 12,
                                 "n": 1
                             },
-                            "item_name": "Desc_SAMIngot_C"
+                            "id": "Desc_SAMIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_Stone_C"
+                            "id": "Desc_Stone_C"
                         }
                     ],
                     "is_alternate": true,
@@ -7493,14 +7493,14 @@ const game_data = {
                                 "d": 12,
                                 "n": 1
                             },
-                            "item_name": "Desc_SAMIngot_C"
+                            "id": "Desc_SAMIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_OreBauxite_C"
+                            "id": "Desc_OreBauxite_C"
                         }
                     ],
                     "is_alternate": true,
@@ -7527,14 +7527,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_AluminaSolution_C"
+                            "id": "Desc_AluminaSolution_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_FluidCanister_C"
+                            "id": "Desc_FluidCanister_C"
                         }
                     ],
                     "is_alternate": false,
@@ -7561,14 +7561,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_LiquidBiofuel_C"
+                            "id": "Desc_LiquidBiofuel_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_FluidCanister_C"
+                            "id": "Desc_FluidCanister_C"
                         }
                     ],
                     "is_alternate": false,
@@ -7595,14 +7595,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 2000
                             },
-                            "item_name": "Desc_IonizedFuel_C"
+                            "id": "Desc_IonizedFuel_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_GasTank_C"
+                            "id": "Desc_GasTank_C"
                         }
                     ],
                     "is_alternate": false,
@@ -7629,14 +7629,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_NitricAcid_C"
+                            "id": "Desc_NitricAcid_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_GasTank_C"
+                            "id": "Desc_GasTank_C"
                         }
                     ],
                     "is_alternate": false,
@@ -7663,14 +7663,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 4000
                             },
-                            "item_name": "Desc_NitrogenGas_C"
+                            "id": "Desc_NitrogenGas_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_GasTank_C"
+                            "id": "Desc_GasTank_C"
                         }
                     ],
                     "is_alternate": false,
@@ -7697,14 +7697,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_HeavyOilResidue_C"
+                            "id": "Desc_HeavyOilResidue_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_FluidCanister_C"
+                            "id": "Desc_FluidCanister_C"
                         }
                     ],
                     "is_alternate": false,
@@ -7731,14 +7731,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_LiquidOil_C"
+                            "id": "Desc_LiquidOil_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_FluidCanister_C"
+                            "id": "Desc_FluidCanister_C"
                         }
                     ],
                     "is_alternate": false,
@@ -7765,14 +7765,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 2000
                             },
-                            "item_name": "Desc_RocketFuel_C"
+                            "id": "Desc_RocketFuel_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_GasTank_C"
+                            "id": "Desc_GasTank_C"
                         }
                     ],
                     "is_alternate": false,
@@ -7799,14 +7799,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_SulfuricAcid_C"
+                            "id": "Desc_SulfuricAcid_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_FluidCanister_C"
+                            "id": "Desc_FluidCanister_C"
                         }
                     ],
                     "is_alternate": false,
@@ -7833,14 +7833,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_Water_C"
+                            "id": "Desc_Water_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_FluidCanister_C"
+                            "id": "Desc_FluidCanister_C"
                         }
                     ],
                     "is_alternate": false,
@@ -7867,14 +7867,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 20
                             },
-                            "item_name": "Desc_Fabric_C"
+                            "id": "Desc_Fabric_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 10
                             },
-                            "item_name": "Desc_Cable_C"
+                            "id": "Desc_Cable_C"
                         }
                     ],
                     "is_alternate": false,
@@ -7901,7 +7901,7 @@ const game_data = {
                                 "d": 3,
                                 "n": 1
                             },
-                            "item_name": "Desc_HeavyOilResidue_C"
+                            "id": "Desc_HeavyOilResidue_C"
                         }
                     ],
                     "is_alternate": false,
@@ -7928,7 +7928,7 @@ const game_data = {
                                 "d": 2,
                                 "n": 3
                             },
-                            "item_name": "Desc_LiquidOil_C"
+                            "id": "Desc_LiquidOil_C"
                         }
                     ],
                     "is_alternate": false,
@@ -7948,14 +7948,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_PolymerResin_C"
+                            "id": "Desc_PolymerResin_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_Water_C"
+                            "id": "Desc_Water_C"
                         }
                     ],
                     "is_alternate": false,
@@ -7975,14 +7975,14 @@ const game_data = {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_Rubber_C"
+                            "id": "Desc_Rubber_C"
                         },
                         {
                             "amount": {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_LiquidFuel_C"
+                            "id": "Desc_LiquidFuel_C"
                         }
                     ],
                     "is_alternate": true,
@@ -8009,14 +8009,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_PlutoniumPellet_C"
+                            "id": "Desc_PlutoniumPellet_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_Cement_C"
+                            "id": "Desc_Cement_C"
                         }
                     ],
                     "is_alternate": false,
@@ -8038,7 +8038,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_AluminumCasing_C"
+                            "id": "Desc_AluminumCasing_C"
                         }
                     ],
                     "is_alternate": true,
@@ -8065,28 +8065,28 @@ const game_data = {
                                 "d": 1,
                                 "n": 30
                             },
-                            "item_name": "Desc_PlutoniumCell_C"
+                            "id": "Desc_PlutoniumCell_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 18
                             },
-                            "item_name": "Desc_SteelPlate_C"
+                            "id": "Desc_SteelPlate_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 6
                             },
-                            "item_name": "Desc_ElectromagneticControlRod_C"
+                            "id": "Desc_ElectromagneticControlRod_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 10
                             },
-                            "item_name": "Desc_AluminumPlateReinforced_C"
+                            "id": "Desc_AluminumPlateReinforced_C"
                         }
                     ],
                     "is_alternate": false,
@@ -8106,14 +8106,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 20
                             },
-                            "item_name": "Desc_PlutoniumCell_C"
+                            "id": "Desc_PlutoniumCell_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_PressureConversionCube_C"
+                            "id": "Desc_PressureConversionCube_C"
                         }
                     ],
                     "is_alternate": true,
@@ -8140,7 +8140,7 @@ const game_data = {
                                 "d": 6,
                                 "n": 5
                             },
-                            "item_name": "Desc_NuclearWaste_C"
+                            "id": "Desc_NuclearWaste_C"
                         }
                     ],
                     "is_alternate": false,
@@ -8173,7 +8173,7 @@ const game_data = {
                                 "d": 13,
                                 "n": 6
                             },
-                            "item_name": "Desc_LiquidOil_C"
+                            "id": "Desc_LiquidOil_C"
                         }
                     ],
                     "is_alternate": false,
@@ -8193,7 +8193,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_LiquidOil_C"
+                            "id": "Desc_LiquidOil_C"
                         }
                     ],
                     "is_alternate": false,
@@ -8213,7 +8213,7 @@ const game_data = {
                                 "d": 2,
                                 "n": 3
                             },
-                            "item_name": "Desc_LiquidOil_C"
+                            "id": "Desc_LiquidOil_C"
                         }
                     ],
                     "is_alternate": true,
@@ -8240,14 +8240,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_ModularFrameFused_C"
+                            "id": "Desc_ModularFrameFused_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_ModularFrameLightweight_C"
+                            "id": "Desc_ModularFrameLightweight_C"
                         }
                     ],
                     "is_alternate": false,
@@ -8295,28 +8295,28 @@ const game_data = {
                                 "d": 1,
                                 "n": 6
                             },
-                            "item_name": "Desc_DarkMatter_C"
+                            "id": "Desc_DarkMatter_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_CrystalOscillator_C"
+                            "id": "Desc_CrystalOscillator_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 9
                             },
-                            "item_name": "Desc_AluminumPlate_C"
+                            "id": "Desc_AluminumPlate_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 25000
                             },
-                            "item_name": "Desc_QuantumEnergy_C"
+                            "id": "Desc_QuantumEnergy_C"
                         }
                     ],
                     "is_alternate": false,
@@ -8343,7 +8343,7 @@ const game_data = {
                                 "d": 3,
                                 "n": 5
                             },
-                            "item_name": "Desc_RawQuartz_C"
+                            "id": "Desc_RawQuartz_C"
                         }
                     ],
                     "is_alternate": false,
@@ -8365,14 +8365,14 @@ const game_data = {
                                 "d": 7,
                                 "n": 9
                             },
-                            "item_name": "Desc_RawQuartz_C"
+                            "id": "Desc_RawQuartz_C"
                         },
                         {
                             "amount": {
                                 "d": 7,
                                 "n": 5
                             },
-                            "item_name": "Desc_Water_C"
+                            "id": "Desc_Water_C"
                         }
                     ],
                     "is_alternate": true,
@@ -8392,14 +8392,14 @@ const game_data = {
                                 "d": 5,
                                 "n": 8
                             },
-                            "item_name": "Desc_RawQuartz_C"
+                            "id": "Desc_RawQuartz_C"
                         },
                         {
                             "amount": {
                                 "d": 15,
                                 "n": 2
                             },
-                            "item_name": "Desc_NitricAcid_C"
+                            "id": "Desc_NitricAcid_C"
                         }
                     ],
                     "is_alternate": true,
@@ -8419,14 +8419,14 @@ const game_data = {
                                 "d": 18,
                                 "n": 25
                             },
-                            "item_name": "Desc_RawQuartz_C"
+                            "id": "Desc_RawQuartz_C"
                         },
                         {
                             "amount": {
                                 "d": 3,
                                 "n": 2
                             },
-                            "item_name": "Desc_Coal_C"
+                            "id": "Desc_Coal_C"
                         }
                     ],
                     "is_alternate": true,
@@ -8453,14 +8453,14 @@ const game_data = {
                                 "d": 12,
                                 "n": 1
                             },
-                            "item_name": "Desc_SAMIngot_C"
+                            "id": "Desc_SAMIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 6,
                                 "n": 5
                             },
-                            "item_name": "Desc_OreBauxite_C"
+                            "id": "Desc_OreBauxite_C"
                         }
                     ],
                     "is_alternate": true,
@@ -8480,14 +8480,14 @@ const game_data = {
                                 "d": 12,
                                 "n": 1
                             },
-                            "item_name": "Desc_SAMIngot_C"
+                            "id": "Desc_SAMIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_Coal_C"
+                            "id": "Desc_Coal_C"
                         }
                     ],
                     "is_alternate": true,
@@ -8514,21 +8514,21 @@ const game_data = {
                                 "d": 1,
                                 "n": 6
                             },
-                            "item_name": "Desc_IronPlateReinforced_C"
+                            "id": "Desc_IronPlateReinforced_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 16
                             },
-                            "item_name": "Desc_IronRod_C"
+                            "id": "Desc_IronRod_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 100
                             },
-                            "item_name": "Desc_IronScrew_C"
+                            "id": "Desc_IronScrew_C"
                         }
                     ],
                     "is_alternate": false,
@@ -8555,21 +8555,21 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_SpikedRebar_C"
+                            "id": "Desc_SpikedRebar_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_GunpowderMK2_C"
+                            "id": "Desc_GunpowderMK2_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_SteelPipe_C"
+                            "id": "Desc_SteelPipe_C"
                         }
                     ],
                     "is_alternate": false,
@@ -8597,14 +8597,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_SpikedRebar_C"
+                            "id": "Desc_SpikedRebar_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_QuartzCrystal_C"
+                            "id": "Desc_QuartzCrystal_C"
                         }
                     ],
                     "is_alternate": false,
@@ -8632,14 +8632,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_SpikedRebar_C"
+                            "id": "Desc_SpikedRebar_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 5
                             },
-                            "item_name": "Desc_HighSpeedWire_C"
+                            "id": "Desc_HighSpeedWire_C"
                         }
                     ],
                     "is_alternate": false,
@@ -8667,14 +8667,14 @@ const game_data = {
                                 "d": 5000,
                                 "n": 3
                             },
-                            "item_name": "Desc_LiquidTurboFuel_C"
+                            "id": "Desc_LiquidTurboFuel_C"
                         },
                         {
                             "amount": {
                                 "d": 10000,
                                 "n": 1
                             },
-                            "item_name": "Desc_NitricAcid_C"
+                            "id": "Desc_NitricAcid_C"
                         }
                     ],
                     "is_alternate": false,
@@ -8694,28 +8694,28 @@ const game_data = {
                                 "d": 1500,
                                 "n": 1
                             },
-                            "item_name": "Desc_LiquidFuel_C"
+                            "id": "Desc_LiquidFuel_C"
                         },
                         {
                             "amount": {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_NitrogenGas_C"
+                            "id": "Desc_NitrogenGas_C"
                         },
                         {
                             "amount": {
                                 "d": 1500,
                                 "n": 1
                             },
-                            "item_name": "Desc_Sulfur_C"
+                            "id": "Desc_Sulfur_C"
                         },
                         {
                             "amount": {
                                 "d": 3000,
                                 "n": 1
                             },
-                            "item_name": "Desc_Coal_C"
+                            "id": "Desc_Coal_C"
                         }
                     ],
                     "is_alternate": true,
@@ -8735,7 +8735,7 @@ const game_data = {
                                 "d": 2000,
                                 "n": 1
                             },
-                            "item_name": "Desc_PackagedRocketFuel_C"
+                            "id": "Desc_PackagedRocketFuel_C"
                         }
                     ],
                     "is_alternate": true,
@@ -8762,14 +8762,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 5
                             },
-                            "item_name": "Desc_IronRod_C"
+                            "id": "Desc_IronRod_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 25
                             },
-                            "item_name": "Desc_IronScrew_C"
+                            "id": "Desc_IronScrew_C"
                         }
                     ],
                     "is_alternate": false,
@@ -8791,14 +8791,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_CopperSheet_C"
+                            "id": "Desc_CopperSheet_C"
                         },
                         {
                             "amount": {
                                 "d": 3,
                                 "n": 52
                             },
-                            "item_name": "Desc_IronScrew_C"
+                            "id": "Desc_IronScrew_C"
                         }
                     ],
                     "is_alternate": true,
@@ -8818,14 +8818,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_SteelPipe_C"
+                            "id": "Desc_SteelPipe_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 6
                             },
-                            "item_name": "Desc_Wire_C"
+                            "id": "Desc_Wire_C"
                         }
                     ],
                     "is_alternate": true,
@@ -8852,7 +8852,7 @@ const game_data = {
                                 "d": 2,
                                 "n": 3
                             },
-                            "item_name": "Desc_LiquidOil_C"
+                            "id": "Desc_LiquidOil_C"
                         }
                     ],
                     "is_alternate": false,
@@ -8872,14 +8872,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_PolymerResin_C"
+                            "id": "Desc_PolymerResin_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_Water_C"
+                            "id": "Desc_Water_C"
                         }
                     ],
                     "is_alternate": false,
@@ -8899,14 +8899,14 @@ const game_data = {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_Plastic_C"
+                            "id": "Desc_Plastic_C"
                         },
                         {
                             "amount": {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_LiquidFuel_C"
+                            "id": "Desc_LiquidFuel_C"
                         }
                     ],
                     "is_alternate": true,
@@ -8933,21 +8933,21 @@ const game_data = {
                                 "d": 1,
                                 "n": 6
                             },
-                            "item_name": "Desc_SAMIngot_C"
+                            "id": "Desc_SAMIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 5
                             },
-                            "item_name": "Desc_Wire_C"
+                            "id": "Desc_Wire_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_SteelPipe_C"
+                            "id": "Desc_SteelPipe_C"
                         }
                     ],
                     "is_alternate": false,
@@ -8975,7 +8975,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_SAM_C"
+                            "id": "Desc_SAM_C"
                         }
                     ],
                     "is_alternate": false,
@@ -9015,7 +9015,7 @@ const game_data = {
                                 "d": 5,
                                 "n": 3
                             },
-                            "item_name": "Desc_RawQuartz_C"
+                            "id": "Desc_RawQuartz_C"
                         }
                     ],
                     "is_alternate": false,
@@ -9037,14 +9037,14 @@ const game_data = {
                                 "d": 5,
                                 "n": 12
                             },
-                            "item_name": "Desc_OreBauxite_C"
+                            "id": "Desc_OreBauxite_C"
                         },
                         {
                             "amount": {
                                 "d": 5,
                                 "n": 18
                             },
-                            "item_name": "Desc_Water_C"
+                            "id": "Desc_Water_C"
                         }
                     ],
                     "is_alternate": false,
@@ -9064,21 +9064,21 @@ const game_data = {
                                 "d": 9,
                                 "n": 4
                             },
-                            "item_name": "Desc_DissolvedSilica_C"
+                            "id": "Desc_DissolvedSilica_C"
                         },
                         {
                             "amount": {
                                 "d": 27,
                                 "n": 5
                             },
-                            "item_name": "Desc_Stone_C"
+                            "id": "Desc_Stone_C"
                         },
                         {
                             "amount": {
                                 "d": 27,
                                 "n": 10
                             },
-                            "item_name": "Desc_Water_C"
+                            "id": "Desc_Water_C"
                         }
                     ],
                     "is_alternate": true,
@@ -9098,14 +9098,14 @@ const game_data = {
                                 "d": 7,
                                 "n": 3
                             },
-                            "item_name": "Desc_RawQuartz_C"
+                            "id": "Desc_RawQuartz_C"
                         },
                         {
                             "amount": {
                                 "d": 7,
                                 "n": 5
                             },
-                            "item_name": "Desc_Stone_C"
+                            "id": "Desc_Stone_C"
                         }
                     ],
                     "is_alternate": true,
@@ -9132,28 +9132,28 @@ const game_data = {
                                 "d": 10,
                                 "n": 1
                             },
-                            "item_name": "Desc_SpaceElevatorPart_9_C"
+                            "id": "Desc_SpaceElevatorPart_9_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_DarkMatter_C"
+                            "id": "Desc_DarkMatter_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 10
                             },
-                            "item_name": "Desc_IronPlate_C"
+                            "id": "Desc_IronPlate_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 20
                             },
-                            "item_name": "Desc_Cement_C"
+                            "id": "Desc_Cement_C"
                         }
                     ],
                     "is_alternate": false,
@@ -9180,7 +9180,7 @@ const game_data = {
                                 "d": 2,
                                 "n": 5
                             },
-                            "item_name": "Desc_Gift_C"
+                            "id": "Desc_Gift_C"
                         }
                     ],
                     "is_alternate": false,
@@ -9207,7 +9207,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_Snow_C"
+                            "id": "Desc_Snow_C"
                         }
                     ],
                     "is_alternate": false,
@@ -9234,21 +9234,21 @@ const game_data = {
                                 "d": 4,
                                 "n": 1
                             },
-                            "item_name": "Desc_SpaceElevatorPart_7_C"
+                            "id": "Desc_SpaceElevatorPart_7_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 20
                             },
-                            "item_name": "Desc_FicsiteMesh_C"
+                            "id": "Desc_FicsiteMesh_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 5
                             },
-                            "item_name": "Desc_Water_C"
+                            "id": "Desc_Water_C"
                         }
                     ],
                     "is_alternate": false,
@@ -9275,28 +9275,28 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_SpaceElevatorPart_8_C"
+                            "id": "Desc_SpaceElevatorPart_8_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 5
                             },
-                            "item_name": "Desc_SingularityCell_C"
+                            "id": "Desc_SingularityCell_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_QuantumOscillator_C"
+                            "id": "Desc_QuantumOscillator_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 40
                             },
-                            "item_name": "Desc_DarkMatter_C"
+                            "id": "Desc_DarkMatter_C"
                         }
                     ],
                     "is_alternate": false,
@@ -9323,28 +9323,28 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_SpaceElevatorPart_6_C"
+                            "id": "Desc_SpaceElevatorPart_6_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_TemporalProcessor_C"
+                            "id": "Desc_TemporalProcessor_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_QuantumOscillator_C"
+                            "id": "Desc_QuantumOscillator_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 25000
                             },
-                            "item_name": "Desc_QuantumEnergy_C"
+                            "id": "Desc_QuantumEnergy_C"
                         }
                     ],
                     "is_alternate": false,
@@ -9371,14 +9371,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_IronPlateReinforced_C"
+                            "id": "Desc_IronPlateReinforced_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_Rotor_C"
+                            "id": "Desc_Rotor_C"
                         }
                     ],
                     "is_alternate": false,
@@ -9398,21 +9398,21 @@ const game_data = {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_IronPlateReinforced_C"
+                            "id": "Desc_IronPlateReinforced_C"
                         },
                         {
                             "amount": {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_Rotor_C"
+                            "id": "Desc_Rotor_C"
                         },
                         {
                             "amount": {
                                 "d": 2,
                                 "n": 3
                             },
-                            "item_name": "Desc_Plastic_C"
+                            "id": "Desc_Plastic_C"
                         }
                     ],
                     "is_alternate": true,
@@ -9439,14 +9439,14 @@ const game_data = {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_ModularFrame_C"
+                            "id": "Desc_ModularFrame_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 6
                             },
-                            "item_name": "Desc_SteelPlate_C"
+                            "id": "Desc_SteelPlate_C"
                         }
                     ],
                     "is_alternate": false,
@@ -9466,21 +9466,21 @@ const game_data = {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_ModularFrame_C"
+                            "id": "Desc_ModularFrame_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_SteelPlate_C"
+                            "id": "Desc_SteelPlate_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_Rubber_C"
+                            "id": "Desc_Rubber_C"
                         }
                     ],
                     "is_alternate": true,
@@ -9507,14 +9507,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_Stator_C"
+                            "id": "Desc_Stator_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 20
                             },
-                            "item_name": "Desc_Cable_C"
+                            "id": "Desc_Cable_C"
                         }
                     ],
                     "is_alternate": false,
@@ -9534,21 +9534,21 @@ const game_data = {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_Stator_C"
+                            "id": "Desc_Stator_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 10
                             },
-                            "item_name": "Desc_Wire_C"
+                            "id": "Desc_Wire_C"
                         },
                         {
                             "amount": {
                                 "d": 4,
                                 "n": 1
                             },
-                            "item_name": "Desc_HighSpeedConnector_C"
+                            "id": "Desc_HighSpeedConnector_C"
                         }
                     ],
                     "is_alternate": true,
@@ -9575,21 +9575,21 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_Motor_C"
+                            "id": "Desc_Motor_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 15
                             },
-                            "item_name": "Desc_Rubber_C"
+                            "id": "Desc_Rubber_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_SpaceElevatorPart_1_C"
+                            "id": "Desc_SpaceElevatorPart_1_C"
                         }
                     ],
                     "is_alternate": false,
@@ -9616,28 +9616,28 @@ const game_data = {
                                 "d": 1,
                                 "n": 5
                             },
-                            "item_name": "Desc_SpaceElevatorPart_3_C"
+                            "id": "Desc_SpaceElevatorPart_3_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 5
                             },
-                            "item_name": "Desc_CircuitBoard_C"
+                            "id": "Desc_CircuitBoard_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_ModularFrameHeavy_C"
+                            "id": "Desc_ModularFrameHeavy_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_Computer_C"
+                            "id": "Desc_Computer_C"
                         }
                     ],
                     "is_alternate": false,
@@ -9664,14 +9664,14 @@ const game_data = {
                                 "d": 2,
                                 "n": 5
                             },
-                            "item_name": "Desc_SpaceElevatorPart_2_C"
+                            "id": "Desc_SpaceElevatorPart_2_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_ElectromagneticControlRod_C"
+                            "id": "Desc_ElectromagneticControlRod_C"
                         }
                     ],
                     "is_alternate": false,
@@ -9698,14 +9698,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_SpaceElevatorPart_5_C"
+                            "id": "Desc_SpaceElevatorPart_5_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_ComputerSuper_C"
+                            "id": "Desc_ComputerSuper_C"
                         }
                     ],
                     "is_alternate": false,
@@ -9732,28 +9732,28 @@ const game_data = {
                                 "d": 2,
                                 "n": 5
                             },
-                            "item_name": "Desc_SpaceElevatorPart_4_C"
+                            "id": "Desc_SpaceElevatorPart_4_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_MotorLightweight_C"
+                            "id": "Desc_MotorLightweight_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_CoolingSystem_C"
+                            "id": "Desc_CoolingSystem_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_ModularFrameFused_C"
+                            "id": "Desc_ModularFrameFused_C"
                         }
                     ],
                     "is_alternate": false,
@@ -9780,14 +9780,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 200
                             },
-                            "item_name": "Desc_CopperDust_C"
+                            "id": "Desc_CopperDust_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_PressureConversionCube_C"
+                            "id": "Desc_PressureConversionCube_C"
                         }
                     ],
                     "is_alternate": false,
@@ -9814,7 +9814,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_IronRod_C"
+                            "id": "Desc_IronRod_C"
                         }
                     ],
                     "is_alternate": false,
@@ -9848,14 +9848,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_SteelPipe_C"
+                            "id": "Desc_SteelPipe_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 8
                             },
-                            "item_name": "Desc_Wire_C"
+                            "id": "Desc_Wire_C"
                         }
                     ],
                     "is_alternate": false,
@@ -9877,14 +9877,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_SteelPipe_C"
+                            "id": "Desc_SteelPipe_C"
                         },
                         {
                             "amount": {
                                 "d": 2,
                                 "n": 15
                             },
-                            "item_name": "Desc_HighSpeedWire_C"
+                            "id": "Desc_HighSpeedWire_C"
                         }
                     ],
                     "is_alternate": true,
@@ -9911,14 +9911,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_OreIron_C"
+                            "id": "Desc_OreIron_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_Coal_C"
+                            "id": "Desc_Coal_C"
                         }
                     ],
                     "is_alternate": false,
@@ -9939,14 +9939,14 @@ const game_data = {
                                 "d": 4,
                                 "n": 3
                             },
-                            "item_name": "Desc_OreIron_C"
+                            "id": "Desc_OreIron_C"
                         },
                         {
                             "amount": {
                                 "d": 4,
                                 "n": 3
                             },
-                            "item_name": "Desc_PetroleumCoke_C"
+                            "id": "Desc_PetroleumCoke_C"
                         }
                     ],
                     "is_alternate": true,
@@ -9966,14 +9966,14 @@ const game_data = {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_OreIron_C"
+                            "id": "Desc_OreIron_C"
                         },
                         {
                             "amount": {
                                 "d": 4,
                                 "n": 1
                             },
-                            "item_name": "Desc_CompactedCoal_C"
+                            "id": "Desc_CompactedCoal_C"
                         }
                     ],
                     "is_alternate": true,
@@ -9993,14 +9993,14 @@ const game_data = {
                                 "d": 3,
                                 "n": 2
                             },
-                            "item_name": "Desc_IronIngot_C"
+                            "id": "Desc_IronIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 3,
                                 "n": 2
                             },
-                            "item_name": "Desc_Coal_C"
+                            "id": "Desc_Coal_C"
                         }
                     ],
                     "is_alternate": true,
@@ -10027,7 +10027,7 @@ const game_data = {
                                 "d": 2,
                                 "n": 3
                             },
-                            "item_name": "Desc_SteelIngot_C"
+                            "id": "Desc_SteelIngot_C"
                         }
                     ],
                     "is_alternate": false,
@@ -10049,14 +10049,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_SteelIngot_C"
+                            "id": "Desc_SteelIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 5,
                                 "n": 3
                             },
-                            "item_name": "Desc_Cement_C"
+                            "id": "Desc_Cement_C"
                         }
                     ],
                     "is_alternate": true,
@@ -10076,7 +10076,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_IronIngot_C"
+                            "id": "Desc_IronIngot_C"
                         }
                     ],
                     "is_alternate": true,
@@ -10103,14 +10103,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_SteelPlate_C"
+                            "id": "Desc_SteelPlate_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 6
                             },
-                            "item_name": "Desc_Cement_C"
+                            "id": "Desc_Cement_C"
                         }
                     ],
                     "is_alternate": false,
@@ -10132,14 +10132,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 6
                             },
-                            "item_name": "Desc_SteelPipe_C"
+                            "id": "Desc_SteelPipe_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 5
                             },
-                            "item_name": "Desc_Cement_C"
+                            "id": "Desc_Cement_C"
                         }
                     ],
                     "is_alternate": true,
@@ -10166,7 +10166,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_SteelIngot_C"
+                            "id": "Desc_SteelIngot_C"
                         }
                     ],
                     "is_alternate": false,
@@ -10188,14 +10188,14 @@ const game_data = {
                                 "d": 3,
                                 "n": 8
                             },
-                            "item_name": "Desc_SteelIngot_C"
+                            "id": "Desc_SteelIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 9,
                                 "n": 16
                             },
-                            "item_name": "Desc_Cement_C"
+                            "id": "Desc_Cement_C"
                         }
                     ],
                     "is_alternate": true,
@@ -10215,7 +10215,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_AluminumIngot_C"
+                            "id": "Desc_AluminumIngot_C"
                         }
                     ],
                     "is_alternate": true,
@@ -10248,14 +10248,14 @@ const game_data = {
                                 "d": 12,
                                 "n": 1
                             },
-                            "item_name": "Desc_SAMIngot_C"
+                            "id": "Desc_SAMIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 6,
                                 "n": 1
                             },
-                            "item_name": "Desc_Sulfur_C"
+                            "id": "Desc_Sulfur_C"
                         }
                     ],
                     "is_alternate": true,
@@ -10282,14 +10282,14 @@ const game_data = {
                                 "d": 12,
                                 "n": 1
                             },
-                            "item_name": "Desc_SAMIngot_C"
+                            "id": "Desc_SAMIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 3,
                                 "n": 5
                             },
-                            "item_name": "Desc_Coal_C"
+                            "id": "Desc_Coal_C"
                         }
                     ],
                     "is_alternate": true,
@@ -10309,14 +10309,14 @@ const game_data = {
                                 "d": 12,
                                 "n": 1
                             },
-                            "item_name": "Desc_SAMIngot_C"
+                            "id": "Desc_SAMIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 2,
                                 "n": 5
                             },
-                            "item_name": "Desc_OreIron_C"
+                            "id": "Desc_OreIron_C"
                         }
                     ],
                     "is_alternate": true,
@@ -10343,14 +10343,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_Sulfur_C"
+                            "id": "Desc_Sulfur_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_Water_C"
+                            "id": "Desc_Water_C"
                         }
                     ],
                     "is_alternate": false,
@@ -10370,21 +10370,21 @@ const game_data = {
                                 "d": 1,
                                 "n": 5
                             },
-                            "item_name": "Desc_OreUranium_C"
+                            "id": "Desc_OreUranium_C"
                         },
                         {
                             "amount": {
                                 "d": 2,
                                 "n": 3
                             },
-                            "item_name": "Desc_Cement_C"
+                            "id": "Desc_Cement_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 4
                             },
-                            "item_name": "Desc_SulfuricAcid_C"
+                            "id": "Desc_SulfuricAcid_C"
                         }
                     ],
                     "is_alternate": false,
@@ -10404,7 +10404,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_PackagedSulfuricAcid_C"
+                            "id": "Desc_PackagedSulfuricAcid_C"
                         }
                     ],
                     "is_alternate": true,
@@ -10431,28 +10431,28 @@ const game_data = {
                                 "d": 1,
                                 "n": 5
                             },
-                            "item_name": "Desc_TimeCrystal_C"
+                            "id": "Desc_TimeCrystal_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_ComputerSuper_C"
+                            "id": "Desc_ComputerSuper_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 15
                             },
-                            "item_name": "Desc_FicsiteMesh_C"
+                            "id": "Desc_FicsiteMesh_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 25000
                             },
-                            "item_name": "Desc_QuantumEnergy_C"
+                            "id": "Desc_QuantumEnergy_C"
                         }
                     ],
                     "is_alternate": false,
@@ -10479,7 +10479,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_Diamond_C"
+                            "id": "Desc_Diamond_C"
                         }
                     ],
                     "is_alternate": true,
@@ -10506,14 +10506,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_LiquidTurboFuel_C"
+                            "id": "Desc_LiquidTurboFuel_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_FluidCanister_C"
+                            "id": "Desc_FluidCanister_C"
                         }
                     ],
                     "is_alternate": false,
@@ -10540,21 +10540,21 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_OreUranium_C"
+                            "id": "Desc_OreUranium_C"
                         },
                         {
                             "amount": {
                                 "d": 5,
                                 "n": 3
                             },
-                            "item_name": "Desc_Cement_C"
+                            "id": "Desc_Cement_C"
                         },
                         {
                             "amount": {
                                 "d": 5,
                                 "n": 8
                             },
-                            "item_name": "Desc_SulfuricAcid_C"
+                            "id": "Desc_SulfuricAcid_C"
                         }
                     ],
                     "is_alternate": false,
@@ -10574,28 +10574,28 @@ const game_data = {
                                 "d": 4,
                                 "n": 5
                             },
-                            "item_name": "Desc_OreUranium_C"
+                            "id": "Desc_OreUranium_C"
                         },
                         {
                             "amount": {
                                 "d": 4,
                                 "n": 3
                             },
-                            "item_name": "Desc_Silica_C"
+                            "id": "Desc_Silica_C"
                         },
                         {
                             "amount": {
                                 "d": 4,
                                 "n": 5
                             },
-                            "item_name": "Desc_Sulfur_C"
+                            "id": "Desc_Sulfur_C"
                         },
                         {
                             "amount": {
                                 "d": 4,
                                 "n": 15
                             },
-                            "item_name": "Desc_HighSpeedWire_C"
+                            "id": "Desc_HighSpeedWire_C"
                         }
                     ],
                     "is_alternate": true,
@@ -10634,21 +10634,21 @@ const game_data = {
                                 "d": 3,
                                 "n": 5
                             },
-                            "item_name": "Desc_SulfuricAcid_C"
+                            "id": "Desc_SulfuricAcid_C"
                         },
                         {
                             "amount": {
                                 "d": 3,
                                 "n": 4
                             },
-                            "item_name": "Desc_AluminaSolution_C"
+                            "id": "Desc_AluminaSolution_C"
                         },
                         {
                             "amount": {
                                 "d": 3,
                                 "n": 2
                             },
-                            "item_name": "Desc_AluminumCasing_C"
+                            "id": "Desc_AluminumCasing_C"
                         }
                     ],
                     "is_alternate": false,
@@ -10668,28 +10668,28 @@ const game_data = {
                                 "d": 2,
                                 "n": 5
                             },
-                            "item_name": "Desc_NuclearWaste_C"
+                            "id": "Desc_NuclearWaste_C"
                         },
                         {
                             "amount": {
                                 "d": 3,
                                 "n": 5
                             },
-                            "item_name": "Desc_Silica_C"
+                            "id": "Desc_Silica_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_NitricAcid_C"
+                            "id": "Desc_NitricAcid_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_SulfuricAcid_C"
+                            "id": "Desc_SulfuricAcid_C"
                         }
                     ],
                     "is_alternate": false,
@@ -10709,14 +10709,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_AluminaSolution_C"
+                            "id": "Desc_AluminaSolution_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_Coal_C"
+                            "id": "Desc_Coal_C"
                         }
                     ],
                     "is_alternate": false,
@@ -10736,7 +10736,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_PackagedWater_C"
+                            "id": "Desc_PackagedWater_C"
                         }
                     ],
                     "is_alternate": true,
@@ -10756,14 +10756,14 @@ const game_data = {
                                 "d": 7,
                                 "n": 12
                             },
-                            "item_name": "Desc_AluminaSolution_C"
+                            "id": "Desc_AluminaSolution_C"
                         },
                         {
                             "amount": {
                                 "d": 7,
                                 "n": 4
                             },
-                            "item_name": "Desc_PetroleumCoke_C"
+                            "id": "Desc_PetroleumCoke_C"
                         }
                     ],
                     "is_alternate": true,
@@ -10783,28 +10783,28 @@ const game_data = {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_OreBauxite_C"
+                            "id": "Desc_OreBauxite_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_Coal_C"
+                            "id": "Desc_Coal_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_SulfuricAcid_C"
+                            "id": "Desc_SulfuricAcid_C"
                         },
                         {
                             "amount": {
                                 "d": 5,
                                 "n": 6
                             },
-                            "item_name": "Desc_Water_C"
+                            "id": "Desc_Water_C"
                         }
                     ],
                     "is_alternate": true,
@@ -10824,28 +10824,28 @@ const game_data = {
                                 "d": 8,
                                 "n": 5
                             },
-                            "item_name": "Desc_OreUranium_C"
+                            "id": "Desc_OreUranium_C"
                         },
                         {
                             "amount": {
                                 "d": 8,
                                 "n": 5
                             },
-                            "item_name": "Desc_NuclearWaste_C"
+                            "id": "Desc_NuclearWaste_C"
                         },
                         {
                             "amount": {
                                 "d": 8,
                                 "n": 3
                             },
-                            "item_name": "Desc_NitricAcid_C"
+                            "id": "Desc_NitricAcid_C"
                         },
                         {
                             "amount": {
                                 "d": 8,
                                 "n": 5
                             },
-                            "item_name": "Desc_SulfuricAcid_C"
+                            "id": "Desc_SulfuricAcid_C"
                         }
                     ],
                     "is_alternate": true,
@@ -10865,21 +10865,21 @@ const game_data = {
                                 "d": 2,
                                 "n": 3
                             },
-                            "item_name": "Desc_DissolvedSilica_C"
+                            "id": "Desc_DissolvedSilica_C"
                         },
                         {
                             "amount": {
                                 "d": 8,
                                 "n": 5
                             },
-                            "item_name": "Desc_Stone_C"
+                            "id": "Desc_Stone_C"
                         },
                         {
                             "amount": {
                                 "d": 4,
                                 "n": 5
                             },
-                            "item_name": "Desc_Water_C"
+                            "id": "Desc_Water_C"
                         }
                     ],
                     "is_alternate": true,
@@ -10906,7 +10906,7 @@ const game_data = {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_CopperIngot_C"
+                            "id": "Desc_CopperIngot_C"
                         }
                     ],
                     "is_alternate": false,
@@ -10928,14 +10928,14 @@ const game_data = {
                                 "d": 15,
                                 "n": 2
                             },
-                            "item_name": "Desc_CopperIngot_C"
+                            "id": "Desc_CopperIngot_C"
                         },
                         {
                             "amount": {
                                 "d": 30,
                                 "n": 1
                             },
-                            "item_name": "Desc_GoldIngot_C"
+                            "id": "Desc_GoldIngot_C"
                         }
                     ],
                     "is_alternate": true,
@@ -10955,7 +10955,7 @@ const game_data = {
                                 "d": 8,
                                 "n": 1
                             },
-                            "item_name": "Desc_GoldIngot_C"
+                            "id": "Desc_GoldIngot_C"
                         }
                     ],
                     "is_alternate": true,
@@ -10975,7 +10975,7 @@ const game_data = {
                                 "d": 9,
                                 "n": 5
                             },
-                            "item_name": "Desc_IronIngot_C"
+                            "id": "Desc_IronIngot_C"
                         }
                     ],
                     "is_alternate": true,
@@ -11008,7 +11008,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_Gift_C"
+                            "id": "Desc_Gift_C"
                         }
                     ],
                     "is_alternate": false,
@@ -11035,7 +11035,7 @@ const game_data = {
                                 "d": 2,
                                 "n": 1
                             },
-                            "item_name": "Desc_Gift_C"
+                            "id": "Desc_Gift_C"
                         }
                     ],
                     "is_alternate": false,
@@ -11062,14 +11062,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_XmasBall1_C"
+                            "id": "Desc_XmasBall1_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_CopperIngot_C"
+                            "id": "Desc_CopperIngot_C"
                         }
                     ],
                     "is_alternate": false,
@@ -11096,14 +11096,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_XmasBall2_C"
+                            "id": "Desc_XmasBall2_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_IronIngot_C"
+                            "id": "Desc_IronIngot_C"
                         }
                     ],
                     "is_alternate": false,
@@ -11130,14 +11130,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_XmasBall3_C"
+                            "id": "Desc_XmasBall3_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_XmasBall4_C"
+                            "id": "Desc_XmasBall4_C"
                         }
                     ],
                     "is_alternate": false,
@@ -11164,7 +11164,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 2
                             },
-                            "item_name": "Desc_Gift_C"
+                            "id": "Desc_Gift_C"
                         }
                     ],
                     "is_alternate": false,
@@ -11191,7 +11191,7 @@ const game_data = {
                                 "d": 1,
                                 "n": 1
                             },
-                            "item_name": "Desc_Gift_C"
+                            "id": "Desc_Gift_C"
                         }
                     ],
                     "is_alternate": false,
@@ -11218,14 +11218,14 @@ const game_data = {
                                 "d": 1,
                                 "n": 5
                             },
-                            "item_name": "Desc_XmasWreath_C"
+                            "id": "Desc_XmasWreath_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 20
                             },
-                            "item_name": "Desc_CandyCane_C"
+                            "id": "Desc_CandyCane_C"
                         }
                     ],
                     "is_alternate": false,
@@ -11252,14 +11252,14 @@ const game_data = {
                                 "d": 2,
                                 "n": 15
                             },
-                            "item_name": "Desc_XmasBranch_C"
+                            "id": "Desc_XmasBranch_C"
                         },
                         {
                             "amount": {
                                 "d": 1,
                                 "n": 3
                             },
-                            "item_name": "Desc_XmasBallCluster_C"
+                            "id": "Desc_XmasBallCluster_C"
                         }
                     ],
                     "is_alternate": false,
