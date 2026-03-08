@@ -1,6 +1,6 @@
 // @ts-check
 import CacheManager from "./CacheManager.mjs"
-import {any, filter} from "./Common.mjs"
+import {any, filter} from "./Utils.mjs"
 
 /** @template NodeData, EdgeData */
 export class Graph {

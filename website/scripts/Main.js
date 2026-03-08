@@ -8,7 +8,7 @@
 
 
 import game_data from "./GameData.auto.mjs"
-import {assert, any, reduce, map} from "./Common.mjs"
+import {assert, any, reduce, map} from "./Utils.mjs"
 import {Graph, Node, Edge} from "./Graph.mjs"
 import Config from "./Config.mjs"
 
