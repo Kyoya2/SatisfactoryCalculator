@@ -7,72 +7,17 @@
 // https://mathjs.org/docs/datatypes/fractions.html
 
 
-import game_data from "./GameData.auto.mjs"
-import {assert, any, reduce, map} from "./Utils.mjs"
-import {Graph, Node, Edge} from "./Graph.mjs"
-import Config from "./Config.mjs"
-
+import game_data from "./GameData.auto.mjs";
+import {assert, any, reduce, map, fractionMax, formatFrac} from "./Utils.mjs";
+import {Graph, Node, Edge} from "./Graph.mjs";
+import {g_, selectedRecipe, singleMachineProduction, machinesRequired, getNodeProductionPerMinute} from "./Common.mjs";
+import initApp from "./Init.mjs";
 /** @import { GameObjectId, CountedItem, Recipe, CraftingObject } from "./GameData.auto.mjs" */
+/** @import { MyNodeInfo, MyEdgeInfo } from "./Common.mjs" */
 
 import mermaid from "mermaid";
-import elkLayouts from '@mermaid-js/layout-elk';
-import {fraction, add, subtract, multiply, divide, smaller, format, number, Fraction, lcm} from 'mathjs';
-
-/**
- * @typedef {Object} MyNodeInfo
- * @property {CraftingObject} obj - The associated crafting object
- * @property {number} selected_recipe_index - The index of the recipe in `obj.recipes` that's currently used
- * @property {Fraction} total_production_required - The total required production per second of this unit's resource to fully supply its target nodes
- *  recipe that are required for optimally producing the final product
- * @property {Fraction?} trivial_prod - If it's a trivial resource, contains its production per second
- * @property {HTMLDivElement} html - The HTML overlay of the node
- * 
- * @typedef {Object} MyEdgeInfo
- * @property {Fraction} amount - The number of units of the source node that are required to produce 1 unit of the target node
- * @property {Fraction} production_required - 
- * @property {Fraction} total_fraction - The part of units of the source node that should be supplied to the target node
- * @property {number} minimal_transporter_index - The index of the minimal transporter that's required for optiomally supplying the source node's
- *  output into the target node's input
- * @property {SVGPathElement} path_element - The SVG element that represent the path between the source and target node
- * @property {HTMLDivElement} html - The overlay tof the edge's label container
- */
-
-/**
- * @type {{
- *      html_elements: Object.<string, HTMLElement>,
- *      product_node: Node<MyNodeInfo, MyEdgeInfo>,
- *      config: Config
- * }}
- */
-var g_ = {
-    html_elements: Object.create(null),
-    product_node: null,
-    config: new Config()
-};
-
-globalThis.satisfactoryCalculator = g_;
-
-
-/**
- * @param {Fraction} a 
- * @param {Fraction} b 
- * @returns {Fraction}
- */
-function fractionMax(a, b) {
-    if (smaller(a, b))
-        return b;
-    return a;
-}
-
-/**
- * 
- * @param {Fraction} frac 
- * @param {boolean} as_ratio?
- * @returns {string}
- */
-function formatFrac(frac, as_ratio=true) {
-    return format(frac, { fraction: as_ratio ? 'ratio' : 'decimal' });
-}
+import * as mathjs from 'mathjs';
+import {fraction, Fraction} from 'mathjs';
 
 /**
  * @param {Graph<MyNodeInfo, MyEdgeInfo>} graph 
@@ -181,19 +126,9 @@ function createEdgeOverlay(edge_label_element, edge) {
 }
 
 /**
- * Returns the selected recipe of the given node
- * @param {MyNodeInfo} node 
- * @returns {Recipe}
- */
-function selectedRecipe(node) {
-    assert(undefined !== node);
-    return node.obj.recipes[node.selected_recipe_index];
-}
-
-/**
  * Regenerates the entire graph. Should only be called if the structure of the graph was changed.
  */
-async function generateGraphPhase1() {
+export async function generateGraphPhase1() {
     /** @type {Graph<MyNodeInfo, MyEdgeInfo>} */
     let graph = new Graph();
 
@@ -248,8 +183,8 @@ async function generateGraphPhase1() {
                     ingredient_node,
                     {
                         amount: ingredient.amount,
-                        production_required: 0,
-                        total_fraction: 0,
+                        production_required: fraction(0),
+                        total_fraction: fraction(0),
                         minimal_transporter_index: -1,
                         path_element: null,
                         html: null
@@ -307,7 +242,7 @@ async function generateGraphPhase1() {
  * Calculates optimal stats according to the current configuration.
  * Should only be called if some configuration that doesn't affect the graph's structure was changed.
  */
-function generateGraphPhase2() {
+export function generateGraphPhase2() {
     // Set the required production to the production of one machine
     g_.product_node.data.total_production_required = singleMachineProduction(g_.product_node.data);
 
@@ -346,18 +281,18 @@ function generateGraphPhase2() {
         // Since we're doing a smart search, we know that we already visited all the target nodes.
         // So, we can reliably calculate the total required production.
         for (const [target_node, data] of node.flinks()) {
-            node.data.total_production_required = add(node.data.total_production_required, data.production_required);
+            node.data.total_production_required = mathjs.add(node.data.total_production_required, data.production_required);
         }
 
         for (const [target_node, data] of node.flinks()) {
             assert(0 != node.data.total_production_required.n);
-            data.total_fraction = divide(data.production_required, node.data.total_production_required);
+            data.total_fraction = mathjs.divide(data.production_required, node.data.total_production_required);
         }
 
         if (null === node.data.trivial_prod) {
             // Calculate the required production rate of each input
             for (const [source_node, data] of node.blinks()) {
-                data.production_required = multiply(node.data.total_production_required, data.amount);
+                data.production_required = mathjs.multiply(node.data.total_production_required, data.amount);
             }
         }
     }
@@ -383,38 +318,11 @@ function generateGraphPhase3() {
 }
 
 /**
- * 
  * @param {Fraction} frac 
  * @returns {Fraction}
  */
 function applyDisplayMultiplier(frac) {
-    return multiply(frac, g_.config.display_multiplier);
-}
-
-/**
- * 
- * @param {MyNodeInfo} node
- * @returns {Fraction}
- */
-function getNodeProductionPerMinute(node) {
-    return multiply(node.total_production_required, 60);
-}
-
-/**
- * @param {MyNodeInfo} node 
- * @returns {Fraction}
- */
-function singleMachineProduction(node) {
-    assert(null === node.trivial_prod);
-    return divide(1, selectedRecipe(node).duration);
-}
-
-/**
- * @param {MyNodeInfo} node 
- * @returns {Fraction}
- */
-function machinesRequired(node) {
-    return divide(node.total_production_required, singleMachineProduction(node));
+    return mathjs.multiply(frac, g_.config.display_multiplier);
 }
 
 function updateOverlay() {
@@ -429,11 +337,11 @@ function updateOverlay() {
 
     for (const edge of graph.links()) {
         edge.data.html.querySelector('.edge-ratio-label').textContent = formatFrac(edge.data.total_fraction);
-        edge.data.html.querySelector('.edge-production-label').textContent = `${formatFrac(applyDisplayMultiplier(multiply(edge.data.production_required, 60)), false)}/m`;
+        edge.data.html.querySelector('.edge-production-label').textContent = `${formatFrac(applyDisplayMultiplier(mathjs.multiply(edge.data.production_required, 60)), false)}/m`;
     }
 }
 
-function resetAlternateRecipes() {
+export function resetAlternateRecipes() {
     // Re-render only if a non-alternate recipe is currently selected
     const should_re_render_graph = any(
         g_.config.alternate_recipes.entries(),
@@ -447,20 +355,17 @@ function resetAlternateRecipes() {
         generateGraphPhase1();
 }
 
-/** @param {InputEvent} e */
-function numberInputFilter(e) { e.target.value = e.target.value.replace(/[^0-9/.]+/g, ''); }
-
-function updateDisplayMultiplier() {
+export function updateDisplayMultiplier() {
     g_.config.display_multiplier = fraction(g_.html_elements.displayMultiplierInput.value);
     g_.config.notifyChange();
     updateOverlay();
 }
 
-function updateDisplayMultiplierAuto() {
+export function updateDisplayMultiplierAuto() {
     // Calculate the LCM of the denominators of all machines required.
     // This will yield a multiplier that, when applied, makes the "machines required" of all nodes
     // into a whole number.
-    const computed_lcm = lcm(...map(
+    const computed_lcm = mathjs.lcm(...map(
         g_.product_node.graph.nodes(),
         (node) => (null === node.data.trivial_prod) ? machinesRequired(node.data).d : 1
     ))
@@ -469,223 +374,4 @@ function updateDisplayMultiplierAuto() {
     updateDisplayMultiplier();
 }
 
-function initGameData() {
-    // Transform information to fraction objects
-    for (const game_obj of Object.values(game_data.crafting_objects)) {
-        for (const recipe of game_obj.recipes) {
-            recipe.duration = fraction(recipe.duration);
-            for (const ingredient of recipe.ingredients) {
-                ingredient.amount = fraction(ingredient.amount);
-            }
-        }
-    }
-
-    for (const transporters of Object.values(game_data.transporters)) {
-        for (const transporter of transporters) {
-            transporter.speed = fraction(transporter.speed);
-        }
-    }
-
-    // If no trivial resources are selected, generate them:
-    if (0 == g_.config.trivial_resources.size) {
-        for (const ingredient_id of game_data.crafting_ingredients) {
-            /** @type {CraftingObject} */
-            const ingredient = game_data.crafting_objects[ingredient_id];
-
-            // If the ingredient has no recipes, or only has alternate recipes, then it should
-            // be trivial by default.
-            // Note: The 2nd check relies on the fact that the recipes are generated such that
-            //       non-alternate recipes always come first.
-            if (0 == ingredient.recipes.length || ingredient.recipes[0].is_alternate) {
-                g_.config.trivial_resources.set(ingredient_id, fraction(1));
-            }
-        }
-
-        // Water is a byproduct of a bunch of things, so it won't be detected by the algorithm above
-        g_.config.trivial_resources.set("Desc_Water_C", fraction(1));
-
-        g_.config.notifyChange();
-    }
-}
-
-function initCraftableObjectsSelect() {
-    g_.craftableItemSelectTom = new TomSelect(
-        g_.html_elements.craftableItemSelect,
-        {
-            options: game_data.crafting_products.map((obj_id) => ({value: obj_id, text: game_data.crafting_objects[obj_id].name})),
-            searchField: "text",
-            maxOptions: null,
-            placeholder: "Select an item...",
-
-            /** @param {string} product_name */
-            onChange: function(product_name) {
-                // Don't do anything if selection is cleared
-                if ("" == product_name)
-                    return;
-
-                g_.config.product_name = product_name;
-                g_.config.notifyChange();
-                generateGraphPhase1();
-            }
-        }
-    );
-}
-
-function initTrivialResources() {
-    /** @type {HTMLTableSectionElement} */
-    const tbody = document.querySelector("#trivialResourcesTable > tbody");
-
-    /** @type {Map<string, HTMLTableRowElement>} */
-    const rows = new Map();
-
-    /** @type {Map<GameObjectId, HTMLInputElement>} */
-    const textboxes = new Map();
-
-    for (const ingredient_id of game_data.crafting_ingredients) {
-        /** @type {CraftingObject} */
-        const obj = game_data.crafting_objects[ingredient_id];
-        const row = tbody.insertRow();
-
-        row.insertCell().innerHTML = `<label>${obj.name}</label>`;
-        
-        /** @type {HTMLInputElement} */
-        const text_box = document.createElement("input");
-        text_box.type = "text";
-        text_box.size = 7;
-        text_box.placeholder = "Prod/m";
-        text_box.classList.add("trivialResourceProdInput");
-        text_box.oninput = numberInputFilter;
-
-        let prod = g_.config.trivial_resources.get(ingredient_id);
-        if (undefined !== prod) {
-            text_box.value = format(multiply(prod, 60), { fraction: 'ratio' }); // Prod/s -> Prod/m
-        }
-
-        row.insertCell().appendChild(text_box);
-        rows.set(obj.name.toLowerCase(), row);
-        textboxes.set(ingredient_id, text_box);
-    }
-
-    /** @type {HTMLInputElement} */
-    const search = document.getElementById("trivialResourceSearch");
-
-    /** @param {InputEvent} e */
-    search.oninput = function(e) {
-        const text = e.target.value;
-        for (const [obj_name, row] of rows.entries()) {
-            row.style.display = obj_name.includes(text) ? "" : "none";
-        }
-    };
-
-    /** @type {HTMLButtonElement} */
-    const update_button = document.getElementById("updateTrivialResourcesButton");
-    update_button.onclick = function() {
-        g_.config.trivial_resources.clear();
-        for (const [crafting_obj_name, text_box] of textboxes.entries()) {
-            if ("" == text_box.value)
-                continue;
-
-            g_.config.trivial_resources.set(
-                crafting_obj_name,
-                divide(fraction(text_box.value), 60) // Prod/m -> Prod/s
-            )
-        }
-
-        g_.config.notifyChange();
-        generateGraphPhase1();
-    }
-}
-
-function initDisplayMultiplier() {
-    g_.html_elements.displayMultiplierInput.value = formatFrac(g_.config.display_multiplier, false);
-
-    /** @type {HTMLInputElement} */
-    const update_button = document.getElementById("updateDisplayMultiplier");
-    update_button.onclick = updateDisplayMultiplier
-
-    /** @type {HTMLInputElement} */
-    const auto_button = document.getElementById("updateDisplayMultiplierAuto");
-    auto_button.onclick = updateDisplayMultiplierAuto;
-}
-
-function initMoversSelects() {
-    const MOVERS = [
-        ["unlockedConveyorBeltSelect",  "conveyor_belts",   "Conveyor Belt ",   "conveyor_speed_index"],
-        ["unlockedPipelineSelect",      "pipelines",        "Pipeline ",        "pipeline_speed_index"],
-    ]
-    
-    for (const [select_id, data_name, name_prefix, config_field] of MOVERS) {
-        /** @type {HTMLSelectElement} */
-        const select_element = document.getElementById(select_id);
-
-        for (const transporter of game_data.transporters[data_name]) {
-            /** @type {string} */
-            let name = transporter.name;
-
-            // Remove prefix
-            assert(transporter.name.startsWith(name_prefix));
-            name = name.substring(name_prefix.length);
-
-            select_element.add(new Option(name));
-        }
-
-        select_element.selectedIndex = g_.config[config_field];
-        select_element.oninput = function(e) {
-            g_.config[config_field] = parseInt(e.target.selectedIndex);
-            g_.config.notifyChange();
-            generateGraphPhase2();
-        }
-    }
-}
-
-function initGraph() {
-    mermaid.registerLayoutLoaders(elkLayouts);
-    
-    document.addEventListener(
-        "DOMContentLoaded",
-        function(){
-            mermaid.initialize({
-                //darkMode: true,
-                //theme: "dark"
-                deterministicIds: true,
-                startOnLoad: false,
-                deterministicIDSeed: undefined,
-                //  htmlLabels
-                logLevel: "warn",
-                securityLevel: "loose",
-                flowchart: {
-                    defaultRenderer: "elk"
-                }
-            });
-        }
-    );
-}
-
-function init() {
-    initGameData();
-
-    const HTML_ELEMENT_NAMES = ['craftableItemSelect', 'displayMultiplierInput', 'graphContainer', 'nodeOverlayTemplate', 'edgeOverlayTemplate'];
-    for (const name of HTML_ELEMENT_NAMES) {
-        g_.html_elements[name] = document.getElementById(name);
-    }
-
-    initCraftableObjectsSelect();
-
-    initTrivialResources();
-
-    document.getElementById("resetAlternateRecipesButton").onclick = resetAlternateRecipes;
-
-    initMoversSelects();
-
-    initDisplayMultiplier();
-
-    initGraph();
-
-    // This will trigger the generation of the graph
-    g_.craftableItemSelectTom.setValue(g_.config.product_name);
-}
-
-init();
-
-// TODO: remove
-//g_.craftableItemSelectTom.setValue("BP_EquipmentDescriptorStunSpear_C");
+initApp();

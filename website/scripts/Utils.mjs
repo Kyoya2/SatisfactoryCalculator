@@ -1,4 +1,7 @@
 // @ts-check
+
+import {Fraction, smaller, format} from 'mathjs';
+
 /**
  * @param {boolean} condition
  * @param {string=} message
@@ -81,4 +84,24 @@ export function* map(iterable, callback) {
     for (const item of iterable) {
         yield callback(item);
     }
+}
+
+/**
+ * @param {Fraction} a 
+ * @param {Fraction} b 
+ * @returns {Fraction}
+ */
+export function fractionMax(a, b) {
+    if (smaller(a, b))
+        return b;
+    return a;
+}
+
+/**
+ * @param {Fraction} frac 
+ * @param {boolean} as_ratio?
+ * @returns {string}
+ */
+export function formatFrac(frac, as_ratio=true) {
+    return format(frac, { fraction: as_ratio ? 'ratio' : 'decimal' });
 }
