@@ -58,6 +58,7 @@ function createNodeOverlay(node_svg_element, node) {
 
     if (is_trivial) {
         overlay.style.backgroundColor = 'lightblue';
+        overlay.querySelector(".machines-required-container").remove();
     }
     else if (g_.product_node == node) {
         overlay.style.backgroundColor = 'pink';
