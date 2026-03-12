@@ -13,7 +13,6 @@ import {fraction, Fraction} from 'mathjs';
  * @property {number} selected_recipe_index - The index of the recipe in `obj.recipes` that's currently used
  * @property {Fraction} total_production_required - The total required production per second of this unit's resource to fully supply its target nodes
  *  recipe that are required for optimally producing the final product
- * @property {Fraction?} trivial_prod - If it's a trivial resource, contains its production per second
  * @property {HTMLDivElement} html - The HTML overlay of the node
  * 
  * @typedef {Object} MyEdgeInfo
@@ -57,7 +56,7 @@ export function selectedRecipe(node) {
  * @returns {Fraction}
  */
 export function singleMachineProduction(node) {
-    assert(null === node.trivial_prod);
+    assert(!g_.config.trivial_resources.has(node.obj.id));
     const selected_recipe = selectedRecipe(node);
     return mathjs.divide(selected_recipe.products[node.obj.id], selected_recipe.duration);
 }

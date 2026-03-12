@@ -54,7 +54,9 @@ function createNodeOverlay(node_svg_element, node) {
 
     const obj = node.data.obj;
 
-    if (null !== node.data.trivial_prod) {
+    const is_trivial = g_.config.trivial_resources.has(obj.id);
+
+    if (is_trivial) {
         overlay.style.backgroundColor = 'lightblue';
     }
     else if (g_.product_node == node) {
@@ -70,7 +72,7 @@ function createNodeOverlay(node_svg_element, node) {
     //
     // Initialize alternate recipes select, or remove if there are none
     //
-    if ((null !== node.data.trivial_prod) || (obj.recipes.length <= 1)) {
+    if (is_trivial || (obj.recipes.length <= 1)) {
         overlay.querySelector(".node-alternate-recipes").remove();
     } else {
         let recipe_index = g_.config.alternate_recipes.get(obj.id);
@@ -144,10 +146,10 @@ export async function generateGraphPhase1() {
         /** @type {CraftingObject} */
         const obj = game_data.crafting_objects[product_id];
 
-        const trivial_prod = g_.config.trivial_resources.get(product_id) ?? null;
+        const is_trivial = g_.config.trivial_resources.has(product_id);
         let selected_recipe;
         let selected_recipe_index = -1;
-        if (null === trivial_prod) {
+        if (!is_trivial) {
             selected_recipe_index = g_.config.alternate_recipes.get(product_id);
             if (undefined === selected_recipe_index) {
                 // "game_data" is generated such that non-alternate recipes are always before
@@ -160,13 +162,11 @@ export async function generateGraphPhase1() {
             selected_recipe = game_data.recipes[obj.recipes[selected_recipe_index]];
         }
         
-        // "selected_recipe_index" and "trivial_prod" are set here because they directly affect
-        // the structure of the graph
+        // "selected_recipe_index" is set here because it directly affects the structure of the graph
         node = graph.createNode({
             obj: obj,
             selected_recipe_index: selected_recipe_index,
             total_production_required: fraction(0),
-            trivial_prod: trivial_prod,
             html: null
         });
 
@@ -245,36 +245,6 @@ export function generateGraphPhase2() {
 
     // Breadth-first search starting from the product
     for (const node of g_.product_node.graph.smartBreadthFirst(false)) {
-        /*
-        if (null === node.data.trivial_prod) {
-            /** @type {Fraction}
-            const conveyor_speed = game_data.transporters.conveyor_belts[g_.config.conveyor_speed_index].speed;
-
-            /** @type {Fraction}
-            const pipeline_speed = game_data.transporters.pipelines[g_.config.pipeline_speed_index].speed;
-            // Factor in the time it takes to load the ingredients onto the machine.
-            // Assuming that ingredients are loaded into the machine as a product is being produced,
-            // this makes a difference only if the load time is higher than the production
-            let slowest_loaded_ingredient = {index: null, load_time: fraction(0)};
-            for (let i = 0; i < selected_recipe.ingredients.length; ++i) {
-                const ingredient = selected_recipe.ingredients[i];
-
-                // The time it takes to load 1 unit
-                const load_1_time = ('SOLID' == game_data.crafting_objects[ingredient.id].form) ? conveyor_speed : pipeline_speed;
-
-                // The time it takes to load the number of units that are required for the product
-                const total_load_time = multiply(ingredient.amount, load_1_time);
-
-                if (smaller(slowest_loaded_ingredient.load_time, total_load_time)) {
-                    slowest_loaded_ingredient.load_time = total_load_time;
-                    slowest_loaded_ingredient.index = i;
-                }
-            }
-
-            node.data.production_duration = fractionMax(selected_recipe.duration, slowest_loaded_ingredient.load_time);
-        }
-        */
-
         // Since we're doing a smart search, we know that we already visited all the target nodes.
         // So, we can reliably calculate the total required production.
         for (const [target_node, data] of node.flinks()) {
@@ -286,7 +256,7 @@ export function generateGraphPhase2() {
             data.total_fraction = mathjs.divide(data.production_required, node.data.total_production_required);
         }
 
-        if (null === node.data.trivial_prod) {
+        if (!g_.config.trivial_resources.has(node.data.obj.id)) {
             // Calculate the required production rate of each input
             for (const [source_node, data] of node.blinks()) {
                 data.production_required = mathjs.multiply(node.data.total_production_required, data.amount);
@@ -326,8 +296,8 @@ function updateOverlay() {
     const graph = g_.product_node.graph;
     for (const node of graph.nodes()) {
         node.data.html.querySelector('.production-rate-label').textContent = `${formatFrac(applyDisplayMultiplier(getNodeProductionPerMinute(node.data)), false)}/m`;
-    
-        if (null === node.data.trivial_prod) {
+
+        if (!g_.config.trivial_resources.has(node.data.obj.id)) {
             node.data.html.querySelector('.machines-required-label').textContent = formatFrac(applyDisplayMultiplier(machinesRequired(node.data)), false);
         }
     }
@@ -364,7 +334,7 @@ export function updateDisplayMultiplierAuto() {
     // into a whole number.
     const computed_lcm = mathjs.lcm(...map(
         g_.product_node.graph.nodes(),
-        (node) => (null === node.data.trivial_prod) ? machinesRequired(node.data).d : 1
+        (node) => g_.config.trivial_resources.has(node.data.obj.id) ? 1 : machinesRequired(node.data).d
     ))
 
     g_.html_elements.displayMultiplierInput.value = computed_lcm.toString();
