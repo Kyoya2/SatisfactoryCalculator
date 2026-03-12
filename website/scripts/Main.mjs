@@ -23,7 +23,7 @@ import {fraction, Fraction} from 'mathjs';
  */
 function estimateNodeOverlayHeight(node) {
     // Object name + icon + production
-    let result = 2;
+    let result = 3;
     const is_trivial = g_.config.trivial_resources.has(node.obj.id);
 
     // Recipe selection
@@ -53,7 +53,11 @@ function to_mermaid(graph) {
 
     for (const node of ordered_nodes) {
         const data = node.data;
-        result += `${data.obj.id}["$AAAAAAAAAAAAAAAAAA${'<br/>'.repeat(estimateNodeOverlayHeight(node.data))}"]\n`;
+
+        const overlay_height = estimateNodeOverlayHeight(node.data);
+        
+        // Sub 1 because we already have 1 line
+        result += `${data.obj.id}["$AAAAAAAAAAAAAAAAAA${'<br/>'.repeat(overlay_height - 1)}"]\n`;
     }
 
     result += '\n';
