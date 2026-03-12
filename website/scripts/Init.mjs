@@ -56,7 +56,7 @@ function initCraftableObjectsSelect() {
 
                 g_.config.product_name = product_name;
                 g_.config.notifyChange();
-                generateGraphPhase1();
+                generateGraphPhase1(true);
             }
         }
     );

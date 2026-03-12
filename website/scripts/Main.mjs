@@ -55,7 +55,7 @@ function to_mermaid(graph) {
         const data = node.data;
 
         const overlay_height = estimateNodeOverlayHeight(node.data);
-        
+
         // Sub 1 because we already have 1 line
         result += `${data.obj.id}["$AAAAAAAAAAAAAAAAAA${'<br/>'.repeat(overlay_height - 1)}"]\n`;
     }
@@ -178,8 +178,9 @@ function createEdgeOverlay(edge_label_element, edge) {
 
 /**
  * Regenerates the entire graph. Should only be called if the structure of the graph was changed.
+ * @param {boolean} recalc_mult - Whether the display multiplier should be recalculated
  */
-export async function generateGraphPhase1() {
+export async function generateGraphPhase1(recalc_mult=false) {
     /** @type {Graph<MyNodeInfo, MyEdgeInfo>} */
     let graph = new Graph();
 
@@ -285,14 +286,15 @@ export async function generateGraphPhase1() {
     }
 
     // Trigger the next phase
-    generateGraphPhase2();
+    generateGraphPhase2(recalc_mult);
 }
 
 /**
  * Calculates optimal stats according to the current configuration.
  * Should only be called if some configuration that doesn't affect the graph's structure was changed.
+ * @param {boolean} recalc_mult - Whether the display multiplier should be recalculated
  */
-export function generateGraphPhase2() {
+export function generateGraphPhase2(recalc_mult=false) {
     // Set the required production to the production of one machine
     g_.product_node.data.total_production_required = singleMachineProduction(g_.product_node.data);
 
@@ -317,9 +319,10 @@ export function generateGraphPhase2() {
         }
     }
 
-    updateDisplayMultiplierAuto();
-    // Called by "updateDisplayMultiplierAuto"
-    //updateOverlay();
+    if (recalc_mult)
+        updateDisplayMultiplierAuto();
+    else
+        updateOverlay();
 
     // Trigger the next phase
     generateGraphPhase3();
