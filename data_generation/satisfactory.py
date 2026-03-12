@@ -251,7 +251,7 @@ def main(
         produced_in = reduce(lambda value, recipe: value | recipe.produced_in, obj['recipes'], set())
 
         # Exclude things whose production can't be automated
-        if (obj["mForm"] == "RF_INVALID") or (len(produced_in) > 0 and produced_in <= {'BP_BuildGun_C', 'FGBuildGun'}):
+        if (obj["mForm"] == "RF_INVALID") or (len(produced_in) > 0 and produced_in <= {'BP_BuildGun_C', 'FGBuildGun', 'BP_WorkshopComponent_C'}):
             crafting_ingredients.discard(crafting_obj_id)
             crafting_products.discard(crafting_obj_id)
             continue

@@ -4,7 +4,7 @@ import {fraction, multiply, format, Fraction} from 'mathjs';
 
 
 export default class Config {
-    static #_DEFAULT_PRODUCT = "BP_EquipmentDescriptorStunSpear_C";
+    static #_DEFAULT_PRODUCT = "Desc_Cable_C";
     static #_DEFAULT_CONVEYOR_INDEX = "0";
     static #_DEFAULT_PIPELINE_INDEX = "0";
     static #_DEFAULT_DISPLAY_MULTIPLIER = "1";
