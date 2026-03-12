@@ -23,7 +23,8 @@
   "dependencies": {
     "@mermaid-js/layout-elk": "^0.2.0",
     "mathjs": "^15.1.1",
-    "mermaid": "^11.12.3"
+    "mermaid": "^11.12.3",
+    "tom-select": "^2.5.2"
   },
   "devDependencies": {
     "vite": "^7.3.1"

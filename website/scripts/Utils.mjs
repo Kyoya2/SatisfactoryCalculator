@@ -1,4 +1,5 @@
-// @ts-check
+import {Fraction, smaller, format} from 'mathjs';
+
 /**
  * @param {boolean} condition
  * @param {string=} message
@@ -6,7 +7,9 @@
 export function assert(condition, message) {
     if (!condition) {
         debugger;
-        throw new Error(message || "Assertion failed");
+        message = message || "Assertion failed";
+        alert(message)
+        throw new Error(message);
     }
 }
 
@@ -79,4 +82,39 @@ export function* map(iterable, callback) {
     for (const item of iterable) {
         yield callback(item);
     }
+}
+
+/**
+ * @param {Fraction} a 
+ * @param {Fraction} b 
+ * @returns {Fraction}
+ */
+export function fractionMax(a, b) {
+    if (smaller(a, b))
+        return b;
+    return a;
+}
+
+/**
+ * @param {Fraction} frac 
+ * @param {boolean} as_ratio?
+ * @returns {string}
+ */
+export function formatFrac(frac, as_ratio=true) {
+    return format(frac, { fraction: as_ratio ? 'ratio' : 'decimal' });
+}
+
+export function deepFreeze(obj) {
+    for (const key of Object.getOwnPropertyNames(obj)) {
+        const value = obj[key];
+
+        if ((value !== null) &&
+            (typeof value === "object") &&
+            !Object.isFrozen(value)
+        ) {
+            deepFreeze(value);
+        }
+    }
+
+    Object.freeze(obj);
 }
