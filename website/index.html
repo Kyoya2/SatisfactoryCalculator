@@ -4,11 +4,8 @@
         <meta charset="UTF-8" />
         <title>Satisfactory Calculator</title>
 
-        <!-- Must be before including cytoscape JS files-->
         <link rel="stylesheet" href="style.css">
-
         <link href="https://cdn.jsdelivr.net/npm/tom-select@2.5.1/dist/css/tom-select.css" rel="stylesheet">
-        
     </head>
 
     <body>
@@ -22,25 +19,6 @@
                 <label for="craftableItemSelect">Item to craft:</label>
                 <select id="craftableItemSelect"></select><br>
 
-                <hr>
-
-                <!-------------------------------------------------------------------->
-
-                <label>Trivial resources</label>
-                <input type="text" id="trivialResourceSearch" placeholder="Search..." style="float:right"><br/><br/>
-                <div id="trivialResourcesTableContainer">
-                    <table id="trivialResourcesTable">
-                        <thead>
-                            <tr>
-                                <th>Resource name</th>
-                                <th>Prod/m</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div><br>
-
-                <button type="button" id="updateTrivialResourcesButton">Update</button>
                 <hr>
 
                 <!-------------------------------------------------------------------->
@@ -100,6 +78,11 @@
 
             <label>Production:&nbsp;</label><label class="production-rate-label editable-label"></label><br/>
             <label>Machines required:&nbsp;</label><label class="machines-required-label editable-label"></label><br/>
+
+            <div class="is-trivial-container">
+                <label>Trivial?</label>
+                <input type="checkbox" class="is-trivial-checkbox" switch>
+            </div>
         </div></template>
 
         <template id="edgeOverlayTemplate"><div class="edge-overlay">

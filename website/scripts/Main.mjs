@@ -27,7 +27,7 @@ function to_mermaid(graph) {
 
     for (const node of ordered_nodes) {
         const data = node.data;
-        result += `${data.obj.id}["$AAAAAAAAAAAAAAAAAA<br/><br/><br/><br/>"]\n`;
+        result += `${data.obj.id}["$AAAAAAAAAAAAAAAAAA<br/><br/><br/><br/><br/>"]\n`;
     }
 
     result += '\n';
@@ -68,6 +68,28 @@ function createNodeOverlay(node_svg_element, node) {
 
     // Initialize image
     overlay.querySelector('.node-icon').src = `images/game_icons/${node.data.obj.id}.png`;
+
+    //
+    // Initialize trivial checkbox
+    //
+    if (0 == obj.recipes.length) {
+        // An object with no recipes is forced to be trivial (remove the option to change it)
+        assert(is_trivial);
+        overlay.querySelector(".is-trivial-container").remove();
+    } else {
+        /** @type {HTMLInputElement} */
+        const trivial_checkbox = overlay.querySelector(".is-trivial-checkbox");
+        trivial_checkbox.checked = is_trivial;
+        trivial_checkbox.onclick = function(e) {
+            if (e.target.checked)
+                g_.config.trivial_resources.add(obj.id);
+            else
+                g_.config.trivial_resources.delete(obj.id);
+
+            g_.config.notifyChange();
+            generateGraphPhase1();
+        }
+    }
 
     //
     // Initialize alternate recipes select, or remove if there are none

@@ -36,13 +36,12 @@ export default class Config {
             }
         }
 
-        /** @type {Map<GameObjectId, Fraction>} */
-        this.trivial_resources = new Map();
+        /** @type {Set<GameObjectId>} */
+        this.trivial_resources = new Set();
         const trivial_resources = search_params.get("trivialResources") ?? Config.#_DEFAULT_TRIVIAL_RESOURCES;
         if (trivial_resources) {
-            for (const item of trivial_resources.split(",")) {
-                const [k, v] = item.split("=");
-                this.trivial_resources.set(k, fraction(v));
+            for (const resource_id of trivial_resources.split(",")) {
+                this.trivial_resources.add(resource_id);
             }
         }
 
@@ -57,7 +56,7 @@ export default class Config {
             pipelineSpeed: this.pipeline_speed_index.toString(),
             displayMultiplier: format(this.display_multiplier, { fraction: 'decimal' }),
             alternateRecipes: [...this.alternate_recipes.entries()].map((kv) => kv.join('=')).join(','),
-            trivialResources: [...this.trivial_resources.entries()].map(([k,v]) => `${k}=${format(v, { fraction: 'ratio' })}`).join(','),
+            trivialResources: [...this.trivial_resources.entries()].join(','),
         });
 
         window.history.replaceState(

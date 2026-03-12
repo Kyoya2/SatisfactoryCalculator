@@ -76,80 +76,14 @@ function initDefaultTrivialResources() {
         // Note: The 2nd check relies on the fact that the recipes are generated such that
         //       non-alternate recipes always come first.
         if (0 == ingredient.recipes.length || game_data.recipes[ingredient.recipes[0]].is_alternate) {
-            g_.config.trivial_resources.set(ingredient_id, fraction(1));
-            console.log(ingredient.name);
+            g_.config.trivial_resources.add(ingredient_id);
         }
     }
 
     // Water is a byproduct of a bunch of things, so it won't be detected by the algorithm above
-    g_.config.trivial_resources.set("Desc_Water_C", fraction(1));
+    g_.config.trivial_resources.add("Desc_Water_C");
 
     g_.config.notifyChange();
-}
-
-function initTrivialResources() {
-    /** @type {HTMLTableSectionElement} */
-    const tbody = document.querySelector("#trivialResourcesTable > tbody");
-
-    /** @type {Map<string, HTMLTableRowElement>} */
-    const rows = new Map();
-
-    /** @type {Map<GameObjectId, HTMLInputElement>} */
-    const textboxes = new Map();
-
-    for (const ingredient_id of game_data.crafting_ingredients) {
-        /** @type {CraftingObject} */
-        const obj = game_data.crafting_objects[ingredient_id];
-        const row = tbody.insertRow();
-
-        row.insertCell().innerHTML = `<label>${obj.name}</label>`;
-        
-        /** @type {HTMLInputElement} */
-        const text_box = document.createElement("input");
-        text_box.type = "text";
-        text_box.size = 7;
-        text_box.placeholder = "Prod/m";
-        text_box.classList.add("trivialResourceProdInput");
-        text_box.oninput = function(e) { e.target.value = e.target.value.replace(/[^0-9/.]+/g, ''); };
-
-        let prod = g_.config.trivial_resources.get(ingredient_id);
-        if (undefined !== prod) {
-            text_box.value = mathjs.format(mathjs.multiply(prod, 60), { fraction: 'ratio' }); // Prod/s -> Prod/m
-        }
-
-        row.insertCell().appendChild(text_box);
-        rows.set(obj.name.toLowerCase(), row);
-        textboxes.set(ingredient_id, text_box);
-    }
-
-    /** @type {HTMLInputElement} */
-    const search = document.getElementById("trivialResourceSearch");
-
-    /** @param {InputEvent} e */
-    search.oninput = function(e) {
-        const text = e.target.value;
-        for (const [obj_name, row] of rows.entries()) {
-            row.style.display = obj_name.includes(text) ? "" : "none";
-        }
-    };
-
-    /** @type {HTMLButtonElement} */
-    const update_button = document.getElementById("updateTrivialResourcesButton");
-    update_button.onclick = function() {
-        g_.config.trivial_resources.clear();
-        for (const [crafting_obj_name, text_box] of textboxes.entries()) {
-            if ("" == text_box.value)
-                continue;
-
-            g_.config.trivial_resources.set(
-                crafting_obj_name,
-                mathjs.divide(fraction(text_box.value), 60) // Prod/m -> Prod/s
-            )
-        }
-
-        g_.config.notifyChange();
-        generateGraphPhase1();
-    }
 }
 
 function initDisplayMultiplier() {
@@ -234,8 +168,6 @@ export default function initApp() {
     const craftable_objects_select = initCraftableObjectsSelect();
 
     initDefaultTrivialResources();
-
-    initTrivialResources();
 
     document.getElementById("resetAlternateRecipesButton").onclick = resetAlternateRecipes;
 
