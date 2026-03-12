@@ -146,7 +146,7 @@ function createNodeOverlay(node_svg_element, node) {
     const foreign_obj = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject");
     foreign_obj.appendChild(overlay);
     
-    // Position the "foregnObject" over the node
+    // Position the "foreignObject" over the node
     const rect = node_svg_element.getBBox({fill: true, stroke: true, markers: true, clipped: false});
     foreign_obj.setAttribute("x", rect.x-2);
     foreign_obj.setAttribute("y", rect.y-2);
