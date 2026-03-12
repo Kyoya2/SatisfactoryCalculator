@@ -19,7 +19,7 @@ import {fraction, Fraction} from 'mathjs';
  * @property {Fraction} amount - The number of units of the source node that are required to produce 1 unit of the target node
  * @property {Fraction} production_required - 
  * @property {Fraction} total_fraction - The part of units of the source node that should be supplied to the target node
- * @property {number} minimal_transporter_index - The index of the minimal transporter that's required for optiomally supplying the source node's
+ * @property {number} minimal_transporter_index - The index of the minimal transporter that's required for optimally supplying the source node's
  *  output into the target node's input
  * @property {SVGPathElement} path_element - The SVG element that represent the path between the source and target node
  * @property {HTMLDivElement} html - The overlay tof the edge's label container

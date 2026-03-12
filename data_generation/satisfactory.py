@@ -125,7 +125,7 @@ def _get_object_display_name(game_object: GameObject) -> str:
 # - Manually extract these one by one (there should be around 5 files in total).
 # Note: Alternatively, it's possible to extract all the textures in teh game, but it will take a lot of time
 #       and a lot of disk space.
-# - Run this function with "fmodel_output_dir_path" set to FModel's "Output" directory (which is atomatically created
+# - Run this function with "fmodel_output_dir_path" set to FModel's "Output" directory (which is automatically created
 #   next to "FModel.exe"
 def main(
     doc_file_path=r"C:\Program Files (x86)\Steam\steamapps\common\Satisfactory\CommunityResources\Docs\en-US.json",
