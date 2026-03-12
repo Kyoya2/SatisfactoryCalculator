@@ -1,5 +1,5 @@
 import {g_, machinesRequired} from "@/Common.mjs"
-import {assert, formatFrac} from "@/Utils.mjs";
+import {assert, formatFrac, deepFreeze} from "@/Utils.mjs";
 import Config from "@/Config.mjs"
 import game_data from "@/GameData.auto.mjs"
 /** @import { GameObjectId, CountedItem, Recipe, CraftingObject } from "@/GameData.auto.mjs" */
@@ -16,41 +16,27 @@ import {generateGraphPhase1, generateGraphPhase2, resetAlternateRecipes, updateD
 
 function initGameData() {
     // Transform information to fraction objects
-    for (const game_obj of Object.values(game_data.crafting_objects)) {
-        for (const recipe of game_obj.recipes) {
-            recipe.duration = fraction(recipe.duration);
-            for (const ingredient of recipe.ingredients) {
-                ingredient.amount = fraction(ingredient.amount);
+    for (const recipe of Object.values(game_data.recipes)) {
+        // Recipe durations
+        recipe.duration = fraction(recipe.duration);
+
+        // Product and ingredient amounts
+        for (const counted_items of [recipe.products, recipe.ingredients]) {
+            for (const item_id of Object.keys(counted_items)) {
+                counted_items[item_id] = fraction(counted_items[item_id]);
             }
         }
     }
 
+    // Transporter speeds
     for (const transporters of Object.values(game_data.transporters)) {
         for (const transporter of transporters) {
             transporter.speed = fraction(transporter.speed);
         }
     }
 
-    // If no trivial resources are selected, generate them:
-    if (0 == g_.config.trivial_resources.size) {
-        for (const ingredient_id of game_data.crafting_ingredients) {
-            /** @type {CraftingObject} */
-            const ingredient = game_data.crafting_objects[ingredient_id];
-
-            // If the ingredient has no recipes, or only has alternate recipes, then it should
-            // be trivial by default.
-            // Note: The 2nd check relies on the fact that the recipes are generated such that
-            //       non-alternate recipes always come first.
-            if (0 == ingredient.recipes.length || ingredient.recipes[0].is_alternate) {
-                g_.config.trivial_resources.set(ingredient_id, fraction(1));
-            }
-        }
-
-        // Water is a byproduct of a bunch of things, so it won't be detected by the algorithm above
-        g_.config.trivial_resources.set("Desc_Water_C", fraction(1));
-
-        g_.config.notifyChange();
-    }
+    // Make "game_data" immutable
+    deepFreeze(game_data);
 }
 
 function initCraftableObjectsSelect() {
@@ -74,6 +60,31 @@ function initCraftableObjectsSelect() {
             }
         }
     );
+}
+
+function initDefaultTrivialResources() {
+    // If no trivial resources are selected, generate them
+    if (0 != g_.config.trivial_resources.size)
+        return;
+
+    for (const ingredient_id of game_data.crafting_ingredients) {
+        /** @type {CraftingObject} */
+        const ingredient = game_data.crafting_objects[ingredient_id];
+
+        // If the ingredient has no recipes, or only has alternate recipes, then it should
+        // be trivial by default.
+        // Note: The 2nd check relies on the fact that the recipes are generated such that
+        //       non-alternate recipes always come first.
+        if (0 == ingredient.recipes.length || game_data.recipes[ingredient.recipes[0]].is_alternate) {
+            g_.config.trivial_resources.set(ingredient_id, fraction(1));
+            console.log(ingredient.name);
+        }
+    }
+
+    // Water is a byproduct of a bunch of things, so it won't be detected by the algorithm above
+    g_.config.trivial_resources.set("Desc_Water_C", fraction(1));
+
+    g_.config.notifyChange();
 }
 
 function initTrivialResources() {
@@ -221,6 +232,8 @@ export default function initApp() {
     }
 
     const craftable_objects_select = initCraftableObjectsSelect();
+
+    initDefaultTrivialResources();
 
     initTrivialResources();
 

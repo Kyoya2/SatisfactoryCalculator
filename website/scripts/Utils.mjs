@@ -103,3 +103,18 @@ export function fractionMax(a, b) {
 export function formatFrac(frac, as_ratio=true) {
     return format(frac, { fraction: as_ratio ? 'ratio' : 'decimal' });
 }
+
+export function deepFreeze(obj) {
+    for (const key of Object.getOwnPropertyNames(obj)) {
+        const value = obj[key];
+
+        if ((value !== null) &&
+            (typeof value === "object") &&
+            !Object.isFrozen(value)
+        ) {
+            deepFreeze(value);
+        }
+    }
+
+    Object.freeze(obj);
+}

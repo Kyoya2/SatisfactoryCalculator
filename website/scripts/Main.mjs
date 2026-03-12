@@ -80,7 +80,7 @@ function createNodeOverlay(node_svg_element, node) {
         /** @type {HTMLSelectElement} */
         const alternate_recipes_select = overlay.querySelector(".node-alternate-recipes > select");
         for (let i = 0; i < obj.recipes.length; ++i) {
-            alternate_recipes_select.add(new Option(obj.recipes[i].name));
+            alternate_recipes_select.add(new Option(game_data.recipes[obj.recipes[i]].name));
         }
 
         alternate_recipes_select.selectedIndex = node.data.selected_recipe_index;
@@ -133,31 +133,31 @@ export async function generateGraphPhase1() {
 
     /**
      * Calculates only the layout of the graph for the currently selected product
-     * @param {GameObjectId} object_id
+     * @param {GameObjectId} product_id
      * @returns {Node<MyNodeInfo, MyEdgeInfo>}
      */
-    function _generateGraphLayout(object_id) {
-        let node = nodes.get(object_id);
+    function _generateGraphLayout(product_id) {
+        let node = nodes.get(product_id);
         if (undefined !== node)
             return node;
 
         /** @type {CraftingObject} */
-        const obj = game_data.crafting_objects[object_id];
+        const obj = game_data.crafting_objects[product_id];
 
-        const trivial_prod = g_.config.trivial_resources.get(object_id) ?? null;
+        const trivial_prod = g_.config.trivial_resources.get(product_id) ?? null;
         let selected_recipe;
         let selected_recipe_index = -1;
         if (null === trivial_prod) {
-            selected_recipe_index = g_.config.alternate_recipes.get(object_id);
+            selected_recipe_index = g_.config.alternate_recipes.get(product_id);
             if (undefined === selected_recipe_index) {
                 // "game_data" is generated such that non-alternate recipes are always before
                 // alternate recipes.
                 assert(obj !== undefined);
-                assert(obj.recipes.findIndex(recipe => !recipe.is_alternate) <= 0);
+                assert(obj.recipes.findIndex(recipe_id => !game_data.recipes[recipe_id].is_alternate) <= 0);
                 selected_recipe_index = 0;
             }
 
-            selected_recipe = obj.recipes[selected_recipe_index];
+            selected_recipe = game_data.recipes[obj.recipes[selected_recipe_index]];
         }
         
         // "selected_recipe_index" and "trivial_prod" are set here because they directly affect
@@ -170,15 +170,16 @@ export async function generateGraphPhase1() {
             html: null
         });
 
-        nodes.set(object_id, node)
+        nodes.set(product_id, node)
 
         if (undefined !== selected_recipe) {
-            for (const ingredient of selected_recipe.ingredients) {
-                const ingredient_node = _generateGraphLayout(ingredient.id);
+            const product_amount = selected_recipe.products[product_id];
+            for (const [ingredient_id, amount] of Object.entries(selected_recipe.ingredients)) {
+                const ingredient_node = _generateGraphLayout(ingredient_id);
                 node.add_blink(
                     ingredient_node,
                     {
-                        amount: ingredient.amount,
+                        amount: mathjs.divide(amount, product_amount),
                         production_required: fraction(0),
                         total_fraction: fraction(0),
                         minimal_transporter_index: -1,
@@ -340,8 +341,8 @@ function updateOverlay() {
 export function resetAlternateRecipes() {
     // Re-render only if a non-alternate recipe is currently selected
     const should_re_render_graph = any(
-        g_.config.alternate_recipes.entries(),
-        ([obj_id, selected_recipe_index]) => game_data.crafting_objects[obj_id].recipes[selected_recipe_index].is_alternate
+        g_.config.alternate_recipes.values(),
+        (selected_recipe_index) => 0 != selected_recipe_index
     );
 
     g_.config.alternate_recipes.clear();

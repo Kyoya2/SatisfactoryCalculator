@@ -1,5 +1,6 @@
 import Config from "@/Config.mjs"
 import {assert} from "@/Utils.mjs"
+import game_data from "@/GameData.auto.mjs"
 /** @import { GameObjectId, CountedItem, Recipe, CraftingObject } from "@/GameData.auto.mjs" */
 /** @import { Graph, Node, Edge } from "@/Graph.mjs" */
 
@@ -48,7 +49,7 @@ globalThis.satisfactoryCalculator = g_;
  */
 export function selectedRecipe(node) {
     assert(undefined !== node);
-    return node.obj.recipes[node.selected_recipe_index];
+    return game_data.recipes[node.obj.recipes[node.selected_recipe_index]];
 }
 
 /**
@@ -57,7 +58,8 @@ export function selectedRecipe(node) {
  */
 export function singleMachineProduction(node) {
     assert(null === node.trivial_prod);
-    return mathjs.divide(1, selectedRecipe(node).duration);
+    const selected_recipe = selectedRecipe(node);
+    return mathjs.divide(selected_recipe.products[node.obj.id], selected_recipe.duration);
 }
 
 /**
