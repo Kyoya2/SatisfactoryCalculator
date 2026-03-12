@@ -15,6 +15,32 @@ import mermaid from "mermaid";
 import * as mathjs from 'mathjs';
 import {fraction, Fraction} from 'mathjs';
 
+
+/**
+ * Returns the number of "lines" that should be reserved for a node overlay
+ * @param {MyNodeInfo} node 
+ * @returns {number}
+ */
+function estimateNodeOverlayHeight(node) {
+    // Object name + icon + production
+    let result = 2;
+    const is_trivial = g_.config.trivial_resources.has(node.obj.id);
+
+    // Recipe selection
+    if (!is_trivial && node.obj.recipes.length > 1)
+        ++result;
+
+    // Machines required
+    if (!is_trivial)
+        ++result;
+
+    // "Trivial?" checkbox
+    if (node.obj.recipes.length > 0)
+        ++result;
+
+    return result;
+}
+
 /**
  * @param {Graph<MyNodeInfo, MyEdgeInfo>} graph 
  * @returns {[string, Node<MyNodeInfo, MyEdgeInfo>[], Edge<MyNodeInfo, MyEdgeInfo>[]]}
@@ -27,7 +53,7 @@ function to_mermaid(graph) {
 
     for (const node of ordered_nodes) {
         const data = node.data;
-        result += `${data.obj.id}["$AAAAAAAAAAAAAAAAAA<br/><br/><br/><br/><br/>"]\n`;
+        result += `${data.obj.id}["$AAAAAAAAAAAAAAAAAA${'<br/>'.repeat(estimateNodeOverlayHeight(node.data))}"]\n`;
     }
 
     result += '\n';
