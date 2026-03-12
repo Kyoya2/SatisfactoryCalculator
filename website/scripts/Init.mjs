@@ -135,13 +135,8 @@ function initGraph() {
         "DOMContentLoaded",
         function(){
             mermaid.initialize({
-                //darkMode: true,
-                //theme: "dark"
                 deterministicIds: true,
                 startOnLoad: false,
-                deterministicIDSeed: undefined,
-                //  htmlLabels
-                logLevel: "warn",
                 securityLevel: "loose",
                 flowchart: {
                     defaultRenderer: "elk"
