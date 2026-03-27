@@ -63,7 +63,9 @@
                 </footer>
             </div>
 
-            <div id="graphContainer" class="mermaid" style="float:right; overflow:auto"></div>
+            <div id="panzoomGraphContainer">
+                <div id="graphContainer"></div>
+            </div>
         </div>
 
         <template id="nodeOverlayTemplate"><div class="node-overlay">
@@ -73,7 +75,7 @@
 
             <div class="node-alternate-recipes">
                 <label class="recipe-label">Recipe:&nbsp;</label>
-                <select></select><br>
+                <select class="panzoom-clickable"></select><br>
             </div>
 
             <label>Production:&nbsp;</label><label class="production-rate-label editable-label"></label><br/>
@@ -86,7 +88,7 @@
 
             <div class="is-trivial-container">
                 <label>Trivial?</label>
-                <input type="checkbox" class="is-trivial-checkbox" switch>
+                <input type="checkbox" class="is-trivial-checkbox panzoom-clickable" switch>
             </div>
         </div></template>
 

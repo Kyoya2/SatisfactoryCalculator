@@ -285,6 +285,9 @@ export async function generateGraphPhase1(recalc_mult=false) {
         createEdgeOverlay(edge_label_svg_elements[i], current_edge);
     }
 
+    // Reset the pan and zoom
+    g_.panzoom.reset({ animate: false });
+
     // Trigger the next phase
     generateGraphPhase2(recalc_mult);
 }

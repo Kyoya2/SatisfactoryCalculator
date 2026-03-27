@@ -1,14 +1,15 @@
-import {g_, machinesRequired} from "@/Common.mjs"
+import {g_, machinesRequired} from "@/Common.mjs";
 import {assert, formatFrac, deepFreeze} from "@/Utils.mjs";
-import Config from "@/Config.mjs"
-import game_data from "@/GameData.auto.mjs"
+import Config from "@/Config.mjs";
+import game_data from "@/GameData.auto.mjs";
 /** @import { GameObjectId, CountedItem, Recipe, CraftingObject } from "@/GameData.auto.mjs" */
 
-import TomSelect from "tom-select"
+import TomSelect from "tom-select";
 import * as mathjs from 'mathjs';
 import {fraction, Fraction} from 'mathjs';
 import mermaid from "mermaid";
 import elkLayouts from '@mermaid-js/layout-elk';
+import Panzoom from "@panzoom/panzoom";
 
 // Must be imported last!!!
 import {generateGraphPhase1, generateGraphPhase2, resetAlternateRecipes, updateDisplayMultiplier, updateDisplayMultiplierAuto} from "@/Main.mjs"
@@ -146,6 +147,21 @@ function initGraph() {
     );
 }
 
+function initPanZoom() {
+    g_.panzoom = Panzoom(
+        g_.html_elements.graphContainer,
+        {
+            excludeClass: "panzoom-clickable",
+
+            // Without this, only the initially-visible part of the graph can be used
+            // to pan the view
+            canvas: true
+        }
+    );
+
+    g_.html_elements.panzoomGraphContainer.addEventListener('wheel', g_.panzoom.zoomWithWheel);
+}
+
 export default function initApp() {
     // This was a bug that I presumably fixed
     assert(null === g_.config, "Module already initialized");
@@ -155,7 +171,7 @@ export default function initApp() {
 
     initGameData();
 
-    const HTML_ELEMENT_NAMES = ['displayMultiplierInput', 'graphContainer', 'nodeOverlayTemplate', 'edgeOverlayTemplate'];
+    const HTML_ELEMENT_NAMES = ['displayMultiplierInput', 'graphContainer', 'panzoomGraphContainer', 'nodeOverlayTemplate', 'edgeOverlayTemplate'];
     for (const name of HTML_ELEMENT_NAMES) {
         g_.html_elements[name] = document.getElementById(name);
     }
@@ -171,6 +187,8 @@ export default function initApp() {
     initDisplayMultiplier();
 
     initGraph();
+
+    initPanZoom();
 
     // This will trigger the generation of the graph
     craftable_objects_select.setValue(g_.config.product_name);

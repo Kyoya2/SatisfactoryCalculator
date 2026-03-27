@@ -16,20 +16,13 @@ html, body {
   overflow: auto; /* independent scroll */
 }
 
-#trivialResourcesTableContainer {
-    width: 100%;
-    max-height: 200px; /* Set your desired height */
-    overflow-y: auto;  /* Enable vertical scrolling */
-    overflow-x: auto;  /* Enable horizontal scrolling if needed */
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-#graphContainer {
+#panzoomGraphContainer {
     flex: 1;
     border-style: solid;
     position: relative;
     display: inline-block;
+    float:right;
+    overflow:auto;
 }
 
 .node-overlay {

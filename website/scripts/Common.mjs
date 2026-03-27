@@ -1,6 +1,6 @@
-import Config from "@/Config.mjs"
-import {assert} from "@/Utils.mjs"
-import game_data from "@/GameData.auto.mjs"
+import Config from "@/Config.mjs";
+import {assert} from "@/Utils.mjs";
+import game_data from "@/GameData.auto.mjs";
 /** @import { GameObjectId, CountedItem, Recipe, CraftingObject } from "@/GameData.auto.mjs" */
 /** @import { Graph, Node, Edge } from "@/Graph.mjs" */
 
@@ -29,13 +29,15 @@ import {fraction, Fraction} from 'mathjs';
  * @type {{
  *      html_elements: Object.<string, HTMLElement>,
  *      product_node: Node<MyNodeInfo, MyEdgeInfo>,
- *      config: Config
+ *      config: Config,
+ *      panzoom: *
  * }}
  */
 export var g_ = {
     html_elements: Object.create(null),
     product_node: null,
-    config: null
+    config: null,
+    panzoom: null
 };
 
 // For debugging
