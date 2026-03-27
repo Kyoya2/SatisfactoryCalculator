@@ -18,11 +18,11 @@ html, body {
 
 #panzoomGraphContainer {
     flex: 1;
-    border-style: solid;
+    border-left: 2px solid;
     position: relative;
-    display: inline-block;
-    float:right;
-    overflow:auto;
+    display: block;
+    float: right;
+    overflow: auto;
 }
 
 .node-overlay {
