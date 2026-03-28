@@ -41,6 +41,18 @@ function initGameData() {
 }
 
 function initCraftableObjectsSelect() {
+    function renderOptionTemplate(class_name) {
+        function renderOption(data, escape) {
+            return `<div class="${class_name}">
+                        <span class="label">${escape(data.text)}</span>
+                        <img class="icon" src="${escape(`images/game_icons/${data.value}.png`)}" />
+                    </div>`;
+        }
+
+        return renderOption;
+    }
+
+
     return new TomSelect(
         "#craftableItemSelect",
         {
@@ -58,6 +70,11 @@ function initCraftableObjectsSelect() {
                 g_.config.product_name = product_name;
                 g_.config.notifyChange();
                 generateGraphPhase1(true);
+            },
+
+            render: {
+                option: renderOptionTemplate("product-select-option"),
+                item: renderOptionTemplate("product-select-option product-select-item")
             }
         }
     );
