@@ -70,6 +70,11 @@ function initCraftableObjectsSelect() {
                 g_.config.product_name = product_name;
                 g_.config.notifyChange();
                 generateGraphPhase1(true);
+
+                // For some reason, the text box stays focused after selecting an option,
+                // which looks ugly, since it's extended vertically as long as it's selected.
+                // Deselect it!
+                this.blur();
             },
 
             render: {
