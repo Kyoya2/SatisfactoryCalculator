@@ -24,19 +24,23 @@ import {fraction, Fraction} from 'mathjs';
 function estimateNodeOverlayHeight(node) {
     // Object name + icon + production
     let result = 3;
-    const is_trivial = g_.config.trivial_resources.has(node.obj.id);
 
-    // Recipe selection
-    if (!is_trivial && node.obj.recipes.length > 1)
-        ++result;
+    if (!node.is_pure_byproduct) {
+        const is_trivial = g_.config.trivial_resources.has(node.obj.id);
+        if (!is_trivial) {
+            // Recipe selection
+            if (node.obj.recipes.length > 1) {
+                ++result;
+            }
 
-    // Machines required
-    if (!is_trivial)
-        ++result;
-
-    // "Trivial?" checkbox
-    if (node.obj.recipes.length > 0)
-        ++result;
+            // Machines required
+            ++result;
+        }
+        
+        // "Trivial?" checkbox
+        if (node.obj.recipes.length > 0)
+            ++result;
+    }
 
     return result;
 }
@@ -88,9 +92,13 @@ function createNodeOverlay(node_svg_element, node) {
     const obj = node.data.obj;
 
     const is_trivial = g_.config.trivial_resources.has(obj.id);
+    const is_pure_byproduct = node.data.is_pure_byproduct;
 
-    if (is_trivial) {
-        overlay.style.backgroundColor = 'lightblue';
+    // A node can't be both trivial and a pure byproduct
+    assert(!(is_pure_byproduct && is_trivial));
+
+    if (is_trivial || is_pure_byproduct) {
+        overlay.style.backgroundColor = is_trivial ? 'lightblue' : 'lightgreen';
         overlay.querySelector(".machines-required-container").remove();
     }
     else if (g_.product_node == node) {
@@ -106,9 +114,9 @@ function createNodeOverlay(node_svg_element, node) {
     //
     // Initialize trivial checkbox
     //
-    if (0 == obj.recipes.length) {
+    if ((0 == obj.recipes.length) || is_pure_byproduct) {
         // An object with no recipes is forced to be trivial (remove the option to change it)
-        assert(is_trivial);
+        assert(is_trivial || is_pure_byproduct);
         overlay.querySelector(".is-trivial-container").remove();
     } else {
         /** @type {HTMLInputElement} */
@@ -128,7 +136,7 @@ function createNodeOverlay(node_svg_element, node) {
     //
     // Initialize alternate recipes select, or remove if there are none
     //
-    if (is_trivial || (obj.recipes.length <= 1)) {
+    if (is_trivial || is_pure_byproduct || (obj.recipes.length <= 1)) {
         overlay.querySelector(".node-alternate-recipes").remove();
     } else {
         let recipe_index = g_.config.alternate_recipes.get(obj.id);
