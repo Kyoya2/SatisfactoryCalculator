@@ -10,17 +10,19 @@ import {fraction, Fraction} from 'mathjs';
 /**
  * @typedef {Object} MyNodeInfo
  * @property {CraftingObject} obj - The associated crafting object
+ * @property {boolean} is_byproduct - Whether this node is a pure byproduct in the current recipe tree - i.e., it's not used as an ingredient
+ *  for any other node in the current recipe tree.
  * @property {number} selected_recipe_index - The index of the recipe in `obj.recipes` that's currently used
  * @property {Fraction} total_production_required - The total required production per second of this unit's resource to fully supply its target nodes
- *  recipe that are required for optimally producing the final product
+ *  recipe that are required for optimally producing the final product. Including byproducts!
+ * @property {Fraction} production_required - Same as above, but excluding byproducts.
  * @property {HTMLDivElement} html - The HTML overlay of the node
  * 
  * @typedef {Object} MyEdgeInfo
+ * @property {boolean} is_byproduct - Whether the target node of this link is a byproduct of the source node's recipe.
  * @property {Fraction} amount - The number of units of the source node that are required to produce 1 unit of the target node
  * @property {Fraction} production_required - 
  * @property {Fraction} total_fraction - The part of units of the source node that should be supplied to the target node
- * @property {number} minimal_transporter_index - The index of the minimal transporter that's required for optimally supplying the source node's
- *  output into the target node's input
  * @property {SVGPathElement} path_element - The SVG element that represent the path between the source and target node
  * @property {HTMLDivElement} html - The overlay tof the edge's label container
  */
@@ -68,7 +70,7 @@ export function singleMachineProduction(node) {
  * @returns {Fraction}
  */
 export function machinesRequired(node) {
-    return mathjs.divide(node.total_production_required, singleMachineProduction(node));
+    return mathjs.divide(node.production_required, singleMachineProduction(node));
 }
 
 /**
@@ -76,5 +78,5 @@ export function machinesRequired(node) {
  * @returns {Fraction}
  */
 export function getNodeProductionPerMinute(node) {
-    return mathjs.multiply(node.total_production_required, 60);
+    return mathjs.multiply(node.production_required, 60);
 }

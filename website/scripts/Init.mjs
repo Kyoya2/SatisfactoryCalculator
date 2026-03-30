@@ -52,7 +52,6 @@ function initCraftableObjectsSelect() {
         return renderOption;
     }
 
-
     return new TomSelect(
         "#craftableItemSelect",
         {
@@ -213,5 +212,6 @@ export default function initApp() {
     initPanZoom();
 
     // This will trigger the generation of the graph
+    // TODO: pretty sure this will ignore the display multiplier in the URL, fix it!
     craftable_objects_select.setValue(g_.config.product_name);
 }

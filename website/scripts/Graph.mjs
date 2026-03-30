@@ -3,10 +3,15 @@ import {any, filter} from "@/Utils.mjs";
 
 /** @template NodeData, EdgeData */
 export class Graph {
-    constructor() {
+    /**
+     * @param {((edge: Edge<NodeData, EdgeData>) => boolean)} [smart_breadth_1st_predicate]
+     */
+    constructor(smart_breadth_1st_predicate) {
         /** @type {Set<Node<NodeData, EdgeData>>} */
         this._nodes = new Set();
         this._cache_manager = new CacheManager();
+
+        this._smart_breadth_1st_predicate = smart_breadth_1st_predicate ?? (() => (true));
 
         this.getRootsOrLeaves = this._cache_manager.cacheFunc(
             /** 
@@ -94,7 +99,7 @@ export class Graph {
         
                 // If we still haven't visited ALL the up links, skip this node for now.
                 // We will have more chances to visit it in the required state.
-                if (any(node[up_links], (edge) => !visited_nodes.has(edge[up_link])))
+                if (any(node[up_links], (edge) => this._smart_breadth_1st_predicate(edge) && !visited_nodes.has(edge[up_link])))
                     continue;
 
                 yield node;

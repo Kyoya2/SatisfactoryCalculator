@@ -43,9 +43,10 @@ function estimateNodeOverlayHeight(node) {
 
 /**
  * @param {Graph<MyNodeInfo, MyEdgeInfo>} graph 
+ * @param {number} stroke_width - stoke width in pixels
  * @returns {[string, Node<MyNodeInfo, MyEdgeInfo>[], Edge<MyNodeInfo, MyEdgeInfo>[]]}
  */
-function to_mermaid(graph) {
+function toMermaid(graph, stroke_width) {
     let ordered_nodes = [...graph.nodes()];
     let ordered_edges = [...graph.links()];
 
@@ -65,6 +66,8 @@ function to_mermaid(graph) {
     for (const edge of ordered_edges) {
         result += `${edge.source.data.obj.id}--AAAAAAAAA</br>AAAAAAAAA-->${edge.target.data.obj.id}\n`;
     }
+
+    result += `linkStyle default stroke-width:${stroke_width}px;`;
 
     return [result, ordered_nodes, ordered_edges];
 }
@@ -162,9 +165,15 @@ function createNodeOverlay(node_svg_element, node) {
 
 /**
  * @param {SVGForeignObjectElement} edge_label_element 
+ * @param {SVGPathElement} edge_path_element 
  * @param {Edge<MyNodeInfo, MyEdgeInfo>} edge
  */
-function createEdgeOverlay(edge_label_element, edge) {
+function createEdgeOverlay(edge_label_element, edge_path_element, edge) {
+    edge.data.path_element = edge_path_element;
+    if (edge.data.is_byproduct) {
+        edge_path_element.style.stroke = 'orange';
+    }
+
     // Clone the template
     const clone = g_.html_elements.edgeOverlayTemplate.content.cloneNode(true);
     assert(1 == clone.childElementCount);
@@ -177,15 +186,20 @@ function createEdgeOverlay(edge_label_element, edge) {
 }
 
 /**
- * Regenerates the entire graph. Should only be called if the structure of the graph was changed.
- * @param {boolean} recalc_mult - Whether the display multiplier should be recalculated
+ * @param {GameObjectId} product_name 
+ * @returns {Node<MyNodeInfo, MyEdgeInfo>} The product node
  */
-export async function generateGraphPhase1(recalc_mult=false) {
+function generateBaseGraph(product_name) {
     /** @type {Graph<MyNodeInfo, MyEdgeInfo>} */
-    let graph = new Graph();
+    let graph = new Graph(((edge) => !edge.data.is_byproduct));
 
     /** @type {Map<GameObjectId, Node<MyNodeInfo, MyEdgeInfo>>} */
     let nodes = new Map();
+    
+    // byproducts[id1] -> A map containing all nodes that preoduce "id1" as a byproduct.
+    // byproducts[id1][id2] -> The amount of byproduct "id1" produced from a production of a single "id2"
+    /** @type {Map<GameObjectId, Map<GameObjectId, Fraction>>} */
+    let byproducts = new Map();
 
     /**
      * Calculates only the layout of the graph for the currently selected product
@@ -219,8 +233,10 @@ export async function generateGraphPhase1(recalc_mult=false) {
         // "selected_recipe_index" is set here because it directly affects the structure of the graph
         node = graph.createNode({
             obj: obj,
+            is_byproduct: false,
             selected_recipe_index: selected_recipe_index,
             total_production_required: fraction(0),
+            production_required: fraction(0),
             html: null
         });
 
@@ -233,25 +249,85 @@ export async function generateGraphPhase1(recalc_mult=false) {
                 node.add_blink(
                     ingredient_node,
                     {
+                        is_byproduct: false,
                         amount: mathjs.divide(amount, product_amount),
                         production_required: fraction(0),
                         total_fraction: fraction(0),
-                        minimal_transporter_index: -1,
                         path_element: null,
                         html: null
                     }
                 );
+            }
+
+            // Process byproducts of the selected recipe
+            for (const [byproduct_id, amount] of Object.entries(selected_recipe.products)) {
+                if (product_id == byproduct_id)
+                    continue;
+
+                let byproduct_producers = byproducts.get(byproduct_id);
+                if (undefined === byproduct_producers) {
+                    byproduct_producers = new Map();
+                    byproducts.set(byproduct_id, byproduct_producers);
+                }
+
+                // Since we iterate over each product once, it shouldn't yet be registered
+                // as a producer of the current byproduct
+                assert(!byproduct_producers.has(product_id));
+
+                byproduct_producers.set(product_id, mathjs.divide(amount, product_amount));
             }
         }
 
         return node;
     }
 
-    g_.product_node = _generateGraphLayout(g_.config.product_name);
+    const product_node = _generateGraphLayout(product_name);
+
+    for (const [byproduct_id, producers] of byproducts.entries()) {
+        const obj = game_data.crafting_objects[byproduct_id];
+
+        // If the byproduct is not used anywhnere in the recipe tree, create a node for it
+        let byproduct_node = nodes.get(byproduct_id);
+        if (undefined === byproduct_node) {
+            byproduct_node = graph.createNode({
+                obj: obj,
+                is_byproduct: true,
+                selected_recipe_index: -1,
+                total_production_required: fraction(0),
+                production_required: fraction(0),
+                html: null
+            });
+        }
+
+        // Connect the byproduct node to all the nodes that produce it
+        for (const [producer_id, amount] of producers.entries()) {
+            byproduct_node.add_blink(
+                nodes.get(producer_id),
+                {
+                    is_byproduct: true,
+                    amount: amount,
+                    production_required: fraction(0),
+                    total_fraction: fraction(0),
+                    path_element: null,
+                    html: null
+                }
+            );
+        }
+    }
+
+    return product_node;
+}
+
+/**
+ * Regenerates the entire graph. Should only be called if the structure of the graph was changed.
+ * @param {boolean} recalc_mult - Whether the display multiplier should be recalculated
+ */
+export async function generateGraphPhase1(recalc_mult=false) {
+    g_.product_node = generateBaseGraph(g_.config.product_name);
 
     // TODO: this function relies on the assumption that the SVG elements appear in the order that
     //       they were declared in the Mermaid string. Check this!
-    const [graph_mermaid, ordered_nodes, ordered_edges] = to_mermaid(g_.product_node.graph);
+    const [graph_mermaid, ordered_nodes, ordered_edges] = toMermaid(g_.product_node.graph, 2);
     const render_result = await mermaid.render('graphSvg', graph_mermaid);
 
     g_.html_elements.graphContainer.innerHTML = render_result.svg;
@@ -280,9 +356,7 @@ export async function generateGraphPhase1(recalc_mult=false) {
     // Create edge overlays and associate them with the relevant edge objects.
     // Also associate the edge path.
     for (let i = 0; i < ordered_edges.length; ++i) {
-        const current_edge = ordered_edges[i];
-        current_edge.data.path_element = edge_path_svg_elements[i];
-        createEdgeOverlay(edge_label_svg_elements[i], current_edge);
+        createEdgeOverlay(edge_label_svg_elements[i], edge_path_svg_elements[i], ordered_edges[i]);
     }
 
     // Reset the pan and zoom
@@ -303,24 +377,124 @@ export function generateGraphPhase2(recalc_mult=false) {
 
     // Breadth-first search starting from the product
     for (const node of g_.product_node.graph.smartBreadthFirst(false)) {
+        if (node.data.is_byproduct)
+            continue;
+
         // Since we're doing a smart search, we know that we already visited all the target nodes.
         // So, we can reliably calculate the total required production.
         for (const [target_node, data] of node.flinks()) {
+            if (data.is_byproduct)
+                continue;
+
             node.data.total_production_required = mathjs.add(node.data.total_production_required, data.production_required);
         }
 
+        node.data.production_required = node.data.total_production_required;
+
         for (const [target_node, data] of node.flinks()) {
-            assert(0 != node.data.total_production_required.n);
-            data.total_fraction = mathjs.divide(data.production_required, node.data.total_production_required);
+            if (data.is_byproduct) {
+                // TODO: There's no reason to display the "total_fraction" of byproducts to the user, since it's always 1.
+                // Additionally, don't display the fraction if it's 1/1 (even for non-byproducts).
+                data.total_fraction = fraction(1);
+            } else {
+                assert(0 != node.data.total_production_required.n);
+                data.total_fraction = mathjs.divide(data.production_required, node.data.total_production_required);
+            }
         }
 
         if (!g_.config.trivial_resources.has(node.data.obj.id)) {
             // Calculate the required production rate of each input
             for (const [source_node, data] of node.blinks()) {
+                if (data.is_byproduct)
+                    continue;
+
                 data.production_required = mathjs.multiply(node.data.total_production_required, data.amount);
             }
         }
     }
+
+    /**
+     * Updates the "production_required" field of the current node to the given value, and propagates
+     * the change upwards.
+     * Does not modify byproducts, this will be handled by "_updateByproduct".
+     * @param {Node<MyNodeInfo, MyEdgeInfo>} target_node 
+     * @param {Fraction} new_production_required 
+     */
+    function _updateProduction(target_node, new_production_required) {
+        // If the production of this node has changed, propagate the modification upwards to update required
+        // productions for producing the current node's product.
+        if (mathjs.equal(target_node.data.production_required, new_production_required))
+            return;
+
+        const proportional_prod_multiplier = mathjs.divide(new_production_required, target_node.data.production_required);
+        target_node.data.production_required = new_production_required;
+
+        for (const [parent_node, parent_data] of target_node.blinks()) {
+            // Skip byproduct edges, they will be handled by "_updateByproduct"
+            if (parent_data.is_byproduct)
+                continue;
+
+            assert(!parent_data.is_byproduct);
+
+            // Edge production is updated proportionally
+            const new_production_required = mathjs.multiply(parent_data.production_required, proportional_prod_multiplier);
+            const absolute_prod_diff = mathjs.subtract(parent_data.production_required, new_production_required);
+            parent_data.production_required = new_production_required;
+
+            // Parent node production is updated absolutely.
+            // The thing that logically changed here is the production that doesn't include byproduct, which is
+            // contained both in "total_production_required" and "production_required", so we update both of them.
+            // Note: "production_required" is updated in the next recursive call.
+            parent_node.data.total_production_required = mathjs.subtract(parent_node.data.total_production_required, absolute_prod_diff);
+
+            _updateProduction(parent_node, mathjs.subtract(parent_node.data.production_required, absolute_prod_diff));
+        }
+    }
+
+    /**
+     * @param {Node<MyNodeInfo, MyEdgeInfo>} source_node 
+     * @returns {boolean}
+     */
+    function _updateByproduct(source_node) {
+        let modified = false;
+        for (const [target_node, data] of source_node.flinks()) {
+            if (!data.is_byproduct)
+                continue
+
+            // Must multiply by the production that doesn't include byproducts, because byproducts are only generated
+            // when crafting using the recipe that produces the byproducts, and not when the products itself is already
+            // a byproduct of another recipe.
+            const byproduct_production = mathjs.multiply(source_node.data.production_required, data.amount);
+
+            if (mathjs.equal(byproduct_production, data.production_required))
+                continue;
+
+            data.production_required = byproduct_production;
+            modified = true;
+
+            // TODO: this is incorrect if the byproduct is produced from 2 different sources, as it will overwrite the
+            // other source
+            const new_production_required = mathjs.subtract(
+                target_node.data.total_production_required,
+                byproduct_production
+            );
+
+            _updateProduction(target_node, new_production_required);
+
+            // Propagate the change to the children
+            modified = _updateByproduct(target_node) || modified;
+        }
+
+        return modified;
+    }
+
+    // TODO: add different color to byproduct nodes *and edges*
+    // TODO: it's possible to get negative values using this method. When an ingredient
+    //       is sufficiently produced as a byproduct, and there's no need to manually produce it
+
+    // Updating byproducts may require multiple iterations over the graph.
+    // Keep iterating until we're able to complete an iteration without making changes perform an iteration with no modifications.
+    while (reduce(g_.product_node.graph.nodes(), (modified, node) => (_updateByproduct(node) || modified), false));
 
     if (recalc_mult)
         updateDisplayMultiplierAuto();
