@@ -6,10 +6,10 @@
 import game_data from "@/GameData.auto.mjs";
 import {assert, any, reduce, map, fractionMax, formatFrac} from "@/Utils.mjs";
 import {Graph, Node, Edge} from "@/Graph.mjs";
-import {g_, selectedRecipe, singleMachineProduction, machinesRequired, getNodeProductionPerMinute} from "@/Common.mjs";
+import {g_, SCNode} from "@/Common.mjs";
 
-/** @import { GameObjectId, CountedItem, Recipe, CraftingObject } from "@/GameData.auto.mjs" */
-/** @import { MyNodeInfo, MyEdgeInfo } from "@/Common.mjs" */
+/** @import { GameObjectId, Recipe, CraftingObject } from "@/GameData.auto.mjs" */
+/** @import { MyEdgeInfo } from "@/Common.mjs" */
 
 import mermaid from "mermaid";
 import * as mathjs from 'mathjs';
@@ -18,27 +18,26 @@ import {fraction, Fraction} from 'mathjs';
 
 /**
  * Returns the number of "lines" that should be reserved for a node overlay
- * @param {MyNodeInfo} node 
+ * @param {SCNode} node 
  * @returns {number}
  */
 function estimateNodeOverlayHeight(node) {
     // Object name + icon + production
     let result = 3;
 
-    if (!node.is_pure_byproduct) {
-        const is_trivial = g_.config.trivial_resources.has(node.obj.id);
-        if (!is_trivial) {
+    if (!node.isPureByproduct()) {
+        const num_recipes = node.recipes().length;
+        if (!node.isTrivial()) {
             // Recipe selection
-            if (node.obj.recipes.length > 1) {
+            if (num_recipes > 1)
                 ++result;
-            }
 
             // Machines required
             ++result;
         }
         
         // "Trivial?" checkbox
-        if (node.obj.recipes.length > 0)
+        if (num_recipes > 0)
             ++result;
     }
 
@@ -46,9 +45,9 @@ function estimateNodeOverlayHeight(node) {
 }
 
 /**
- * @param {Graph<MyNodeInfo, MyEdgeInfo>} graph 
+ * @param {Graph<SCNode, MyEdgeInfo>} graph 
  * @param {number} stroke_width - stoke width in pixels
- * @returns {[string, Node<MyNodeInfo, MyEdgeInfo>[], Edge<MyNodeInfo, MyEdgeInfo>[]]}
+ * @returns {[string, Node<SCNode, MyEdgeInfo>[], Edge<SCNode, MyEdgeInfo>[]]}
  */
 function toMermaid(graph, stroke_width) {
     let ordered_nodes = [...graph.nodes()];
@@ -57,18 +56,16 @@ function toMermaid(graph, stroke_width) {
     let result = "flowchart-elk TD\n";
 
     for (const node of ordered_nodes) {
-        const data = node.data;
-
         const overlay_height = estimateNodeOverlayHeight(node.data);
 
         // Sub 1 because we already have 1 line
-        result += `${data.obj.id}["$AAAAAAAAAAAAAAAAAA${'<br/>'.repeat(overlay_height - 1)}"]\n`;
+        result += `${node.data.obj().id}["$AAAAAAAAAAAAAAAAAA${'<br/>'.repeat(overlay_height - 1)}"]\n`;
     }
 
     result += '\n';
 
     for (const edge of ordered_edges) {
-        result += `${edge.source.data.obj.id}--AAAAAAAAA</br>AAAAAAAAA-->${edge.target.data.obj.id}\n`;
+        result += `${edge.source.data.obj().id}--AAAAAAAAA</br>AAAAAAAAA-->${edge.target.data.obj().id}\n`;
     }
 
     result += `linkStyle default stroke-width:${stroke_width}px;`;
@@ -78,7 +75,7 @@ function toMermaid(graph, stroke_width) {
 
 /**
  * @param {SVGGElement} node_svg_element 
- * @param {Node<MyNodeInfo, MyEdgeInfo>} node
+ * @param {Node<SCNode, MyEdgeInfo>} node
  */
 function createNodeOverlay(node_svg_element, node) {
     // Clone the template
@@ -89,10 +86,10 @@ function createNodeOverlay(node_svg_element, node) {
     const overlay = clone.firstChild;
     node.data.html = overlay;
 
-    const obj = node.data.obj;
+    const obj = node.data.obj();
 
-    const is_trivial = g_.config.trivial_resources.has(obj.id);
-    const is_pure_byproduct = node.data.is_pure_byproduct;
+    const is_trivial = node.data.isTrivial();
+    const is_pure_byproduct = node.data.isPureByproduct();
 
     // A node can't be both trivial and a pure byproduct
     assert(!(is_pure_byproduct && is_trivial));
@@ -109,7 +106,7 @@ function createNodeOverlay(node_svg_element, node) {
     overlay.querySelector('.node-item-name').textContent = obj.name;
 
     // Initialize image
-    overlay.querySelector('.node-icon').src = `images/game_icons/${node.data.obj.id}.png`;
+    overlay.querySelector('.node-icon').src = `images/game_icons/${obj.id}.png`;
 
     //
     // Initialize trivial checkbox
@@ -174,7 +171,7 @@ function createNodeOverlay(node_svg_element, node) {
 /**
  * @param {SVGForeignObjectElement} edge_label_element 
  * @param {SVGPathElement} edge_path_element 
- * @param {Edge<MyNodeInfo, MyEdgeInfo>} edge
+ * @param {Edge<SCNode, MyEdgeInfo>} edge
  */
 function createEdgeOverlay(edge_label_element, edge_path_element, edge) {
     edge.data.path_element = edge_path_element;
@@ -195,13 +192,13 @@ function createEdgeOverlay(edge_label_element, edge_path_element, edge) {
 
 /**
  * @param {GameObjectId} product_name 
- * @returns {Node<MyNodeInfo, MyEdgeInfo>} The product node
+ * @returns {Node<SCNode, MyEdgeInfo>} The product node
  */
 function generateBaseGraph(product_name) {
-    /** @type {Graph<MyNodeInfo, MyEdgeInfo>} */
+    /** @type {Graph<SCNode, MyEdgeInfo>} */
     let graph = new Graph(((edge) => !edge.data.is_byproduct));
 
-    /** @type {Map<GameObjectId, Node<MyNodeInfo, MyEdgeInfo>>} */
+    /** @type {Map<GameObjectId, Node<SCNode, MyEdgeInfo>>} */
     let nodes = new Map();
     
     // byproducts[id1] -> A map containing all nodes that preoduce "id1" as a byproduct.
@@ -212,7 +209,7 @@ function generateBaseGraph(product_name) {
     /**
      * Calculates only the layout of the graph for the currently selected product
      * @param {GameObjectId} product_id
-     * @returns {Node<MyNodeInfo, MyEdgeInfo>}
+     * @returns {Node<SCNode, MyEdgeInfo>}
      */
     function _generateGraphLayout(product_id) {
         let node = nodes.get(product_id);
@@ -239,14 +236,11 @@ function generateBaseGraph(product_name) {
         }
         
         // "selected_recipe_index" is set here because it directly affects the structure of the graph
-        node = graph.createNode({
-            obj: obj,
-            is_pure_byproduct: false,
-            selected_recipe_index: selected_recipe_index,
-            total_production_required: fraction(0),
-            production_required: fraction(0),
-            html: null
-        });
+        node = graph.createNode(new SCNode(
+            product_id,
+            false,
+            selected_recipe_index
+        ));
 
         nodes.set(product_id, node)
 
@@ -294,17 +288,13 @@ function generateBaseGraph(product_name) {
     for (const [byproduct_id, producers] of byproducts.entries()) {
         const obj = game_data.crafting_objects[byproduct_id];
 
-        // If the byproduct is not used anywhnere in the recipe tree, create a node for it
+        // If the byproduct is not used anywhere in the recipe tree, create a node for it
         let byproduct_node = nodes.get(byproduct_id);
         if (undefined === byproduct_node) {
-            byproduct_node = graph.createNode({
-                obj: obj,
-                is_pure_byproduct: true,
-                selected_recipe_index: -1,
-                total_production_required: fraction(0),
-                production_required: fraction(0),
-                html: null
-            });
+            byproduct_node = graph.createNode(new SCNode(
+                byproduct_id,
+                true
+            ));
         }
 
         // Connect the byproduct node to all the nodes that produce it
@@ -381,11 +371,11 @@ export async function generateGraphPhase1(recalc_mult=false) {
  */
 export function generateGraphPhase2(recalc_mult=false) {
     // Set the required production to the production of one machine
-    g_.product_node.data.total_production_required = singleMachineProduction(g_.product_node.data);
+    g_.product_node.data.total_production_required = g_.product_node.data.singleMachineProduction();
 
     // Breadth-first search starting from the product
     for (const node of g_.product_node.graph.smartBreadthFirst(false)) {
-        if (node.data.is_pure_byproduct)
+        if (node.data.isPureByproduct())
             continue;
 
         // Since we're doing a smart search, we know that we already visited all the target nodes.
@@ -410,7 +400,7 @@ export function generateGraphPhase2(recalc_mult=false) {
             }
         }
 
-        if (!g_.config.trivial_resources.has(node.data.obj.id)) {
+        if (!node.data.isTrivial()) {
             // Calculate the required production rate of each input
             for (const [source_node, data] of node.blinks()) {
                 if (data.is_byproduct)
@@ -425,7 +415,7 @@ export function generateGraphPhase2(recalc_mult=false) {
      * Updates the "production_required" field of the current node to the given value, and propagates
      * the change upwards.
      * Does not modify byproducts, this will be handled by "_updateByproduct".
-     * @param {Node<MyNodeInfo, MyEdgeInfo>} target_node 
+     * @param {Node<SCNode, MyEdgeInfo>} target_node 
      * @param {Fraction} new_production_required
      * @returns {boolean} - Whether the production of the given node was changed
      */
@@ -463,7 +453,7 @@ export function generateGraphPhase2(recalc_mult=false) {
     }
 
     /**
-     * @param {Node<MyNodeInfo, MyEdgeInfo>} source_node 
+     * @param {Node<SCNode, MyEdgeInfo>} source_node 
      * @returns {boolean}
      */
     function _updateByproduct(source_node) {
@@ -504,7 +494,7 @@ export function generateGraphPhase2(recalc_mult=false) {
             }
         }
 
-        if (source_node.data.is_pure_byproduct) {
+        if (source_node.data.isPureByproduct()) {
             // For "pure" byproducts, we want to display the total production value of the byproducts.
             // Pure byproducts don't affect anything, their production can simply be updated without
             // causing recalculation of anything else
@@ -571,10 +561,10 @@ function applyDisplayMultiplier(frac) {
 function updateOverlay() {
     const graph = g_.product_node.graph;
     for (const node of graph.nodes()) {
-        node.data.html.querySelector('.production-rate-label').textContent = `${formatFrac(applyDisplayMultiplier(getNodeProductionPerMinute(node.data)), false)}/m`;
+        node.data.html.querySelector('.production-rate-label').textContent = `${formatFrac(applyDisplayMultiplier(node.data.productionPerMinute()), false)}/m`;
 
-        if (!g_.config.trivial_resources.has(node.data.obj.id) && !node.data.is_pure_byproduct) {
-            node.data.html.querySelector('.machines-required-label').textContent = formatFrac(applyDisplayMultiplier(machinesRequired(node.data)), false);
+        if (!node.data.isTrivial() && !node.data.isPureByproduct()) {
+            node.data.html.querySelector('.machines-required-label').textContent = formatFrac(applyDisplayMultiplier(node.data.machinesRequired()), false);
         }
     }
 
@@ -610,7 +600,7 @@ export function updateDisplayMultiplierAuto() {
     // into a whole number.
     const computed_lcm = mathjs.lcm(...map(
         g_.product_node.graph.nodes(),
-        (node) => (g_.config.trivial_resources.has(node.data.obj.id) || node.data.is_pure_byproduct) ? 1 : machinesRequired(node.data).d
+        (node) => (node.data.isTrivial() || node.data.isPureByproduct()) ? 1 : node.data.machinesRequired().d
     ))
 
     g_.html_elements.displayMultiplierInput.value = computed_lcm.toString();

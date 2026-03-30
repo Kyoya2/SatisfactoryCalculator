@@ -1,4 +1,4 @@
-import {g_, machinesRequired} from "@/Common.mjs";
+import {g_} from "@/Common.mjs";
 import {assert, formatFrac, deepFreeze} from "@/Utils.mjs";
 import Config from "@/Config.mjs";
 import game_data from "@/GameData.auto.mjs";
