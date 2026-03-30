@@ -418,13 +418,14 @@ export function generateGraphPhase2(recalc_mult=false) {
      * the change upwards.
      * Does not modify byproducts, this will be handled by "_updateByproduct".
      * @param {Node<MyNodeInfo, MyEdgeInfo>} target_node 
-     * @param {Fraction} new_production_required 
+     * @param {Fraction} new_production_required
+     * @returns {boolean} - Whether the production of the given node was changed
      */
     function _updateProduction(target_node, new_production_required) {
         // If the production of this node has changed, propagate the modification upwards to update required
         // productions for producing the current node's product.
         if (mathjs.equal(target_node.data.production_required, new_production_required))
-            return;
+            return false;
 
         const proportional_prod_multiplier = mathjs.divide(new_production_required, target_node.data.production_required);
         target_node.data.production_required = new_production_required;
@@ -449,6 +450,8 @@ export function generateGraphPhase2(recalc_mult=false) {
 
             _updateProduction(parent_node, mathjs.subtract(parent_node.data.production_required, absolute_prod_diff));
         }
+
+        return true;
     }
 
     /**
@@ -457,32 +460,64 @@ export function generateGraphPhase2(recalc_mult=false) {
      */
     function _updateByproduct(source_node) {
         let modified = false;
-        for (const [target_node, data] of source_node.flinks()) {
+
+        let total_byproduct_prod = fraction(0);
+        let is_byproduct = false;
+        for (const [parent_node, data] of source_node.blinks()) {
             if (!data.is_byproduct)
                 continue
 
-            // Must multiply by the production that doesn't include byproducts, because byproducts are only generated
-            // when crafting using the recipe that produces the byproducts, and not when the products itself is already
-            // a byproduct of another recipe.
-            const byproduct_production = mathjs.multiply(source_node.data.production_required, data.amount);
+            is_byproduct = true;
 
-            if (mathjs.equal(byproduct_production, data.production_required))
-                continue;
+            // Byproducts produced by the current parent node
+            const byproduct_production = mathjs.multiply(parent_node.data.production_required, data.amount);
+            if (!mathjs.equal(data.production_required, byproduct_production))
+                modified = true;
 
             data.production_required = byproduct_production;
-            modified = true;
 
-            // TODO: this is incorrect if the byproduct is produced from 2 different sources, as it will overwrite the
-            // other source
-            const new_production_required = mathjs.subtract(
-                target_node.data.total_production_required,
-                byproduct_production
-            );
+            // Add to the total
+            total_byproduct_prod = mathjs.add(total_byproduct_prod, byproduct_production);
+        }
 
-            _updateProduction(target_node, new_production_required);
+        if (!is_byproduct) {
+            // The node isn't being produced as a byproduct, nothing to do here.
+            assert(!modified)
+            return false;
+        }
 
-            // Propagate the change to the children
-            modified = _updateByproduct(target_node) || modified;
+        // Recalculate fractions
+        if (modified) {
+            for (const [parent_node, data] of source_node.blinks()) {
+                if (data.is_byproduct)
+                    continue
+
+                data.total_fraction = mathjs.divide(data.production_required, total_byproduct_prod);
+            }
+        }
+
+        if (source_node.data.is_byproduct) {
+            // For "pure" byproducts, we want to display the total production value of the byproducts.
+            // Pure byproducts don't affect anything, their production can simply be updated without
+            // causing recalculation of anything else
+            source_node.data.production_required = total_byproduct_prod;
+            return;
+        }
+        
+        // For "non-pure" byproducts, we want to display the production that's required *additionally*
+        // to the byproduct production
+        const new_production_required = mathjs.subtract(source_node.data.total_production_required, total_byproduct_prod);
+
+        if (!_updateProduction(source_node, new_production_required)) {
+            // The byproduct production didn't change, no need to propagate the change to the children
+            return modified;
+        }
+
+        // The production required has changed, which means that the production of all byproducts of this node
+        // has also changed (if the node produces byproducts). Recalculate it.
+        for (const [target_node, data] of source_node.flinks()) {
+            if (data.is_byproduct)
+                modified = _updateByproduct(target_node) || modified;
         }
 
         return modified;
