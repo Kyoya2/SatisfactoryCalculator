@@ -573,7 +573,7 @@ function updateOverlay() {
     for (const node of graph.nodes()) {
         node.data.html.querySelector('.production-rate-label').textContent = `${formatFrac(applyDisplayMultiplier(getNodeProductionPerMinute(node.data)), false)}/m`;
 
-        if (!g_.config.trivial_resources.has(node.data.obj.id)) {
+        if (!g_.config.trivial_resources.has(node.data.obj.id) && !node.data.is_pure_byproduct) {
             node.data.html.querySelector('.machines-required-label').textContent = formatFrac(applyDisplayMultiplier(machinesRequired(node.data)), false);
         }
     }
@@ -610,7 +610,7 @@ export function updateDisplayMultiplierAuto() {
     // into a whole number.
     const computed_lcm = mathjs.lcm(...map(
         g_.product_node.graph.nodes(),
-        (node) => g_.config.trivial_resources.has(node.data.obj.id) ? 1 : machinesRequired(node.data).d
+        (node) => (g_.config.trivial_resources.has(node.data.obj.id) || node.data.is_pure_byproduct) ? 1 : machinesRequired(node.data).d
     ))
 
     g_.html_elements.displayMultiplierInput.value = computed_lcm.toString();
