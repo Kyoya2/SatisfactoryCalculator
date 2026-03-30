@@ -10,8 +10,8 @@ import {fraction, Fraction} from 'mathjs';
 /**
  * @typedef {Object} MyNodeInfo
  * @property {CraftingObject} obj - The associated crafting object
- * @property {boolean} is_byproduct - Whether this node is a pure byproduct in the current recipe tree - i.e., it's not used as an ingredient
- *  for any other node in the current recipe tree.
+ * @property {boolean} is_pure_byproduct - Whether this node is a byproduct, and also isn't used as an ingredient
+ *  for any node in the current recipe tree.
  * @property {number} selected_recipe_index - The index of the recipe in `obj.recipes` that's currently used
  * @property {Fraction} total_production_required - The total required production per second of this unit's resource to fully supply its target nodes
  *  recipe that are required for optimally producing the final product. Including byproducts!

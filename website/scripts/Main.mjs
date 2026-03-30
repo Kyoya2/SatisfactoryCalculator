@@ -233,7 +233,7 @@ function generateBaseGraph(product_name) {
         // "selected_recipe_index" is set here because it directly affects the structure of the graph
         node = graph.createNode({
             obj: obj,
-            is_byproduct: false,
+            is_pure_byproduct: false,
             selected_recipe_index: selected_recipe_index,
             total_production_required: fraction(0),
             production_required: fraction(0),
@@ -291,7 +291,7 @@ function generateBaseGraph(product_name) {
         if (undefined === byproduct_node) {
             byproduct_node = graph.createNode({
                 obj: obj,
-                is_byproduct: true,
+                is_pure_byproduct: true,
                 selected_recipe_index: -1,
                 total_production_required: fraction(0),
                 production_required: fraction(0),
@@ -377,7 +377,7 @@ export function generateGraphPhase2(recalc_mult=false) {
 
     // Breadth-first search starting from the product
     for (const node of g_.product_node.graph.smartBreadthFirst(false)) {
-        if (node.data.is_byproduct)
+        if (node.data.is_pure_byproduct)
             continue;
 
         // Since we're doing a smart search, we know that we already visited all the target nodes.
@@ -496,7 +496,7 @@ export function generateGraphPhase2(recalc_mult=false) {
             }
         }
 
-        if (source_node.data.is_byproduct) {
+        if (source_node.data.is_pure_byproduct) {
             // For "pure" byproducts, we want to display the total production value of the byproducts.
             // Pure byproducts don't affect anything, their production can simply be updated without
             // causing recalculation of anything else
