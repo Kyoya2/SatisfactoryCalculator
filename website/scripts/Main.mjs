@@ -599,11 +599,12 @@ export function updateDisplayMultiplierAuto() {
     // Calculate the LCM of the denominators of all machines required.
     // This will yield a multiplier that, when applied, makes the "machines required" of all nodes
     // into a whole number.
-    const computed_lcm = mathjs.lcm(...map(
-        g_.product_node.graph.nodes(),
-        (node) => (node.data.isTrivial() || node.data.isPureByproduct()) ? 1 : node.data.machinesRequired().d
-    ))
-
+    let computed_lcm = fraction(1);
+    for (const node of g_.product_node.graph.nodes()) {
+        if (!node.data.isTrivial() && !node.data.isPureByproduct())
+            computed_lcm = mathjs.lcm(computed_lcm, node.data.machinesRequired().d);
+    }
+    
     g_.html_elements.displayMultiplierInput.value = computed_lcm.toString();
     updateDisplayMultiplier();
 }
