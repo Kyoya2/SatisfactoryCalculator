@@ -8,6 +8,7 @@ export default class Config {
     static #_DEFAULT_CONVEYOR_INDEX = "0";
     static #_DEFAULT_PIPELINE_INDEX = "0";
     static #_DEFAULT_DISPLAY_MULTIPLIER = "1";
+    static #_DEFAULT_SHOW_BYPRODUCTS = "1";
     static #_DEFAULT_ALTERNATE_RECIPES = "";
     static #_DEFAULT_TRIVIAL_RESOURCES = "";
 
@@ -25,6 +26,9 @@ export default class Config {
 
         /** @type {Fraction} */
         this.display_multiplier = fraction(search_params.get("displayMultiplier") ?? Config.#_DEFAULT_DISPLAY_MULTIPLIER);
+
+        /** @type {boolean} */
+        this.show_byproducts = !!parseInt(search_params.get("showByproducts") ?? Config.#_DEFAULT_SHOW_BYPRODUCTS);
 
         /** @type {Map<GameObjectId, number>} */
         this.alternate_recipes = new Map();
@@ -55,6 +59,7 @@ export default class Config {
             conveyorSpeed: this.conveyor_speed_index.toString(),
             pipelineSpeed: this.pipeline_speed_index.toString(),
             displayMultiplier: format(this.display_multiplier, { fraction: 'decimal' }),
+            showByproducts: this.show_byproducts ? "1" : "0",
             alternateRecipes: [...this.alternate_recipes.entries()].map((kv) => kv.join('=')).join(','),
             trivialResources: [...this.trivial_resources.entries()].join(','),
         });

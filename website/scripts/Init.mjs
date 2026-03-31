@@ -1,4 +1,4 @@
-import {g_, machinesRequired} from "@/Common.mjs";
+import {g_} from "@/Common.mjs";
 import {assert, formatFrac, deepFreeze} from "@/Utils.mjs";
 import Config from "@/Config.mjs";
 import game_data from "@/GameData.auto.mjs";
@@ -12,7 +12,7 @@ import elkLayouts from '@mermaid-js/layout-elk';
 import Panzoom from "@panzoom/panzoom";
 
 // Must be imported last!!!
-import {generateGraphPhase1, generateGraphPhase2, resetAlternateRecipes, updateDisplayMultiplier, updateDisplayMultiplierAuto} from "@/Main.mjs"
+import {generateGraphPhase1, generateGraphPhase2, resetAlternateRecipes, updateDisplayMultiplier, updateDisplayMultiplierAuto, toggleShowByproducts} from "@/Main.mjs"
 
 
 function initGameData() {
@@ -51,7 +51,6 @@ function initCraftableObjectsSelect() {
 
         return renderOption;
     }
-
 
     return new TomSelect(
         "#craftableItemSelect",
@@ -151,6 +150,14 @@ function initMoversSelects() {
     }
 }
 
+function initByproductsCheckbox() {
+    /** @type {HTMLInputElement} */
+    const checkbox = document.getElementById("showByproductsCheckbox");
+
+    checkbox.checked = g_.config.show_byproducts;
+    checkbox.onclick = toggleShowByproducts;
+}
+
 function initGraph() {
     mermaid.registerLayoutLoaders(elkLayouts);
     
@@ -208,10 +215,13 @@ export default function initApp() {
 
     initDisplayMultiplier();
 
+    initByproductsCheckbox();
+
     initGraph();
 
     initPanZoom();
 
     // This will trigger the generation of the graph
+    // TODO: pretty sure this will ignore the display multiplier in the URL, fix it!
     craftable_objects_select.setValue(g_.config.product_name);
 }
