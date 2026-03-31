@@ -88,11 +88,10 @@ function createNodeOverlay(node_svg_element, node) {
 
     const obj = node.data.obj();
 
-    const is_trivial = node.data.isTrivial();
     const is_pure_byproduct = node.data.isPureByproduct();
 
-    // A node can't be both trivial and a pure byproduct
-    assert(!(is_pure_byproduct && is_trivial));
+    // Pure byproducts take precedence over trivial resources
+    const is_trivial = is_pure_byproduct ? false : node.data.isTrivial();
 
     if (is_trivial || is_pure_byproduct) {
         overlay.style.backgroundColor = is_trivial ? 'lightblue' : 'lightgreen';
