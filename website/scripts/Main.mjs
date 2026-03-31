@@ -159,6 +159,7 @@ function createNodeOverlay(node_svg_element, node) {
         
         alternate_recipes_select.oninput = function(e) {
             g_.config.alternate_recipes.set(obj.id, e.target.selectedIndex);
+            g_.config.notifyChange();
             generateGraphPhase1();
         };
     }
