@@ -1,17 +1,18 @@
-import {g_, machinesRequired} from "@/Common.mjs"
+import {g_} from "@/Common.mjs";
 import {assert, formatFrac, deepFreeze} from "@/Utils.mjs";
-import Config from "@/Config.mjs"
-import game_data from "@/GameData.auto.mjs"
+import Config from "@/Config.mjs";
+import game_data from "@/GameData.auto.mjs";
 /** @import { GameObjectId, CountedItem, Recipe, CraftingObject } from "@/GameData.auto.mjs" */
 
-import TomSelect from "tom-select"
+import TomSelect from "tom-select";
 import * as mathjs from 'mathjs';
 import {fraction, Fraction} from 'mathjs';
 import mermaid from "mermaid";
 import elkLayouts from '@mermaid-js/layout-elk';
+import Panzoom from "@panzoom/panzoom";
 
 // Must be imported last!!!
-import {generateGraphPhase1, generateGraphPhase2, resetAlternateRecipes, updateDisplayMultiplier, updateDisplayMultiplierAuto} from "@/Main.mjs"
+import {generateGraphPhase1, generateGraphPhase2, resetAlternateRecipes, updateDisplayMultiplier, updateDisplayMultiplierAuto, toggleShowByproducts} from "@/Main.mjs"
 
 
 function initGameData() {
@@ -28,18 +29,22 @@ function initGameData() {
         }
     }
 
-    // Transporter speeds
-    for (const transporters of Object.values(game_data.transporters)) {
-        for (const transporter of transporters) {
-            transporter.speed = fraction(transporter.speed);
-        }
-    }
-
     // Make "game_data" immutable
     deepFreeze(game_data);
 }
 
 function initCraftableObjectsSelect() {
+    function renderOptionTemplate(class_name) {
+        function renderOption(data, escape) {
+            return `<div class="${class_name}">
+                        <span class="label">${escape(data.text)}</span>
+                        <img class="icon" src="${escape(`images/game_icons/${data.value}.png`)}" />
+                    </div>`;
+        }
+
+        return renderOption;
+    }
+
     return new TomSelect(
         "#craftableItemSelect",
         {
@@ -57,6 +62,16 @@ function initCraftableObjectsSelect() {
                 g_.config.product_name = product_name;
                 g_.config.notifyChange();
                 generateGraphPhase1(true);
+
+                // For some reason, the text box stays focused after selecting an option,
+                // which looks ugly, since it's extended vertically as long as it's selected.
+                // Deselect it!
+                this.blur();
+            },
+
+            render: {
+                option: renderOptionTemplate("product-select-option"),
+                item: renderOptionTemplate("product-select-option product-select-item")
             }
         }
     );
@@ -98,34 +113,12 @@ function initDisplayMultiplier() {
     auto_button.onclick = updateDisplayMultiplierAuto;
 }
 
-function initMoversSelects() {
-    const MOVERS = [
-        ["unlockedConveyorBeltSelect",  "conveyor_belts",   "Conveyor Belt ",   "conveyor_speed_index"],
-        ["unlockedPipelineSelect",      "pipelines",        "Pipeline ",        "pipeline_speed_index"],
-    ]
-    
-    for (const [select_id, data_name, name_prefix, config_field] of MOVERS) {
-        /** @type {HTMLSelectElement} */
-        const select_element = document.getElementById(select_id);
+function initByproductsCheckbox() {
+    /** @type {HTMLInputElement} */
+    const checkbox = document.getElementById("showByproductsCheckbox");
 
-        for (const transporter of game_data.transporters[data_name]) {
-            /** @type {string} */
-            let name = transporter.name;
-
-            // Remove prefix
-            assert(transporter.name.startsWith(name_prefix));
-            name = name.substring(name_prefix.length);
-
-            select_element.add(new Option(name));
-        }
-
-        select_element.selectedIndex = g_.config[config_field];
-        select_element.oninput = function(e) {
-            g_.config[config_field] = parseInt(e.target.selectedIndex);
-            g_.config.notifyChange();
-            generateGraphPhase2();
-        }
-    }
+    checkbox.checked = g_.config.show_byproducts;
+    checkbox.onclick = toggleShowByproducts;
 }
 
 function initGraph() {
@@ -146,6 +139,21 @@ function initGraph() {
     );
 }
 
+function initPanZoom() {
+    g_.panzoom = Panzoom(
+        g_.html_elements.graphContainer,
+        {
+            excludeClass: "panzoom-clickable",
+
+            // Without this, only the initially-visible part of the graph can be used
+            // to pan the view
+            canvas: true
+        }
+    );
+
+    g_.html_elements.panzoomGraphContainer.addEventListener('wheel', g_.panzoom.zoomWithWheel);
+}
+
 export default function initApp() {
     // This was a bug that I presumably fixed
     assert(null === g_.config, "Module already initialized");
@@ -155,7 +163,7 @@ export default function initApp() {
 
     initGameData();
 
-    const HTML_ELEMENT_NAMES = ['displayMultiplierInput', 'graphContainer', 'nodeOverlayTemplate', 'edgeOverlayTemplate'];
+    const HTML_ELEMENT_NAMES = ['displayMultiplierInput', 'graphContainer', 'panzoomGraphContainer', 'nodeOverlayTemplate', 'edgeOverlayTemplate'];
     for (const name of HTML_ELEMENT_NAMES) {
         g_.html_elements[name] = document.getElementById(name);
     }
@@ -166,12 +174,15 @@ export default function initApp() {
 
     document.getElementById("resetAlternateRecipesButton").onclick = resetAlternateRecipes;
 
-    initMoversSelects();
-
     initDisplayMultiplier();
+
+    initByproductsCheckbox();
 
     initGraph();
 
+    initPanZoom();
+
     // This will trigger the generation of the graph
+    // TODO: pretty sure this will ignore the display multiplier in the URL, fix it!
     craftable_objects_select.setValue(g_.config.product_name);
 }

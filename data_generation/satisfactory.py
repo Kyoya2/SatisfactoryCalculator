@@ -46,12 +46,6 @@ class CraftingObject(NamedTuple):
     form: str
 
 
-# Either a belt or a pipeline
-class Transporter(NamedTuple):
-    name: str
-    speed: Fraction
-
-
 def jsonify(obj):
     """Prepares the given object for serialization using JSON"""
     if isinstance(obj, Fraction):
@@ -264,37 +258,6 @@ def main(
         )
 
     #
-    # Process transporters (belts+pipelines)
-    #
-    conveyor_belts = []
-    for conveyor_belt in categorized_objects['FGBuildableConveyorBelt'].values():
-        # For some reason, the "mSpeed" value is twice as large as the actual items/minute speed.
-        speed = float(conveyor_belt['mSpeed']) / 2
-        assert speed.is_integer()
-
-        # The number of seconds it takes to move 1 item
-        speed = Fraction(60, int(speed))
-
-        conveyor_belts.append(Transporter(conveyor_belt['name'], speed))
-    conveyor_belts.sort(key=lambda b: b.speed, reverse=True)
-
-    pipelines = []
-    for pipeline in categorized_objects['FGBuildablePipeline'].values():
-        # Filter-out the pipelines that don't have indicators, since they're essentially duplicates for our purposes
-        if '_NoIndicator_' in pipeline['id']:
-            continue
-
-        flow_limit = float(pipeline['mFlowLimit'])
-        assert flow_limit.is_integer()
-
-        # The number of seconds it takes to move 1 cubic meter of liquid
-        # TODO: It might not work like this, need to check
-        speed = Fraction(1, int(flow_limit))
-
-        pipelines.append(Transporter(pipeline['name'], speed))
-    pipelines.sort(key=lambda p: p.speed, reverse=True)
-
-    #
     # Process extracted assets
     #
     if fmodel_output_dir_path is not None:
@@ -317,10 +280,6 @@ def main(
         'crafting_products': sort_by_display_name(crafting_products),
         'crafting_ingredients': sort_by_display_name(crafting_ingredients),
         'recipes': recipes,
-        'transporters': {
-            'conveyor_belts': conveyor_belts,
-            'pipelines': pipelines,
-        }
     })
     return \
 f"""/* This file is auto-generated! */
@@ -340,11 +299,6 @@ f"""/* This file is auto-generated! */
  * }}}} Recipe
  *
  * @typedef {{{{
- *      name: string,
- *      speed: Fraction
- * }}}} Transporter
- *
- * @typedef {{{{
  *      id: string,
  *      name: string,
  *      recipes: GameObjectId[],
@@ -357,11 +311,7 @@ f"""/* This file is auto-generated! */
  *      crafting_objects: Object.<string, CraftingObject>,
  *      crafting_products: GameObjectId[],
  *      crafting_ingredients: GameObjectId[],
- *      recipes: Object.<string, Recipe>,
- *      transporters: {{
- *          conveyor_belts: Transporter[],
- *          pipelines: Transporter[]
- *      }},
+ *      recipes: Object.<string, Recipe>
  *  }}}}
  */
 const game_data = {json.dumps(data, indent=4, sort_keys=True)};

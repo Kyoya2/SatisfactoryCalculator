@@ -1,3 +1,4 @@
+/* === General === */
 html, body {
     margin: 0;
     height: 100%;
@@ -10,66 +11,79 @@ html, body {
     width: 100vw;
 }
 
-#sidebar {
-  width: 400px;
-  padding: 5px;
-  overflow: auto; /* independent scroll */
-}
+/* === Sidebar === */
+    #sidebar {
+        width: 400px;
+        padding: 5px;
+        overflow: auto; /* independent scroll */
+    }
 
-#trivialResourcesTableContainer {
-    width: 100%;
-    max-height: 200px; /* Set your desired height */
-    overflow-y: auto;  /* Enable vertical scrolling */
-    overflow-x: auto;  /* Enable horizontal scrolling if needed */
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
+    .product-select-option {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-#graphContainer {
-    flex: 1;
-    border-style: solid;
-    position: relative;
-    display: inline-block;
-}
+    .product-select-option .icon {
+        width: 24px;
+        height: 24px;
+        float: right;
+    }
 
-.node-overlay {
-    height: 100%;
-    width: 100%;
-    margin: 0px;
-    padding: 2px;
-    border: 3px solid black;
-    box-sizing: border-box;
-    background-color: wheat;
-}
+    .product-select-item {
+        width: 100%;
+    }
 
-.node-alternate-recipes {
-    display: flex;
-    width: 100%;
-}
+/* === Graph === */
+    #panzoomGraphContainer {
+        flex: 1;
+        border-left: 2px solid;
+        position: relative;
+        display: block;
+        float: right;
+        overflow: auto;
+    }
 
-.node-alternate-recipes > .recipe-label {
-    white-space: nowrap;
-    flex-shrink: 0;
-}
+    /* === Nodes === */
+        .node-overlay {
+            height: 100%;
+            width: 100%;
+            margin: 0px;
+            padding: 2px;
+            border: 3px solid black;
+            box-sizing: border-box;
+            background-color: wheat;
+        }
 
-.node-alternate-recipes > select {
-    flex: 0 1 auto; /* Don't grow, do shrink, base on content */
-    min-width: 0;
-    max-width: 100%;
-    width: auto;
-}
+        .node-alternate-recipes {
+            display: flex;
+            width: 100%;
+        }
 
-.node-icon {
-    height: 48px;
-    width: 48px;
-    float: right;
-}
+        .node-alternate-recipes > .recipe-label {
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
 
-.edge-overlay {
-    height: 100%;
-    width: 100%;
-    margin: 0px;
-    padding: 2px;
-    box-sizing: border-box;
-    background-color: rgb(240, 240, 240);
-}
+        .node-alternate-recipes > select {
+            flex: 0 1 auto; /* Don't grow, do shrink, base on content */
+            min-width: 0;
+            max-width: 100%;
+            width: auto;
+        }
+
+        .node-icon {
+            height: 48px;
+            width: 48px;
+            float: right;
+        }
+
+    /* === Edges === */
+        .edge-overlay {
+            height: 100%;
+            width: 100%;
+            margin: 0px;
+            padding: 2px;
+            box-sizing: border-box;
+            background-color: rgb(240, 240, 240);
+        }
