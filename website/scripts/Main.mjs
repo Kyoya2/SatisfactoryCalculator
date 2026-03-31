@@ -493,7 +493,7 @@ export function generateGraphPhase2(recalc_mult=false) {
         // Recalculate fractions
         if (modified) {
             for (const [parent_node, data] of source_node.blinks()) {
-                if (data.is_byproduct)
+                if (!data.is_byproduct)
                     continue
 
                 data.total_fraction = mathjs.divide(data.production_required, total_byproduct_prod);
