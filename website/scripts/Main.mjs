@@ -23,6 +23,7 @@ import {fraction, Fraction} from 'mathjs';
 - Don't display fractions when they're 1/1.
 - When handling byproducts, it's possible to get negative values. When an ingredient  is sufficiently produced as a
   byproduct, and there's no need to manually produce it.
+- "Superposition Oscillator" doesn't work with byproducts.
 */
 
 
