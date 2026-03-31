@@ -575,6 +575,16 @@ function updateOverlay() {
     }
 }
 
+/**
+ * @param {string} product_name - the name of the new product
+ * @param {boolean} recalc_mult - Whether the display multiplier should be recalculated
+ */
+export function updateSelectedProduct(product_name, recalc_mult) {
+    g_.config.product_name = product_name;
+    g_.config.notifyChange();
+    generateGraphPhase1(recalc_mult);
+}
+
 export function resetAlternateRecipes() {
     // Re-render only if a non-alternate recipe is currently selected
     const should_re_render_graph = any(
@@ -604,7 +614,7 @@ export function updateDisplayMultiplierAuto() {
         if (!node.data.isTrivial() && !node.data.isPureByproduct())
             computed_lcm = mathjs.lcm(computed_lcm, node.data.machinesRequired().d);
     }
-    
+
     g_.html_elements.displayMultiplierInput.value = computed_lcm.toString();
     updateDisplayMultiplier();
 }

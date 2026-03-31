@@ -12,7 +12,7 @@ import elkLayouts from '@mermaid-js/layout-elk';
 import Panzoom from "@panzoom/panzoom";
 
 // Must be imported last!!!
-import {generateGraphPhase1, generateGraphPhase2, resetAlternateRecipes, updateDisplayMultiplier, updateDisplayMultiplierAuto, toggleShowByproducts} from "@/Main.mjs"
+import {generateGraphPhase1, generateGraphPhase2, updateSelectedProduct, resetAlternateRecipes, updateDisplayMultiplier, updateDisplayMultiplierAuto, toggleShowByproducts} from "@/Main.mjs"
 
 
 function initGameData() {
@@ -59,9 +59,7 @@ function initCraftableObjectsSelect() {
                 if ("" == product_name)
                     return;
 
-                g_.config.product_name = product_name;
-                g_.config.notifyChange();
-                generateGraphPhase1(true);
+                updateSelectedProduct(product_name, true);
 
                 // For some reason, the text box stays focused after selecting an option,
                 // which looks ugly, since it's extended vertically as long as it's selected.
@@ -182,7 +180,7 @@ export default function initApp() {
 
     initPanZoom();
 
-    // This will trigger the generation of the graph
-    // TODO: pretty sure this will ignore the display multiplier in the URL, fix it!
-    craftable_objects_select.setValue(g_.config.product_name);
+    // Generate the graph
+    craftable_objects_select.setValue(g_.config.product_name, true);
+    updateSelectedProduct(g_.config.product_name, false);
 }
