@@ -261,22 +261,24 @@ function generateBaseGraph(product_name) {
                 );
             }
 
-            // Process byproducts of the selected recipe
-            for (const [byproduct_id, amount] of Object.entries(selected_recipe.products)) {
-                if (product_id == byproduct_id)
-                    continue;
+            if (g_.config.show_byproducts) {
+                // Process byproducts of the selected recipe
+                for (const [byproduct_id, amount] of Object.entries(selected_recipe.products)) {
+                    if (product_id == byproduct_id)
+                        continue;
 
-                let byproduct_producers = byproducts.get(byproduct_id);
-                if (undefined === byproduct_producers) {
-                    byproduct_producers = new Map();
-                    byproducts.set(byproduct_id, byproduct_producers);
+                    let byproduct_producers = byproducts.get(byproduct_id);
+                    if (undefined === byproduct_producers) {
+                        byproduct_producers = new Map();
+                        byproducts.set(byproduct_id, byproduct_producers);
+                    }
+
+                    // Since we iterate over each product once, it shouldn't yet be registered
+                    // as a producer of the current byproduct
+                    assert(!byproduct_producers.has(product_id));
+
+                    byproduct_producers.set(product_id, mathjs.divide(amount, product_amount));
                 }
-
-                // Since we iterate over each product once, it shouldn't yet be registered
-                // as a producer of the current byproduct
-                assert(!byproduct_producers.has(product_id));
-
-                byproduct_producers.set(product_id, mathjs.divide(amount, product_amount));
             }
         }
 
@@ -605,6 +607,16 @@ export function updateDisplayMultiplierAuto() {
 
     g_.html_elements.displayMultiplierInput.value = computed_lcm.toString();
     updateDisplayMultiplier();
+}
+
+/** @param {PointerEvent} e */
+export function toggleShowByproducts(e) {
+    g_.config.show_byproducts = e.target.checked;
+    g_.config.notifyChange();
+
+    // Re-generate the graph, unless box was unchcked AND current graph didn't have byproducts.
+    if (e.target.checked || any(g_.product_node.graph.links(), (edge) => edge.data.is_byproduct))
+        generateGraphPhase1();
 }
 
 // Must be last

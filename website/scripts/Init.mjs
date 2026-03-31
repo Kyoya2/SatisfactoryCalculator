@@ -12,7 +12,7 @@ import elkLayouts from '@mermaid-js/layout-elk';
 import Panzoom from "@panzoom/panzoom";
 
 // Must be imported last!!!
-import {generateGraphPhase1, generateGraphPhase2, resetAlternateRecipes, updateDisplayMultiplier, updateDisplayMultiplierAuto} from "@/Main.mjs"
+import {generateGraphPhase1, generateGraphPhase2, resetAlternateRecipes, updateDisplayMultiplier, updateDisplayMultiplierAuto, toggleShowByproducts} from "@/Main.mjs"
 
 
 function initGameData() {
@@ -150,6 +150,14 @@ function initMoversSelects() {
     }
 }
 
+function initByproductsCheckbox() {
+    /** @type {HTMLInputElement} */
+    const checkbox = document.getElementById("showByproductsCheckbox");
+
+    checkbox.checked = g_.config.show_byproducts;
+    checkbox.onclick = toggleShowByproducts;
+}
+
 function initGraph() {
     mermaid.registerLayoutLoaders(elkLayouts);
     
@@ -206,6 +214,8 @@ export default function initApp() {
     initMoversSelects();
 
     initDisplayMultiplier();
+
+    initByproductsCheckbox();
 
     initGraph();
 
