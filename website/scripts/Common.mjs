@@ -87,8 +87,10 @@ export class SCNode {
     /** @returns {CraftingObject} */
     obj() { return this._obj; }
 
+    /** @returns {boolean} */
     isTrivial() { return g_.config.trivial_resources.has(this._obj.id); }
 
+    /** @returns {boolean} */
     isPureByproduct() { return this._is_pure_byproduct; }
 
     /** @returns {string[]} */

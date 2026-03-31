@@ -16,6 +16,17 @@ import * as mathjs from 'mathjs';
 import {fraction, Fraction} from 'mathjs';
 
 
+/* TODOs:
+- Add getters and setters to everything in "Config" to remove the need to call "notifyChange".
+- "generateGraphPhase1" assumes that the SVG elements are generated in the same order that they are specified in the
+   mermaid input. Check this assumption!
+- Don't display fractions when they're 1/1.
+- When handling byproducts, it's possible to get negative values. When an ingredient  is sufficiently produced as a
+  byproduct, and there's no need to manually produce it.
+- "Superposition Oscillator" doesn't work with byproducts.
+*/
+
+
 /**
  * Returns the number of "lines" that should be reserved for a node overlay
  * @param {SCNode} node 
@@ -149,6 +160,7 @@ function createNodeOverlay(node_svg_element, node) {
         
         alternate_recipes_select.oninput = function(e) {
             g_.config.alternate_recipes.set(obj.id, e.target.selectedIndex);
+            g_.config.notifyChange();
             generateGraphPhase1();
         };
     }
@@ -324,8 +336,6 @@ function generateBaseGraph(product_name) {
 export async function generateGraphPhase1(recalc_mult=false) {
     g_.product_node = generateBaseGraph(g_.config.product_name);
 
-    // TODO: this function relies on the assumption that the SVG elements appear in the order that
-    //       they were declared in the Mermaid string. Check this!
     const [graph_mermaid, ordered_nodes, ordered_edges] = toMermaid(g_.product_node.graph, 2);
     const render_result = await mermaid.render('graphSvg', graph_mermaid);
 
@@ -391,14 +401,11 @@ export function generateGraphPhase2(recalc_mult=false) {
         node.data.production_required = node.data.total_production_required;
 
         for (const [target_node, data] of node.flinks()) {
-            if (data.is_byproduct) {
-                // TODO: There's no reason to display the "total_fraction" of byproducts to the user, since it's always 1.
-                // Additionally, don't display the fraction if it's 1/1 (even for non-byproducts).
-                data.total_fraction = fraction(1);
-            } else {
-                assert(0 != node.data.total_production_required.n);
-                data.total_fraction = mathjs.divide(data.production_required, node.data.total_production_required);
-            }
+            if (data.is_byproduct) 
+                continue;
+
+            assert(0 != node.data.total_production_required.n);
+            data.total_fraction = mathjs.divide(data.production_required, node.data.total_production_required);
         }
 
         if (!node.data.isTrivial()) {
@@ -488,7 +495,7 @@ export function generateGraphPhase2(recalc_mult=false) {
         // Recalculate fractions
         if (modified) {
             for (const [parent_node, data] of source_node.blinks()) {
-                if (data.is_byproduct)
+                if (!data.is_byproduct)
                     continue
 
                 data.total_fraction = mathjs.divide(data.production_required, total_byproduct_prod);
@@ -521,10 +528,6 @@ export function generateGraphPhase2(recalc_mult=false) {
 
         return modified;
     }
-
-    // TODO: add different color to byproduct nodes *and edges*
-    // TODO: it's possible to get negative values using this method. When an ingredient
-    //       is sufficiently produced as a byproduct, and there's no need to manually produce it
 
     // Updating byproducts may require multiple iterations over the graph.
     // Keep iterating until we're able to complete an iteration without making changes perform an iteration with no modifications.
@@ -575,6 +578,16 @@ function updateOverlay() {
     }
 }
 
+/**
+ * @param {string} product_name - the name of the new product
+ * @param {boolean} recalc_mult - Whether the display multiplier should be recalculated
+ */
+export function updateSelectedProduct(product_name, recalc_mult) {
+    g_.config.product_name = product_name;
+    g_.config.notifyChange();
+    generateGraphPhase1(recalc_mult);
+}
+
 export function resetAlternateRecipes() {
     // Re-render only if a non-alternate recipe is currently selected
     const should_re_render_graph = any(
@@ -599,10 +612,11 @@ export function updateDisplayMultiplierAuto() {
     // Calculate the LCM of the denominators of all machines required.
     // This will yield a multiplier that, when applied, makes the "machines required" of all nodes
     // into a whole number.
-    const computed_lcm = mathjs.lcm(...map(
-        g_.product_node.graph.nodes(),
-        (node) => (node.data.isTrivial() || node.data.isPureByproduct()) ? 1 : node.data.machinesRequired().d
-    ))
+    let computed_lcm = fraction(1);
+    for (const node of g_.product_node.graph.nodes()) {
+        if (!node.data.isTrivial() && !node.data.isPureByproduct())
+            computed_lcm = mathjs.lcm(computed_lcm, node.data.machinesRequired().d);
+    }
 
     g_.html_elements.displayMultiplierInput.value = computed_lcm.toString();
     updateDisplayMultiplier();

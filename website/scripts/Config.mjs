@@ -52,7 +52,6 @@ export default class Config {
         this.notifyChange();
     }
 
-    // TODO: add getters and setters to everything to make this automatic
     notifyChange() {
         const search_params = new URLSearchParams({
             productName: this.product_name,
