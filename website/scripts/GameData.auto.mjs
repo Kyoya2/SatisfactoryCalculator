@@ -15,11 +15,6 @@
  * }} Recipe
  *
  * @typedef {{
- *      name: string,
- *      speed: Fraction
- * }} Transporter
- *
- * @typedef {{
  *      id: string,
  *      name: string,
  *      recipes: GameObjectId[],
@@ -32,11 +27,7 @@
  *      crafting_objects: Object.<string, CraftingObject>,
  *      crafting_products: GameObjectId[],
  *      crafting_ingredients: GameObjectId[],
- *      recipes: Object.<string, Recipe>,
- *      transporters: {
- *          conveyor_belts: Transporter[],
- *          pipelines: Transporter[]
- *      },
+ *      recipes: Object.<string, Recipe>
  *  }}
  */
 const game_data = {
@@ -24409,68 +24400,6 @@ const game_data = {
                 }
             }
         }
-    },
-    "transporters": {
-        "conveyor_belts": [
-            {
-                "name": "Conveyor Belt Mk.1",
-                "speed": {
-                    "d": 1,
-                    "n": 1
-                }
-            },
-            {
-                "name": "Conveyor Belt Mk.2",
-                "speed": {
-                    "d": 2,
-                    "n": 1
-                }
-            },
-            {
-                "name": "Conveyor Belt Mk.3",
-                "speed": {
-                    "d": 9,
-                    "n": 2
-                }
-            },
-            {
-                "name": "Conveyor Belt Mk.4",
-                "speed": {
-                    "d": 8,
-                    "n": 1
-                }
-            },
-            {
-                "name": "Conveyor Belt Mk.5",
-                "speed": {
-                    "d": 13,
-                    "n": 1
-                }
-            },
-            {
-                "name": "Conveyor Belt Mk.6",
-                "speed": {
-                    "d": 20,
-                    "n": 1
-                }
-            }
-        ],
-        "pipelines": [
-            {
-                "name": "Pipeline Mk.1",
-                "speed": {
-                    "d": 5,
-                    "n": 1
-                }
-            },
-            {
-                "name": "Pipeline Mk.2",
-                "speed": {
-                    "d": 10,
-                    "n": 1
-                }
-            }
-        ]
     }
 };
 export default game_data;

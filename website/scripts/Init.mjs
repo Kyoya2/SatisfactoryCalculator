@@ -29,13 +29,6 @@ function initGameData() {
         }
     }
 
-    // Transporter speeds
-    for (const transporters of Object.values(game_data.transporters)) {
-        for (const transporter of transporters) {
-            transporter.speed = fraction(transporter.speed);
-        }
-    }
-
     // Make "game_data" immutable
     deepFreeze(game_data);
 }
@@ -120,36 +113,6 @@ function initDisplayMultiplier() {
     auto_button.onclick = updateDisplayMultiplierAuto;
 }
 
-function initMoversSelects() {
-    const MOVERS = [
-        ["unlockedConveyorBeltSelect",  "conveyor_belts",   "Conveyor Belt ",   "conveyor_speed_index"],
-        ["unlockedPipelineSelect",      "pipelines",        "Pipeline ",        "pipeline_speed_index"],
-    ]
-    
-    for (const [select_id, data_name, name_prefix, config_field] of MOVERS) {
-        /** @type {HTMLSelectElement} */
-        const select_element = document.getElementById(select_id);
-
-        for (const transporter of game_data.transporters[data_name]) {
-            /** @type {string} */
-            let name = transporter.name;
-
-            // Remove prefix
-            assert(transporter.name.startsWith(name_prefix));
-            name = name.substring(name_prefix.length);
-
-            select_element.add(new Option(name));
-        }
-
-        select_element.selectedIndex = g_.config[config_field];
-        select_element.oninput = function(e) {
-            g_.config[config_field] = parseInt(e.target.selectedIndex);
-            g_.config.notifyChange();
-            generateGraphPhase2();
-        }
-    }
-}
-
 function initByproductsCheckbox() {
     /** @type {HTMLInputElement} */
     const checkbox = document.getElementById("showByproductsCheckbox");
@@ -210,8 +173,6 @@ export default function initApp() {
     initDefaultTrivialResources();
 
     document.getElementById("resetAlternateRecipesButton").onclick = resetAlternateRecipes;
-
-    initMoversSelects();
 
     initDisplayMultiplier();
 
