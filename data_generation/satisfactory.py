@@ -103,8 +103,8 @@ def _parse_crafting_obj_list(all_objects, item_list: str) -> CountedItems:
 
         amount = Fraction(amount)
 
-        # For some reason, liquid amounts are multiplied by 1000 in the game data
-        if 'RF_LIQUID' == all_objects[item_id]['mForm']:
+        # For some reason, liquid and gas amounts are multiplied by 1000 in the game data
+        if all_objects[item_id]['mForm'] in ('RF_LIQUID', 'RF_GAS'):
             amount /= 1000
 
         result[item_id] = amount

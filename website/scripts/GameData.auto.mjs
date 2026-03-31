@@ -1961,7 +1961,7 @@ const game_data = {
                 },
                 "Desc_QuantumEnergy_C": {
                     "d": 1,
-                    "n": 24000
+                    "n": 24
                 },
                 "Desc_QuantumOscillator_C": {
                     "d": 1,
@@ -1984,7 +1984,7 @@ const game_data = {
                 },
                 "Desc_DarkEnergy_C": {
                     "d": 1,
-                    "n": 24000
+                    "n": 24
                 }
             }
         },
@@ -2598,7 +2598,7 @@ const game_data = {
                 },
                 "Desc_NitrogenGas_C": {
                     "d": 1,
-                    "n": 24000
+                    "n": 24
                 }
             },
             "is_alternate": true,
@@ -2760,7 +2760,7 @@ const game_data = {
             "ingredients": {
                 "Desc_DarkEnergy_C": {
                     "d": 1,
-                    "n": 10000
+                    "n": 10
                 }
             },
             "is_alternate": true,
@@ -2783,7 +2783,7 @@ const game_data = {
             "ingredients": {
                 "Desc_DarkEnergy_C": {
                     "d": 1,
-                    "n": 5000
+                    "n": 5
                 },
                 "Desc_TimeCrystal_C": {
                     "d": 1,
@@ -3625,7 +3625,7 @@ const game_data = {
                 },
                 "Desc_IonizedFuel_C": {
                     "d": 1,
-                    "n": 10000
+                    "n": 10
                 }
             }
         },
@@ -4333,7 +4333,7 @@ const game_data = {
                 },
                 "Desc_NitrogenGas_C": {
                     "d": 1,
-                    "n": 3000
+                    "n": 3
                 },
                 "Desc_Sulfur_C": {
                     "d": 1,
@@ -4352,7 +4352,7 @@ const game_data = {
                 },
                 "Desc_RocketFuel_C": {
                     "d": 1,
-                    "n": 6000
+                    "n": 6
                 }
             }
         },
@@ -7447,7 +7447,7 @@ const game_data = {
                 },
                 "Desc_NitrogenGas_C": {
                     "d": 1,
-                    "n": 25000
+                    "n": 25
                 },
                 "Desc_Rubber_C": {
                     "d": 1,
@@ -7649,7 +7649,7 @@ const game_data = {
             "products": {
                 "Desc_DarkEnergy_C": {
                     "d": 1,
-                    "n": 10000
+                    "n": 10
                 }
             }
         },
@@ -7661,7 +7661,7 @@ const game_data = {
             "ingredients": {
                 "Desc_DarkEnergy_C": {
                     "d": 1,
-                    "n": 5000
+                    "n": 5
                 },
                 "Desc_Diamond_C": {
                     "d": 1,
@@ -8416,7 +8416,7 @@ const game_data = {
                 },
                 "Desc_QuantumEnergy_C": {
                     "d": 1,
-                    "n": 20000
+                    "n": 20
                 }
             },
             "is_alternate": false,
@@ -8427,7 +8427,7 @@ const game_data = {
             "products": {
                 "Desc_DarkEnergy_C": {
                     "d": 1,
-                    "n": 20000
+                    "n": 20
                 },
                 "Desc_FicsoniumFuelRod_C": {
                     "d": 1,
@@ -8443,7 +8443,7 @@ const game_data = {
             "ingredients": {
                 "Desc_DarkEnergy_C": {
                     "d": 1,
-                    "n": 20000
+                    "n": 20
                 },
                 "Desc_PlutoniumWaste_C": {
                     "d": 1,
@@ -9352,7 +9352,7 @@ const game_data = {
                 },
                 "Desc_NitrogenGas_C": {
                     "d": 1,
-                    "n": 25000
+                    "n": 25
                 }
             },
             "is_alternate": false,
@@ -11053,7 +11053,7 @@ const game_data = {
                 },
                 "Desc_RocketFuel_C": {
                     "d": 1,
-                    "n": 16000
+                    "n": 16
                 }
             },
             "is_alternate": false,
@@ -11068,7 +11068,7 @@ const game_data = {
                 },
                 "Desc_IonizedFuel_C": {
                     "d": 1,
-                    "n": 16000
+                    "n": 16
                 }
             }
         },
@@ -11926,7 +11926,7 @@ const game_data = {
                 },
                 "Desc_NitrogenGas_C": {
                     "d": 1,
-                    "n": 12000
+                    "n": 12
                 },
                 "Desc_Water_C": {
                     "d": 1,
@@ -11968,7 +11968,7 @@ const game_data = {
             "products": {
                 "Desc_NitrogenGas_C": {
                     "d": 1,
-                    "n": 12000
+                    "n": 12
                 }
             }
         },
@@ -11995,7 +11995,7 @@ const game_data = {
             "products": {
                 "Desc_NitrogenGas_C": {
                     "d": 1,
-                    "n": 12000
+                    "n": 12
                 }
             }
         },
@@ -12465,7 +12465,7 @@ const game_data = {
                 },
                 "Desc_IonizedFuel_C": {
                     "d": 1,
-                    "n": 4000
+                    "n": 4
                 }
             },
             "is_alternate": false,
@@ -12519,7 +12519,7 @@ const game_data = {
                 },
                 "Desc_NitrogenGas_C": {
                     "d": 1,
-                    "n": 4000
+                    "n": 4
                 }
             },
             "is_alternate": false,
@@ -12573,7 +12573,7 @@ const game_data = {
                 },
                 "Desc_RocketFuel_C": {
                     "d": 1,
-                    "n": 2000
+                    "n": 2
                 }
             },
             "is_alternate": false,
@@ -14304,7 +14304,7 @@ const game_data = {
             "products": {
                 "Desc_QuantumEnergy_C": {
                     "d": 1,
-                    "n": 10000
+                    "n": 10
                 }
             }
         },
@@ -17982,7 +17982,7 @@ const game_data = {
                 },
                 "Desc_RocketFuel_C": {
                     "d": 1,
-                    "n": 10000
+                    "n": 10
                 }
             }
         },
@@ -19358,7 +19358,7 @@ const game_data = {
             "ingredients": {
                 "Desc_QuantumEnergy_C": {
                     "d": 1,
-                    "n": 25000
+                    "n": 25
                 },
                 "Desc_QuantumOscillator_C": {
                     "d": 1,
@@ -19381,7 +19381,7 @@ const game_data = {
             "products": {
                 "Desc_DarkEnergy_C": {
                     "d": 1,
-                    "n": 25000
+                    "n": 25
                 },
                 "Desc_SpaceElevatorPart_12_C": {
                     "d": 1,
@@ -21089,7 +21089,7 @@ const game_data = {
                 },
                 "Desc_QuantumEnergy_C": {
                     "d": 1,
-                    "n": 25000
+                    "n": 25
                 }
             },
             "is_alternate": false,
@@ -21100,7 +21100,7 @@ const game_data = {
             "products": {
                 "Desc_DarkEnergy_C": {
                     "d": 1,
-                    "n": 25000
+                    "n": 25
                 },
                 "Desc_QuantumOscillator_C": {
                     "d": 1,
@@ -21120,7 +21120,7 @@ const game_data = {
                 },
                 "Desc_QuantumEnergy_C": {
                     "d": 1,
-                    "n": 12000
+                    "n": 12
                 },
                 "Desc_QuartzCrystal_C": {
                     "d": 1,
@@ -21143,7 +21143,7 @@ const game_data = {
                 },
                 "Desc_DarkEnergy_C": {
                     "d": 1,
-                    "n": 12000
+                    "n": 12
                 }
             }
         },
@@ -21186,7 +21186,7 @@ const game_data = {
                 },
                 "Desc_QuantumEnergy_C": {
                     "d": 1,
-                    "n": 25000
+                    "n": 25
                 },
                 "Desc_TimeCrystal_C": {
                     "d": 1,
@@ -21201,7 +21201,7 @@ const game_data = {
             "products": {
                 "Desc_DarkEnergy_C": {
                     "d": 1,
-                    "n": 25000
+                    "n": 25
                 },
                 "Desc_TemporalProcessor_C": {
                     "d": 1,
@@ -21720,7 +21720,7 @@ const game_data = {
                 },
                 "Desc_IonizedFuel_C": {
                     "d": 1,
-                    "n": 4000
+                    "n": 4
                 }
             }
         },
@@ -21774,7 +21774,7 @@ const game_data = {
                 },
                 "Desc_NitrogenGas_C": {
                     "d": 1,
-                    "n": 4000
+                    "n": 4
                 }
             }
         },
@@ -21855,7 +21855,7 @@ const game_data = {
                 },
                 "Desc_RocketFuel_C": {
                     "d": 1,
-                    "n": 2000
+                    "n": 2
                 }
             }
         },
