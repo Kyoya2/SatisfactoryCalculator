@@ -15,7 +15,6 @@ import mermaid from "mermaid";
 import * as mathjs from 'mathjs';
 import {fraction, Fraction} from 'mathjs';
 
-
 /* TODOs:
 - Add getters and setters to everything in "Config" to remove the need to call "notifyChange".
 - "generateGraphPhase1" assumes that the SVG elements are generated in the same order that they are specified in the
@@ -82,6 +81,84 @@ function toMermaid(graph, stroke_width) {
     result += `linkStyle default stroke-width:${stroke_width}px;`;
 
     return [result, ordered_nodes, ordered_edges];
+}
+
+const FRACTION_CHARACTERS_FILTER_REGEX = /[^\d.\/()]/g;
+
+/**
+ * @param {HTMLLabelElement} editable_multiplier_label 
+ */
+function initEditableMultiplierLabel(editable_multiplier_label) {
+    editable_multiplier_label.contentEditable = "plaintext-only";
+
+    let current_val = null;
+
+    /** @param {InputEvent} e */
+    editable_multiplier_label.oninput = function(e) {
+        // Filter out characters that can't be used to represent a fraction
+        // Note: Each time the "textContent" is set, the text cursor is reset to the beginning, even if
+        //       the same value is written. To prevent that, we set it only if it was changed, i.e., only
+        //       if an invalid character was entered. 
+        const new_content = e.target.textContent.replace(FRACTION_CHARACTERS_FILTER_REGEX, "");
+        if (new_content != e.target.textContent)
+            e.target.textContent = new_content;
+    }
+
+    /** @param {KeyboardEvent} e */
+    editable_multiplier_label.onkeydown = function(e) {
+        console.log(e.key);
+
+        // Put the label out of focus when pressing escape or enter
+        if (("Enter" == e.key) || ("Escape" == e.key)) {
+
+            // When enter is pressed, calculate the display multiplier that's required for setting the current label
+            // to the value that was entered. Then, apply this display multiplier to the entire graph.
+            if ("Enter" == e.key) {
+                let new_value = null;
+
+                // Parsing user input as a fraction, expect parsing errors.
+                try { new_value = fraction(e.target.textContent); } catch (err) {}
+
+                // Will be null if the user has entered an invalid fraction
+                if (null !== new_value) {
+                    const prev_value = fraction(current_val);
+                    const mult_mult = mathjs.divide(new_value, prev_value);
+
+                    const new_display_mult = mathjs.multiply(g_.config.display_multiplier, mult_mult);
+
+                    // Disallow the value 0, since it will break the next calculation, because it will attempt
+                    // to divide the new value by zero.
+                    if (0 != new_display_mult.n) {
+                        // Need to update this after the next blur (which will happen now), because our "blur" handler
+                        // resets the value that's currently being edited.
+                        e.target.addEventListener(
+                            "blur",
+                            (e) => { updateDisplayMultiplier(new_display_mult); },
+                            {once: true}
+                        );
+                    }
+                }
+            }
+
+            e.preventDefault();
+            e.target.blur();
+        }
+    }
+
+    /** @param {FocusEvent} e */
+    editable_multiplier_label.onfocus = function(e) { current_val = e.target.textContent; }
+
+    editable_multiplier_label.addEventListener(
+        "blur",
+        /** @param {FocusEvent} e */
+        (e) => {
+            window.getSelection().removeAllRanges();
+
+            // Restore the content to what it was, because any change should be reflected in the global
+            // display multiplier, and not here.
+            e.target.textContent = current_val;
+        }
+    );
 }
 
 /**
@@ -368,6 +445,10 @@ export async function generateGraphPhase1(recalc_mult=false) {
         createEdgeOverlay(edge_label_svg_elements[i], edge_path_svg_elements[i], ordered_edges[i]);
     }
 
+    for (const editable_multiplier_label of graph_svg.querySelectorAll(".editable-multiplier-label")) {
+        initEditableMultiplierLabel(editable_multiplier_label);
+    }
+
     // Reset the pan and zoom
     g_.panzoom.reset({ animate: false });
 
@@ -565,7 +646,7 @@ function applyDisplayMultiplier(frac) {
 function updateOverlay() {
     const graph = g_.product_node.graph;
     for (const node of graph.nodes()) {
-        node.data.html.querySelector('.production-rate-label').textContent = `${formatFrac(applyDisplayMultiplier(node.data.productionPerMinute()), false)}/m`;
+        node.data.html.querySelector('.production-rate-label').textContent = formatFrac(applyDisplayMultiplier(node.data.productionPerMinute()), false);
 
         if (!node.data.isTrivial() && !node.data.isPureByproduct()) {
             node.data.html.querySelector('.machines-required-label').textContent = formatFrac(applyDisplayMultiplier(node.data.machinesRequired()), false);
@@ -574,7 +655,7 @@ function updateOverlay() {
 
     for (const edge of graph.links()) {
         edge.data.html.querySelector('.edge-ratio-label').textContent = formatFrac(edge.data.total_fraction);
-        edge.data.html.querySelector('.edge-production-label').textContent = `${formatFrac(applyDisplayMultiplier(mathjs.multiply(edge.data.production_required, 60)), false)}/m`;
+        edge.data.html.querySelector('.edge-production-label').textContent = formatFrac(applyDisplayMultiplier(mathjs.multiply(edge.data.production_required, 60)), false);
     }
 }
 
@@ -602,8 +683,17 @@ export function resetAlternateRecipes() {
         generateGraphPhase1();
 }
 
-export function updateDisplayMultiplier() {
-    g_.config.display_multiplier = fraction(g_.html_elements.displayMultiplierInput.value);
+/**
+ * @param {Fraction=} new_value 
+ */
+export function updateDisplayMultiplier(new_value) {
+    if (undefined === new_value) {
+        new_value = fraction(g_.html_elements.displayMultiplierInput.value);
+    } else {
+        g_.html_elements.displayMultiplierInput.value = formatFrac(new_value, true, true);
+    }
+
+    g_.config.display_multiplier = fraction(new_value);
     g_.config.notifyChange();
     updateOverlay();
 }
@@ -618,8 +708,7 @@ export function updateDisplayMultiplierAuto() {
             computed_lcm = mathjs.lcm(computed_lcm, node.data.machinesRequired().d);
     }
 
-    g_.html_elements.displayMultiplierInput.value = computed_lcm.toString();
-    updateDisplayMultiplier();
+    updateDisplayMultiplier(computed_lcm);
 }
 
 /** @param {PointerEvent} e */

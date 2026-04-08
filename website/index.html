@@ -4,6 +4,12 @@
         <meta charset="UTF-8" />
         <title>Satisfactory Calculator</title>
 
+        <!-- favicon stuff -->
+        <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+        <link rel="manifest" href="favicon/site.webmanifest">
+
         <link rel="stylesheet" href="style.css">
         <link href="https://cdn.jsdelivr.net/npm/tom-select@2.5.1/dist/css/tom-select.css" rel="stylesheet">
     </head>
@@ -51,7 +57,7 @@
         </div>
 
         <template id="nodeOverlayTemplate"><div class="node-overlay">
-            <label class="node-item-name editable-label"></label>
+            <label class="node-item-name"></label>
             <img class="node-icon"/>
             <br/><br/>
 
@@ -60,11 +66,11 @@
                 <select class="panzoom-clickable"></select><br>
             </div>
 
-            <label>Production:&nbsp;</label><label class="production-rate-label editable-label"></label><br/>
+            <label>Production:&nbsp;</label><label class="production-rate-label editable-multiplier-label panzoom-clickable"></label><label>/m</label><br/>
 
             <div class="machines-required-container">
                 <label>Machines required:</label>
-                <label class="machines-required-label editable-label"></label>
+                <label class="machines-required-label editable-multiplier-label panzoom-clickable"></label>
                 <br/>
             </div>
 
@@ -75,9 +81,9 @@
         </div></template>
 
         <template id="edgeOverlayTemplate"><div class="edge-overlay">
-            <label class="edge-ratio-label editable-label"></label>
+            <label class="edge-ratio-label"></label>
             <br/>
-            <label class="edge-production-label editable-label"></label>
+            <label class="edge-production-label editable-multiplier-label panzoom-clickable"></label><label>/m</label>
         </div></template>
         
         <script type="module">import "@/Main.mjs";</script>
