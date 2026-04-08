@@ -44,6 +44,10 @@ html, body {
         overflow: auto;
     }
 
+    .editable-multiplier-label:hover {
+        cursor: text;
+    }
+
     /* === Nodes === */
         .node-overlay {
             height: 100%;
