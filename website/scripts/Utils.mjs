@@ -100,7 +100,10 @@ export function fractionMax(a, b) {
  * @param {boolean} as_ratio?
  * @returns {string}
  */
-export function formatFrac(frac, as_ratio=true) {
+export function formatFrac(frac, as_ratio=true, opt_denom=false) {
+    if (as_ratio && opt_denom && (1 == frac.d))
+        return frac.n.toString();
+    
     return format(frac, { fraction: as_ratio ? 'ratio' : 'decimal' });
 }
 

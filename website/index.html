@@ -51,7 +51,7 @@
         </div>
 
         <template id="nodeOverlayTemplate"><div class="node-overlay">
-            <label class="node-item-name editable-label"></label>
+            <label class="node-item-name"></label>
             <img class="node-icon"/>
             <br/><br/>
 
@@ -60,11 +60,11 @@
                 <select class="panzoom-clickable"></select><br>
             </div>
 
-            <label>Production:&nbsp;</label><label class="production-rate-label editable-label"></label><br/>
+            <label>Production:&nbsp;</label><label class="production-rate-label editable-multiplier-label panzoom-clickable"></label><label>/m</label><br/>
 
             <div class="machines-required-container">
                 <label>Machines required:</label>
-                <label class="machines-required-label editable-label"></label>
+                <label class="machines-required-label editable-multiplier-label panzoom-clickable"></label>
                 <br/>
             </div>
 
@@ -75,9 +75,9 @@
         </div></template>
 
         <template id="edgeOverlayTemplate"><div class="edge-overlay">
-            <label class="edge-ratio-label editable-label"></label>
+            <label class="edge-ratio-label"></label>
             <br/>
-            <label class="edge-production-label editable-label"></label>
+            <label class="edge-production-label editable-multiplier-label panzoom-clickable"></label><label>/m</label>
         </div></template>
         
         <script type="module">import "@/Main.mjs";</script>

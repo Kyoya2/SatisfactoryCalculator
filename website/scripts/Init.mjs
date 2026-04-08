@@ -100,11 +100,11 @@ function initDefaultTrivialResources() {
 }
 
 function initDisplayMultiplier() {
-    g_.html_elements.displayMultiplierInput.value = formatFrac(g_.config.display_multiplier, false);
+    g_.html_elements.displayMultiplierInput.value = formatFrac(g_.config.display_multiplier, true, true);
 
     /** @type {HTMLInputElement} */
     const update_button = document.getElementById("updateDisplayMultiplier");
-    update_button.onclick = updateDisplayMultiplier
+    update_button.onclick = (e) => { updateDisplayMultiplier(); };
 
     /** @type {HTMLInputElement} */
     const auto_button = document.getElementById("updateDisplayMultiplierAuto");
