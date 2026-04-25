@@ -22,7 +22,7 @@ export default class CacheManager {
     cacheFunc(func) {
         assert("Function" == func.constructor.name, "Can only cache functions (not generators)");
         assert(!this._cache.has(func), "Function already cached");
-        
+
         /** @type {Map<*[], ReturnType<F>>} */
         let cache = new Map();
         this._cache.set(func, cache);
@@ -53,7 +53,7 @@ export default class CacheManager {
                 cache.clear();
             return;
         }
-        
+
         let func_cache = this._cache.get(func);
 
         assert(undefined !== func_cache, "Function isn't cached");

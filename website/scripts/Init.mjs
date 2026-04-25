@@ -12,7 +12,7 @@ import elkLayouts from '@mermaid-js/layout-elk';
 import Panzoom from "@panzoom/panzoom";
 
 // Must be imported last!!!
-import {generateGraphPhase1, generateGraphPhase2, updateSelectedProduct, resetAlternateRecipes, updateDisplayMultiplier, updateDisplayMultiplierAuto, toggleShowByproducts} from "@/Main.mjs"
+import {generateGraphPhase1, generateGraphPhase2, updateSelectedProduct, resetAlternateRecipes, resetTrivialResources, updateDisplayMultiplier, updateDisplayMultiplierAuto, toggleShowByproducts} from "@/Main.mjs"
 
 
 function initGameData() {
@@ -75,30 +75,6 @@ function initCraftableObjectsSelect() {
     );
 }
 
-function initDefaultTrivialResources() {
-    // If no trivial resources are selected, generate them
-    if (0 != g_.config.trivial_resources.size)
-        return;
-
-    for (const ingredient_id of game_data.crafting_ingredients) {
-        /** @type {CraftingObject} */
-        const ingredient = game_data.crafting_objects[ingredient_id];
-
-        // If the ingredient has no recipes, or only has alternate recipes, then it should
-        // be trivial by default.
-        // Note: The 2nd check relies on the fact that the recipes are generated such that
-        //       non-alternate recipes always come first.
-        if (0 == ingredient.recipes.length || game_data.recipes[ingredient.recipes[0]].is_alternate) {
-            g_.config.trivial_resources.add(ingredient_id);
-        }
-    }
-
-    // Water is a byproduct of a bunch of things, so it won't be detected by the algorithm above
-    g_.config.trivial_resources.add("Desc_Water_C");
-
-    g_.config.notifyChange();
-}
-
 function initDisplayMultiplier() {
     g_.html_elements.displayMultiplierInput.value = formatFrac(g_.config.display_multiplier, true, true);
 
@@ -119,9 +95,14 @@ function initByproductsCheckbox() {
     checkbox.onclick = toggleShowByproducts;
 }
 
+function initResetButtons() {
+    document.getElementById("resetAlternateRecipesButton").onclick = resetAlternateRecipes;
+    document.getElementById("resetTrivialResources").onclick = resetTrivialResources;
+}
+
 function initGraph() {
     mermaid.registerLayoutLoaders(elkLayouts);
-    
+
     document.addEventListener(
         "DOMContentLoaded",
         function(){
@@ -155,11 +136,15 @@ function initPanZoom() {
 export default function initApp() {
     // This was a bug that I presumably fixed
     assert(null === g_.config, "Module already initialized");
-    
+
     // Must be first!
     g_.config = new Config();
 
     initGameData();
+
+    // If no trivial resources are selected, reset them
+    if (0 == g_.config.trivial_resources.size)
+        resetTrivialResources();
 
     const HTML_ELEMENT_NAMES = ['displayMultiplierInput', 'graphContainer', 'panzoomGraphContainer', 'nodeOverlayTemplate', 'edgeOverlayTemplate'];
     for (const name of HTML_ELEMENT_NAMES) {
@@ -168,13 +153,11 @@ export default function initApp() {
 
     const craftable_objects_select = initCraftableObjectsSelect();
 
-    initDefaultTrivialResources();
-
-    document.getElementById("resetAlternateRecipesButton").onclick = resetAlternateRecipes;
-
     initDisplayMultiplier();
 
     initByproductsCheckbox();
+
+    initResetButtons();
 
     initGraph();
 
