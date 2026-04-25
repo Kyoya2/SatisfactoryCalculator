@@ -134,6 +134,7 @@ class SatisfactoryParser:
  *      crafting_objects: Object.<string, CraftingObject>,
  *      crafting_products: GameObjectId[],
  *      crafting_ingredients: GameObjectId[],
+ *      trivial_ingredients: GameObjectId[],
  *      recipes: Object.<string, Recipe>
  *  }}}}
  */

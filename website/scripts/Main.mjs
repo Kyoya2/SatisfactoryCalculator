@@ -22,7 +22,6 @@ import {fraction, Fraction} from 'mathjs';
 - Don't display fractions when they're 1/1.
 - When handling byproducts, it's possible to get negative values. When an ingredient  is sufficiently produced as a
   byproduct, and there's no need to manually produce it.
-- "Superposition Oscillator" doesn't work with byproducts.
 */
 
 
@@ -679,6 +678,23 @@ export function resetAlternateRecipes() {
         generateGraphPhase1();
 }
 
+export function resetTrivialResources() {
+    const new_trivial_resources = new Set(game_data.trivial_ingredients);
+
+    const symmetric_diff = new_trivial_resources.symmetricDifference(g_.config.trivial_resources);
+
+    // If nothing was changed, return
+    if (0 == symmetric_diff.size)
+        return;
+
+    g_.config.trivial_resources = new_trivial_resources;
+    g_.config.notifyChange();
+
+    // If the difference contains at-least one node in the current graph, re-generate the entire graph
+    if ((null != g_.product_node) && any(g_.product_node.graph.nodes(), (node) => symmetric_diff.has(node.data.obj().id)))
+        generateGraphPhase1()
+}
+
 /**
  * @param {Fraction=} new_value 
  */
@@ -712,7 +728,7 @@ export function toggleShowByproducts(e) {
     g_.config.show_byproducts = e.target.checked;
     g_.config.notifyChange();
 
-    // Re-generate the graph, unless box was unchcked AND current graph didn't have byproducts.
+    // Re-generate the graph, unless box was unchecked AND current graph didn't have byproducts.
     if (e.target.checked || any(g_.product_node.graph.links(), (edge) => edge.data.is_byproduct))
         generateGraphPhase1();
 }
