@@ -138,7 +138,7 @@ class SatisfactoryParser:
  *      recipes: Object.<string, Recipe>
  *  }}}}
  */
-const game_data = {json.dumps(data, indent=4, sort_keys=True)};
+const game_data = {json.dumps(data, sort_keys=True, separators=(',', ':'))};
 export default game_data;
 """
 
@@ -210,13 +210,17 @@ export default game_data;
             products = self._parse_crafting_obj_list(recipe['mProduct'])
             ingredients = self._parse_crafting_obj_list(recipe['mIngredients'])
 
-            crafting_ingredients |= set(ingredients.keys())
-            crafting_products |= set(products.keys())
-
             duration = Fraction(recipe['mManufactoringDuration'])
             is_alternate = recipe['mDisplayName'].startswith('Alternate: ')
             produced_in = set(self._PRODUCED_IN_REGEX.findall(recipe['mProducedIn']))
             recipe_name = recipe['name']
+
+            # Ignore recipes that can't be automated
+            if produced_in <= {'BP_BuildGun_C', 'FGBuildGun', 'BP_WorkshopComponent_C'}:
+                continue
+
+            crafting_ingredients |= set(ingredients.keys())
+            crafting_products |= set(products.keys())
 
             # Force build converted recipes to be alternate, and update the recipe name accordingly
             if "Build_Converter_C" in produced_in:
@@ -279,15 +283,6 @@ export default game_data;
                     del obj['recipes'][i]
                     obj['recipes'].insert(0, recipe_id)
                     break
-
-            produced_in = reduce(lambda value, recipe_id: value | self._recipes[recipe_id].produced_in, obj['recipes'], set())
-
-            # Exclude things whose production can't be automated
-            if (obj["mForm"] == "RF_INVALID") or (
-                    len(produced_in) > 0 and produced_in <= {'BP_BuildGun_C', 'FGBuildGun', 'BP_WorkshopComponent_C'}):
-                self._crafting_ingredients.discard(crafting_obj_id)
-                self._crafting_products.discard(crafting_obj_id)
-                continue
 
             # if '/UI/' not in obj['mSmallIcon']:
             #    print(obj['mSmallIcon'])
