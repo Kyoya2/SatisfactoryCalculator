@@ -27,6 +27,7 @@
  *      crafting_objects: Object.<string, CraftingObject>,
  *      crafting_products: GameObjectId[],
  *      crafting_ingredients: GameObjectId[],
+ *      trivial_ingredients: GameObjectId[],
  *      recipes: Object.<string, Recipe>
  *  }}
  */
@@ -21715,6 +21716,44 @@ const game_data = {
                 }
             }
         }
-    }
+    },
+    "trivial_ingredients": [
+        "Desc_Shroom_C",
+        "Desc_OreBauxite_C",
+        "Desc_Nut_C",
+        "Desc_Crystal_C",
+        "Desc_OreGold_C",
+        "Desc_Coal_C",
+        "Desc_OreCopper_C",
+        "Desc_LiquidOil_C",
+        "Desc_DarkEnergy_C",
+        "Desc_DissolvedSilica_C",
+        "Desc_QuantumEnergy_C",
+        "Desc_Gift_C",
+        "Desc_FicsiteIngot_C",
+        "Desc_HatcherParts_C",
+        "Desc_HogParts_C",
+        "Desc_OreIron_C",
+        "Desc_Leaves_C",
+        "Desc_Stone_C",
+        "Desc_WAT2_C",
+        "Desc_Mycelia_C",
+        "Desc_NitrogenGas_C",
+        "Desc_Berry_C",
+        "Desc_PlutoniumWaste_C",
+        "Desc_Crystal_mk3_C",
+        "Desc_RawQuartz_C",
+        "Desc_SAM_C",
+        "Desc_WAT1_C",
+        "Desc_SpitterParts_C",
+        "Desc_StingerParts_C",
+        "Desc_Sulfur_C",
+        "Desc_TimeCrystal_C",
+        "Desc_OreUranium_C",
+        "Desc_NuclearWaste_C",
+        "Desc_Water_C",
+        "Desc_Wood_C",
+        "Desc_Crystal_mk2_C"
+    ]
 };
 export default game_data;

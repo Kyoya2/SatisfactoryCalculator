@@ -83,6 +83,7 @@ class SatisfactoryParser:
         self._all_objects, self._categorized_objects = self._preprocess_doc_file(doc_file_path)
         self._recipes, self._crafting_ingredients, self._crafting_products = self._process_recipes()
         self._crafting_objects = self._process_crafting_objects()
+        self._trivial_ingredients = self._calculate_trivial_ingredients()
 
     def generate_data_file_content(self):
         def sort_by_display_name(object_ids: Iterable[GameObjectId]) -> list[GameObjectId]:
@@ -92,6 +93,7 @@ class SatisfactoryParser:
             'crafting_objects': self._crafting_objects,
             'crafting_products': sort_by_display_name(self._crafting_products),
             'crafting_ingredients': sort_by_display_name(self._crafting_ingredients),
+            'trivial_ingredients': sort_by_display_name(self._trivial_ingredients),
             'recipes': self._recipes,
         })
 
@@ -300,6 +302,16 @@ export default game_data;
             )
 
         return crafting_objects
+
+    def _calculate_trivial_ingredients(self) -> set[GameObjectId]:
+        # Water is a byproduct of a bunch of things, so it won't be detected by the algorithm below
+        trivial_ingredients: set[GameObjectId] = {"Desc_Water_C"}
+        for ingredient_id in self._crafting_ingredients:
+            ingredient = self._crafting_objects[ingredient_id]
+            if (0 == len(ingredient.recipes)) or self._recipes[ingredient.recipes[0]].is_alternate:
+                trivial_ingredients.add(ingredient_id)
+
+        return trivial_ingredients
 
     def _parse_crafting_obj_list(self, item_list: str) -> CountedItems:
         items = self._CRAFTING_OBJ_LIST_REGEX.findall(item_list)
