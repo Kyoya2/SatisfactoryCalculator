@@ -611,7 +611,7 @@ export function generateGraphPhase2(recalc_mult=false) {
     }
 
     // Updating byproducts may require multiple iterations over the graph.
-    // Keep iterating until we're able to complete an iteration without making changes perform an iteration with no modifications.
+    // Keep iterating until we're able to complete an iteration without making changes.
     while (reduce(g_.product_node.graph.nodes(), (modified, node) => (_updateByproduct(node) || modified), false));
 
     if (recalc_mult)
