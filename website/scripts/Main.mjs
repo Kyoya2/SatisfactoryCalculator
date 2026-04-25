@@ -461,7 +461,7 @@ export async function generateGraphPhase1(recalc_mult=false) {
  */
 export function generateGraphPhase2(recalc_mult=false) {
     // Set the required production to the production of one machine
-    g_.product_node.data.total_production_required = g_.product_node.data.singleMachineProduction();
+    g_.product_node.data.total_production_required = g_.product_node.data.isTrivial() ? fraction(0) : g_.product_node.data.singleMachineProduction();
 
     // Breadth-first search starting from the product
     for (const node of g_.product_node.graph.smartBreadthFirst(false)) {
