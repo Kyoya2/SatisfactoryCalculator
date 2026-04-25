@@ -1,17 +1,17 @@
 import CacheManager from "@/CacheManager.mjs";
-import {any, filter} from "@/Utils.mjs";
+import {any, all, filter} from "@/Utils.mjs";
 
 /** @template NodeData, EdgeData */
 export class Graph {
     /**
-     * @param {((edge: Edge<NodeData, EdgeData>) => boolean)} [smart_breadth_1st_predicate]
+     * @param {((edge: Edge<NodeData, EdgeData>) => boolean)} [smart_predicate]
      */
-    constructor(smart_breadth_1st_predicate) {
+    constructor(smart_predicate) {
         /** @type {Set<Node<NodeData, EdgeData>>} */
         this._nodes = new Set();
         this._cache_manager = new CacheManager();
 
-        this._smart_breadth_1st_predicate = smart_breadth_1st_predicate ?? (() => (true));
+        this._smart_predicate = smart_predicate ?? (() => (true));
 
         this.getRootsOrLeaves = this._cache_manager.cacheFunc(
             /** 
@@ -65,10 +65,16 @@ export class Graph {
      * @returns {IterableIterator<Node<NodeData, EdgeData>>}
      */
     *_getRootsOrLeaves(roots) {
-        // A node is a root if it has no blinks.
-        // A node is a leaf if it has no flinks.
+        // A node is a root if all of its blinks don't match the smart predicate.
+        // A node is a leaf if all of its flinks don't match the smart predicate.
         const down_links = roots ? '_blinks' : '_flinks';
-        yield* filter(this._nodes, (node) => (0 == node[down_links].size));
+        yield* filter(
+            this._nodes,
+            (node) => all(
+                node[down_links],
+                (down_link) => !this._smart_predicate(down_link)
+            )
+        );
     }
 
     /**
@@ -99,7 +105,7 @@ export class Graph {
         
                 // If we still haven't visited ALL the up links, skip this node for now.
                 // We will have more chances to visit it in the required state.
-                if (any(node[up_links], (edge) => this._smart_breadth_1st_predicate(edge) && !visited_nodes.has(edge[up_link])))
+                if (any(node[up_links], (edge) => this._smart_predicate(edge) && !visited_nodes.has(edge[up_link])))
                     continue;
 
                 yield node;
