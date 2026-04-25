@@ -307,6 +307,9 @@ export default game_data;
             if (0 == len(ingredient.recipes)) or self._recipes[ingredient.recipes[0]].is_alternate:
                 trivial_ingredients.add(ingredient_id)
 
+        # This is wrongfully detected as trivial, since it only has alternate recipes
+        trivial_ingredients.discard('Desc_FicsiteIngot_C')
+
         return trivial_ingredients
 
     def _parse_crafting_obj_list(self, item_list: str) -> CountedItems:
