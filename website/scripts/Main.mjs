@@ -45,7 +45,7 @@ function estimateNodeOverlayHeight(node) {
             // Machines required
             ++result;
         }
-        
+
         // "Trivial?" checkbox
         if (num_recipes > 0)
             ++result;
@@ -234,7 +234,7 @@ function createNodeOverlay(node_svg_element, node) {
         }
 
         alternate_recipes_select.selectedIndex = node.data.selected_recipe_index;
-        
+
         alternate_recipes_select.oninput = function(e) {
             g_.config.alternate_recipes.set(obj.id, e.target.selectedIndex);
             g_.config.notifyChange();
@@ -245,7 +245,7 @@ function createNodeOverlay(node_svg_element, node) {
     // Inject a "foreignObject" element into the node
     const foreign_obj = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject");
     foreign_obj.appendChild(overlay);
-    
+
     // Position the "foreignObject" over the node
     const rect = node_svg_element.getBBox({fill: true, stroke: true, markers: true, clipped: false});
     foreign_obj.setAttribute("x", rect.x-2);
@@ -288,7 +288,7 @@ function generateBaseGraph(product_name) {
 
     /** @type {Map<GameObjectId, Node<SCNode, MyEdgeInfo>>} */
     let nodes = new Map();
-    
+
     // byproducts[id1] -> A map containing all nodes that preoduce "id1" as a byproduct.
     // byproducts[id1][id2] -> The amount of byproduct "id1" produced from a production of a single "id2"
     /** @type {Map<GameObjectId, Map<GameObjectId, Fraction>>} */
@@ -322,7 +322,7 @@ function generateBaseGraph(product_name) {
 
             selected_recipe = game_data.recipes[obj.recipes[selected_recipe_index]];
         }
-        
+
         // "selected_recipe_index" is set here because it directly affects the structure of the graph
         node = graph.createNode(new SCNode(
             product_id,
@@ -588,7 +588,7 @@ export function generateGraphPhase2(recalc_mult=false) {
             source_node.data.production_required = total_byproduct_prod;
             return;
         }
-        
+
         // For "non-pure" byproducts, we want to display the production that's required *additionally*
         // to the byproduct production
         const new_production_required = mathjs.subtract(source_node.data.total_production_required, total_byproduct_prod);
@@ -627,7 +627,7 @@ export function generateGraphPhase2(recalc_mult=false) {
  */
 function generateGraphPhase3() {
 
-    
+
     //updateDisplayMultiplierAuto();
     // Called by "updateDisplayMultiplierAuto"
     //updateOverlay();

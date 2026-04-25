@@ -20,7 +20,7 @@ export default class Config {
 
         /** @type {number} */
         this.conveyor_speed_index = parseInt(search_params.get("conveyorSpeed") ?? Config.#_DEFAULT_CONVEYOR_INDEX)
-        
+
         /** @type {number} */
         this.pipeline_speed_index = parseInt(search_params.get("pipelineSpeed") ?? Config.#_DEFAULT_PIPELINE_INDEX);
 

@@ -98,27 +98,27 @@ export class Graph {
         while (true) {
             /** @type {Set<Node<NodeData, EdgeData>>} */
             let next_round_nodes = new Set();
-        
+
             for (const node of current_nodes) {
                 if (visited_nodes.has(node))
                     continue;
-        
+
                 // If we still haven't visited ALL the up links, skip this node for now.
                 // We will have more chances to visit it in the required state.
                 if (any(node[up_links], (edge) => this._smart_predicate(edge) && !visited_nodes.has(edge[up_link])))
                     continue;
 
                 yield node;
-        
+
                 visited_nodes.add(node);
 
                 next_round_nodes = next_round_nodes.union(new Set(Array.from(node[down_links], (edge) => edge[down_link])));
             }
-        
+
             next_round_nodes = next_round_nodes.difference(visited_nodes);
             if (0 == next_round_nodes.size)
                 break;
-        
+
             current_nodes = next_round_nodes
         }
     }

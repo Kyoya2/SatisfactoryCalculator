@@ -75,7 +75,7 @@ export class SCNode {
          * @public
         */
         this.production_required = fraction(0);
-        
+
         /**
          * The HTML overlay of the node.
          * @type {HTMLDivElement} 

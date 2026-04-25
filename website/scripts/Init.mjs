@@ -121,7 +121,7 @@ function initByproductsCheckbox() {
 
 function initGraph() {
     mermaid.registerLayoutLoaders(elkLayouts);
-    
+
     document.addEventListener(
         "DOMContentLoaded",
         function(){
@@ -155,7 +155,7 @@ function initPanZoom() {
 export default function initApp() {
     // This was a bug that I presumably fixed
     assert(null === g_.config, "Module already initialized");
-    
+
     // Must be first!
     g_.config = new Config();
 

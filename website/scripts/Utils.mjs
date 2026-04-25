@@ -68,7 +68,7 @@ export function reduce(iterable, callback, initial_value) {
     for (const item of iterable) {
         value = callback(value, item)
     }
-    
+
     return value;
 }
 
@@ -103,7 +103,7 @@ export function fractionMax(a, b) {
 export function formatFrac(frac, as_ratio=true, opt_denom=false) {
     if (as_ratio && opt_denom && (1 == frac.d))
         return frac.n.toString();
-    
+
     return format(frac, { fraction: as_ratio ? 'ratio' : 'decimal' });
 }
 
