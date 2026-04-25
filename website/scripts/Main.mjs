@@ -106,8 +106,6 @@ function initEditableMultiplierLabel(editable_multiplier_label) {
 
     /** @param {KeyboardEvent} e */
     editable_multiplier_label.onkeydown = function(e) {
-        console.log(e.key);
-
         // Put the label out of focus when pressing escape or enter
         if (("Enter" == e.key) || ("Escape" == e.key)) {
 
