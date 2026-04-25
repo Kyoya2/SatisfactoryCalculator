@@ -376,8 +376,6 @@ function generateBaseGraph(product_name) {
     const product_node = _generateGraphLayout(product_name);
 
     for (const [byproduct_id, producers] of byproducts.entries()) {
-        const obj = game_data.crafting_objects[byproduct_id];
-
         // If the byproduct is not used anywhere in the recipe tree, create a node for it
         let byproduct_node = nodes.get(byproduct_id);
         if (undefined === byproduct_node) {
