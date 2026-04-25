@@ -1869,11 +1869,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "AI Limiter",
-            "produced_in": [
-                "Build_AssemblerMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_CircuitBoardHighSpeed_C": {
                     "d": 1,
@@ -1894,11 +1889,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Alien DNA Capsule",
-            "produced_in": [
-                "Build_ConstructorMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_AlienDNACapsule_C": {
                     "d": 1,
@@ -1939,9 +1929,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Alien Power Augmenter",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_AlienPowerBuilding_C": {
                     "d": 1,
@@ -1974,9 +1961,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Alien Power Matrix",
-            "produced_in": [
-                "Build_QuantumEncoder_C"
-            ],
             "products": {
                 "Desc_AlienPowerFuel_C": {
                     "d": 1,
@@ -2005,9 +1989,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Plastic AI Limiter",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_CircuitBoardHighSpeed_C": {
                     "d": 1,
@@ -2032,9 +2013,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Adhered Iron Plate",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_IronPlateReinforced_C": {
                     "d": 1,
@@ -2059,9 +2037,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Alclad Casing",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_AluminumCasing_C": {
                     "d": 1,
@@ -2082,9 +2057,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Aluminum Rod",
-            "produced_in": [
-                "Build_ConstructorMk1_C"
-            ],
             "products": {
                 "Desc_IronRod_C": {
                     "d": 1,
@@ -2109,9 +2081,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Automated Miner",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "BP_ItemDescriptorPortableMiner_C": {
                     "d": 1,
@@ -2136,9 +2105,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Bolted Frame",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_ModularFrame_C": {
                     "d": 1,
@@ -2163,9 +2129,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Insulated Cable",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_Cable_C": {
                     "d": 1,
@@ -2190,9 +2153,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Quickwire Cable",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_Cable_C": {
                     "d": 1,
@@ -2217,9 +2177,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Leached Caterium Ingot",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_GoldIngot_C": {
                     "d": 1,
@@ -2244,9 +2201,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Tempered Caterium Ingot",
-            "produced_in": [
-                "Build_FoundryMk1_C"
-            ],
             "products": {
                 "Desc_GoldIngot_C": {
                     "d": 1,
@@ -2271,9 +2225,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Silicon Circuit Board",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_CircuitBoard_C": {
                     "d": 1,
@@ -2298,9 +2249,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Caterium Circuit Board",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_CircuitBoard_C": {
                     "d": 1,
@@ -2333,9 +2281,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Classic Battery",
-            "produced_in": [
-                "Build_ManufacturerMk1_C"
-            ],
             "products": {
                 "Desc_Battery_C": {
                     "d": 1,
@@ -2356,9 +2301,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Charcoal",
-            "produced_in": [
-                "Build_ConstructorMk1_C"
-            ],
             "products": {
                 "Desc_Coal_C": {
                     "d": 1,
@@ -2379,9 +2321,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Biocoal",
-            "produced_in": [
-                "Build_ConstructorMk1_C"
-            ],
             "products": {
                 "Desc_Coal_C": {
                     "d": 1,
@@ -2406,9 +2345,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Coated Cable",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_Cable_C": {
                     "d": 1,
@@ -2433,9 +2369,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Coated Iron Canister",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_FluidCanister_C": {
                     "d": 1,
@@ -2460,9 +2393,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Coated Iron Plate",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_IronPlate_C": {
                     "d": 1,
@@ -2487,9 +2417,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Coke Steel Ingot",
-            "produced_in": [
-                "Build_FoundryMk1_C"
-            ],
             "products": {
                 "Desc_SteelIngot_C": {
                     "d": 1,
@@ -2518,9 +2445,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Caterium Computer",
-            "produced_in": [
-                "Build_ManufacturerMk1_C"
-            ],
             "products": {
                 "Desc_Computer_C": {
                     "d": 1,
@@ -2545,9 +2469,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Crystal Computer",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_Computer_C": {
                     "d": 1,
@@ -2572,9 +2493,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Fine Concrete",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_Cement_C": {
                     "d": 1,
@@ -2603,9 +2521,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Cooling Device",
-            "produced_in": [
-                "Build_Blender_C"
-            ],
             "products": {
                 "Desc_CoolingSystem_C": {
                     "d": 1,
@@ -2630,9 +2545,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Copper Alloy Ingot",
-            "produced_in": [
-                "Build_FoundryMk1_C"
-            ],
             "products": {
                 "Desc_CopperIngot_C": {
                     "d": 1,
@@ -2657,9 +2569,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Leached Copper Ingot",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_CopperIngot_C": {
                     "d": 1,
@@ -2684,9 +2593,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Tempered Copper Ingot",
-            "produced_in": [
-                "Build_FoundryMk1_C"
-            ],
             "products": {
                 "Desc_CopperIngot_C": {
                     "d": 1,
@@ -2711,9 +2617,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Copper Rotor",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_Rotor_C": {
                     "d": 1,
@@ -2742,9 +2645,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Insulated Crystal Oscillator",
-            "produced_in": [
-                "Build_ManufacturerMk1_C"
-            ],
             "products": {
                 "Desc_CrystalOscillator_C": {
                     "d": 1,
@@ -2765,9 +2665,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Dark Matter Crystallization",
-            "produced_in": [
-                "Build_HadronCollider_C"
-            ],
             "products": {
                 "Desc_DarkMatter_C": {
                     "d": 1,
@@ -2792,9 +2689,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Dark Matter Trap",
-            "produced_in": [
-                "Build_HadronCollider_C"
-            ],
             "products": {
                 "Desc_DarkMatter_C": {
                     "d": 1,
@@ -2819,9 +2713,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Cloudy Diamonds",
-            "produced_in": [
-                "Build_HadronCollider_C"
-            ],
             "products": {
                 "Desc_Diamond_C": {
                     "d": 1,
@@ -2842,9 +2733,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Oil-Based Diamonds",
-            "produced_in": [
-                "Build_HadronCollider_C"
-            ],
             "products": {
                 "Desc_Diamond_C": {
                     "d": 1,
@@ -2865,9 +2753,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Petroleum Diamonds",
-            "produced_in": [
-                "Build_HadronCollider_C"
-            ],
             "products": {
                 "Desc_Diamond_C": {
                     "d": 1,
@@ -2892,9 +2777,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Build converter: Alternate: Pink Diamonds",
-            "produced_in": [
-                "Build_Converter_C"
-            ],
             "products": {
                 "Desc_Diamond_C": {
                     "d": 1,
@@ -2919,9 +2801,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Turbo Diamonds",
-            "produced_in": [
-                "Build_HadronCollider_C"
-            ],
             "products": {
                 "Desc_Diamond_C": {
                     "d": 1,
@@ -2946,9 +2825,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Diluted Fuel",
-            "produced_in": [
-                "Build_Blender_C"
-            ],
             "products": {
                 "Desc_LiquidFuel_C": {
                     "d": 1,
@@ -2973,9 +2849,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Diluted Packaged Fuel",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_Fuel_C": {
                     "d": 1,
@@ -3000,9 +2873,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Electric Motor",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_Motor_C": {
                     "d": 1,
@@ -3027,9 +2897,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Electrode Aluminum Scrap",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_AluminumScrap_C": {
                     "d": 1,
@@ -3058,9 +2925,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Electrode Circuit Board",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_CircuitBoard_C": {
                     "d": 1,
@@ -3085,9 +2949,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Electromagnetic Connection Rod",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_ElectromagneticControlRod_C": {
                     "d": 1,
@@ -3112,9 +2973,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Encased Industrial Pipe",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_SteelPlateReinforced_C": {
                     "d": 1,
@@ -3139,9 +2997,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Compacted Coal",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_CompactedCoal_C": {
                     "d": 1,
@@ -3174,9 +3029,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Fertile Uranium",
-            "produced_in": [
-                "Build_Blender_C"
-            ],
             "products": {
                 "Desc_Water_C": {
                     "d": 1,
@@ -3205,9 +3057,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Flexible Framework",
-            "produced_in": [
-                "Build_ManufacturerMk1_C"
-            ],
             "products": {
                 "Desc_SpaceElevatorPart_2_C": {
                     "d": 1,
@@ -3232,9 +3081,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Fused Wire",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_Wire_C": {
                     "d": 1,
@@ -3259,9 +3105,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Fine Black Powder",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_Gunpowder_C": {
                     "d": 1,
@@ -3294,9 +3137,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Heat-Fused Frame",
-            "produced_in": [
-                "Build_Blender_C"
-            ],
             "products": {
                 "Desc_ModularFrameFused_C": {
                     "d": 1,
@@ -3321,9 +3161,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Heat Exchanger",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_AluminumPlateReinforced_C": {
                     "d": 1,
@@ -3356,9 +3193,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Heavy Flexible Frame",
-            "produced_in": [
-                "Build_ManufacturerMk1_C"
-            ],
             "products": {
                 "Desc_ModularFrameHeavy_C": {
                     "d": 1,
@@ -3379,9 +3213,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Heavy Oil Residue",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_HeavyOilResidue_C": {
                     "d": 1,
@@ -3414,9 +3245,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Silicon High-Speed Connector",
-            "produced_in": [
-                "Build_ManufacturerMk1_C"
-            ],
             "products": {
                 "Desc_HighSpeedConnector_C": {
                     "d": 1,
@@ -3445,9 +3273,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Automated Speed Wiring",
-            "produced_in": [
-                "Build_ManufacturerMk1_C"
-            ],
             "products": {
                 "Desc_SpaceElevatorPart_3_C": {
                     "d": 1,
@@ -3472,9 +3297,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Iron Alloy Ingot",
-            "produced_in": [
-                "Build_FoundryMk1_C"
-            ],
             "products": {
                 "Desc_IronIngot_C": {
                     "d": 1,
@@ -3499,9 +3321,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Solid Steel Ingot",
-            "produced_in": [
-                "Build_FoundryMk1_C"
-            ],
             "products": {
                 "Desc_SteelIngot_C": {
                     "d": 1,
@@ -3526,9 +3345,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Compacted Steel Ingot",
-            "produced_in": [
-                "Build_FoundryMk1_C"
-            ],
             "products": {
                 "Desc_SteelIngot_C": {
                     "d": 1,
@@ -3549,9 +3365,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Instant Plutonium Cell",
-            "produced_in": [
-                "Build_HadronCollider_C"
-            ],
             "products": {
                 "Desc_PlutoniumCell_C": {
                     "d": 1,
@@ -3584,9 +3397,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Instant Scrap",
-            "produced_in": [
-                "Build_Blender_C"
-            ],
             "products": {
                 "Desc_AluminumScrap_C": {
                     "d": 1,
@@ -3615,9 +3425,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Build converter: Alternate: Dark-Ion Fuel",
-            "produced_in": [
-                "Build_Converter_C"
-            ],
             "products": {
                 "Desc_CompactedCoal_C": {
                     "d": 1,
@@ -3646,9 +3453,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Basic Iron Ingot",
-            "produced_in": [
-                "Build_FoundryMk1_C"
-            ],
             "products": {
                 "Desc_IronIngot_C": {
                     "d": 1,
@@ -3673,9 +3477,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Leached Iron Ingot",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_IronIngot_C": {
                     "d": 1,
@@ -3708,9 +3509,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Heavy Encased Frame",
-            "produced_in": [
-                "Build_ManufacturerMk1_C"
-            ],
             "products": {
                 "Desc_ModularFrameHeavy_C": {
                     "d": 1,
@@ -3735,9 +3533,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Steeled Frame",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_ModularFrame_C": {
                     "d": 1,
@@ -3766,9 +3561,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Rigor Motor",
-            "produced_in": [
-                "Build_ManufacturerMk1_C"
-            ],
             "products": {
                 "Desc_Motor_C": {
                     "d": 1,
@@ -3801,9 +3593,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Uranium Fuel Unit",
-            "produced_in": [
-                "Build_ManufacturerMk1_C"
-            ],
             "products": {
                 "Desc_NuclearFuelRod_C": {
                     "d": 1,
@@ -3828,9 +3617,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "OC Supercomputer",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_ComputerSuper_C": {
                     "d": 1,
@@ -3859,9 +3645,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Plastic Smart Plating",
-            "produced_in": [
-                "Build_ManufacturerMk1_C"
-            ],
             "products": {
                 "Desc_SpaceElevatorPart_1_C": {
                     "d": 1,
@@ -3886,9 +3669,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Recycled Plastic",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_Plastic_C": {
                     "d": 1,
@@ -3913,9 +3693,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Plutonium Fuel Unit",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_PlutoniumFuelRod_C": {
                     "d": 1,
@@ -3940,9 +3717,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Polyester Fabric",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_Fabric_C": {
                     "d": 1,
@@ -3963,9 +3737,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Polymer Resin",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_HeavyOilResidue_C": {
                     "d": 1,
@@ -3994,9 +3765,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Pure Caterium Ingot",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_GoldIngot_C": {
                     "d": 1,
@@ -4021,9 +3789,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Pure Copper Ingot",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_CopperIngot_C": {
                     "d": 1,
@@ -4048,9 +3813,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Pure Iron Ingot",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_IronIngot_C": {
                     "d": 1,
@@ -4075,9 +3837,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Pure Quartz Crystal",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_QuartzCrystal_C": {
                     "d": 1,
@@ -4102,9 +3861,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Fused Quartz Crystal",
-            "produced_in": [
-                "Build_FoundryMk1_C"
-            ],
             "products": {
                 "Desc_QuartzCrystal_C": {
                     "d": 1,
@@ -4129,9 +3885,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Quartz Purification",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_DissolvedSilica_C": {
                     "d": 1,
@@ -4160,9 +3913,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Fused Quickwire",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_HighSpeedWire_C": {
                     "d": 1,
@@ -4195,9 +3945,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Radio Control System",
-            "produced_in": [
-                "Build_ManufacturerMk1_C"
-            ],
             "products": {
                 "Desc_ModularFrameLightweight_C": {
                     "d": 1,
@@ -4226,9 +3973,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Radio Connection Unit",
-            "produced_in": [
-                "Build_ManufacturerMk1_C"
-            ],
             "products": {
                 "Desc_ModularFrameLightweight_C": {
                     "d": 1,
@@ -4253,9 +3997,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Recycled Rubber",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_Rubber_C": {
                     "d": 1,
@@ -4280,9 +4021,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Bolted Iron Plate",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_IronPlateReinforced_C": {
                     "d": 1,
@@ -4307,9 +4045,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Stitched Iron Plate",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_IronPlateReinforced_C": {
                     "d": 1,
@@ -4342,9 +4077,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Nitro Rocket Fuel",
-            "produced_in": [
-                "Build_Blender_C"
-            ],
             "products": {
                 "Desc_CompactedCoal_C": {
                     "d": 1,
@@ -4373,9 +4105,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Steel Rotor",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_Rotor_C": {
                     "d": 1,
@@ -4400,9 +4129,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Rubber Concrete",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_Cement_C": {
                     "d": 1,
@@ -4423,9 +4149,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Steel Screws",
-            "produced_in": [
-                "Build_ConstructorMk1_C"
-            ],
             "products": {
                 "Desc_IronScrew_C": {
                     "d": 1,
@@ -4446,9 +4169,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Cast Screws",
-            "produced_in": [
-                "Build_ConstructorMk1_C"
-            ],
             "products": {
                 "Desc_IronScrew_C": {
                     "d": 1,
@@ -4473,9 +4193,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Cheap Silica",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_Silica_C": {
                     "d": 1,
@@ -4504,9 +4221,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Distilled Silica",
-            "produced_in": [
-                "Build_Blender_C"
-            ],
             "products": {
                 "Desc_Silica_C": {
                     "d": 1,
@@ -4535,9 +4249,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Sloppy Alumina",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_AluminaSolution_C": {
                     "d": 1,
@@ -4562,9 +4273,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Quickwire Stator",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_Stator_C": {
                     "d": 1,
@@ -4589,9 +4297,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Steamed Copper Sheet",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_CopperSheet_C": {
                     "d": 1,
@@ -4612,9 +4317,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Aluminum Beam",
-            "produced_in": [
-                "Build_ConstructorMk1_C"
-            ],
             "products": {
                 "Desc_SteelPlate_C": {
                     "d": 1,
@@ -4639,9 +4341,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Molded Beam",
-            "produced_in": [
-                "Build_FoundryMk1_C"
-            ],
             "products": {
                 "Desc_SteelPlate_C": {
                     "d": 1,
@@ -4662,9 +4361,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Steel Canister",
-            "produced_in": [
-                "Build_ConstructorMk1_C"
-            ],
             "products": {
                 "Desc_FluidCanister_C": {
                     "d": 1,
@@ -4689,9 +4385,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Steel Cast Plate",
-            "produced_in": [
-                "Build_FoundryMk1_C"
-            ],
             "products": {
                 "Desc_IronPlate_C": {
                     "d": 1,
@@ -4712,9 +4405,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Iron Pipe",
-            "produced_in": [
-                "Build_ConstructorMk1_C"
-            ],
             "products": {
                 "Desc_SteelPipe_C": {
                     "d": 1,
@@ -4739,9 +4429,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Molded Steel Pipe",
-            "produced_in": [
-                "Build_FoundryMk1_C"
-            ],
             "products": {
                 "Desc_SteelPipe_C": {
                     "d": 1,
@@ -4762,9 +4449,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Steel Rod",
-            "produced_in": [
-                "Build_ConstructorMk1_C"
-            ],
             "products": {
                 "Desc_IronRod_C": {
                     "d": 1,
@@ -4797,9 +4481,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Super-State Computer",
-            "produced_in": [
-                "Build_ManufacturerMk1_C"
-            ],
             "products": {
                 "Desc_ComputerSuper_C": {
                     "d": 1,
@@ -4832,9 +4513,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Turbo Blend Fuel",
-            "produced_in": [
-                "Build_Blender_C"
-            ],
             "products": {
                 "Desc_LiquidTurboFuel_C": {
                     "d": 1,
@@ -4859,9 +4537,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Turbo Heavy Fuel",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_LiquidTurboFuel_C": {
                     "d": 1,
@@ -4894,9 +4569,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Turbo Electric Motor",
-            "produced_in": [
-                "Build_ManufacturerMk1_C"
-            ],
             "products": {
                 "Desc_MotorLightweight_C": {
                     "d": 1,
@@ -4929,9 +4601,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Turbo Pressure Motor",
-            "produced_in": [
-                "Build_ManufacturerMk1_C"
-            ],
             "products": {
                 "Desc_MotorLightweight_C": {
                     "d": 1,
@@ -4956,9 +4625,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Turbofuel",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_LiquidTurboFuel_C": {
                     "d": 1,
@@ -4991,9 +4657,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Infused Uranium Cell",
-            "produced_in": [
-                "Build_ManufacturerMk1_C"
-            ],
             "products": {
                 "Desc_UraniumCell_C": {
                     "d": 1,
@@ -5018,9 +4681,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Wet Concrete",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_Cement_C": {
                     "d": 1,
@@ -5041,9 +4701,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Iron Wire",
-            "produced_in": [
-                "Build_ConstructorMk1_C"
-            ],
             "products": {
                 "Desc_Wire_C": {
                     "d": 1,
@@ -5064,9 +4721,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Caterium Wire",
-            "produced_in": [
-                "Build_ConstructorMk1_C"
-            ],
             "products": {
                 "Desc_Wire_C": {
                     "d": 1,
@@ -5091,9 +4745,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Alumina Solution",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_AluminaSolution_C": {
                     "d": 1,
@@ -5118,11 +4769,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Aluminum Casing",
-            "produced_in": [
-                "Build_ConstructorMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_AluminumCasing_C": {
                     "d": 1,
@@ -5147,9 +4793,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Aluminum Scrap",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_AluminumScrap_C": {
                     "d": 1,
@@ -5178,11 +4821,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Alclad Aluminum Sheet",
-            "produced_in": [
-                "Build_AssemblerMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_AluminumPlate_C": {
                     "d": 1,
@@ -5211,9 +4849,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Assembler",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_AssemblerMk1_C": {
                     "d": 1,
@@ -5234,9 +4869,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Corner Road Barrier",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Barrier_Corner_C": {
                     "d": 1,
@@ -5261,9 +4893,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Low Barrier",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Barrier_Low_01_C": {
                     "d": 1,
@@ -5288,9 +4917,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "High Barrier",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Barrier_Tall_01_C": {
                     "d": 1,
@@ -5319,9 +4945,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Battery",
-            "produced_in": [
-                "Build_Blender_C"
-            ],
             "products": {
                 "Desc_Battery_C": {
                     "d": 1,
@@ -5350,9 +4973,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Build converter: Bauxite (Caterium)",
-            "produced_in": [
-                "Build_Converter_C"
-            ],
             "products": {
                 "Desc_OreBauxite_C": {
                     "d": 1,
@@ -5377,9 +4997,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Build converter: Bauxite (Copper)",
-            "produced_in": [
-                "Build_Converter_C"
-            ],
             "products": {
                 "Desc_OreBauxite_C": {
                     "d": 1,
@@ -5400,9 +5017,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Metal Beam",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Beam_C": {
                     "d": 1,
@@ -5423,9 +5037,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Braided Cable",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Beam_Cable_C": {
                     "d": 1,
@@ -5446,9 +5057,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Braided Cable Cluster",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Beam_Cable_Cluster_C": {
                     "d": 1,
@@ -5469,9 +5077,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Round Concrete Beam",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Beam_Concrete_C": {
                     "d": 1,
@@ -5492,9 +5097,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Beam Connector",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Beam_Connector_C": {
                     "d": 1,
@@ -5515,9 +5117,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Double Beam Connector",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Beam_Connector_Double_C": {
                     "d": 1,
@@ -5538,9 +5137,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "H-Beam",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Beam_H_C": {
                     "d": 1,
@@ -5561,9 +5157,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Painted Beam",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Beam_Painted_C": {
                     "d": 1,
@@ -5584,9 +5177,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Shelf Beam",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Beam_Shelf_C": {
                     "d": 1,
@@ -5607,9 +5197,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Beam Support",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Beam_Support_C": {
                     "d": 1,
@@ -5634,9 +5221,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Roll-Up Gate",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_BigGarageDoor_16x8_C": {
                     "d": 1,
@@ -5657,9 +5241,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Roll-Up Gate",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_BigGarageDoor_16x8_Concrete_C": {
                     "d": 1,
@@ -5684,9 +5265,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Roll-Up Gate",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_BigGarageDoor_16x8_Steel_C": {
                     "d": 1,
@@ -5707,11 +5285,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Solid Biofuel",
-            "produced_in": [
-                "Build_AutomatedWorkBench_C",
-                "Build_ConstructorMk1_C",
-                "BP_WorkBenchComponent_C"
-            ],
             "products": {
                 "Desc_Biofuel_C": {
                     "d": 1,
@@ -5732,11 +5305,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Biomass (Alien Protein)",
-            "produced_in": [
-                "Build_ConstructorMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_GenericBiomass_C": {
                     "d": 1,
@@ -5757,11 +5325,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Biomass (Leaves)",
-            "produced_in": [
-                "Build_ConstructorMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_GenericBiomass_C": {
                     "d": 1,
@@ -5782,11 +5345,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Biomass (Mycelia)",
-            "produced_in": [
-                "Build_ConstructorMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_GenericBiomass_C": {
                     "d": 1,
@@ -5807,11 +5365,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Biomass (Wood)",
-            "produced_in": [
-                "Build_ConstructorMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_GenericBiomass_C": {
                     "d": 1,
@@ -5840,9 +5393,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Blade Runners",
-            "produced_in": [
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "BP_EquipmentDescriptorJumpingStilts_C": {
                     "d": 1,
@@ -5875,9 +5425,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Blender",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Blender_C": {
                     "d": 1,
@@ -5910,9 +5457,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Blueprint Designer Mk.1",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_BlueprintDesigner_C": {
                     "d": 1,
@@ -5945,9 +5489,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Blueprint Designer Mk.2",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_BlueprintDesigner_MK2_C": {
                     "d": 1,
@@ -5980,9 +5521,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Blueprint Designer Mk.3",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_BlueprintDesigner_MK3_C": {
                     "d": 1,
@@ -6003,11 +5541,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Cable",
-            "produced_in": [
-                "Build_ConstructorMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_Cable_C": {
                     "d": 1,
@@ -6036,9 +5569,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Candy Cane Basher",
-            "produced_in": [
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "BP_EquipmentDescriptorCandyCane_C": {
                     "d": 1,
@@ -6063,9 +5593,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "FICSMAS Candy Cane",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_CandyCaneDecor_C": {
                     "d": 1,
@@ -6086,9 +5613,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Candy Cane",
-            "produced_in": [
-                "Build_ConstructorMk1_C"
-            ],
             "products": {
                 "Desc_CandyCane_C": {
                     "d": 1,
@@ -6117,9 +5641,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Turbo Rifle Ammo",
-            "produced_in": [
-                "Build_Blender_C"
-            ],
             "products": {
                 "Desc_CartridgeChaos_C": {
                     "d": 1,
@@ -6148,10 +5669,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Turbo Rifle Ammo",
-            "produced_in": [
-                "BP_WorkshopComponent_C",
-                "Build_ManufacturerMk1_C"
-            ],
             "products": {
                 "Desc_CartridgeChaos_C": {
                     "d": 1,
@@ -6176,10 +5693,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Homing Rifle Ammo",
-            "produced_in": [
-                "Build_AssemblerMk1_C",
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "Desc_CartridgeSmartProjectile_C": {
                     "d": 1,
@@ -6204,10 +5717,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Rifle Ammo",
-            "produced_in": [
-                "Build_AssemblerMk1_C",
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "Desc_CartridgeStandard_C": {
                     "d": 1,
@@ -6232,9 +5741,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Build converter: Caterium Ore (Copper)",
-            "produced_in": [
-                "Build_Converter_C"
-            ],
             "products": {
                 "Desc_OreGold_C": {
                     "d": 1,
@@ -6259,9 +5765,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Build converter: Caterium Ore (Quartz)",
-            "produced_in": [
-                "Build_Converter_C"
-            ],
             "products": {
                 "Desc_OreGold_C": {
                     "d": 1,
@@ -6286,9 +5789,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Catwalk Intersection",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_CatwalkCross_C": {
                     "d": 1,
@@ -6313,9 +5813,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Catwalk Ramp",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_CatwalkRamp_C": {
                     "d": 1,
@@ -6340,9 +5837,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Catwalk Stairs",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_CatwalkStairs_C": {
                     "d": 1,
@@ -6367,9 +5861,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Straight Catwalk",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_CatwalkStraight_C": {
                     "d": 1,
@@ -6394,9 +5885,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Catwalk T-Junction",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_CatwalkT_C": {
                     "d": 1,
@@ -6421,9 +5909,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Catwalk Corner",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_CatwalkTurn_C": {
                     "d": 1,
@@ -6452,9 +5937,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ceiling Light",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_CeilingLight_C": {
                     "d": 1,
@@ -6487,9 +5969,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Dimensional Depot Uploader",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_CentralStorage_C": {
                     "d": 1,
@@ -6510,9 +5989,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Construction Fence",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_ChainLinkFence_C": {
                     "d": 1,
@@ -6545,9 +6021,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Chainsaw",
-            "produced_in": [
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "Desc_Chainsaw_C": {
                     "d": 1,
@@ -6572,11 +6045,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Circuit Board",
-            "produced_in": [
-                "Build_AssemblerMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_CircuitBoard_C": {
                     "d": 1,
@@ -6601,9 +6069,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Build converter: Coal (Iron)",
-            "produced_in": [
-                "Build_Converter_C"
-            ],
             "products": {
                 "Desc_Coal_C": {
                     "d": 1,
@@ -6628,9 +6093,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Build converter: Coal (Limestone)",
-            "produced_in": [
-                "Build_Converter_C"
-            ],
             "products": {
                 "Desc_Coal_C": {
                     "d": 1,
@@ -6663,11 +6125,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Supercomputer",
-            "produced_in": [
-                "BP_WorkBenchComponent_C",
-                "Build_ManufacturerMk1_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_ComputerSuper_C": {
                     "d": 1,
@@ -6696,11 +6153,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Computer",
-            "produced_in": [
-                "BP_WorkBenchComponent_C",
-                "Build_ManufacturerMk1_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_Computer_C": {
                     "d": 1,
@@ -6721,9 +6173,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Road Barrier",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Concrete_Barrier_01_C": {
                     "d": 1,
@@ -6744,11 +6193,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Concrete",
-            "produced_in": [
-                "Build_ConstructorMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_Cement_C": {
                     "d": 1,
@@ -6773,9 +6217,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Constructor",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_ConstructorMk1_C": {
                     "d": 1,
@@ -6808,9 +6249,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Converter",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Converter_C": {
                     "d": 1,
@@ -6839,9 +6277,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Priority Merger",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_ConveyorAttachmentMergerPriority_C": {
                     "d": 1,
@@ -6866,9 +6301,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Conveyor Merger",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_ConveyorAttachmentMerger_C": {
                     "d": 1,
@@ -6897,9 +6329,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Programmable Splitter",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_ConveyorAttachmentSplitterProgrammable_C": {
                     "d": 1,
@@ -6928,9 +6357,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Smart Splitter",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_ConveyorAttachmentSplitterSmart_C": {
                     "d": 1,
@@ -6955,9 +6381,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Conveyor Splitter",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_ConveyorAttachmentSplitter_C": {
                     "d": 1,
@@ -6978,9 +6401,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Conveyor Belt Mk.1",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_ConveyorBeltMk1_C": {
                     "d": 1,
@@ -7001,9 +6421,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Conveyor Belt Mk.2",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_ConveyorBeltMk2_C": {
                     "d": 1,
@@ -7024,9 +6441,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Conveyor Belt Mk.3",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_ConveyorBeltMk3_C": {
                     "d": 1,
@@ -7047,9 +6461,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Conveyor Belt Mk.4",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_ConveyorBeltMk4_C": {
                     "d": 1,
@@ -7070,9 +6481,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Conveyor Belt Mk.5",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_ConveyorBeltMk5_C": {
                     "d": 1,
@@ -7097,9 +6505,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Conveyor Belt Mk.6",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_ConveyorBeltMk6_C": {
                     "d": 1,
@@ -7128,9 +6533,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Conveyor Ceiling Mount",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_ConveyorCeilingAttachment_C": {
                     "d": 1,
@@ -7151,9 +6553,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Conveyor Lift Mk.1",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_ConveyorLiftMk1_C": {
                     "d": 1,
@@ -7174,9 +6573,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Conveyor Lift Mk.2",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_ConveyorLiftMk2_C": {
                     "d": 1,
@@ -7197,9 +6593,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Conveyor Lift Mk.3",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_ConveyorLiftMk3_C": {
                     "d": 1,
@@ -7220,9 +6613,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Conveyor Lift Mk.4",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_ConveyorLiftMk4_C": {
                     "d": 1,
@@ -7243,9 +6633,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Conveyor Lift Mk.5",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_ConveyorLiftMk5_C": {
                     "d": 1,
@@ -7270,9 +6657,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Conveyor Lift Mk.6",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_ConveyorLiftMk6_C": {
                     "d": 1,
@@ -7301,9 +6685,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Conveyor Throughput Monitor",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_ConveyorMonitor_C": {
                     "d": 1,
@@ -7332,9 +6713,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Stackable Conveyor Pole",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_ConveyorPoleStackable_C": {
                     "d": 1,
@@ -7363,9 +6741,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Conveyor Wall Mount",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_ConveyorPoleWall_C": {
                     "d": 1,
@@ -7394,9 +6769,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Conveyor Pole",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_ConveyorPole_C": {
                     "d": 1,
@@ -7425,9 +6797,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Conveyor Wall Hole",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_ConveyorWallHole_C": {
                     "d": 1,
@@ -7460,9 +6829,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Cooling System",
-            "produced_in": [
-                "Build_Blender_C"
-            ],
             "products": {
                 "Desc_CoolingSystem_C": {
                     "d": 1,
@@ -7483,11 +6849,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Copper Powder",
-            "produced_in": [
-                "Build_ConstructorMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_CopperDust_C": {
                     "d": 1,
@@ -7508,11 +6869,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Copper Sheet",
-            "produced_in": [
-                "Build_ConstructorMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_CopperSheet_C": {
                     "d": 1,
@@ -7537,9 +6893,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Build converter: Copper Ore (Quartz)",
-            "produced_in": [
-                "Build_Converter_C"
-            ],
             "products": {
                 "Desc_OreCopper_C": {
                     "d": 1,
@@ -7564,9 +6917,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Build converter: Copper Ore (Sulfur)",
-            "produced_in": [
-                "Build_Converter_C"
-            ],
             "products": {
                 "Desc_OreCopper_C": {
                     "d": 1,
@@ -7595,11 +6945,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Crystal Oscillator",
-            "produced_in": [
-                "BP_WorkBenchComponent_C",
-                "Build_ManufacturerMk1_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_CrystalOscillator_C": {
                     "d": 1,
@@ -7620,9 +6965,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Cyber Wagon",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_CyberWagon_C": {
                     "d": 1,
@@ -7643,9 +6985,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Build converter: Dark Matter Residue",
-            "produced_in": [
-                "Build_Converter_C"
-            ],
             "products": {
                 "Desc_DarkEnergy_C": {
                     "d": 1,
@@ -7670,9 +7009,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Dark Matter Crystal",
-            "produced_in": [
-                "Build_HadronCollider_C"
-            ],
             "products": {
                 "Desc_DarkMatter_C": {
                     "d": 1,
@@ -7693,9 +7029,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Diamonds",
-            "produced_in": [
-                "Build_HadronCollider_C"
-            ],
             "products": {
                 "Desc_Diamond_C": {
                     "d": 1,
@@ -7716,9 +7049,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Inner Corner Quarter Pipe",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_DownQuarterPipeInCorner_Asphalt_8x4_C": {
                     "d": 1,
@@ -7739,9 +7069,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Outer Corner Quarter Pipe",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_DownQuarterPipeOutCorner_Asphalt_8x4_C": {
                     "d": 1,
@@ -7762,9 +7089,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Quarter Pipe",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_DownQuarterPipe_Asphalt_8x4_C": {
                     "d": 1,
@@ -7785,9 +7109,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Inner Corner Quarter Pipe",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_DownQuarterPipeInCorner_Concrete_8x4_C": {
                     "d": 1,
@@ -7808,9 +7129,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Outer Corner Quarter Pipe",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_DownQuarterPipeOutCorner_Concrete_8x4_C": {
                     "d": 1,
@@ -7831,9 +7149,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Inner Corner Quarter Pipe",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_DownQuarterPipeInCorner_ConcretePolished_8x4_C": {
                     "d": 1,
@@ -7854,9 +7169,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Outer Corner Quarter Pipe",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_DownQuarterPipeOutCorner_ConcretePolished_8x4_C": {
                     "d": 1,
@@ -7877,9 +7189,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Quarter Pipe",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_DownQuarterPipe_ConcretePolished_8x4_C": {
                     "d": 1,
@@ -7900,9 +7209,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Quarter Pipe",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_DownQuarterPipe_Concrete_8x4_C": {
                     "d": 1,
@@ -7923,9 +7229,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Inner Corner Quarter Pipe",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_DownQuarterPipeInCorner_Grip_8x4_C": {
                     "d": 1,
@@ -7946,9 +7249,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Outer Corner Quarter Pipe",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_DownQuarterPipeOutCorner_Grip_8x4_C": {
                     "d": 1,
@@ -7969,9 +7269,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Quarter Pipe",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_DownQuarterPipe_Grip_8x4_C": {
                     "d": 1,
@@ -8008,9 +7305,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Drone Port",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_DroneStation_C": {
                     "d": 1,
@@ -8047,9 +7341,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Drone",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_DroneTransport_C": {
                     "d": 1,
@@ -8074,11 +7365,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Electromagnetic Control Rod",
-            "produced_in": [
-                "Build_AssemblerMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_ElectromagneticControlRod_C": {
                     "d": 1,
@@ -8107,9 +7393,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Elevator Floor Stop",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_ElevatorFloorStop_C": {
                     "d": 1,
@@ -8134,9 +7417,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Personnel Elevator",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Elevator_C": {
                     "d": 1,
@@ -8161,11 +7441,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Encased Industrial Beam",
-            "produced_in": [
-                "Build_AssemblerMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_SteelPlateReinforced_C": {
                     "d": 1,
@@ -8198,9 +7473,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Explorer",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Explorer_C": {
                     "d": 1,
@@ -8225,11 +7497,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Fabric",
-            "produced_in": [
-                "Build_AssemblerMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_Fabric_C": {
                     "d": 1,
@@ -8258,9 +7525,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Factory Cart\u2122",
-            "produced_in": [
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "Desc_GolfCart_C": {
                     "d": 1,
@@ -8281,9 +7545,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Industrial Railing",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Fence_01_C": {
                     "d": 1,
@@ -8308,9 +7569,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Build converter: Ficsite Ingot (Aluminum)",
-            "produced_in": [
-                "Build_Converter_C"
-            ],
             "products": {
                 "Desc_FicsiteIngot_C": {
                     "d": 1,
@@ -8335,9 +7593,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Build converter: Ficsite Ingot (Caterium)",
-            "produced_in": [
-                "Build_Converter_C"
-            ],
             "products": {
                 "Desc_FicsiteIngot_C": {
                     "d": 1,
@@ -8362,9 +7617,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Build converter: Ficsite Ingot (Iron)",
-            "produced_in": [
-                "Build_Converter_C"
-            ],
             "products": {
                 "Desc_FicsiteIngot_C": {
                     "d": 1,
@@ -8385,10 +7637,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ficsite Trigon",
-            "produced_in": [
-                "Build_ConstructorMk1_C",
-                "BP_WorkBenchComponent_C"
-            ],
             "products": {
                 "Desc_FicsiteMesh_C": {
                     "d": 1,
@@ -8421,9 +7669,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ficsonium Fuel Rod",
-            "produced_in": [
-                "Build_QuantumEncoder_C"
-            ],
             "products": {
                 "Desc_DarkEnergy_C": {
                     "d": 1,
@@ -8456,9 +7701,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ficsonium",
-            "produced_in": [
-                "Build_HadronCollider_C"
-            ],
             "products": {
                 "Desc_Ficsonium_C": {
                     "d": 1,
@@ -8487,10 +7729,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Gas Filter",
-            "produced_in": [
-                "BP_WorkshopComponent_C",
-                "Build_ManufacturerMk1_C"
-            ],
             "products": {
                 "Desc_Filter_C": {
                     "d": 1,
@@ -8519,10 +7757,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Iodine-Infused Filter",
-            "produced_in": [
-                "BP_WorkshopComponent_C",
-                "Build_ManufacturerMk1_C"
-            ],
             "products": {
                 "Desc_HazmatFilter_C": {
                     "d": 1,
@@ -8547,10 +7781,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Sweet Fireworks",
-            "produced_in": [
-                "Build_AssemblerMk1_C",
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "Desc_Fireworks_Projectile_01_C": {
                     "d": 1,
@@ -8575,10 +7805,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Fancy Fireworks",
-            "produced_in": [
-                "Build_AssemblerMk1_C",
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "Desc_Fireworks_Projectile_02_C": {
                     "d": 1,
@@ -8603,10 +7829,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Sparkly Fireworks",
-            "produced_in": [
-                "Build_AssemblerMk1_C",
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "Desc_Fireworks_Projectile_03_C": {
                     "d": 1,
@@ -8627,9 +7849,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Frame Floor",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Flat_Frame_01_C": {
                     "d": 1,
@@ -8658,9 +7877,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Flood Light Tower",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_FloodlightPole_C": {
                     "d": 1,
@@ -8689,9 +7905,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Wall-Mounted Flood Light",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_FloodlightWall_C": {
                     "d": 1,
@@ -8712,11 +7925,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Empty Canister",
-            "produced_in": [
-                "Build_ConstructorMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_FluidCanister_C": {
                     "d": 1,
@@ -8741,9 +7949,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Glass Frame Foundation",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_FoundationGlass_01_C": {
                     "d": 1,
@@ -8772,9 +7977,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Hypertube Floor Hole",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_FoundationPassthrough_Hypertube_C": {
                     "d": 1,
@@ -8803,9 +8005,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Conveyor Lift Floor Hole",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_FoundationPassthrough_Lift_C": {
                     "d": 1,
@@ -8834,9 +8033,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Pipeline Floor Hole",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_FoundationPassthrough_Pipe_C": {
                     "d": 1,
@@ -8857,9 +8053,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Foundation (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Foundation_8x1_01_C": {
                     "d": 1,
@@ -8880,9 +8073,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Foundation (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Foundation_8x2_01_C": {
                     "d": 1,
@@ -8903,9 +8093,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Foundation (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Foundation_8x4_01_C": {
                     "d": 1,
@@ -8926,9 +8113,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Foundation (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Foundation_Asphalt_8x1_C": {
                     "d": 1,
@@ -8949,9 +8133,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Foundation (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Foundation_Asphalt_8x2_C": {
                     "d": 1,
@@ -8972,9 +8153,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Foundation (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Foundation_Asphalt_8x4_C": {
                     "d": 1,
@@ -8995,9 +8173,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Foundation (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Foundation_ConcretePolished_8x1_C": {
                     "d": 1,
@@ -9018,9 +8193,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Foundation (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Foundation_ConcretePolished_8x2_C": {
                     "d": 1,
@@ -9041,9 +8213,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Foundation (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Foundation_ConcretePolished_8x4_C": {
                     "d": 1,
@@ -9064,9 +8233,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Foundation (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Foundation_Concrete_8x1_C": {
                     "d": 1,
@@ -9087,9 +8253,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Foundation (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Foundation_Concrete_8x2_C": {
                     "d": 1,
@@ -9110,9 +8273,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Foundation (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Foundation_Concrete_8x4_C": {
                     "d": 1,
@@ -9133,9 +8293,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Frame Foundation",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Foundation_Frame_01_C": {
                     "d": 1,
@@ -9156,9 +8313,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Foundation (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Foundation_Metal_8x1_C": {
                     "d": 1,
@@ -9179,9 +8333,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Foundation (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Foundation_Metal_8x2_C": {
                     "d": 1,
@@ -9202,9 +8353,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Foundation (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Foundation_Metal_8x4_C": {
                     "d": 1,
@@ -9229,9 +8377,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Resource Well Extractor",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_FrackingExtractor_C": {
                     "d": 1,
@@ -9268,9 +8413,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Resource Well Pressurizer",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_FrackingSmasher_C": {
                     "d": 1,
@@ -9299,9 +8441,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Freight Car",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_FreightWagon_C": {
                     "d": 1,
@@ -9326,9 +8465,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Packaged Fuel",
-            "produced_in": [
-                "Build_Packager_C"
-            ],
             "products": {
                 "Desc_Fuel_C": {
                     "d": 1,
@@ -9357,9 +8493,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Fused Modular Frame",
-            "produced_in": [
-                "Build_Blender_C"
-            ],
             "products": {
                 "Desc_ModularFrameFused_C": {
                     "d": 1,
@@ -9380,10 +8513,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Empty Fluid Tank",
-            "produced_in": [
-                "Build_ConstructorMk1_C",
-                "BP_WorkBenchComponent_C"
-            ],
             "products": {
                 "Desc_GasTank_C": {
                     "d": 1,
@@ -9412,9 +8541,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Gas Mask",
-            "produced_in": [
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "BP_EquipmentDescriptorGasmask_C": {
                     "d": 1,
@@ -9435,9 +8561,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Automated Gate",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Gate_Automated_8x4_C": {
                     "d": 1,
@@ -9466,9 +8589,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Biomass Burner",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_GeneratorBiomass_Automated_C": {
                     "d": 1,
@@ -9497,9 +8617,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Coal-Powered Generator",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_GeneratorCoal_C": {
                     "d": 1,
@@ -9536,9 +8653,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Fuel-Powered Generator",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_GeneratorFuel_C": {
                     "d": 1,
@@ -9575,9 +8689,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Geothermal Generator",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_GeneratorGeoThermal_C": {
                     "d": 1,
@@ -9614,9 +8725,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Nuclear Power Plant",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_GeneratorNuclear_C": {
                     "d": 1,
@@ -9645,9 +8753,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Golden Factory Cart\u2122",
-            "produced_in": [
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "Desc_GolfCartGold_C": {
                     "d": 1,
@@ -9672,9 +8777,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Smokeless Powder",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_GunpowderMK2_C": {
                     "d": 1,
@@ -9699,10 +8801,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Black Powder",
-            "produced_in": [
-                "Build_AssemblerMk1_C",
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "Desc_Gunpowder_C": {
                     "d": 1,
@@ -9739,9 +8837,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Particle Accelerator",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_HadronCollider_C": {
                     "d": 1,
@@ -9774,9 +8869,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Hazmat Suit",
-            "produced_in": [
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "BP_EquipmentDescriptorHazmatSuit_C": {
                     "d": 1,
@@ -9801,11 +8893,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Heat Sink",
-            "produced_in": [
-                "Build_AssemblerMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_AluminumPlateReinforced_C": {
                     "d": 1,
@@ -9834,11 +8921,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "High-Speed Connector",
-            "produced_in": [
-                "BP_WorkBenchComponent_C",
-                "Build_ManufacturerMk1_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_HighSpeedConnector_C": {
                     "d": 1,
@@ -9871,9 +8953,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Hoverpack",
-            "produced_in": [
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "BP_EquipmentDescriptorHoverPack_C": {
                     "d": 1,
@@ -9902,9 +8981,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Stackable Hypertube Support",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_HyperPoleStackable_C": {
                     "d": 1,
@@ -9933,9 +9009,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Hypertube Junction",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_HyperTubeJunction_C": {
                     "d": 1,
@@ -9964,9 +9037,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Hypertube Branch",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_HypertubeTJunction_C": {
                     "d": 1,
@@ -9991,9 +9061,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Hypertube Wall Hole",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_HyperTubeWallHole_C": {
                     "d": 1,
@@ -10018,9 +9085,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Hypertube Wall Support",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_HyperTubeWallSupport_C": {
                     "d": 1,
@@ -10049,9 +9113,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Industrial Fluid Buffer",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_IndustrialTank_C": {
                     "d": 1,
@@ -10076,10 +9137,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Aluminum Ingot",
-            "produced_in": [
-                "Build_FoundryMk1_C",
-                "BP_WorkBenchComponent_C"
-            ],
             "products": {
                 "Desc_AluminumIngot_C": {
                     "d": 1,
@@ -10100,10 +9157,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Caterium Ingot",
-            "produced_in": [
-                "Build_SmelterMk1_C",
-                "BP_WorkBenchComponent_C"
-            ],
             "products": {
                 "Desc_GoldIngot_C": {
                     "d": 1,
@@ -10124,11 +9177,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Copper Ingot",
-            "produced_in": [
-                "Build_SmelterMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_CopperIngot_C": {
                     "d": 1,
@@ -10149,11 +9197,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Iron Ingot",
-            "produced_in": [
-                "Build_SmelterMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_IronIngot_C": {
                     "d": 1,
@@ -10174,10 +9217,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Reanimated SAM",
-            "produced_in": [
-                "Build_ConstructorMk1_C",
-                "BP_WorkBenchComponent_C"
-            ],
             "products": {
                 "Desc_SAMIngot_C": {
                     "d": 1,
@@ -10202,10 +9241,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Steel Ingot",
-            "produced_in": [
-                "Build_FoundryMk1_C",
-                "BP_WorkBenchComponent_C"
-            ],
             "products": {
                 "Desc_SteelIngot_C": {
                     "d": 1,
@@ -10226,9 +9261,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Ramp (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_Asphalt_8x1_C": {
                     "d": 1,
@@ -10249,9 +9281,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Ramp (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_Asphalt_8x2_C": {
                     "d": 1,
@@ -10272,9 +9301,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Ramp (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_Asphalt_8x4_C": {
                     "d": 1,
@@ -10295,9 +9321,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Ramp (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_Concrete_8x1_C": {
                     "d": 1,
@@ -10318,9 +9341,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Ramp (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_Concrete_8x2_C": {
                     "d": 1,
@@ -10341,9 +9361,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Ramp (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_Concrete_8x4_C": {
                     "d": 1,
@@ -10364,9 +9381,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Down Corner (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_DCorner_Asphalt_8x1_C": {
                     "d": 1,
@@ -10387,9 +9401,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Down Corner (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_DCorner_Asphalt_8x2_C": {
                     "d": 1,
@@ -10410,9 +9421,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Down Corner (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_DCorner_Asphalt_8x4_C": {
                     "d": 1,
@@ -10433,9 +9441,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Down Corner (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_DCorner_Concrete_8x1_C": {
                     "d": 1,
@@ -10456,9 +9461,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Down Corner (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_DCorner_Concrete_8x2_C": {
                     "d": 1,
@@ -10479,9 +9481,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Down Corner (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_DCorner_Concrete_8x4_C": {
                     "d": 1,
@@ -10502,9 +9501,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Down Corner (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_DCorner_Metal_8x1_C": {
                     "d": 1,
@@ -10525,9 +9521,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Down Corner (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_DCorner_Metal_8x2_C": {
                     "d": 1,
@@ -10548,9 +9541,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Down Corner (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_DCorner_Metal_8x4_C": {
                     "d": 1,
@@ -10571,9 +9561,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Down Corner (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_DCorner_Polished_8x1_C": {
                     "d": 1,
@@ -10594,9 +9581,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Down Corner (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_DCorner_Polished_8x2_C": {
                     "d": 1,
@@ -10617,9 +9601,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Down Corner (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_DCorner_Polished_8x4_C": {
                     "d": 1,
@@ -10640,9 +9621,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Ramp (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_Metal_8x1_C": {
                     "d": 1,
@@ -10663,9 +9641,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Ramp (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_Metal_8x2_C": {
                     "d": 1,
@@ -10686,9 +9661,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Ramp (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_Metal_8x4_C": {
                     "d": 1,
@@ -10709,9 +9681,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Ramp (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_Polished_8x1_C": {
                     "d": 1,
@@ -10732,9 +9701,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Ramp (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_Polished_8x2_C": {
                     "d": 1,
@@ -10755,9 +9721,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Ramp (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_Polished_8x4_C": {
                     "d": 1,
@@ -10778,9 +9741,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Up Corner (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_UCorner_Asphalt_8x1_C": {
                     "d": 1,
@@ -10801,9 +9761,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Up Corner (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_UCorner_Asphalt_8x2_C": {
                     "d": 1,
@@ -10824,9 +9781,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Up Corner (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_UCorner_Asphalt_8x4_C": {
                     "d": 1,
@@ -10847,9 +9801,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Up Corner (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_UCorner_Concrete_8x1_C": {
                     "d": 1,
@@ -10870,9 +9821,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Up Corner (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_UCorner_Concrete_8x2_C": {
                     "d": 1,
@@ -10893,9 +9841,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Up Corner (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_UCorner_Concrete_8x4_C": {
                     "d": 1,
@@ -10916,9 +9861,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Up Corner (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_UCorner_Metal_8x1_C": {
                     "d": 1,
@@ -10939,9 +9881,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Up Corner (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_UCorner_Metal_8x2_C": {
                     "d": 1,
@@ -10962,9 +9901,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Up Corner (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_UCorner_Metal_8x4_C": {
                     "d": 1,
@@ -10985,9 +9921,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Up Corner (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_UCorner_Polished_8x1_C": {
                     "d": 1,
@@ -11008,9 +9941,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Up Corner (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_UCorner_Polished_8x2_C": {
                     "d": 1,
@@ -11031,9 +9961,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Up Corner (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_InvertedRamp_UCorner_Polished_8x4_C": {
                     "d": 1,
@@ -11058,9 +9985,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ionized Fuel",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_CompactedCoal_C": {
                     "d": 1,
@@ -11089,11 +10013,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Reinforced Iron Plate",
-            "produced_in": [
-                "Build_AssemblerMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_IronPlateReinforced_C": {
                     "d": 1,
@@ -11114,11 +10033,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Iron Plate",
-            "produced_in": [
-                "Build_ConstructorMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_IronPlate_C": {
                     "d": 1,
@@ -11139,11 +10053,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Iron Rod",
-            "produced_in": [
-                "Build_ConstructorMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_IronRod_C": {
                     "d": 1,
@@ -11168,9 +10077,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Build converter: Iron Ore (Limestone)",
-            "produced_in": [
-                "Build_Converter_C"
-            ],
             "products": {
                 "Desc_OreIron_C": {
                     "d": 1,
@@ -11203,9 +10109,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Jetpack",
-            "produced_in": [
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "BP_EquipmentDescriptorJetPack_C": {
                     "d": 1,
@@ -11234,9 +10137,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Jump Pad",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_JumpPadAdjustable_C": {
                     "d": 1,
@@ -11265,7 +10165,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Old Tilted Jump Pad",
-            "produced_in": [],
             "products": {
                 "Desc_JumpPadTilted_C": {
                     "d": 1,
@@ -11294,7 +10193,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Old Jump Pad",
-            "produced_in": [],
             "products": {
                 "Desc_JumpPad_C": {
                     "d": 1,
@@ -11315,9 +10213,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ladder",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ladder_C": {
                     "d": 1,
@@ -11342,9 +10237,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Large Fan",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_LargeFan_C": {
                     "d": 1,
@@ -11369,9 +10261,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Large Vent",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_LargeVent_C": {
                     "d": 1,
@@ -11400,9 +10289,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Light Control Panel",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_LightsControlPanel_C": {
                     "d": 1,
@@ -11427,9 +10313,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Build converter: Limestone (Sulfur)",
-            "produced_in": [
-                "Build_Converter_C"
-            ],
             "products": {
                 "Desc_Stone_C": {
                     "d": 1,
@@ -11454,9 +10337,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Liquid Biofuel",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_LiquidBiofuel_C": {
                     "d": 1,
@@ -11477,9 +10357,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Fuel",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_LiquidFuel_C": {
                     "d": 1,
@@ -11520,9 +10397,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Electric Locomotive",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Locomotive_C": {
                     "d": 1,
@@ -11547,9 +10421,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Lookout Tower",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_LookoutTower_C": {
                     "d": 1,
@@ -11578,9 +10449,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "MAM",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Mam_C": {
                     "d": 1,
@@ -11613,9 +10481,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Manufacturer",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_ManufacturerMk1_C": {
                     "d": 1,
@@ -11640,9 +10505,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Protein Inhaler",
-            "produced_in": [
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "Desc_Medkit_C": {
                     "d": 1,
@@ -11667,9 +10529,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Vitamin Inhaler",
-            "produced_in": [
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "Desc_Medkit_C": {
                     "d": 1,
@@ -11698,9 +10557,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Miner Mk.1",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_MinerMk1_C": {
                     "d": 1,
@@ -11733,9 +10589,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Miner Mk.2",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_MinerMk2_C": {
                     "d": 1,
@@ -11772,9 +10625,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Miner Mk.3",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_MinerMk3_C": {
                     "d": 1,
@@ -11807,11 +10657,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Heavy Modular Frame",
-            "produced_in": [
-                "BP_WorkBenchComponent_C",
-                "Build_ManufacturerMk1_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_ModularFrameHeavy_C": {
                     "d": 1,
@@ -11836,11 +10681,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Modular Frame",
-            "produced_in": [
-                "Build_AssemblerMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_ModularFrame_C": {
                     "d": 1,
@@ -11873,11 +10713,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Turbo Motor",
-            "produced_in": [
-                "BP_WorkBenchComponent_C",
-                "Build_ManufacturerMk1_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_MotorLightweight_C": {
                     "d": 1,
@@ -11902,11 +10737,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Motor",
-            "produced_in": [
-                "Build_AssemblerMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_Motor_C": {
                     "d": 1,
@@ -11935,9 +10765,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Nitric Acid",
-            "produced_in": [
-                "Build_Blender_C"
-            ],
             "products": {
                 "Desc_NitricAcid_C": {
                     "d": 1,
@@ -11962,9 +10789,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Build converter: Nitrogen Gas (Bauxite)",
-            "produced_in": [
-                "Build_Converter_C"
-            ],
             "products": {
                 "Desc_NitrogenGas_C": {
                     "d": 1,
@@ -11989,9 +10813,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Build converter: Nitrogen Gas (Caterium)",
-            "produced_in": [
-                "Build_Converter_C"
-            ],
             "products": {
                 "Desc_NitrogenGas_C": {
                     "d": 1,
@@ -12016,10 +10837,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Cluster Nobelisk",
-            "produced_in": [
-                "Build_AssemblerMk1_C",
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "Desc_NobeliskCluster_C": {
                     "d": 1,
@@ -12048,9 +10865,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Nobelisk Detonator",
-            "produced_in": [
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "BP_EquipmentDescriptorNobeliskDetonator_C": {
                     "d": 1,
@@ -12075,10 +10889,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Gas Nobelisk",
-            "produced_in": [
-                "Build_AssemblerMk1_C",
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "Desc_NobeliskGas_C": {
                     "d": 1,
@@ -12111,10 +10921,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Nuke Nobelisk",
-            "produced_in": [
-                "BP_WorkshopComponent_C",
-                "Build_ManufacturerMk1_C"
-            ],
             "products": {
                 "Desc_NobeliskNuke_C": {
                     "d": 1,
@@ -12139,10 +10945,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Pulse Nobelisk",
-            "produced_in": [
-                "Build_AssemblerMk1_C",
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "Desc_NobeliskShockwave_C": {
                     "d": 1,
@@ -12167,10 +10969,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Nobelisk",
-            "produced_in": [
-                "Build_AssemblerMk1_C",
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "Desc_NobeliskExplosive_C": {
                     "d": 1,
@@ -12203,9 +11001,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Non-Fissile Uranium",
-            "produced_in": [
-                "Build_Blender_C"
-            ],
             "products": {
                 "Desc_Water_C": {
                     "d": 1,
@@ -12234,9 +11029,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Uranium Fuel Rod",
-            "produced_in": [
-                "Build_ManufacturerMk1_C"
-            ],
             "products": {
                 "Desc_NuclearFuelRod_C": {
                     "d": 1,
@@ -12265,9 +11057,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Nutritional Inhaler",
-            "produced_in": [
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "Desc_Medkit_C": {
                     "d": 1,
@@ -12296,9 +11085,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Object Scanner",
-            "produced_in": [
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "BP_EquipmentDescriptorObjectScanner_C": {
                     "d": 1,
@@ -12327,9 +11113,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Oil Extractor",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_OilPump_C": {
                     "d": 1,
@@ -12362,9 +11145,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Refinery",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_OilRefinery_C": {
                     "d": 1,
@@ -12389,9 +11169,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Packaged Alumina Solution",
-            "produced_in": [
-                "Build_Packager_C"
-            ],
             "products": {
                 "Desc_PackagedAlumina_C": {
                     "d": 1,
@@ -12416,9 +11193,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Packaged Liquid Biofuel",
-            "produced_in": [
-                "Build_Packager_C"
-            ],
             "products": {
                 "Desc_PackagedBiofuel_C": {
                     "d": 1,
@@ -12443,9 +11217,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Packaged Oil",
-            "produced_in": [
-                "Build_Packager_C"
-            ],
             "products": {
                 "Desc_PackagedOil_C": {
                     "d": 1,
@@ -12470,9 +11241,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Packaged Ionized Fuel",
-            "produced_in": [
-                "Build_Packager_C"
-            ],
             "products": {
                 "Desc_PackagedIonizedFuel_C": {
                     "d": 1,
@@ -12497,9 +11265,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Packaged Nitric Acid",
-            "produced_in": [
-                "Build_Packager_C"
-            ],
             "products": {
                 "Desc_PackagedNitricAcid_C": {
                     "d": 1,
@@ -12524,9 +11289,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Packaged Nitrogen Gas",
-            "produced_in": [
-                "Build_Packager_C"
-            ],
             "products": {
                 "Desc_PackagedNitrogenGas_C": {
                     "d": 1,
@@ -12551,9 +11313,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Packaged Heavy Oil Residue",
-            "produced_in": [
-                "Build_Packager_C"
-            ],
             "products": {
                 "Desc_PackagedOilResidue_C": {
                     "d": 1,
@@ -12578,9 +11337,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Packaged Rocket Fuel",
-            "produced_in": [
-                "Build_Packager_C"
-            ],
             "products": {
                 "Desc_PackagedRocketFuel_C": {
                     "d": 1,
@@ -12605,9 +11361,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Packaged Sulfuric Acid",
-            "produced_in": [
-                "Build_Packager_C"
-            ],
             "products": {
                 "Desc_PackagedSulfuricAcid_C": {
                     "d": 1,
@@ -12632,9 +11385,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Packaged Turbofuel",
-            "produced_in": [
-                "Build_Packager_C"
-            ],
             "products": {
                 "Desc_TurboFuel_C": {
                     "d": 1,
@@ -12659,9 +11409,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Packaged Water",
-            "produced_in": [
-                "Build_Packager_C"
-            ],
             "products": {
                 "Desc_PackagedWater_C": {
                     "d": 1,
@@ -12690,9 +11437,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Packager",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Packager_C": {
                     "d": 1,
@@ -12717,9 +11461,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Parachute",
-            "produced_in": [
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "Desc_Parachute_C": {
                     "d": 1,
@@ -12740,9 +11481,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Petroleum Coke",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_PetroleumCoke_C": {
                     "d": 1,
@@ -12763,9 +11501,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Big Pillar Support",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PillarBase_C": {
                     "d": 1,
@@ -12786,9 +11521,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Small Pillar Support",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PillarBase_Small_C": {
                     "d": 1,
@@ -12813,9 +11545,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Big Metal Pillar",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PillarMiddle_C": {
                     "d": 1,
@@ -12836,9 +11565,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Big Concrete Pillar",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PillarMiddle_Concrete_C": {
                     "d": 1,
@@ -12859,9 +11585,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Big Frame Pillar",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PillarMiddle_Frame_C": {
                     "d": 1,
@@ -12882,7 +11605,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Pillar Top",
-            "produced_in": [],
             "products": {
                 "Desc_PillarTop_C": {
                     "d": 1,
@@ -12903,9 +11625,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Small Concrete Pillar",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Pillar_Small_Concrete_C": {
                     "d": 1,
@@ -12926,9 +11645,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Small Frame Pillar",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Pillar_Small_Frame_C": {
                     "d": 1,
@@ -12953,9 +11669,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Small Metal Pillar",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Pillar_Small_Metal_C": {
                     "d": 1,
@@ -12984,9 +11697,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Hypertube Entrance",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PipeHyperStart_C": {
                     "d": 1,
@@ -13011,9 +11721,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Hypertube Support",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PipeHyperSupport_C": {
                     "d": 1,
@@ -13038,9 +11745,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Hypertube",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PipeHyper_C": {
                     "d": 1,
@@ -13065,9 +11769,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Fluid Buffer",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PipeStorageTank_C": {
                     "d": 1,
@@ -13096,9 +11797,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Stackable Pipeline Support",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PipeSupportStackable_C": {
                     "d": 1,
@@ -13127,9 +11825,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Pipeline Wall Hole",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PipelineSupportWallHole_C": {
                     "d": 1,
@@ -13158,9 +11853,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Pipeline Wall Support",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PipelineSupportWall_C": {
                     "d": 1,
@@ -13185,9 +11877,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Pipeline Support",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PipelineSupport_C": {
                     "d": 1,
@@ -13208,9 +11897,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Pipeline Junction",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PipelineJunction_Cross_C": {
                     "d": 1,
@@ -13235,9 +11921,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Pipeline Mk.2",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PipelineMK2_C": {
                     "d": 1,
@@ -13262,9 +11945,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Clean Pipeline Mk.2",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PipelineMK2_NoIndicator_C": {
                     "d": 1,
@@ -13293,9 +11973,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Pipeline Pump Mk.2",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PipelinePumpMk2_C": {
                     "d": 1,
@@ -13320,9 +11997,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Pipeline Pump Mk.1",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PipelinePump_C": {
                     "d": 1,
@@ -13343,9 +12017,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Pipeline Mk.1",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Pipeline_C": {
                     "d": 1,
@@ -13366,9 +12037,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Clean Pipeline Mk.1",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Pipeline_NoIndicator_C": {
                     "d": 1,
@@ -13389,9 +12057,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Plastic",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_HeavyOilResidue_C": {
                     "d": 1,
@@ -13420,11 +12085,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Encased Plutonium Cell",
-            "produced_in": [
-                "Build_AssemblerMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_PlutoniumCell_C": {
                     "d": 1,
@@ -13457,9 +12117,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Plutonium Fuel Rod",
-            "produced_in": [
-                "Build_ManufacturerMk1_C"
-            ],
             "products": {
                 "Desc_PlutoniumFuelRod_C": {
                     "d": 1,
@@ -13480,9 +12137,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Plutonium Pellet",
-            "produced_in": [
-                "Build_HadronCollider_C"
-            ],
             "products": {
                 "Desc_PlutoniumPellet_C": {
                     "d": 1,
@@ -13507,9 +12161,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Portable Miner",
-            "produced_in": [
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "BP_ItemDescriptorPortableMiner_C": {
                     "d": 1,
@@ -13542,9 +12193,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Satellite Portal",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PortalSatellite_C": {
                     "d": 1,
@@ -13581,9 +12229,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Main Portal",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Portal_C": {
                     "d": 1,
@@ -13604,11 +12249,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Power Shard (1)",
-            "produced_in": [
-                "Build_ConstructorMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_CrystalShard_C": {
                     "d": 1,
@@ -13629,11 +12269,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Power Shard (2)",
-            "produced_in": [
-                "Build_ConstructorMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_CrystalShard_C": {
                     "d": 1,
@@ -13654,11 +12289,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Power Shard (5)",
-            "produced_in": [
-                "Build_ConstructorMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_CrystalShard_C": {
                     "d": 1,
@@ -13679,9 +12309,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Power Line",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PowerLine_C": {
                     "d": 1,
@@ -13710,9 +12337,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Power Pole Mk.1",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PowerPoleMk1_C": {
                     "d": 1,
@@ -13741,9 +12365,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Power Pole Mk.2",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PowerPoleMk2_C": {
                     "d": 1,
@@ -13772,9 +12393,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Power Pole Mk.3",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PowerPoleMk3_C": {
                     "d": 1,
@@ -13799,9 +12417,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Double Wall Outlet Mk.2",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PowerPoleWallDoubleMk2_C": {
                     "d": 1,
@@ -13826,9 +12441,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Double Wall Outlet Mk.3",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PowerPoleWallDoubleMk3_C": {
                     "d": 1,
@@ -13853,9 +12465,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Double Wall Outlet Mk.1",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PowerPoleWallDouble_C": {
                     "d": 1,
@@ -13880,9 +12489,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Wall Outlet Mk.2",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PowerPoleWallMk2_C": {
                     "d": 1,
@@ -13907,9 +12513,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Wall Outlet Mk.3",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PowerPoleWallMk3_C": {
                     "d": 1,
@@ -13934,9 +12537,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Wall Outlet Mk.1",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PowerPoleWall_C": {
                     "d": 1,
@@ -13965,9 +12565,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Power Storage",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PowerStorageMk1_C": {
                     "d": 1,
@@ -13996,9 +12593,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Power Switch",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PowerSwitch_C": {
                     "d": 1,
@@ -14027,9 +12621,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Power Tower Platform",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PowerTowerPlatform_C": {
                     "d": 1,
@@ -14058,9 +12649,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Power Tower",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PowerTower_C": {
                     "d": 1,
@@ -14085,11 +12673,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Pressure Conversion Cube",
-            "produced_in": [
-                "Build_AssemblerMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_PressureConversionCube_C": {
                     "d": 1,
@@ -14118,9 +12701,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Priority Power Switch",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_PriorityPowerSwitch_C": {
                     "d": 1,
@@ -14141,11 +12721,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Hatcher Protein",
-            "produced_in": [
-                "Build_ConstructorMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_AlienProtein_C": {
                     "d": 1,
@@ -14166,11 +12741,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Hog Protein",
-            "produced_in": [
-                "Build_ConstructorMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_AlienProtein_C": {
                     "d": 1,
@@ -14191,11 +12761,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Spitter Protein",
-            "produced_in": [
-                "Build_ConstructorMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_AlienProtein_C": {
                     "d": 1,
@@ -14216,11 +12781,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Stinger Protein",
-            "produced_in": [
-                "Build_ConstructorMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_AlienProtein_C": {
                     "d": 1,
@@ -14241,9 +12801,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Pure Aluminum Ingot",
-            "produced_in": [
-                "Build_SmelterMk1_C"
-            ],
             "products": {
                 "Desc_AluminumIngot_C": {
                     "d": 1,
@@ -14280,9 +12837,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Quantum Encoder",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuantumEncoder_C": {
                     "d": 1,
@@ -14298,9 +12852,6 @@ const game_data = {
             "ingredients": {},
             "is_alternate": true,
             "name": "Build converter: Excited Photonic Matter",
-            "produced_in": [
-                "Build_Converter_C"
-            ],
             "products": {
                 "Desc_QuantumEnergy_C": {
                     "d": 1,
@@ -14321,9 +12872,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Quarter Pipe",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeCorner_01_C": {
                     "d": 1,
@@ -14344,9 +12892,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Inner Corner Quarter Pipe",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeCorner_02_C": {
                     "d": 1,
@@ -14367,9 +12912,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Quarter Pipe",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeCorner_03_C": {
                     "d": 1,
@@ -14390,9 +12932,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Outer Corner Quarter Pipe",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeCorner_04_C": {
                     "d": 1,
@@ -14413,9 +12952,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Quarter Pipe",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeInCorner_Asphalt_8x4_C": {
                     "d": 1,
@@ -14436,9 +12972,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Quarter Pipe",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeInCorner_ConcretePolished_8x4_C": {
                     "d": 1,
@@ -14459,9 +12992,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Quarter Pipe",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeInCorner_Concrete_8x4_C": {
                     "d": 1,
@@ -14482,9 +13012,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Quarter Pipe",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeInCorner_Grip_8x4_C": {
                     "d": 1,
@@ -14505,9 +13032,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Extension (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddleInCorner_Asphalt_8x1_C": {
                     "d": 1,
@@ -14528,9 +13052,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Extension (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddleInCorner_Asphalt_8x2_C": {
                     "d": 1,
@@ -14551,9 +13072,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Extension (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddleInCorner_Asphalt_8x4_C": {
                     "d": 1,
@@ -14574,9 +13092,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Extension (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddleInCorner_Concrete_8x1_C": {
                     "d": 1,
@@ -14597,9 +13112,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Extension (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddleInCorner_Concrete_8x2_C": {
                     "d": 1,
@@ -14620,9 +13132,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Extension (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddleInCorner_Concrete_8x4_C": {
                     "d": 1,
@@ -14643,9 +13152,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Extension (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddleInCorner_Ficsit_8x1_C": {
                     "d": 1,
@@ -14666,9 +13172,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Extension (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddleInCorner_Ficsit_8x2_C": {
                     "d": 1,
@@ -14689,9 +13192,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Extension (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddleInCorner_Ficsit_8x4_C": {
                     "d": 1,
@@ -14712,9 +13212,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Extension (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddleInCorner_Grip_8x1_C": {
                     "d": 1,
@@ -14735,9 +13232,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Extension (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddleInCorner_Grip_8x2_C": {
                     "d": 1,
@@ -14758,9 +13252,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Extension (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddleInCorner_Grip_8x4_C": {
                     "d": 1,
@@ -14781,9 +13272,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Extension (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddleInCorner_PolishedConcrete_8x1_C": {
                     "d": 1,
@@ -14804,9 +13292,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Extension (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddleInCorner_PolishedConcrete_8x2_C": {
                     "d": 1,
@@ -14827,9 +13312,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Extension (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddleInCorner_PolishedConcrete_8x4_C": {
                     "d": 1,
@@ -14850,9 +13332,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Extension (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddleOutCorner_Asphalt_4x1_C": {
                     "d": 1,
@@ -14873,9 +13352,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Extension (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddleOutCorner_Asphalt_4x2_C": {
                     "d": 1,
@@ -14896,9 +13372,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Extension (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddleOutCorner_Asphalt_4x4_C": {
                     "d": 1,
@@ -14919,9 +13392,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Extension (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddleOutCorner_Concrete_4x1_C": {
                     "d": 1,
@@ -14942,9 +13412,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Extension (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddleOutCorner_Concrete_4x2_C": {
                     "d": 1,
@@ -14965,9 +13432,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Extension (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddleOutCorner_Concrete_4x4_C": {
                     "d": 1,
@@ -14988,9 +13452,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Extension (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddleOutCorner_Ficsit_4x1_C": {
                     "d": 1,
@@ -15011,9 +13472,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Extension (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddleOutCorner_Ficsit_4x2_C": {
                     "d": 1,
@@ -15034,9 +13492,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Extension (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddleOutCorner_Ficsit_4x4_C": {
                     "d": 1,
@@ -15057,9 +13512,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Extension (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddleOutCorner_Grip_4x1_C": {
                     "d": 1,
@@ -15080,9 +13532,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Extension (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddleOutCorner_Grip_4x2_C": {
                     "d": 1,
@@ -15103,9 +13552,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Extension (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddleOutCorner_Grip_4x4_C": {
                     "d": 1,
@@ -15126,9 +13572,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Extension (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddleOutCorner_PolishedConcrete_4x1_C": {
                     "d": 1,
@@ -15149,9 +13592,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Extension (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddleOutCorner_PolishedConcrete_4x2_C": {
                     "d": 1,
@@ -15172,9 +13612,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Extension (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddleOutCorner_PolishedConcrete_4x4_C": {
                     "d": 1,
@@ -15195,9 +13632,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Half Foundation (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddle_Asphalt_8x1_C": {
                     "d": 1,
@@ -15218,9 +13652,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Half Foundation (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddle_Asphalt_8x2_C": {
                     "d": 1,
@@ -15241,9 +13672,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Half Foundation (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddle_Asphalt_8x4_C": {
                     "d": 1,
@@ -15264,9 +13692,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Half Foundation (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddle_Concrete_8x1_C": {
                     "d": 1,
@@ -15287,9 +13712,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Half Foundation (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddle_Concrete_8x2_C": {
                     "d": 1,
@@ -15310,9 +13732,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Half Foundation (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddle_Concrete_8x4_C": {
                     "d": 1,
@@ -15333,9 +13752,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Half Foundation (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddle_Ficsit_4x1_C": {
                     "d": 1,
@@ -15356,9 +13772,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Half Foundation (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddle_Ficsit_4x2_C": {
                     "d": 1,
@@ -15379,9 +13792,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Half Foundation (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddle_Ficsit_4x4_C": {
                     "d": 1,
@@ -15402,9 +13812,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Half Foundation (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddle_Grip_8x1_C": {
                     "d": 1,
@@ -15425,9 +13832,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Half Foundation (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddle_Grip_8x2_C": {
                     "d": 1,
@@ -15448,9 +13852,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Half Foundation (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddle_Grip_8x4_C": {
                     "d": 1,
@@ -15471,9 +13872,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Half Foundation (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddle_PolishedConcrete_8x1_C": {
                     "d": 1,
@@ -15494,9 +13892,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Half Foundation (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddle_PolishedConcrete_8x2_C": {
                     "d": 1,
@@ -15517,9 +13912,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Half Foundation (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeMiddle_PolishedConcrete_8x4_C": {
                     "d": 1,
@@ -15540,9 +13932,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Quarter Pipe",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeOutCorner_Asphalt_8x4_C": {
                     "d": 1,
@@ -15563,9 +13952,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Quarter Pipe",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeOutCorner_ConcretePolished_8x4_C": {
                     "d": 1,
@@ -15586,9 +13972,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Quarter Pipe",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeOutCorner_Concrete_8x4_C": {
                     "d": 1,
@@ -15609,9 +13992,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Quarter Pipe",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipeOutCorner_Grip_8x4_C": {
                     "d": 1,
@@ -15632,9 +14012,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Quarter Pipe",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipe_02_C": {
                     "d": 1,
@@ -15655,9 +14032,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Quarter Pipe",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipe_Asphalt_8x4_C": {
                     "d": 1,
@@ -15678,9 +14052,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Quarter Pipe",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipe_C": {
                     "d": 1,
@@ -15701,9 +14072,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Quarter Pipe",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipe_ConcretePolished_8x4_C": {
                     "d": 1,
@@ -15724,9 +14092,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Quarter Pipe",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipe_Concrete_8x4_C": {
                     "d": 1,
@@ -15747,9 +14112,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Quarter Pipe",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_QuarterPipe_Grip_8x4_C": {
                     "d": 1,
@@ -15770,11 +14132,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Quartz Crystal",
-            "produced_in": [
-                "Build_ConstructorMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_QuartzCrystal_C": {
                     "d": 1,
@@ -15799,9 +14156,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Build converter: Raw Quartz (Bauxite)",
-            "produced_in": [
-                "Build_Converter_C"
-            ],
             "products": {
                 "Desc_RawQuartz_C": {
                     "d": 1,
@@ -15826,9 +14180,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Build converter: Raw Quartz (Coal)",
-            "produced_in": [
-                "Build_Converter_C"
-            ],
             "products": {
                 "Desc_RawQuartz_C": {
                     "d": 1,
@@ -15849,11 +14200,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Quickwire",
-            "produced_in": [
-                "Build_ConstructorMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_HighSpeedWire_C": {
                     "d": 1,
@@ -15886,9 +14232,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Radar Tower",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_RadarTower_C": {
                     "d": 1,
@@ -15917,11 +14260,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Radio Control Unit",
-            "produced_in": [
-                "BP_WorkBenchComponent_C",
-                "Build_ManufacturerMk1_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_ModularFrameLightweight_C": {
                     "d": 1,
@@ -15942,9 +14280,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Modern Railing",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Railing_01_C": {
                     "d": 1,
@@ -15969,9 +14304,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Block Signal",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_RailroadBlockSignal_C": {
                     "d": 1,
@@ -16000,9 +14332,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Buffer Stop",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_RailroadEndStop_C": {
                     "d": 1,
@@ -16027,9 +14356,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Path Signal",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_RailroadPathSignal_C": {
                     "d": 1,
@@ -16054,9 +14380,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Railway",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_RailroadTrack_C": {
                     "d": 1,
@@ -16077,9 +14400,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Double Ramp (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_RampDouble_8x1_C": {
                     "d": 1,
@@ -16100,9 +14420,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Double Ramp (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_RampDouble_Asphalt_8x1_C": {
                     "d": 1,
@@ -16123,9 +14440,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Double Ramp (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_RampDouble_Asphalt_8x2_C": {
                     "d": 1,
@@ -16146,9 +14460,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Double Ramp (8\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_RampDouble_Asphalt_8x4_C": {
                     "d": 1,
@@ -16169,9 +14480,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Double Ramp (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_RampDouble_C": {
                     "d": 1,
@@ -16192,9 +14500,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Double Ramp (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_RampDouble_Concrete_8x1_C": {
                     "d": 1,
@@ -16215,9 +14520,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Double Ramp (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_RampDouble_Concrete_8x2_C": {
                     "d": 1,
@@ -16238,9 +14540,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Double Ramp (8\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_RampDouble_Concrete_8x4_C": {
                     "d": 1,
@@ -16261,9 +14560,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Double Ramp (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_RampDouble_Metal_8x1_C": {
                     "d": 1,
@@ -16284,9 +14580,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Double Ramp (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_RampDouble_Metal_8x2_C": {
                     "d": 1,
@@ -16307,9 +14600,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Double Ramp (8\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_RampDouble_Metal_8x4_C": {
                     "d": 1,
@@ -16330,9 +14620,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Double Ramp (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_RampDouble_Polished_8x1_C": {
                     "d": 1,
@@ -16353,9 +14640,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Double Ramp (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_RampDouble_Polished_8x2_C": {
                     "d": 1,
@@ -16376,9 +14660,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Double Ramp (8\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_RampDouble_Polished_8x4_C": {
                     "d": 1,
@@ -16399,9 +14680,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Ramp (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_RampInverted_8x1_C": {
                     "d": 1,
@@ -16422,9 +14700,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Up Corner (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_RampInverted_8x1_Corner_01_C": {
                     "d": 1,
@@ -16445,9 +14720,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Down Corner (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_RampInverted_8x1_Corner_02_C": {
                     "d": 1,
@@ -16468,9 +14740,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Ramp (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_RampInverted_8x2_01_C": {
                     "d": 1,
@@ -16491,9 +14760,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Up Corner (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_RampInverted_8x2_Corner_01_C": {
                     "d": 1,
@@ -16514,9 +14780,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Down Corner (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_RampInverted_8x2_Corner_02_C": {
                     "d": 1,
@@ -16537,9 +14800,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Up Corner (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_RampInverted_8x4_Corner_01_C": {
                     "d": 1,
@@ -16560,9 +14820,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Down Corner (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_RampInverted_8x4_Corner_02_C": {
                     "d": 1,
@@ -16583,9 +14840,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ramp (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_8x1_01_C": {
                     "d": 1,
@@ -16606,9 +14860,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ramp (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_8x2_01_C": {
                     "d": 1,
@@ -16629,9 +14880,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ramp (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_8x4_01_C": {
                     "d": 1,
@@ -16652,9 +14900,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Ramp (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_8x4_Inverted_01_C": {
                     "d": 1,
@@ -16675,9 +14920,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Double Ramp (8\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_8x8x8_C": {
                     "d": 1,
@@ -16698,9 +14940,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ramp (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_Asphalt_8x1_C": {
                     "d": 1,
@@ -16721,9 +14960,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ramp (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_Asphalt_8x2_C": {
                     "d": 1,
@@ -16744,9 +14980,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ramp (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_Asphalt_8x4_C": {
                     "d": 1,
@@ -16767,9 +15000,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ramp (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_Concrete_8x1_C": {
                     "d": 1,
@@ -16790,9 +15020,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ramp (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_Concrete_8x2_C": {
                     "d": 1,
@@ -16813,9 +15040,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ramp (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_Concrete_8x4_C": {
                     "d": 1,
@@ -16836,9 +15060,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Down Corner Ramp (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_Diagonal_8x1_01_C": {
                     "d": 1,
@@ -16859,9 +15080,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Up Corner Ramp (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_Diagonal_8x1_02_C": {
                     "d": 1,
@@ -16882,9 +15100,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Down Corner Ramp (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_Diagonal_8x2_01_C": {
                     "d": 1,
@@ -16905,9 +15120,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Up Corner Ramp (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_Diagonal_8x2_02_C": {
                     "d": 1,
@@ -16928,9 +15140,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Down Corner Ramp (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_Diagonal_8x4_01_C": {
                     "d": 1,
@@ -16951,9 +15160,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Up Corner Ramp (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_Diagonal_8x4_02_C": {
                     "d": 1,
@@ -16974,9 +15180,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Down Corner Ramp (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_DownCorner_Asphalt_8x1_C": {
                     "d": 1,
@@ -16997,9 +15200,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Down Corner Ramp (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_DownCorner_Asphalt_8x2_C": {
                     "d": 1,
@@ -17020,9 +15220,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Down Corner Ramp (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_DownCorner_Asphalt_8x4_C": {
                     "d": 1,
@@ -17043,9 +15240,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Down Corner Ramp (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_DownCorner_Concrete_8x1_C": {
                     "d": 1,
@@ -17066,9 +15260,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Down Corner Ramp (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_DownCorner_Concrete_8x2_C": {
                     "d": 1,
@@ -17089,9 +15280,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Down Corner Ramp (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_DownCorner_Concrete_8x4_C": {
                     "d": 1,
@@ -17112,9 +15300,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Down Corner Ramp (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_DownCorner_Metal_8x1_C": {
                     "d": 1,
@@ -17135,9 +15320,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Down Corner Ramp (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_DownCorner_Metal_8x2_C": {
                     "d": 1,
@@ -17158,9 +15340,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Down Corner Ramp (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_DownCorner_Metal_8x4_C": {
                     "d": 1,
@@ -17181,9 +15360,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Down Corner Ramp (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_DownCorner_Polished_8x1_C": {
                     "d": 1,
@@ -17204,9 +15380,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Down Corner Ramp (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_DownCorner_Polished_8x2_C": {
                     "d": 1,
@@ -17227,9 +15400,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Down Corner Ramp (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_DownCorner_Polished_8x4_C": {
                     "d": 1,
@@ -17250,9 +15420,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Frame Ramp",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_Frame_01_C": {
                     "d": 1,
@@ -17273,9 +15440,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Frame Ramp",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_Frame_Inverted_01_C": {
                     "d": 1,
@@ -17296,9 +15460,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ramp (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_Metal_8x1_C": {
                     "d": 1,
@@ -17319,9 +15480,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ramp (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_Metal_8x2_C": {
                     "d": 1,
@@ -17342,9 +15500,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ramp (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_Metal_8x4_C": {
                     "d": 1,
@@ -17365,9 +15520,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ramp (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_Polished_8x1_C": {
                     "d": 1,
@@ -17388,9 +15540,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ramp (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_Polished_8x2_C": {
                     "d": 1,
@@ -17411,9 +15560,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ramp (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_Polished_8x4_C": {
                     "d": 1,
@@ -17434,9 +15580,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Up Corner Ramp (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_UpCorner_Asphalt_8x1_C": {
                     "d": 1,
@@ -17457,9 +15600,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Up Corner Ramp (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_UpCorner_Asphalt_8x2_C": {
                     "d": 1,
@@ -17480,9 +15620,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Up Corner Ramp (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_UpCorner_Asphalt_8x4_C": {
                     "d": 1,
@@ -17503,9 +15640,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Up Corner Ramp (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_UpCorner_Concrete_8x1_C": {
                     "d": 1,
@@ -17526,9 +15660,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Up Corner Ramp (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_UpCorner_Concrete_8x2_C": {
                     "d": 1,
@@ -17549,9 +15680,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Up Corner Ramp (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_UpCorner_Concrete_8x4_C": {
                     "d": 1,
@@ -17572,9 +15700,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Up Corner Ramp (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_UpCorner_Metal_8x1_C": {
                     "d": 1,
@@ -17595,9 +15720,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Up Corner Ramp (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_UpCorner_Metal_8x2_C": {
                     "d": 1,
@@ -17618,9 +15740,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Up Corner Ramp (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_UpCorner_Metal_8x4_C": {
                     "d": 1,
@@ -17641,9 +15760,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Up Corner Ramp (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_UpCorner_Polished_8x1_C": {
                     "d": 1,
@@ -17664,9 +15780,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Up Corner Ramp (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_UpCorner_Polished_8x2_C": {
                     "d": 1,
@@ -17687,9 +15800,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Up Corner Ramp (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Ramp_UpCorner_Polished_8x4_C": {
                     "d": 1,
@@ -17718,9 +15828,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Rebar Gun",
-            "produced_in": [
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "Desc_RebarGunProjectile_C": {
                     "d": 1,
@@ -17749,10 +15856,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Explosive Rebar",
-            "produced_in": [
-                "BP_WorkshopComponent_C",
-                "Build_ManufacturerMk1_C"
-            ],
             "products": {
                 "Desc_Rebar_Explosive_C": {
                     "d": 1,
@@ -17777,10 +15880,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Shatter Rebar",
-            "produced_in": [
-                "Build_AssemblerMk1_C",
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "Desc_Rebar_Spreadshot_C": {
                     "d": 1,
@@ -17805,10 +15904,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Stun Rebar",
-            "produced_in": [
-                "Build_AssemblerMk1_C",
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "Desc_Rebar_Stunshot_C": {
                     "d": 1,
@@ -17829,9 +15924,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Residual Fuel",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_LiquidFuel_C": {
                     "d": 1,
@@ -17856,9 +15948,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Residual Plastic",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_Plastic_C": {
                     "d": 1,
@@ -17883,9 +15972,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Residual Rubber",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_Rubber_C": {
                     "d": 1,
@@ -17914,9 +16000,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "AWESOME Shop",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_ResourceSinkShop_C": {
                     "d": 1,
@@ -17945,9 +16028,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "AWESOME Sink",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_ResourceSink_C": {
                     "d": 1,
@@ -17972,9 +16052,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Rocket Fuel",
-            "produced_in": [
-                "Build_Blender_C"
-            ],
             "products": {
                 "Desc_CompactedCoal_C": {
                     "d": 1,
@@ -17999,9 +16076,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Flat Roof",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_A_01_C": {
                     "d": 1,
@@ -18022,9 +16096,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Roof (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_A_02_C": {
                     "d": 1,
@@ -18045,9 +16116,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Roof (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_A_03_C": {
                     "d": 1,
@@ -18068,9 +16136,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Roof (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_A_04_C": {
                     "d": 1,
@@ -18091,9 +16156,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Roof (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Metal_InCorner_01_C": {
                     "d": 1,
@@ -18114,9 +16176,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Roof (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Metal_InCorner_02_C": {
                     "d": 1,
@@ -18137,9 +16196,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Roof (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Metal_InCorner_03_C": {
                     "d": 1,
@@ -18160,9 +16216,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Roof (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Metal_OutCorner_01_C": {
                     "d": 1,
@@ -18183,9 +16236,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Roof (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Metal_OutCorner_02_C": {
                     "d": 1,
@@ -18206,9 +16256,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Roof (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Metal_OutCorner_03_C": {
                     "d": 1,
@@ -18229,9 +16276,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Flat Roof",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Orange_01_C": {
                     "d": 1,
@@ -18252,9 +16296,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Roof (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Orange_02_C": {
                     "d": 1,
@@ -18275,9 +16316,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Roof (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Orange_03_C": {
                     "d": 1,
@@ -18298,9 +16336,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Roof (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Orange_04_C": {
                     "d": 1,
@@ -18321,9 +16356,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Roof (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Orange_InCorner_01_C": {
                     "d": 1,
@@ -18344,9 +16376,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Roof (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Orange_InCorner_02_C": {
                     "d": 1,
@@ -18367,9 +16396,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Roof (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Orange_InCorner_03_C": {
                     "d": 1,
@@ -18390,9 +16416,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Roof (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Orange_OutCorner_01_C": {
                     "d": 1,
@@ -18413,9 +16436,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Roof (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Orange_OutCorner_02_C": {
                     "d": 1,
@@ -18436,9 +16456,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Roof (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Orange_OutCorner_03_C": {
                     "d": 1,
@@ -18459,9 +16476,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Flat Roof",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Tar_01_C": {
                     "d": 1,
@@ -18482,9 +16496,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Roof (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Tar_02_C": {
                     "d": 1,
@@ -18505,9 +16516,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Roof (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Tar_03_C": {
                     "d": 1,
@@ -18528,9 +16536,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Roof (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Tar_04_C": {
                     "d": 1,
@@ -18551,9 +16556,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Roof (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Tar_InCorner_01_C": {
                     "d": 1,
@@ -18574,9 +16576,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Roof (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Tar_InCorner_02_C": {
                     "d": 1,
@@ -18597,9 +16596,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Roof (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Tar_InCorner_03_C": {
                     "d": 1,
@@ -18620,9 +16616,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Roof (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Tar_OutCorner_01_C": {
                     "d": 1,
@@ -18643,9 +16636,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Roof (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Tar_OutCorner_02_C": {
                     "d": 1,
@@ -18666,9 +16656,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Roof (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Tar_OutCorner_03_C": {
                     "d": 1,
@@ -18689,9 +16676,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Flat Roof",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Window_01_C": {
                     "d": 1,
@@ -18712,9 +16696,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Roof (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Window_02_C": {
                     "d": 1,
@@ -18735,9 +16716,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Roof (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Window_03_C": {
                     "d": 1,
@@ -18758,9 +16736,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Roof (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Window_04_C": {
                     "d": 1,
@@ -18781,9 +16756,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Roof (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Window_InCorner_01_C": {
                     "d": 1,
@@ -18804,9 +16776,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Roof (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Window_InCorner_02_C": {
                     "d": 1,
@@ -18827,9 +16796,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inner Corner Roof (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Window_InCorner_03_C": {
                     "d": 1,
@@ -18850,9 +16816,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Roof (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Window_OutCorner_01_C": {
                     "d": 1,
@@ -18873,9 +16836,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Roof (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Window_OutCorner_02_C": {
                     "d": 1,
@@ -18896,9 +16856,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Outer Corner Roof (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Roof_Window_OutCorner_03_C": {
                     "d": 1,
@@ -18923,11 +16880,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Rotor",
-            "produced_in": [
-                "Build_AssemblerMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_Rotor_C": {
                     "d": 1,
@@ -18948,9 +16900,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Rubber",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_HeavyOilResidue_C": {
                     "d": 1,
@@ -18983,10 +16932,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "SAM Fluctuator",
-            "produced_in": [
-                "BP_WorkBenchComponent_C",
-                "Build_ManufacturerMk1_C"
-            ],
             "products": {
                 "Desc_SAMFluctuator_C": {
                     "d": 1,
@@ -19007,11 +16952,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Screws",
-            "produced_in": [
-                "Build_ConstructorMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_IronScrew_C": {
                     "d": 1,
@@ -19032,11 +16972,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Silica",
-            "produced_in": [
-                "Build_ConstructorMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_Silica_C": {
                     "d": 1,
@@ -19069,9 +17004,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Singularity Cell",
-            "produced_in": [
-                "Build_ManufacturerMk1_C"
-            ],
             "products": {
                 "Desc_SingularityCell_C": {
                     "d": 1,
@@ -19096,9 +17028,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Smelter",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_SmelterMk1_C": {
                     "d": 1,
@@ -19127,9 +17056,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Foundry",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_FoundryMk1_C": {
                     "d": 1,
@@ -19158,9 +17084,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "FICSMAS Snow Cannon",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_SnowCannon_C": {
                     "d": 1,
@@ -19189,9 +17112,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "FICSMAS Snow Dispenser",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_SnowDispenser_C": {
                     "d": 1,
@@ -19212,9 +17132,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "FICSMAS Actual Snow",
-            "produced_in": [
-                "Build_ConstructorMk1_C"
-            ],
             "products": {
                 "Desc_Snow_C": {
                     "d": 1,
@@ -19235,9 +17152,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Snowball",
-            "produced_in": [
-                "Build_ConstructorMk1_C"
-            ],
             "products": {
                 "Desc_SnowballProjectile_C": {
                     "d": 1,
@@ -19274,9 +17188,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "FICSMAS Snowman",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Snowman_C": {
                     "d": 1,
@@ -19305,9 +17216,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Biochemical Sculptor",
-            "produced_in": [
-                "Build_Blender_C"
-            ],
             "products": {
                 "Desc_SpaceElevatorPart_10_C": {
                     "d": 1,
@@ -19340,9 +17248,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ballistic Warp Drive",
-            "produced_in": [
-                "Build_ManufacturerMk1_C"
-            ],
             "products": {
                 "Desc_SpaceElevatorPart_11_C": {
                     "d": 1,
@@ -19375,9 +17280,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "AI Expansion Server",
-            "produced_in": [
-                "Build_QuantumEncoder_C"
-            ],
             "products": {
                 "Desc_DarkEnergy_C": {
                     "d": 1,
@@ -19406,9 +17308,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Smart Plating",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_SpaceElevatorPart_1_C": {
                     "d": 1,
@@ -19433,9 +17332,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Versatile Framework",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_SpaceElevatorPart_2_C": {
                     "d": 1,
@@ -19460,9 +17356,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Automated Wiring",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_SpaceElevatorPart_3_C": {
                     "d": 1,
@@ -19491,9 +17384,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Modular Engine",
-            "produced_in": [
-                "Build_ManufacturerMk1_C"
-            ],
             "products": {
                 "Desc_SpaceElevatorPart_4_C": {
                     "d": 1,
@@ -19526,9 +17416,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Adaptive Control Unit",
-            "produced_in": [
-                "Build_ManufacturerMk1_C"
-            ],
             "products": {
                 "Desc_SpaceElevatorPart_5_C": {
                     "d": 1,
@@ -19553,9 +17440,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Magnetic Field Generator",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_SpaceElevatorPart_6_C": {
                     "d": 1,
@@ -19580,9 +17464,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Assembly Director System",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_SpaceElevatorPart_7_C": {
                     "d": 1,
@@ -19615,9 +17496,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Thermal Propulsion Rocket",
-            "produced_in": [
-                "Build_ManufacturerMk1_C"
-            ],
             "products": {
                 "Desc_SpaceElevatorPart_8_C": {
                     "d": 1,
@@ -19642,9 +17520,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Nuclear Pasta",
-            "produced_in": [
-                "Build_HadronCollider_C"
-            ],
             "products": {
                 "Desc_SpaceElevatorPart_9_C": {
                     "d": 1,
@@ -19677,9 +17552,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Space Elevator",
-            "produced_in": [
-                "FGBuildGun"
-            ],
             "products": {
                 "Desc_SpaceElevator_C": {
                     "d": 1,
@@ -19712,9 +17584,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Rifle",
-            "produced_in": [
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "BP_EquipmentDescriptorRifle_C": {
                     "d": 1,
@@ -19735,10 +17604,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Iron Rebar",
-            "produced_in": [
-                "Build_ConstructorMk1_C",
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "Desc_SpikedRebar_C": {
                     "d": 1,
@@ -19763,9 +17628,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Basic Shelf Unit",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_StackableShelf_C": {
                     "d": 1,
@@ -19786,9 +17648,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Foundation Stairs (1 m)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Stair_Asphalt_8x1_C": {
                     "d": 1,
@@ -19809,9 +17668,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Foundation Stairs (2 m)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Stair_Asphalt_8x2_C": {
                     "d": 1,
@@ -19832,9 +17688,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Foundation Stairs (4 m)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Stair_Asphalt_8x4_C": {
                     "d": 1,
@@ -19855,9 +17708,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Foundation Stairs (1 m)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Stair_Concrete_8x1_C": {
                     "d": 1,
@@ -19878,9 +17728,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Foundation Stairs (2 m)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Stair_Concrete_8x2_C": {
                     "d": 1,
@@ -19901,9 +17748,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Foundation Stairs (4 m)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Stair_Concrete_8x4_C": {
                     "d": 1,
@@ -19924,9 +17768,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Foundation Stairs (1 m)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Stair_FicsitSet_8x1_01_C": {
                     "d": 1,
@@ -19947,9 +17788,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Foundation Stairs (2 m)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Stair_FicsitSet_8x2_01_C": {
                     "d": 1,
@@ -19970,9 +17808,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Foundation Stairs (4 m)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Stair_FicsitSet_8x4_01_C": {
                     "d": 1,
@@ -19993,9 +17828,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Foundation Stairs (1 m)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Stair_GripMetal_8x1_C": {
                     "d": 1,
@@ -20016,9 +17848,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Foundation Stairs (2 m)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Stair_GripMetal_8x2_C": {
                     "d": 1,
@@ -20039,9 +17868,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Foundation Stairs (4 m)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Stair_GripMetal_8x4_C": {
                     "d": 1,
@@ -20062,9 +17888,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Foundation Stairs (1 m)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Stair_PolishedConcrete_8x1_C": {
                     "d": 1,
@@ -20085,9 +17908,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Foundation Stairs (2 m)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Stair_PolishedConcrete_8x2_C": {
                     "d": 1,
@@ -20108,9 +17928,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Foundation Stairs (4 m)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Stair_PolishedConcrete_8x4_C": {
                     "d": 1,
@@ -20139,9 +17956,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Large Billboard",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_StandaloneWidgetSign_Huge_C": {
                     "d": 1,
@@ -20170,9 +17984,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Small Billboard",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_StandaloneWidgetSign_Large_C": {
                     "d": 1,
@@ -20197,9 +18008,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Display Sign",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_StandaloneWidgetSign_Medium_C": {
                     "d": 1,
@@ -20224,9 +18032,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Portrait Sign",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_StandaloneWidgetSign_Portrait_C": {
                     "d": 1,
@@ -20251,9 +18056,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Label Sign (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_StandaloneWidgetSign_SmallVeryWide_C": {
                     "d": 1,
@@ -20278,9 +18080,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Label Sign (3\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_StandaloneWidgetSign_SmallWide_C": {
                     "d": 1,
@@ -20305,9 +18104,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Label Sign (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_StandaloneWidgetSign_Small_C": {
                     "d": 1,
@@ -20332,9 +18128,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Square Sign (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_StandaloneWidgetSign_Square_C": {
                     "d": 1,
@@ -20359,9 +18152,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Square Sign (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_StandaloneWidgetSign_Square_Small_C": {
                     "d": 1,
@@ -20386,9 +18176,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Square Sign (0.5\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_StandaloneWidgetSign_Square_Tiny_C": {
                     "d": 1,
@@ -20413,11 +18200,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Stator",
-            "produced_in": [
-                "Build_AssemblerMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_Stator_C": {
                     "d": 1,
@@ -20438,11 +18220,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Steel Beam",
-            "produced_in": [
-                "Build_ConstructorMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_SteelPlate_C": {
                     "d": 1,
@@ -20463,11 +18240,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Steel Pipe",
-            "produced_in": [
-                "Build_ConstructorMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_SteelPipe_C": {
                     "d": 1,
@@ -20488,9 +18260,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Basic Wall (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_SteelWall_8x1_C": {
                     "d": 1,
@@ -20515,7 +18284,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Tilted Wall (4\u202fm)",
-            "produced_in": [],
             "products": {
                 "Desc_SteelWall_8x4_C": {
                     "d": 1,
@@ -20536,9 +18304,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Gate Hole Wall",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_SteelWall_8x4_Gate_01_C": {
                     "d": 1,
@@ -20559,9 +18324,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Single Window",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_SteelWall_8x4_Window_01_C": {
                     "d": 1,
@@ -20582,9 +18344,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Reinforced Window",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_SteelWall_8x4_Window_02_C": {
                     "d": 1,
@@ -20605,9 +18364,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Frame Window",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_SteelWall_8x4_Window_03_C": {
                     "d": 1,
@@ -20628,9 +18384,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Panel Window",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_SteelWall_8x4_Window_04_C": {
                     "d": 1,
@@ -20651,9 +18404,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Ramp Wall (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_SteelWall_FlipTris_8x1_C": {
                     "d": 1,
@@ -20674,9 +18424,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Ramp Wall (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_SteelWall_FlipTris_8x2_C": {
                     "d": 1,
@@ -20697,9 +18444,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Ramp Wall (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_SteelWall_FlipTris_8x4_C": {
                     "d": 1,
@@ -20720,9 +18464,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Ramp Wall (8\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_SteelWall_FlipTris_8x8_C": {
                     "d": 1,
@@ -20743,9 +18484,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ramp Wall (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_SteelWall_Tris_8x1_C": {
                     "d": 1,
@@ -20766,9 +18504,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ramp Wall (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_SteelWall_Tris_8x2_C": {
                     "d": 1,
@@ -20789,9 +18524,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ramp Wall (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_SteelWall_Tris_8x4_C": {
                     "d": 1,
@@ -20812,9 +18544,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ramp Wall (8\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_SteelWall_Tris_8x8_C": {
                     "d": 1,
@@ -20839,9 +18568,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Storage Container",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_StorageContainerMk1_C": {
                     "d": 1,
@@ -20866,9 +18592,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Industrial Storage Container",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_StorageContainerMk2_C": {
                     "d": 1,
@@ -20893,9 +18616,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Hazard Storage Box",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_StorageHazard_C": {
                     "d": 1,
@@ -20920,9 +18640,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Medical Storage Box",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_StorageMedkit_C": {
                     "d": 1,
@@ -20947,9 +18664,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Personal Storage Box",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_StoragePlayer_C": {
                     "d": 1,
@@ -20978,9 +18692,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Street Light",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_StreetLight_C": {
                     "d": 1,
@@ -21005,9 +18716,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Build converter: Sulfur (Coal)",
-            "produced_in": [
-                "Build_Converter_C"
-            ],
             "products": {
                 "Desc_Sulfur_C": {
                     "d": 1,
@@ -21032,9 +18740,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Build converter: Sulfur (Iron)",
-            "produced_in": [
-                "Build_Converter_C"
-            ],
             "products": {
                 "Desc_Sulfur_C": {
                     "d": 1,
@@ -21059,9 +18764,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Sulfuric Acid",
-            "produced_in": [
-                "Build_OilRefinery_C"
-            ],
             "products": {
                 "Desc_SulfuricAcid_C": {
                     "d": 1,
@@ -21094,9 +18796,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Superposition Oscillator",
-            "produced_in": [
-                "Build_QuantumEncoder_C"
-            ],
             "products": {
                 "Desc_DarkEnergy_C": {
                     "d": 1,
@@ -21133,9 +18832,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Synthetic Power Shard",
-            "produced_in": [
-                "Build_QuantumEncoder_C"
-            ],
             "products": {
                 "Desc_CrystalShard_C": {
                     "d": 1,
@@ -21160,9 +18856,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Tarp Construction Fence",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_TarpFence_C": {
                     "d": 1,
@@ -21195,9 +18888,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Neural-Quantum Processor",
-            "produced_in": [
-                "Build_QuantumEncoder_C"
-            ],
             "products": {
                 "Desc_DarkEnergy_C": {
                     "d": 1,
@@ -21230,9 +18920,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Therapeutic Inhaler",
-            "produced_in": [
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "Desc_Medkit_C": {
                     "d": 1,
@@ -21253,9 +18940,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Build converter: Time Crystal",
-            "produced_in": [
-                "Build_Converter_C"
-            ],
             "products": {
                 "Desc_TimeCrystal_C": {
                     "d": 1,
@@ -21284,9 +18968,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Tractor",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Tractor_C": {
                     "d": 1,
@@ -21307,9 +18988,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "The HUB",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_TradingPost_C": {
                     "d": 1,
@@ -21346,9 +19024,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Fluid Freight Platform",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_TrainDockingStationLiquid_C": {
                     "d": 1,
@@ -21385,9 +19060,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Freight Platform",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_TrainDockingStation_C": {
                     "d": 1,
@@ -21412,9 +19084,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Empty Platform With Catwalk",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_TrainPlatformEmpty_02_C": {
                     "d": 1,
@@ -21439,9 +19108,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Empty Platform",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_TrainPlatformEmpty_C": {
                     "d": 1,
@@ -21474,9 +19140,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Train Station",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_TrainStation_C": {
                     "d": 1,
@@ -21509,9 +19172,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "FICSMAS Gift Tree",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_TreeGiftProducer_C": {
                     "d": 1,
@@ -21540,9 +19200,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Truck Station",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_TruckStation_C": {
                     "d": 1,
@@ -21575,9 +19232,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Truck",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Truck_C": {
                     "d": 1,
@@ -21606,9 +19260,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "U-Jelly Landing Pad",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_LandingPad_C": {
                     "d": 1,
@@ -21629,9 +19280,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Unpackage Alumina Solution",
-            "produced_in": [
-                "Build_Packager_C"
-            ],
             "products": {
                 "Desc_AluminaSolution_C": {
                     "d": 1,
@@ -21656,9 +19304,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Unpackage Liquid Biofuel",
-            "produced_in": [
-                "Build_Packager_C"
-            ],
             "products": {
                 "Desc_FluidCanister_C": {
                     "d": 1,
@@ -21683,9 +19328,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Unpackage Fuel",
-            "produced_in": [
-                "Build_Packager_C"
-            ],
             "products": {
                 "Desc_FluidCanister_C": {
                     "d": 1,
@@ -21710,9 +19352,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Unpackage Ionized Fuel",
-            "produced_in": [
-                "Build_Packager_C"
-            ],
             "products": {
                 "Desc_GasTank_C": {
                     "d": 1,
@@ -21737,9 +19376,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Unpackage Nitric Acid",
-            "produced_in": [
-                "Build_Packager_C"
-            ],
             "products": {
                 "Desc_GasTank_C": {
                     "d": 1,
@@ -21764,9 +19400,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Unpackage Nitrogen Gas",
-            "produced_in": [
-                "Build_Packager_C"
-            ],
             "products": {
                 "Desc_GasTank_C": {
                     "d": 1,
@@ -21791,9 +19424,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Unpackage Heavy Oil Residue",
-            "produced_in": [
-                "Build_Packager_C"
-            ],
             "products": {
                 "Desc_FluidCanister_C": {
                     "d": 1,
@@ -21818,9 +19448,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Unpackage Oil",
-            "produced_in": [
-                "Build_Packager_C"
-            ],
             "products": {
                 "Desc_FluidCanister_C": {
                     "d": 1,
@@ -21845,9 +19472,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Unpackage Rocket Fuel",
-            "produced_in": [
-                "Build_Packager_C"
-            ],
             "products": {
                 "Desc_GasTank_C": {
                     "d": 1,
@@ -21872,9 +19496,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Unpackage Sulfuric Acid",
-            "produced_in": [
-                "Build_Packager_C"
-            ],
             "products": {
                 "Desc_FluidCanister_C": {
                     "d": 1,
@@ -21899,9 +19520,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Unpackage Turbofuel",
-            "produced_in": [
-                "Build_Packager_C"
-            ],
             "products": {
                 "Desc_FluidCanister_C": {
                     "d": 1,
@@ -21926,9 +19544,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Unpackage Water",
-            "produced_in": [
-                "Build_Packager_C"
-            ],
             "products": {
                 "Desc_FluidCanister_C": {
                     "d": 1,
@@ -21961,9 +19576,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Encased Uranium Cell",
-            "produced_in": [
-                "Build_Blender_C"
-            ],
             "products": {
                 "Desc_SulfuricAcid_C": {
                     "d": 1,
@@ -21992,9 +19604,6 @@ const game_data = {
             },
             "is_alternate": true,
             "name": "Build converter: Uranium Ore (Bauxite)",
-            "produced_in": [
-                "Build_Converter_C"
-            ],
             "products": {
                 "Desc_OreUranium_C": {
                     "d": 1,
@@ -22019,9 +19628,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Valve",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Valve_C": {
                     "d": 1,
@@ -22046,9 +19652,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Walkway Intersection",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_WalkwayCross_C": {
                     "d": 1,
@@ -22073,9 +19676,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Walkway Ramp",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_WalkwayRamp_C": {
                     "d": 1,
@@ -22100,9 +19700,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Straight Walkway",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_WalkwayStraight_C": {
                     "d": 1,
@@ -22127,9 +19724,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Walkway T-Junction",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_WalkwayT_C": {
                     "d": 1,
@@ -22154,9 +19748,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Walkway Corner",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_WalkwayTurn_C": {
                     "d": 1,
@@ -22177,9 +19768,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Tilted Wall (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_WallSet_Steel_Angular_8x4_C": {
                     "d": 1,
@@ -22200,9 +19788,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Tilted Wall (8\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_WallSet_Steel_Angular_8x8_C": {
                     "d": 1,
@@ -22223,9 +19808,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Basic Wall (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_8x4_01_C": {
                     "d": 1,
@@ -22246,9 +19828,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Basic Wall (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_8x4_02_C": {
                     "d": 1,
@@ -22269,9 +19848,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Basic Wall (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Concrete_8x1_C": {
                     "d": 1,
@@ -22292,9 +19868,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Basic Wall (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Concrete_8x4_C": {
                     "d": 1,
@@ -22315,9 +19888,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Conveyor Wall x\u202f1",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Concrete_8x4_ConveyorHole_01_C": {
                     "d": 1,
@@ -22338,9 +19908,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Conveyor Wall x\u202f2",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Concrete_8x4_ConveyorHole_02_C": {
                     "d": 1,
@@ -22361,9 +19928,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Conveyor Wall x\u202f3",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Concrete_8x4_ConveyorHole_03_C": {
                     "d": 1,
@@ -22384,9 +19948,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Tilted Corner Wall (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Concrete_8x4_Corner_01_C": {
                     "d": 1,
@@ -22407,9 +19968,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Tilted Concave Wall (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Concrete_8x4_Corner_2_C": {
                     "d": 1,
@@ -22430,9 +19988,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Single Window",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Concrete_8x4_Window_01_C": {
                     "d": 1,
@@ -22453,9 +20008,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Frame Window",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Concrete_8x4_Window_02_C": {
                     "d": 1,
@@ -22476,9 +20028,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Panel Window",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Concrete_8x4_Window_03_C": {
                     "d": 1,
@@ -22499,9 +20048,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Reinforced Window",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Concrete_8x4_Window_04_C": {
                     "d": 1,
@@ -22522,9 +20068,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Tilted Corner Wall (8\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Concrete_8x8_Corner_01_C": {
                     "d": 1,
@@ -22545,9 +20088,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Tilted Concave Wall (8\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Concrete_8x8_Corner_2_C": {
                     "d": 1,
@@ -22568,9 +20108,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Tilted Wall (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Concrete_Angular_8x4_C": {
                     "d": 1,
@@ -22591,9 +20128,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Tilted Wall (8\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Concrete_Angular_8x8_C": {
                     "d": 1,
@@ -22614,9 +20148,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Center Door Wall",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Concrete_CDoor_8x4_C": {
                     "d": 1,
@@ -22637,9 +20168,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Ramp Wall (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Concrete_8x1_FlipTris_C": {
                     "d": 1,
@@ -22660,9 +20188,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Ramp Wall (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Concrete_8x2_FlipTris_C": {
                     "d": 1,
@@ -22683,9 +20208,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Ramp Wall (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Concrete_8x4_FlipTris_C": {
                     "d": 1,
@@ -22706,9 +20228,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Ramp Wall (8\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Concrete_8x8_FlipTris_C": {
                     "d": 1,
@@ -22729,9 +20248,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Gate Hole Wall",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Concrete_Gate_8x4_C": {
                     "d": 1,
@@ -22752,9 +20268,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Side Door Wall",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Concrete_SDoor_8x4_C": {
                     "d": 1,
@@ -22775,9 +20288,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ramp Wall (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Concrete_8x1_Tris_C": {
                     "d": 1,
@@ -22798,9 +20308,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ramp Wall (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Concrete_8x2_Tris_C": {
                     "d": 1,
@@ -22821,9 +20328,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ramp Wall (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Concrete_8x4_Tris_C": {
                     "d": 1,
@@ -22844,9 +20348,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ramp Wall (8\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Concrete_8x8_Tris_C": {
                     "d": 1,
@@ -22867,9 +20368,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Conveyor Wall x\u202f3",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Conveyor_8x4_01_C": {
                     "d": 1,
@@ -22890,9 +20388,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Conveyor Wall x\u202f3",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Conveyor_8x4_01_Steel_C": {
                     "d": 1,
@@ -22913,9 +20408,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Conveyor Wall x\u202f2",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Conveyor_8x4_02_C": {
                     "d": 1,
@@ -22936,9 +20428,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Conveyor Wall x\u202f2",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Conveyor_8x4_02_Steel_C": {
                     "d": 1,
@@ -22959,9 +20448,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Conveyor Wall x\u202f1",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Conveyor_8x4_03_C": {
                     "d": 1,
@@ -22982,9 +20468,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Conveyor Wall x\u202f1",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Conveyor_8x4_03_Steel_C": {
                     "d": 1,
@@ -23009,9 +20492,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Perpendicular Wall Conveyor",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Conveyor_8x4_04_C": {
                     "d": 1,
@@ -23036,9 +20516,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Perpendicular Wall Conveyor",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Conveyor_8x4_04_Steel_C": {
                     "d": 1,
@@ -23059,9 +20536,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Center Door Wall",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Door_8x4_01_C": {
                     "d": 1,
@@ -23082,9 +20556,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Center Door Wall",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Door_8x4_01_Steel_C": {
                     "d": 1,
@@ -23105,9 +20576,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Side Door Wall",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Door_8x4_03_C": {
                     "d": 1,
@@ -23128,9 +20596,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Side Door Wall",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Door_8x4_03_Steel_C": {
                     "d": 1,
@@ -23151,9 +20616,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Frame Wall",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Frame_01_C": {
                     "d": 1,
@@ -23174,9 +20636,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Gate Hole Wall",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Gate_8x4_01_C": {
                     "d": 1,
@@ -23197,9 +20656,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Basic Wall (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Orange_8x1_C": {
                     "d": 1,
@@ -23220,9 +20676,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Tilted Corner Wall (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Orange_8x4_Corner_01_C": {
                     "d": 1,
@@ -23243,9 +20696,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Tilted Concave Wall (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Orange_8x4_Corner_02_C": {
                     "d": 1,
@@ -23266,9 +20716,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Tilted Corner Wall (8\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Orange_8x8_Corner_01_C": {
                     "d": 1,
@@ -23289,9 +20736,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Tilted Concave Wall (8\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Orange_8x8_Corner_02_C": {
                     "d": 1,
@@ -23312,9 +20756,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Tilted Wall (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Orange_Angular_8x4_C": {
                     "d": 1,
@@ -23335,9 +20776,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Tilted Wall (8\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Orange_Angular_8x8_C": {
                     "d": 1,
@@ -23358,9 +20796,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Ramp Wall (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Orange_8x1_FlipTris_C": {
                     "d": 1,
@@ -23381,9 +20816,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Ramp Wall (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Orange_8x2_FlipTris_C": {
                     "d": 1,
@@ -23404,9 +20836,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Ramp Wall (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Orange_8x4_FlipTris_C": {
                     "d": 1,
@@ -23427,9 +20856,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Inverted Ramp Wall (8\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Orange_8x8_FlipTris_C": {
                     "d": 1,
@@ -23450,9 +20876,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ramp Wall (1\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Orange_8x1_Tris_C": {
                     "d": 1,
@@ -23473,9 +20896,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ramp Wall (2\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Orange_8x2_Tris_C": {
                     "d": 1,
@@ -23496,9 +20916,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ramp Wall (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Orange_8x4_Tris_C": {
                     "d": 1,
@@ -23519,9 +20936,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Ramp Wall (8\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Orange_8x8_Tris_C": {
                     "d": 1,
@@ -23542,9 +20956,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Tilted Corner Wall (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Steel_8x4_Corner_01_C": {
                     "d": 1,
@@ -23565,9 +20976,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Tilted Concave Wall (4\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Steel_8x4_Corner_2_C": {
                     "d": 1,
@@ -23588,9 +20996,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Tilted Corner Wall (8\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Steel_8x8_Corner_01_C": {
                     "d": 1,
@@ -23611,9 +21016,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Tilted Concave Wall (8\u202fm)",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Steel_8x8_Corner_2_C": {
                     "d": 1,
@@ -23634,9 +21036,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Single Window",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Window_8x4_01_C": {
                     "d": 1,
@@ -23657,9 +21056,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Frame Window",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Window_8x4_02_C": {
                     "d": 1,
@@ -23680,9 +21076,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Panel Window",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Window_8x4_03_C": {
                     "d": 1,
@@ -23707,7 +21100,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Panel Window",
-            "produced_in": [],
             "products": {
                 "Desc_Wall_Window_8x4_03_Steel_C": {
                     "d": 1,
@@ -23728,9 +21120,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Reinforced Window",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Window_8x4_04_C": {
                     "d": 1,
@@ -23755,9 +21144,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Angled Frame Window",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Window_8x4_05_C": {
                     "d": 1,
@@ -23782,9 +21168,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Honeycomb Frame Window",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Window_8x4_06_C": {
                     "d": 1,
@@ -23809,9 +21192,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Triple Frame Window",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Window_8x4_07_C": {
                     "d": 1,
@@ -23836,9 +21216,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Full Frame Window",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Window_Thin_8x4_01_C": {
                     "d": 1,
@@ -23863,9 +21240,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Hex Frame Window",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Wall_Window_Thin_8x4_02_C": {
                     "d": 1,
@@ -23894,9 +21268,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Water Extractor",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_WaterPump_C": {
                     "d": 1,
@@ -23917,11 +21288,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Wire",
-            "produced_in": [
-                "Build_ConstructorMk1_C",
-                "BP_WorkBenchComponent_C",
-                "FGBuildableAutomatedWorkBench"
-            ],
             "products": {
                 "Desc_Wire_C": {
                     "d": 1,
@@ -23946,9 +21312,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Crafting Bench",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_WorkBench_C": {
                     "d": 1,
@@ -23973,9 +21336,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Equipment Workshop",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_Workshop_C": {
                     "d": 1,
@@ -24000,9 +21360,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "FICSMAS Decoration",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_WreathDecor_C": {
                     "d": 1,
@@ -24031,9 +21388,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Giant FICSMAS Tree",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_XMassTree_C": {
                     "d": 1,
@@ -24066,9 +21420,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Xeno-Basher",
-            "produced_in": [
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "BP_EquipmentDescriptorStunSpear_C": {
                     "d": 1,
@@ -24101,9 +21452,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Xeno-Zapper",
-            "produced_in": [
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "BP_EquipmentDescriptorShockShank_C": {
                     "d": 1,
@@ -24124,9 +21472,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Red FICSMAS Ornament",
-            "produced_in": [
-                "Build_SmelterMk1_C"
-            ],
             "products": {
                 "Desc_XmasBall1_C": {
                     "d": 1,
@@ -24147,9 +21492,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Blue FICSMAS Ornament",
-            "produced_in": [
-                "Build_SmelterMk1_C"
-            ],
             "products": {
                 "Desc_XmasBall2_C": {
                     "d": 1,
@@ -24174,9 +21516,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Copper FICSMAS Ornament",
-            "produced_in": [
-                "Build_FoundryMk1_C"
-            ],
             "products": {
                 "Desc_XmasBall3_C": {
                     "d": 1,
@@ -24201,9 +21540,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Iron FICSMAS Ornament",
-            "produced_in": [
-                "Build_FoundryMk1_C"
-            ],
             "products": {
                 "Desc_XmasBall4_C": {
                     "d": 1,
@@ -24228,9 +21564,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "FICSMAS Ornament Bundle",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_XmasBallCluster_C": {
                     "d": 1,
@@ -24251,9 +21584,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "FICSMAS Bow",
-            "produced_in": [
-                "Build_ConstructorMk1_C"
-            ],
             "products": {
                 "Desc_XmasBow_C": {
                     "d": 1,
@@ -24274,9 +21604,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "FICSMAS Tree Branch",
-            "produced_in": [
-                "Build_ConstructorMk1_C"
-            ],
             "products": {
                 "Desc_XmasBranch_C": {
                     "d": 1,
@@ -24301,9 +21628,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "FICSMAS Wonder Star",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_XmasStar_C": {
                     "d": 1,
@@ -24328,9 +21652,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "FICSMAS Wreath",
-            "produced_in": [
-                "Build_AssemblerMk1_C"
-            ],
             "products": {
                 "Desc_XmasWreath_C": {
                     "d": 1,
@@ -24363,9 +21684,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "Zipline",
-            "produced_in": [
-                "BP_WorkshopComponent_C"
-            ],
             "products": {
                 "BP_EqDescZipLine_C": {
                     "d": 1,
@@ -24390,9 +21708,6 @@ const game_data = {
             },
             "is_alternate": false,
             "name": "FICSMAS Power Light",
-            "produced_in": [
-                "BP_BuildGun_C"
-            ],
             "products": {
                 "Desc_xmassLights_C": {
                     "d": 1,
