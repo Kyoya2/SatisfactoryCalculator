@@ -307,8 +307,8 @@ export default game_data;
             if (0 == len(ingredient.recipes)) or self._recipes[ingredient.recipes[0]].is_alternate:
                 trivial_ingredients.add(ingredient_id)
 
-        # This is wrongfully detected as trivial, since it only has alternate recipes
-        trivial_ingredients.discard('Desc_FicsiteIngot_C')
+        # These are wrongfully detected as trivial, since they only has alternate recipes
+        trivial_ingredients -= {'Desc_FicsiteIngot_C', 'Desc_DissolvedSilica_C'}
 
         return trivial_ingredients
 
