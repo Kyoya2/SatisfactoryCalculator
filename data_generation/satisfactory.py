@@ -207,17 +207,18 @@ export default game_data;
     def _process_recipes(self) -> dict[GameObjectId, Recipe]:
         recipes: dict[GameObjectId, Recipe] = {}
         for recipe_id, recipe in self._categorized_objects['FGRecipe'].items():
+            produced_in = set(self._PRODUCED_IN_REGEX.findall(recipe['mProducedIn']))
+
+            # Ignore recipes that can't be automated
+            if produced_in <= {'BP_BuildGun_C', 'FGBuildGun', 'BP_WorkshopComponent_C'}:
+                continue
+
             products = self._parse_crafting_obj_list(recipe['mProduct'])
             ingredients = self._parse_crafting_obj_list(recipe['mIngredients'])
 
             duration = Fraction(recipe['mManufactoringDuration'])
             is_alternate = recipe['mDisplayName'].startswith('Alternate: ')
-            produced_in = set(self._PRODUCED_IN_REGEX.findall(recipe['mProducedIn']))
             recipe_name = recipe['name']
-
-            # Ignore recipes that can't be automated
-            if produced_in <= {'BP_BuildGun_C', 'FGBuildGun', 'BP_WorkshopComponent_C'}:
-                continue
 
             # Force build converted recipes to be alternate, and update the recipe name accordingly
             if "Build_Converter_C" in produced_in:
