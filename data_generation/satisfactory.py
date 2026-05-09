@@ -292,6 +292,16 @@ export default game_data;
                 products = {accepted_fuel['mByproduct']: Fraction(accepted_fuel['mByproductAmount'])}
                 ingredients = {fuel_obj['id']: Fraction(1)}
 
+                supplemental_resource_id = accepted_fuel['mSupplementalResourceClass']
+
+                # Compute supplemental resource
+                if ("True" == fuel_burner_building['mRequiresSupplementalResource']) and \
+                   ("" != supplemental_resource_id):
+                    ingredients[supplemental_resource_id] = self._normalize_amount(
+                        supplemental_resource_id,
+                        power_production * Fraction(fuel_burner_building["mSupplementalToPowerRatio"]) * burn_duration
+                    )
+
                 dummy_recipe_id = 'Recipe_' + self._OBJECT_NAME_REGEX.match(accepted_fuel['mByproduct'])[2] + '_C'
 
                 fuel_byproduct_recipes[dummy_recipe_id] = Recipe(
@@ -363,15 +373,16 @@ export default game_data;
         for item_id, amount in items:
             assert item_id not in result, "Duplicate item appears in list"
 
-            amount = Fraction(amount)
-
-            # For some reason, liquid and gas amounts are multiplied by 1000 in the game data
-            if self._all_objects[item_id]['mForm'] in ('RF_LIQUID', 'RF_GAS'):
-                amount /= 1000
-
-            result[item_id] = amount
+            result[item_id] = self._normalize_amount(item_id, Fraction(amount))
 
         return result
+
+    def _normalize_amount(self, obj_id: str, amount: Fraction) -> Fraction:
+        # For some reason, liquid and gas amounts are multiplied by 1000 in the game data
+        if self._all_objects[obj_id]['mForm'] in ('RF_LIQUID', 'RF_GAS'):
+            amount /= 1000
+
+        return amount
 
     @classmethod
     def _get_object_display_name(cls, game_object: GameObject) -> str:
