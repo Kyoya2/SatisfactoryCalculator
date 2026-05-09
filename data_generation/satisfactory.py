@@ -221,7 +221,13 @@ export default game_data;
             recipe_name = recipe['name']
 
             # Force build converted recipes to be alternate, and update the recipe name accordingly
-            if "Build_Converter_C" in produced_in:
+            # Unless the name of the product is the name of the recipe, in which case it's the main recipe.
+            # For example: time crystal, dark matter residue and excited photonic mater.
+            if ("Build_Converter_C" in produced_in) and \
+               (
+                    (1 != len(products)) or \
+                    (self._all_objects[next(iter(products.keys()))]['name'] != recipe_name)
+            ):
                 is_alternate = True
                 recipe_name = f"Build converter: {recipe_name}"
 
@@ -358,7 +364,7 @@ export default game_data;
             if (0 == len(ingredient.recipes)) or self._recipes[ingredient.recipes[0]].is_alternate:
                 trivial_ingredients.add(ingredient_id)
 
-        # These are wrongfully detected as trivial, since they only has alternate recipes
+        # These are wrongfully detected as trivial, since they only have alternate recipes
         trivial_ingredients -= {'Desc_FicsiteIngot_C', 'Desc_DissolvedSilica_C'}
 
         return trivial_ingredients
