@@ -72,7 +72,7 @@ def jsonify(obj):
 
 class SatisfactoryParser:
     _COMMON_OBJECT_CATEGORY_NAME_PREFIX = r"/Script/CoreUObject.Class'/Script/FactoryGame."
-    _CRAFTING_OBJ_LIST_REGEX = re.compile(r"""\(ItemClass="[/\w.']+\.(\w+)'",Amount=(\d+)\)""")
+    _CRAFTING_OBJ_LIST_REGEX = re.compile(r"""\(ItemClass=\".+?\.([^']+)'\",Amount=(\d+)\)""")
     _OBJECT_NAME_REGEX = re.compile(r"^([a-zA-Z\d]+)_(.+)_C$")
     _CAMEL_CASE_REGEX = re.compile(r"([a-z])([A-Z])")
     _ICON_STRING_REGEX = re.compile(r"Texture2D /Game/(.*(\w+))\.\2")
@@ -314,6 +314,11 @@ export default game_data;
 
     def _parse_crafting_obj_list(self, item_list: str) -> CountedItems:
         items = self._CRAFTING_OBJ_LIST_REGEX.findall(item_list)
+
+        # Make sure that we parsed correctly. Each individual item contains a comma, and theres
+        # a comma between every 2 items.
+        assert item_list.count(',') == max((len(items) * 2) - 1, 0)
+
         result = {}
         for item_id, amount in items:
             assert item_id not in result, "Duplicate item appears in list"
