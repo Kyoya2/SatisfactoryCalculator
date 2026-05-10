@@ -207,20 +207,24 @@ export default game_data;
     def _process_recipes(self) -> dict[GameObjectId, Recipe]:
         recipes: dict[GameObjectId, Recipe] = {}
         for recipe_id, recipe in self._categorized_objects['FGRecipe'].items():
-            products = self._parse_crafting_obj_list(recipe['mProduct'])
-            ingredients = self._parse_crafting_obj_list(recipe['mIngredients'])
-
-            duration = Fraction(recipe['mManufactoringDuration'])
-            is_alternate = recipe['mDisplayName'].startswith('Alternate: ')
             produced_in = set(self._PRODUCED_IN_REGEX.findall(recipe['mProducedIn']))
-            recipe_name = recipe['name']
 
             # Ignore recipes that can't be automated
             if produced_in <= {'BP_BuildGun_C', 'FGBuildGun', 'BP_WorkshopComponent_C'}:
                 continue
 
+            products = self._parse_crafting_obj_list(recipe['mProduct'])
+            ingredients = self._parse_crafting_obj_list(recipe['mIngredients'])
+
+            duration = Fraction(recipe['mManufactoringDuration'])
+            is_alternate = recipe['mDisplayName'].startswith('Alternate: ')
+            recipe_name = recipe['name']
+
             # Force build converted recipes to be alternate, and update the recipe name accordingly
-            if "Build_Converter_C" in produced_in:
+            # Unless the name of the product is the name of the recipe, in which case it's the main recipe.
+            # For example: time crystal, dark matter residue and excited photonic mater.
+            if ("Build_Converter_C" in produced_in) and \
+               ((1 != len(products)) or (self._all_objects[next(iter(products.keys()))]['name'] != recipe_name)):
                 is_alternate = True
                 recipe_name = f"Build converter: {recipe_name}"
 
@@ -292,6 +296,16 @@ export default game_data;
                 products = {accepted_fuel['mByproduct']: Fraction(accepted_fuel['mByproductAmount'])}
                 ingredients = {fuel_obj['id']: Fraction(1)}
 
+                supplemental_resource_id = accepted_fuel['mSupplementalResourceClass']
+
+                # Compute supplemental resource
+                if ("True" == fuel_burner_building['mRequiresSupplementalResource']) and \
+                   ("" != supplemental_resource_id):
+                    ingredients[supplemental_resource_id] = self._normalize_amount(
+                        supplemental_resource_id,
+                        power_production * Fraction(fuel_burner_building["mSupplementalToPowerRatio"]) * burn_duration
+                    )
+
                 dummy_recipe_id = 'Recipe_' + self._OBJECT_NAME_REGEX.match(accepted_fuel['mByproduct'])[2] + '_C'
 
                 fuel_byproduct_recipes[dummy_recipe_id] = Recipe(
@@ -347,7 +361,7 @@ export default game_data;
             if (0 == len(ingredient.recipes)) or self._recipes[ingredient.recipes[0]].is_alternate:
                 trivial_ingredients.add(ingredient_id)
 
-        # These are wrongfully detected as trivial, since they only has alternate recipes
+        # These are wrongfully detected as trivial, since they only have alternate recipes
         trivial_ingredients -= {'Desc_FicsiteIngot_C', 'Desc_DissolvedSilica_C'}
 
         return trivial_ingredients
@@ -363,15 +377,16 @@ export default game_data;
         for item_id, amount in items:
             assert item_id not in result, "Duplicate item appears in list"
 
-            amount = Fraction(amount)
-
-            # For some reason, liquid and gas amounts are multiplied by 1000 in the game data
-            if self._all_objects[item_id]['mForm'] in ('RF_LIQUID', 'RF_GAS'):
-                amount /= 1000
-
-            result[item_id] = amount
+            result[item_id] = self._normalize_amount(item_id, Fraction(amount))
 
         return result
+
+    def _normalize_amount(self, obj_id: str, amount: Fraction) -> Fraction:
+        # For some reason, liquid and gas amounts are multiplied by 1000 in the game data
+        if self._all_objects[obj_id]['mForm'] in ('RF_LIQUID', 'RF_GAS'):
+            amount /= 1000
+
+        return amount
 
     @classmethod
     def _get_object_display_name(cls, game_object: GameObject) -> str:
