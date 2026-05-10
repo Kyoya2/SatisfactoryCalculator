@@ -224,10 +224,7 @@ export default game_data;
             # Unless the name of the product is the name of the recipe, in which case it's the main recipe.
             # For example: time crystal, dark matter residue and excited photonic mater.
             if ("Build_Converter_C" in produced_in) and \
-               (
-                    (1 != len(products)) or \
-                    (self._all_objects[next(iter(products.keys()))]['name'] != recipe_name)
-            ):
+               ((1 != len(products)) or (self._all_objects[next(iter(products.keys()))]['name'] != recipe_name)):
                 is_alternate = True
                 recipe_name = f"Build converter: {recipe_name}"
 
