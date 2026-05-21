@@ -12,7 +12,7 @@ import elkLayouts from '@mermaid-js/layout-elk';
 import Panzoom from "@panzoom/panzoom";
 
 // Must be imported last!!!
-import {generateGraphPhase1, generateGraphPhase2, updateSelectedProduct, resetAlternateRecipes, resetTrivialResources, updateDisplayMultiplier, updateDisplayMultiplierAuto, toggleShowByproducts} from "@/Main.mjs"
+import {updateSelectedProduct, resetAlternateRecipes, resetTrivialResources, updateDisplayMultiplier, updateDisplayMultiplierAuto, toggleShowByproducts} from "@/Main.mjs"
 
 
 function initGameData() {
