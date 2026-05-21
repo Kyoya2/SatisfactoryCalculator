@@ -13,7 +13,7 @@ html, body {
 
 /* === Sidebar === */
     #sidebar {
-        width: 400px;
+        width: auto;
         padding: 5px;
         overflow: auto; /* independent scroll */
     }
