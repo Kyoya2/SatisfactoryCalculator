@@ -287,6 +287,8 @@ function createEdgeOverlay(edge_label_element, edge_path_element, edge) {
     const overlay = clone.firstChild;
     edge.data.html = overlay;
 
+    overlay.querySelector('.edge-ratio-label').textContent = formatFrac(edge.data.total_fraction);
+
     edge_label_element.replaceChildren(overlay);
 }
 
@@ -359,6 +361,7 @@ function applyDisplayMultiplier(frac) {
     return mathjs.multiply(frac, g_.config.display_multiplier);
 }
 
+/** Updates the overlay according to the display multiplier */
 function updateOverlay() {
     const graph = g_.product_node.graph;
     for (const node of graph.nodes()) {
@@ -370,7 +373,6 @@ function updateOverlay() {
     }
 
     for (const edge of graph.links()) {
-        edge.data.html.querySelector('.edge-ratio-label').textContent = formatFrac(edge.data.total_fraction);
         edge.data.html.querySelector('.edge-production-label').textContent = formatFrac(applyDisplayMultiplier(mathjs.multiply(edge.data.production_required, 60)), false);
     }
 }
