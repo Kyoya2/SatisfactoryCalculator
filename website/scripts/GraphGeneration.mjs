@@ -186,6 +186,7 @@ function calculateGraphProductionRates(product_node) {
 
 /**
  * Adjusts the existing production rates of nodes in the graph according to byproducts.
+ * @param {Node<SCNode, MyEdgeInfo>} product_node 
  */
 function calculateGraphByproducts(product_node) {
     /**
@@ -246,10 +247,10 @@ function calculateGraphByproducts(product_node) {
 
             // Byproducts produced by the current parent node
             const byproduct_production = mathjs.multiply(parent_node.data.production_required, data.amount);
-            if (!mathjs.equal(data.production_required, byproduct_production))
+            if (!mathjs.equal(data.production_required, byproduct_production)) {
+                data.production_required = byproduct_production;
                 modified = true;
-
-            data.production_required = byproduct_production;
+            }
 
             // Add to the total
             total_byproduct_prod = mathjs.add(total_byproduct_prod, byproduct_production);

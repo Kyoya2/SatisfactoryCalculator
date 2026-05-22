@@ -62,8 +62,8 @@ export class SCNode {
         this.selected_recipe_index = selected_recipe_index;
 
         /**
-         * The total required production per second of this unit's resource to fully supply its target nodes
-         * recipe that are required for optimally producing the final product. Including byproducts!
+         * The total required production per second of this unit's resource to fully supply its target node's
+         * recipe for optimally producing the final product. Including byproducts!
          * @type {Fraction} 
          * @public
         */
