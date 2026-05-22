@@ -8,6 +8,7 @@ import {assert, any, reduce, map, fractionMax, formatFrac} from "@/Utils.mjs";
 import {Graph, Node, Edge} from "@/Graph.mjs";
 import {g_, SCNode} from "@/Common.mjs";
 import generateGraphData from "@/GraphGeneration.mjs";
+import Config from "@/Config.mjs";
 
 /** @import { GameObjectId, Recipe, CraftingObject } from "@/GameData.auto.mjs" */
 /** @import { MyEdgeInfo } from "@/Common.mjs" */
@@ -456,6 +457,76 @@ export function toggleShowByproducts(e) {
         generateGraph();
 }
 
+/** 
+ * Generate graph data for all possible combinations of:
+ * - Target products
+ * - Selected trivial resources
+ * - Selected alternate recipes
+ * 
+ * Currently very slow and pretty much unusable.
+ * TODOs:
+ * - Optimize by not checking combinations that don't add new information. For example, don't bother generating
+ *   the graph data for smart plating with a different alternate recipe for uranium fuel rod, because the two
+ *   are unrelated.
+ * - Maybe, instead of going over all possible combinations, also add a variation which chooses a random combination
+ *   each time. Not sure if it's better though.
+ */
+function _testAll() {
+    const prev_config = g_.config;
+    g_.config = new Config();
+
+    // Subtract the default trivial ingredients, because we always keep those as trivial
+    const crafting_obj_ids = new Set(Object.keys(game_data.crafting_objects)).difference(new Set(game_data.trivial_ingredients));
+
+    const num_trivial_items_combinations = Math.pow(2, crafting_obj_ids.size);
+    const num_recipe_combinations = reduce(
+        game_data.crafting_products,
+        (product, obj_id) => product * game_data.crafting_objects[obj_id].recipes.length,
+        1
+    );
+
+    // Iterate through all craftable objects
+    for (const crafting_product_name of game_data.crafting_products) {
+        console.time(crafting_product_name);
+
+        // Iterate through all possible combinations of trivial resources (excluding items that are trivial by default, these
+        // will always be selected as trivial for this test)
+        for (let i = 0; i < num_trivial_items_combinations; ++i) {
+            const str = i.toString(2).padStart(crafting_obj_ids.size, '0');
+            g_.config.trivial_resources = new Set(game_data.trivial_ingredients);
+            for (let j = 0; j < str.length; ++j) {
+                if ('1' == str[j])
+                     g_.config.trivial_resources.add(crafting_obj_ids[j]);
+            }
+            
+            // Iterate through all possible combinations of selected recipes
+            g_.config.alternate_recipes = new Map(game_data.crafting_products.map((obj_id) => [obj_id, 0]));
+            for (let j = 0; j < num_recipe_combinations; ++j) {
+                for (const crafting_prod_id of game_data.crafting_products) {
+                    const num_recipes = game_data.crafting_objects[crafting_prod_id].recipes.length;
+                    const new_recipe_index = (g_.config.alternate_recipes.get(crafting_prod_id) + 1) % num_recipes;
+                    g_.config.alternate_recipes.set(crafting_prod_id, new_recipe_index);
+
+                    // If we overflowed, carry to the next recipe.
+                    // Otherwise, stop.
+                    if (new_recipe_index > 0)
+                        break;
+                }
+
+                const data = generateGraphData(crafting_product_name);
+            }
+            
+        }
+
+        console.timeEnd(crafting_product_name);
+    }
+    
+    // Restore previous config
+    g_.config = prev_config;
+}
+
 // Must be last
 import initApp from "@/Init.mjs";
 initApp();
+
+//_testAll();
