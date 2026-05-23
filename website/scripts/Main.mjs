@@ -141,7 +141,7 @@ function initEditableMultiplierLabel(editable_multiplier_label) {
 
                     // Disallow the value 0, since it will break the next calculation, because it will attempt
                     // to divide the new value by zero.
-                    if (0 != new_display_mult.n) {
+                    if (!mathjs.isZero(new_display_mult)) {
                         // Need to update this after the next blur (which will happen now), because our "blur" handler
                         // resets the value that's currently being edited.
                         e.target.addEventListener(

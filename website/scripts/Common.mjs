@@ -63,14 +63,15 @@ export class SCNode {
 
         /**
          * The total required production per second of this unit's resource to fully supply its target node's
-         * recipe for optimally producing the final product. Including byproducts!
+         * recipe for optimally producing the final product. Disregarding byproducts.
          * @type {Fraction} 
          * @public
         */
         this.total_production_required = fraction(0);
 
         /**
-         * Same as above, but excluding byproducts.
+         * Same as above, but including byproducts. Meaning that this value can be smaller than "total_production_required"
+         * if the current item is being produced as a byproduct of another recipe in the current tree.
          * @type {Fraction} 
          * @public
         */
