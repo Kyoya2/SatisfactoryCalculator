@@ -471,6 +471,8 @@ export function toggleShowByproducts(e) {
 function _testAll() {
     const prev_config = g_.config;
     g_.config = new Config();
+    g_.config.display_multiplier = fraction(1);
+    g_.config.show_byproducts = true;
 
     // Subtract the default trivial ingredients, because we always keep those as trivial
     const crafting_obj_ids = new Set(Object.keys(game_data.crafting_objects)).difference(new Set(game_data.trivial_ingredients));
@@ -510,7 +512,18 @@ function _testAll() {
                         break;
                 }
 
-                const data = generateGraphData(crafting_product_name);
+                try
+                {
+                    const data = generateGraphData(crafting_product_name);
+                } catch {
+                    g_.config.notifyChange();
+                    alert("A test has failed, copy the current URL to reproduce");
+
+                    // Restore previous config
+                    g_.config = prev_config; 
+                    g_.config.notifyChange();
+                    return;
+                }
             }
             
         }
