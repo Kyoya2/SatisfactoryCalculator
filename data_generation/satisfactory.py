@@ -34,7 +34,7 @@ class Recipe(NamedTuple):
     ingredients: CountedItems
     duration: Fraction
     is_alternate: bool
-    produced_in: set[str]
+    produced_in: GameObjectId
 
 
 class CraftingObject(NamedTuple):
@@ -42,6 +42,15 @@ class CraftingObject(NamedTuple):
     name: str
     recipes: list[GameObjectId]
     form: str
+
+
+class Building(NamedTuple):
+    name: str
+    power_consumption: float            # Base power consumption (MW)
+    speed_power_exponent: float         # Power consumption exponent of under/overclocking
+    production_power_exponent: float    # Power consumption exponent of overslooping
+    num_sloop_slots: int                # Max number of sloops that can be installed in the machine
+    sloop_multiplier: float             # Production% boost of single sloop
 
 
 def jsonify(obj):
@@ -76,6 +85,7 @@ class SatisfactoryParser:
     _ICON_STRING_REGEX = re.compile(r"Texture2D /Game/(.*(\w+))\.\2")
     _PRODUCED_IN_REGEX = re.compile(r'\"[^,]+\.(\w+)\"')
     _ALTERNATE_RECIPE_NAME_PREFIX = "Alternate: "
+    _MANUAL_CRAFTING_BUILDINGS = {'BP_BuildGun_C', 'FGBuildGun', 'BP_WorkshopComponent_C', 'BP_WorkBenchComponent_C', 'FGBuildableAutomatedWorkBench', 'Build_AutomatedWorkBench_C'}
 
     def __init__(self, doc_file_path=r"C:\Program Files (x86)\Steam\steamapps\common\Satisfactory\CommunityResources\Docs\en-US.json"):
         self._all_objects, self._categorized_objects = self._preprocess_doc_file(doc_file_path)
@@ -88,6 +98,7 @@ class SatisfactoryParser:
             self._crafting_products |= set(recipe.products.keys())
 
         self._crafting_objects = self._process_crafting_objects()
+        self._buildings = self._process_buildings()
         self._trivial_ingredients = self._calculate_trivial_ingredients()
 
     def generate_data_file_content(self):
@@ -123,7 +134,7 @@ class SatisfactoryParser:
  *      ingredients: CountedItems,
  *      duration: Fraction,
  *      is_alternate: boolean,
- *      produced_in: string[]
+ *      produced_in: GameObjectId
  * }}}} Recipe
  *
  * @typedef {{{{
@@ -207,11 +218,13 @@ export default game_data;
     def _process_recipes(self) -> dict[GameObjectId, Recipe]:
         recipes: dict[GameObjectId, Recipe] = {}
         for recipe_id, recipe in self._categorized_objects['FGRecipe'].items():
-            produced_in = set(self._PRODUCED_IN_REGEX.findall(recipe['mProducedIn']))
-
             # Ignore recipes that can't be automated
-            if produced_in <= {'BP_BuildGun_C', 'FGBuildGun', 'BP_WorkshopComponent_C'}:
+            produced_in = set(self._PRODUCED_IN_REGEX.findall(recipe['mProducedIn'])) - self._MANUAL_CRAFTING_BUILDINGS
+            if 0 == len(produced_in):
                 continue
+
+            assert 1 == len(produced_in)
+            produced_in = next(iter(produced_in))
 
             products = self._parse_crafting_obj_list(recipe['mProduct'])
             ingredients = self._parse_crafting_obj_list(recipe['mIngredients'])
@@ -223,13 +236,13 @@ export default game_data;
             # Force build converted recipes to be alternate, and update the recipe name accordingly
             # Unless the name of the product is the name of the recipe, in which case it's the main recipe.
             # For example: time crystal, dark matter residue and excited photonic mater.
-            if ("Build_Converter_C" in produced_in) and \
+            if ("Build_Converter_C" == produced_in) and \
                ((1 != len(products)) or (self._all_objects[next(iter(products.keys()))]['name'] != recipe_name)):
                 is_alternate = True
                 recipe_name = f"Build converter: {recipe_name}"
 
             # Force "unpackage" recipes to be alternate
-            if "Build_Packager_C" in produced_in and "Unpackage" in recipe['id']:
+            if ("Build_Packager_C" == produced_in) and ("Unpackage" in recipe['id']):
                 is_alternate = True
 
             # Strip common prefix for alternate recipes
@@ -314,10 +327,26 @@ export default game_data;
                     ingredients,
                     burn_duration,
                     False,  # TODO: check if there are other ways to generate the byproduct
-                    {fuel_burner_building['id']}
+                    fuel_burner_building['id']
                 )
 
         return fuel_byproduct_recipes
+
+    def _process_buildings(self) -> dict[GameObjectId, Building]:
+        result = {}
+        crafting_buildings = set(recipe.produced_in for recipe in self._recipes.values())
+        for building_id in crafting_buildings:
+            building_obj = self._all_objects[building_id]
+            result[building_id] = Building(
+                building_obj['name'],
+                float(building_obj['mPowerConsumption']),
+                float(building_obj['mPowerConsumptionExponent']),
+                float(building_obj['mProductionBoostPowerConsumptionExponent']),
+                int(building_obj['mProductionShardSlotSize']),
+                float(building_obj['mProductionShardBoostMultiplier'])
+            )
+
+        return result
 
     def _process_crafting_objects(self) -> dict[GameObjectId, CraftingObject]:
         crafting_objects: dict[GameObjectId, CraftingObject] = {}
