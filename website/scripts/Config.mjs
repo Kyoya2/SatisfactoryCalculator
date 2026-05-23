@@ -18,12 +18,6 @@ export default class Config {
         /** @type {GameObjectId} */
         this.product_name = search_params.get("productName") ?? Config.#_DEFAULT_PRODUCT;
 
-        /** @type {number} */
-        this.conveyor_speed_index = parseInt(search_params.get("conveyorSpeed") ?? Config.#_DEFAULT_CONVEYOR_INDEX)
-
-        /** @type {number} */
-        this.pipeline_speed_index = parseInt(search_params.get("pipelineSpeed") ?? Config.#_DEFAULT_PIPELINE_INDEX);
-
         /** @type {Fraction} */
         this.display_multiplier = fraction(search_params.get("displayMultiplier") ?? Config.#_DEFAULT_DISPLAY_MULTIPLIER);
 
@@ -55,18 +49,14 @@ export default class Config {
     notifyChange() {
         const search_params = new URLSearchParams({
             productName: this.product_name,
-            conveyorSpeed: this.conveyor_speed_index.toString(),
-            pipelineSpeed: this.pipeline_speed_index.toString(),
             displayMultiplier: format(this.display_multiplier, { fraction: 'decimal' }),
             showByproducts: this.show_byproducts ? "1" : "0",
             alternateRecipes: [...this.alternate_recipes.entries()].map((kv) => kv.join('=')).join(','),
             trivialResources: [...this.trivial_resources.entries()].join(','),
         });
 
-        window.history.replaceState(
-            null,
-            '',
-            `${window.location.origin}${window.location.pathname}?${search_params.toString()}`
-        );
+        const new_url = `${window.location.origin}${window.location.pathname}?${search_params.toString()}`;
+
+        window.history.replaceState(null, '', new_url);
     }
 }
