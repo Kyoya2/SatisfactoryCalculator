@@ -210,11 +210,17 @@ export class Node {
         }
     }
 
+    /** @returns {IterableIterator<Edge<NodeData, EdgeData>>} */
+    *flink_objs() { yield* this._flinks; }
+
     /** @returns {IterableIterator<[Node<NodeData, EdgeData>, EdgeData]>} */
     *blinks() {
         for (const blink of this._blinks) {
             yield [blink.source, blink.data];
         }
     }
+
+    /** @returns {IterableIterator<Edge<NodeData, EdgeData>>} */
+    *blink_objs() { yield* this._blinks; }
 }
 

@@ -1,5 +1,5 @@
 import game_data from "@/GameData.auto.mjs";
-import {assert, any, reduce, map, fractionMax, formatFrac} from "@/Utils.mjs";
+import {assert, any, all, reduce, map, fractionMax, formatFrac} from "@/Utils.mjs";
 import {Graph, Node, Edge} from "@/Graph.mjs";
 import {g_, SCNode} from "@/Common.mjs";
 
@@ -9,6 +9,19 @@ import {g_, SCNode} from "@/Common.mjs";
 import * as mathjs from 'mathjs';
 import {fraction, Fraction} from 'mathjs';
 
+/**
+ * Calculates the fraction values for non-byproduct edges of a given node
+ * @param {Node<SCNode, MyEdgeInfo>} node
+ */
+function calculateOutputFractions(node) {
+    for (const [target_node, data] of node.flinks()) {
+        if (data.is_byproduct) 
+            continue;
+
+        assert(0 != node.data.total_production_required.n);
+        data.total_fraction = mathjs.divide(data.production_required, node.data.total_production_required);
+    }
+}
 
 /**
  * Generates a basic graph according to the given products recipe.
@@ -164,13 +177,7 @@ function calculateGraphProductionRates(product_node) {
 
         node.data.production_required = node.data.total_production_required;
 
-        for (const [target_node, data] of node.flinks()) {
-            if (data.is_byproduct) 
-                continue;
-
-            assert(0 != node.data.total_production_required.n);
-            data.total_fraction = mathjs.divide(data.production_required, node.data.total_production_required);
-        }
+        calculateOutputFractions(node);
 
         if (!node.data.isTrivial()) {
             // Calculate the required production rate of each input
@@ -195,9 +202,10 @@ function calculateGraphByproducts(product_node) {
      * Does not modify byproducts, this will be handled by "_updateByproduct".
      * @param {Node<SCNode, MyEdgeInfo>} target_node 
      * @param {Fraction} new_production_required
+     * @param {boolean} remove_if_zero - Whether nodes whose new production evaluates to 0 should be removed.
      * @returns {boolean} - Whether the production of the given node was changed
      */
-    function _updateProduction(target_node, new_production_required) {
+    function _updateProduction(target_node, new_production_required, remove_if_zero=false) {
         // If the production of this node has changed, propagate the modification upwards to update required
         // productions for producing the current node's product.
         if (mathjs.equal(target_node.data.production_required, new_production_required))
@@ -211,8 +219,6 @@ function calculateGraphByproducts(product_node) {
             if (parent_data.is_byproduct)
                 continue;
 
-            assert(!parent_data.is_byproduct);
-
             // Edge production is updated proportionally
             const new_production_required = mathjs.multiply(parent_data.production_required, proportional_prod_multiplier);
             const absolute_prod_diff = mathjs.subtract(parent_data.production_required, new_production_required);
@@ -224,21 +230,35 @@ function calculateGraphByproducts(product_node) {
             // Note: "production_required" is updated in the next recursive call.
             parent_node.data.total_production_required = mathjs.subtract(parent_node.data.total_production_required, absolute_prod_diff);
 
-            _updateProduction(parent_node, mathjs.subtract(parent_node.data.production_required, absolute_prod_diff));
+            _updateProduction(
+                parent_node,
+                mathjs.subtract(parent_node.data.production_required, absolute_prod_diff),
+                remove_if_zero
+            );
         }
+
+        // Remove the node if its total required production is zero.
+        // It's important that we check "total_production_required" and not "production_required", because if
+        // "production_required" is zero while "total_production_required" is not, we want to convert the node
+        // into a pure byproduct instead of deleting it. This is done in "_fixNegatives".
+        if (remove_if_zero && mathjs.isZero(target_node.data.total_production_required))
+            target_node.remove();
 
         return true;
     }
 
     /**
-     * @param {Node<SCNode, MyEdgeInfo>} source_node 
+     * @param {Node<SCNode, MyEdgeInfo>} source_node
+     * @param {boolean} remove_if_zero - Whether nodes whose new production evaluates to 0 should be removed.
+     * @param {boolean} force_byproduct - Force evaluating the node as a byproduct node, even if it's no longer
+     *  a byproduct. Set to "true" if the node used to be a byproduct, but no longer may be.
      * @returns {boolean}
      */
-    function _updateByproduct(source_node) {
+    function _updateByproduct(source_node, remove_if_zero=false, force_byproduct=false) {
         let modified = false;
 
         let total_byproduct_prod = fraction(0);
-        let is_byproduct = false;
+        let is_byproduct = force_byproduct;
         for (const [parent_node, data] of source_node.blinks()) {
             if (!data.is_byproduct)
                 continue
@@ -276,32 +296,128 @@ function calculateGraphByproducts(product_node) {
             // For "pure" byproducts, we want to display the total production value of the byproducts.
             // Pure byproducts don't affect anything, their production can simply be updated without
             // causing recalculation of anything else
-            source_node.data.production_required = total_byproduct_prod;
-            return;
+            if (!mathjs.equal(source_node.data.production_required, total_byproduct_prod)) {
+                source_node.data.production_required = total_byproduct_prod;
+                modified = true;
+            }
+        }
+        else {
+            // For "non-pure" byproducts, we want to display the production that's required *additionally*
+            // to the byproduct production
+            const new_production_required = mathjs.subtract(source_node.data.total_production_required, total_byproduct_prod);
+
+            if (!_updateProduction(source_node, new_production_required)) {
+                // The byproduct production didn't change, no need to propagate the change to the children
+                return modified;
+            }
+
+            // The production required has changed, which means that the production of all byproducts of this node
+            // has also changed (if the node produces byproducts). Recalculate it.
+            for (const [target_node, data] of source_node.flinks()) {
+                if (data.is_byproduct)
+                    modified = _updateByproduct(target_node, remove_if_zero) || modified;
+            }
         }
 
-        // For "non-pure" byproducts, we want to display the production that's required *additionally*
-        // to the byproduct production
-        const new_production_required = mathjs.subtract(source_node.data.total_production_required, total_byproduct_prod);
-
-        if (!_updateProduction(source_node, new_production_required)) {
-            // The byproduct production didn't change, no need to propagate the change to the children
-            return modified;
-        }
-
-        // The production required has changed, which means that the production of all byproducts of this node
-        // has also changed (if the node produces byproducts). Recalculate it.
-        for (const [target_node, data] of source_node.flinks()) {
-            if (data.is_byproduct)
-                modified = _updateByproduct(target_node) || modified;
-        }
+        // Remove the node if its total required production is zero.
+        // It's important that we check "total_production_required" and not "production_required", because if
+        // "production_required" is zero while "total_production_required" is not, we want to convert the node
+        // into a pure byproduct instead of deleting it. This is done in "_fixNegatives".
+        if (remove_if_zero && mathjs.isZero(source_node.data.total_production_required))
+            source_node.remove();
 
         return modified;
     }
 
+    /**
+     * Fixes negative production values caused by over-producing certain items from byproducts
+     * @param {Node<SCNode, MyEdgeInfo>} node
+     * @returns {boolean}
+     */
+    function _fixNegatives(node) {
+        // Skip non-positive nodes
+        if (mathjs.isPositive(node.data.production_required))
+            return false;
+
+        // Skip pure byproducts for the same reason as explained below
+        if (node.data.isPureByproduct())
+            return false;
+
+        // If the node is not a byproduct, skip it even though its production is negative.
+        // That's because the reason for this node being negative comes from another node
+        // that we've yet to find. Once we find that node, the negative value of this node
+        // will be fixed automatically.
+        if (all(node.blinks(), ([_, data]) => !data.is_byproduct))
+            return false;
+
+        // If we reached here, it means that the current node is over-produced by byproducts.
+
+        // Convert the node to a pure byproduct.
+        // Converting the negative to positive to indicate the over-production.
+        node.data._is_pure_byproduct = true;
+        node.data.production_required = mathjs.unaryMinus(node.data.production_required);
+        
+        // Remove products that are explicitly used for producing this item (there's no need due to
+        // over-production of this item as a byproduct)
+        for (const blink of node.blink_objs()) {
+            if (blink.data.is_byproduct)
+                continue;
+            
+            // Should be non-positive, since it's over-produced
+            assert(!mathjs.isPositive(blink.data.production_required));
+
+            // Remove the edge
+            blink.remove();
+
+            // Subtract the negative over-production from the source node's total production 
+            blink.source.data.total_production_required = mathjs.subtract(blink.source.data.total_production_required, blink.data.production_required);
+
+            // Recalculate fractions, since we remove one edge
+            calculateOutputFractions(blink.source);
+
+            // Same for the production that includes byproducts, and propagate the change upwards
+            _updateProduction(
+                blink.source,
+                mathjs.subtract(blink.source.data.production_required, blink.data.production_required),
+                true
+            );
+        }
+
+        // Remove byproducts of the current item, since it's no longer produced using the recipe that
+        // produces these byproducts.
+        for (const flink of node.flink_objs()) {
+            if (!flink.data.is_byproduct)
+                continue;
+
+            // Should be non-positive, since it's over-produced
+            assert(!mathjs.isPositive(flink.data.production_required));
+
+            flink.remove();
+
+            // Force treating the node as a byproduct, since removing the current flink may
+            // cause it to no longer look like a byproduct
+            _updateByproduct(flink.target, true, true);
+        }
+
+        return true;
+    }
+    
     // Updating byproducts may require multiple iterations over the graph.
     // Keep iterating until we're able to complete an iteration without making changes.
     while (reduce(product_node.graph.nodes(), (modified, node) => (_updateByproduct(node) || modified), false));
+
+    // Fix negative production values due to over-production of items as byproducts.
+    // It's important to note that this logic is not a part of the loop above because this function can cause
+    // the removal of nodes. We have to be absolutely sure that we want to remove a node before removing it,
+    // since reverting the removal will be complicated. We can't be sure whether a node should be removed in
+    // the loop above because it may require multiple iterations over the graph, during which a node may have
+    // negative production for a short time, but in the next iteration it will be set back to a positive value.
+    while (reduce(product_node.graph.nodes(), (modified, node) => (_fixNegatives(node) || modified), false));
+
+    // Make sure that all negatives were fixed
+    // Note: zeroes are fine!
+    assert(all(product_node.graph.nodes(), (node) => !mathjs.isNegative(node.data.production_required)));
+    assert(all(product_node.graph.links(), (link) => !mathjs.isNegative(link.data.production_required)));
 }
 
 export default function generateGraphData(product_name) {
