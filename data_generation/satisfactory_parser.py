@@ -1,16 +1,23 @@
 import re
+import zstd
 import json
 import shutil
 from os import path
-from types import NoneType
-from functools import reduce
 from fractions import Fraction
-from typing import NamedTuple, Any, TypeAlias, Iterable
+from typing import NamedTuple, Any, TypeAlias, Iterable, Callable
+
+from object_manager import ObjectManager
+from game_object_lookup import GameObjectLookup, GameObjectId
+import game_data_structs_pb2 as game_structs
+
+# TODO: parse from "https://static.satisfactory-calculator.com/data/json/gameData/en-Stable.json"???
+
+FORM_MAP = {"RF_GAS": 0, "RF_LIQUID": 1, "RF_SOLID": 2}
 
 
-# Corresponds to the "ClassName" element in the JSON file.
-# For example: "Desc_SpaceElevatorPart_1_C".
-GameObjectId: TypeAlias = str
+def frac(f: Fraction) -> game_structs.Fraction:
+    return game_structs.Fraction(n=f.numerator, d=f.denominator)
+
 
 # Corresponds to the "NativeClass" element in the JSON.
 # For example: "FGItemDescriptor".
@@ -46,35 +53,10 @@ class CraftingObject(NamedTuple):
 
 class Building(NamedTuple):
     name: str
-    power_consumption: float            # Base power consumption (MW)
-    speed_power_exponent: float         # Power consumption exponent of under/overclocking
-    production_power_exponent: float    # Power consumption exponent of overslooping
+    power_consumption: Fraction            # Base power consumption (MW)
+    speed_power_exponent: Fraction         # Power consumption exponent of under/overclocking
+    production_power_exponent: Fraction    # Power consumption exponent of overslooping
     num_sloop_slots: int                # Max number of sloops that can be installed in the machine
-    sloop_multiplier: float             # Production% boost of single sloop
-
-
-def jsonify(obj):
-    """Prepares the given object for serialization using JSON"""
-    if isinstance(obj, Fraction):
-        return {'n': obj.numerator, 'd': obj.denominator}
-
-    if isinstance(obj, (int, float, str, bool, NoneType)):
-        return obj
-
-    if isinstance(obj, dict):
-        return {
-            k: jsonify(v)
-            for k, v
-            in obj.items()
-        }
-
-    if isinstance(obj, (list, tuple, set)):
-        if isinstance(obj, tuple) and hasattr(obj, '_fields'):
-            return jsonify(obj._asdict())
-        else:
-            return [jsonify(item) for item in obj]
-
-    raise TypeError(f'Unknown type: {type(obj)}')
 
 
 class SatisfactoryParser:
@@ -101,62 +83,79 @@ class SatisfactoryParser:
         self._buildings = self._process_buildings()
         self._trivial_ingredients = self._calculate_trivial_ingredients()
 
-    def generate_data_file_content(self):
+    def serialize(self, object_manager: ObjectManager) -> bytes:
+        def generate_lookup(objs: dict[GameObjectId, object]) -> GameObjectLookup:
+            return GameObjectLookup({
+                (i, obj_id): objs[obj_id]
+                for i, obj_id
+                in enumerate(sorted(objs.keys(), key=lambda oid: object_manager.lookup_obj_index(oid)))
+            })
+
+        crafting_objects_lookup = generate_lookup(self._crafting_objects)
+        recipes_lookup = generate_lookup(self._recipes)
+        buildings_lookup = generate_lookup(self._buildings)
+
+        def create_object_list(objs_lookup: GameObjectLookup, converter: Callable[[object], object]):
+            return [converter(objs_lookup[i]) for i in range(len(objs_lookup))]
+
+        crafting_objects = create_object_list(
+            crafting_objects_lookup,
+            lambda obj: game_structs.CraftingObject(
+                name=obj.name,
+                recipes=[recipes_lookup.get_idx(recipe_id) for recipe_id in obj.recipes],
+                form=FORM_MAP[obj.form]
+            )
+        )
+
+        recipes = create_object_list(
+            recipes_lookup,
+            lambda obj: game_structs.Recipe(
+                name=obj.name,
+                ingredients={crafting_objects_lookup.get_idx(oid): frac(amount) for oid, amount in obj.ingredients.items()},
+                products={crafting_objects_lookup.get_idx(oid): frac(amount) for oid, amount in obj.products.items()},
+                duration=frac(obj.duration),
+                is_alternate=obj.is_alternate,
+                produced_in=buildings_lookup.get_idx(obj.produced_in)
+            )
+        )
+
+        buildings = create_object_list(
+            buildings_lookup,
+            lambda obj: game_structs.Building(
+                name=obj.name,
+                power_consumption=frac(obj.power_consumption),
+                speed_power_exponent=frac(obj.speed_power_exponent),
+                production_power_exponent=frac(obj.production_power_exponent),
+                num_sloop_slots=obj.num_sloop_slots
+            )
+        )
+
         def sort_by_display_name(object_ids: Iterable[GameObjectId]) -> list[GameObjectId]:
             return list(sorted(object_ids, key=lambda name: self._crafting_objects[name].name))
 
-        data = jsonify({
-            'crafting_objects': self._crafting_objects,
-            'crafting_products': sort_by_display_name(self._crafting_products),
-            'crafting_ingredients': sort_by_display_name(self._crafting_ingredients),
-            'trivial_ingredients': sort_by_display_name(self._trivial_ingredients),
-            'recipes': self._recipes,
-        })
+        game_data = game_structs.GameData(
+            crafting_objects=crafting_objects,
+            recipes=recipes,
+            buildings=buildings,
+            crafting_ingredients=[crafting_objects_lookup.get_idx(obj_id) for obj_id in sort_by_display_name(self._crafting_ingredients)],
+            crafting_products=[crafting_objects_lookup.get_idx(obj_id) for obj_id in sort_by_display_name(self._crafting_products)],
+            trivial_ingredients=[crafting_objects_lookup.get_idx(obj_id) for obj_id in sort_by_display_name(self._trivial_ingredients)]
+        )
 
-        # Remove fields that aren't currently used by teh website
-        # TODO: if you need it for the website, make sure to sort this field so that
-        # the autogenerated file won't change each time even though there aren't any
-        # real changes.
-        for recipe in data['recipes'].values():
-            del recipe["produced_in"]
+        object_manager.finalize()
 
-        return \
-            f"""/* This file is auto-generated! */
+        game_data = game_data.SerializeToString()
+        uncompressed_size = len(game_data)
 
-/** @import {{Fraction}} from "mathjs" */
+        # Note: I used "lzbench" on GitHub to check which level of zstd compresses this data best.
+        #       Level 12 yielded the best result for its decompression time. Compression time is
+        #       irrelevant, can take an hour for all I care.
+        game_data = zstd.compress(game_data, 12)
+        compressed_size = len(game_data)
 
-/**
- * @typedef {{string}} GameObjectId
- * @typedef {{Object.<string, Fraction>}} CountedItems
- * @typedef {{{{
- *      name: GameObjectId,
- *      products: CountedItems,
- *      ingredients: CountedItems,
- *      duration: Fraction,
- *      is_alternate: boolean,
- *      produced_in: GameObjectId
- * }}}} Recipe
- *
- * @typedef {{{{
- *      id: string,
- *      name: string,
- *      recipes: GameObjectId[],
- *      form: "SOLID" | "LIQUID" | "GAS"
- * }}}} CraftingObject
- */
+        print(f"Compressed from {uncompressed_size} bytes to {compressed_size} bytes. Ratio: {compressed_size/uncompressed_size:.2f}")
 
-/**
- * @type {{{{
- *      crafting_objects: Object.<string, CraftingObject>,
- *      crafting_products: GameObjectId[],
- *      crafting_ingredients: GameObjectId[],
- *      trivial_ingredients: GameObjectId[],
- *      recipes: Object.<string, Recipe>
- *  }}}}
- */
-const game_data = {json.dumps(data, sort_keys=True, separators=(',', ':'))};
-export default game_data;
-"""
+        return game_data
 
     # To extract the icons:
     # - Follow the guide in "https://docs.ficsit.app/satisfactory-modding/latest/Development/ExtractGameFiles.html" up to
@@ -337,13 +336,17 @@ export default game_data;
         crafting_buildings = set(recipe.produced_in for recipe in self._recipes.values())
         for building_id in crafting_buildings:
             building_obj = self._all_objects[building_id]
+
+            num_sloop_slots = int(building_obj['mProductionShardSlotSize'])
+            if num_sloop_slots:
+                assert 1 == Fraction(building_obj['mProductionShardBoostMultiplier']) * num_sloop_slots
+
             result[building_id] = Building(
                 building_obj['name'],
-                float(building_obj['mPowerConsumption']),
-                float(building_obj['mPowerConsumptionExponent']),
-                float(building_obj['mProductionBoostPowerConsumptionExponent']),
-                int(building_obj['mProductionShardSlotSize']),
-                float(building_obj['mProductionShardBoostMultiplier'])
+                Fraction(building_obj['mPowerConsumption']),
+                Fraction(building_obj['mPowerConsumptionExponent']),
+                Fraction(building_obj['mProductionBoostPowerConsumptionExponent']),
+                num_sloop_slots
             )
 
         return result
@@ -370,8 +373,8 @@ export default game_data;
             # if '/UI/' not in obj['mSmallIcon']:
             #     print(obj['mSmallIcon'])
 
-            assert obj["mForm"] in ("RF_LIQUID", "RF_SOLID", "RF_GAS")
-            form = obj["mForm"][len('RF_'):]
+            form = obj["mForm"]
+            assert form in ("RF_LIQUID", "RF_SOLID", "RF_GAS")
 
             crafting_objects[crafting_obj_id] = CraftingObject(
                 obj['id'],
@@ -398,7 +401,7 @@ export default game_data;
     def _parse_crafting_obj_list(self, item_list: str) -> CountedItems:
         items = self._CRAFTING_OBJ_LIST_REGEX.findall(item_list)
 
-        # Make sure that we parsed correctly. Each individual item contains a comma, and theres
+        # Make sure that we parsed correctly. Each individual item contains a comma, and there's
         # a comma between every 2 items.
         assert item_list.count(',') == max((len(items) * 2) - 1, 0)
 
@@ -434,8 +437,14 @@ export default game_data;
         return display_name
 
 
-if __name__ == '__main__':
+def main():
+    parent_dir = path.dirname(__file__)
     parser = SatisfactoryParser()
-    data = parser.generate_data_file_content()
-    with open(path.join(path.dirname(__file__), '..', 'website', 'scripts', 'GameData.auto.mjs'), 'w') as f:
+    obj_manager = ObjectManager(path.join(parent_dir, "known_objects.txt"))
+    data = parser.serialize(obj_manager)
+    with open(path.join(parent_dir, '..', 'website', 'public', 'game_data.bin'), 'wb') as f:
         f.write(data)
+
+
+if __name__ == '__main__':
+    main()

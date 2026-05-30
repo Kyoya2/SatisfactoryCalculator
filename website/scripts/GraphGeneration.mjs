@@ -1,9 +1,9 @@
-import game_data from "@/GameData.auto.mjs";
+import game_data from "@/GameData/GameData.mjs";
 import {assert, any, all, reduce, map, fractionMax, formatFrac} from "@/Utils.mjs";
 import {Graph, Node, Edge} from "@/Graph.mjs";
 import {g_, SCNode} from "@/Common.mjs";
 
-/** @import { GameObjectId, Recipe, CraftingObject } from "@/GameData.auto.mjs" */
+/** @import { GameObjectId, Recipe, CraftingObject } from "@/GameData/GameData.mjs" */
 /** @import { MyEdgeInfo } from "@/Common.mjs" */
 
 import * as mathjs from 'mathjs';
@@ -64,11 +64,11 @@ function generateBaseGraph(product_name) {
                 // "game_data" is generated such that non-alternate recipes are always before
                 // alternate recipes.
                 assert(obj !== undefined);
-                assert(obj.recipes.findIndex(recipe_id => !game_data.recipes[recipe_id].is_alternate) <= 0);
+                assert(obj.recipes.findIndex(recipe => !recipe.is_alternate) <= 0);
                 selected_recipe_index = 0;
             }
 
-            selected_recipe = game_data.recipes[obj.recipes[selected_recipe_index]];
+            selected_recipe = obj.recipes[selected_recipe_index];
         }
 
         // "selected_recipe_index" is set here because it directly affects the structure of the graph

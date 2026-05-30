@@ -1,6 +1,6 @@
 import {fraction, multiply, format, Fraction} from 'mathjs';
 
-/** @import { GameObjectId, CountedItem, Recipe, CraftingObject } from "@/GameData.auto.mjs" */
+/** @import { GameObjectId, CountedItem, Recipe, CraftingObject } from "@/GameData/GameData.mjs" */
 
 
 export default class Config {

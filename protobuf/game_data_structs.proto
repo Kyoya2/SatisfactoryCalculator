@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+enum Form {
+    Gas = 0;
+    Liquid = 1;
+    Solid = 2;
+}
+
+message Fraction {
+    int32 n = 1;    // Numerator
+    int32 d = 2;    // Denominator
+}
+
+message CraftingObject {
+    string name = 1;
+    repeated int32 recipes = 2;
+    Form form = 3;
+}
+
+message Recipe {
+    string name = 1; 
+    map<int32, Fraction> ingredients = 2;   // Maps between ingredient ID and amount
+    map<int32, Fraction> products = 3;      // Maps between product ID and amount
+    Fraction duration = 4;                  // Duration (in seconds) to make all listed products
+    bool is_alternate = 5;
+    int32 produced_in = 6;                  // Building ID
+}
+
+// TODO: Add "bool consumes_power" to differentiate between power consumers and power producers.
+message Building {
+    string name = 1;
+    Fraction power_consumption = 2;             // Base power consumption (MW)
+    Fraction speed_power_exponent = 3;          // Power consumption exponent of under/overclocking
+    Fraction production_power_exponent = 4;     // Power consumption exponent of overslooping
+    int32 num_sloop_slots = 5;                  // Max number of sloops that can be installed in the machine
+}
+
+message GameData {
+    repeated CraftingObject crafting_objects = 1;
+    repeated Recipe recipes = 2;
+    repeated Building buildings = 3;
+    repeated int32 crafting_ingredients = 4;    // IDs of items used as ingredients in recipes
+    repeated int32 crafting_products = 5;       // IDs of items that can be produced using recipes
+    repeated int32 trivial_ingredients = 6;     // IDs of ingredients that are trivial by defauilt
+}
