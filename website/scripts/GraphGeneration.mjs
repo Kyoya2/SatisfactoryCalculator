@@ -37,7 +37,7 @@ function generateBaseGraph(product_name) {
     /** @type {Map<GameObjectId, Node<SCNode, MyEdgeInfo>>} */
     let nodes = new Map();
 
-    // byproducts[id1] -> A map containing all nodes that preoduce "id1" as a byproduct.
+    // byproducts[id1] -> A map containing all nodes that produce "id1" as a byproduct.
     // byproducts[id1][id2] -> The amount of byproduct "id1" produced from a production of a single "id2"
     /** @type {Map<GameObjectId, Map<GameObjectId, Fraction>>} */
     let byproducts = new Map();
