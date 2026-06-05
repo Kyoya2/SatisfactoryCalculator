@@ -41,14 +41,14 @@ message GameData {
     repeated Building buildings = 3;
     repeated int32 crafting_ingredients = 4;    // IDs of items used as ingredients in recipes
     repeated int32 crafting_products = 5;       // IDs of items that can be produced using recipes
-    repeated int32 trivial_ingredients = 6;     // IDs of ingredients that are trivial by defauilt
+    repeated int32 trivial_ingredients = 6;     // IDs of ingredients that are trivial by default
 }
 
 message WebsiteState {
     int32 product_id = 1;
     Fraction display_multiplier = 2;
     bool show_byproducts = 3;
-    map<int32, int32> alternate_recipes = 4;    // Maps between an ID and the index of the selected recipe. TODO: map to recipe ID for backwards compatibility of URLs!
+    map<int32, int32> alternate_recipes = 4;    // Maps between an object ID and the ID of the recipe that's currently selected for it.
     repeated int32 trivial_resources = 5;
 
     // Field beyond this point must be optional in order to stay compatible

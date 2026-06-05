@@ -35,7 +35,7 @@ export default class Config {
                 this.show_byproducts = website_state.show_byproducts;
                 this.alternate_recipes = new Map(
                     Object.entries(website_state.alternate_recipes).map((
-                        [obj_id, recipe_index]) => [Number(obj_id), game_data.crafting_objects[Number(obj_id)].recipes[recipe_index]]
+                        [obj_id, recipe_id]) => [Number(obj_id), game_data.recipes[Number(recipe_id)]]
                     )
                 );
                 this.trivial_resources = new Set(website_state.trivial_resources);
@@ -51,7 +51,7 @@ export default class Config {
             display_multiplier: new GameDataStructs.Fraction({n: mathjs.number(this.display_multiplier.n), d: mathjs.number(this.display_multiplier.d)}),
             show_byproducts: this.show_byproducts,
             alternate_recipes: Object.fromEntries(this.alternate_recipes.entries().map(
-                ([obj_id, recipe]) => [obj_id, game_data.crafting_objects[obj_id].recipes.indexOf(recipe)]
+                ([obj_id, recipe]) => [obj_id, recipe.id]
             )),
             trivial_resources: [...this.trivial_resources.keys()]
         };
