@@ -1,5 +1,7 @@
 import * as GameDataStructs from '@/GameData/GameDataStructs.auto.js';
 import game_data from "@/GameData/GameData.mjs";
+import {map} from "@/Utils.mjs"
+import {g_} from './Common.mjs';
 /** @import { GameObjectId, CountedItem, Recipe, CraftingObject } from "@/GameData/GameData.mjs" */
 
 import * as mathjs from 'mathjs';
@@ -46,13 +48,22 @@ export default class Config {
     }
 
     notifyChange() {
+        let current_graph_items = new Set();
+        if (null != g_.product_node) {
+            current_graph_items = new Set(map(g_.product_node.graph.nodes(), node => node.data.obj().id));
+        }
+
         const data = {
             product_id: this.selected_product.id,
             display_multiplier: new GameDataStructs.Fraction({n: mathjs.number(this.display_multiplier.n), d: mathjs.number(this.display_multiplier.d)}),
             show_byproducts: this.show_byproducts,
-            alternate_recipes: Object.fromEntries(this.alternate_recipes.entries().map(
-                ([obj_id, recipe]) => [obj_id, recipe.id]
-            )),
+
+            // Serialize only alternate recipes for nodes in the current graph.
+            alternate_recipes: Object.fromEntries(
+                this.alternate_recipes.entries()
+                .filter(([obj_id, recipe]) => current_graph_items.has(obj_id))
+                .map(([obj_id, recipe]) => [obj_id, recipe.id])
+            ),
             trivial_resources: [...this.trivial_resources.keys()]
         };
         
