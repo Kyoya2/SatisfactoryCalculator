@@ -21,7 +21,7 @@ function initCraftableObjectsSelect() {
         function renderOption(data, escape) {
             return `<div class="${class_name}">
                         <span class="label">${escape(data.text)}</span>
-                        <img class="icon" src="${escape(`images/game_icons/${data.value}.png`)}" />
+                        <img class="icon" src="${escape(`images/items/${data.value}.png`)}" />
                     </div>`;
         }
 

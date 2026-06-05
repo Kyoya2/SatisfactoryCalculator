@@ -205,7 +205,7 @@ function createNodeOverlay(node_svg_element, node) {
     overlay.querySelector('.node-item-name').textContent = obj.name;
 
     // Initialize image
-    overlay.querySelector('.node-icon').src = `images/game_icons/${obj.id}.png`;
+    overlay.querySelector('.node-icon').src = `images/items/${obj.id}.png`;
 
     //
     // Initialize trivial checkbox

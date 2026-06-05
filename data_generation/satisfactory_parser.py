@@ -1,7 +1,9 @@
+import os
 import re
 import zstd
 import json
 import shutil
+import requests
 from os import path
 from fractions import Fraction
 from typing import NamedTuple, Any, TypeAlias, Iterable, Callable, TypeVar
@@ -11,6 +13,8 @@ from game_object_lookup import GameObjectLookup, GameObjectId
 import game_data_structs_pb2 as game_structs
 
 # TODO: parse from "https://static.satisfactory-calculator.com/data/json/gameData/en-Stable.json"???
+
+WEBSITE_ROOT = path.dirname(path.dirname(__file__))
 
 FORM_MAP = {
     "RF_GAS": game_structs.Form.Gas,
@@ -38,6 +42,8 @@ GameObject: TypeAlias = dict[str, Any]
 
 CountedItems: TypeAlias = dict[GameObjectId, Fraction]
 
+T = TypeVar('T')
+
 
 class Recipe(NamedTuple):
     name: str
@@ -49,13 +55,14 @@ class Recipe(NamedTuple):
 
 
 class CraftingObject(NamedTuple):
-    id: str
+    id: GameObjectId
     name: str
     recipes: list[GameObjectId]
     form: str
 
 
 class Building(NamedTuple):
+    id: GameObjectId
     name: str
     power_consumption: Fraction            # Base power consumption (MW)
     speed_power_exponent: Fraction         # Power consumption exponent of under/overclocking
@@ -91,7 +98,6 @@ class SatisfactoryParser:
         self._obj_manager.finalize()
 
     def serialize(self) -> bytes:
-        T = TypeVar('T')
         def create_object_list(objs_lookup: GameObjectLookup[T], converter: Callable[[T], object]):
             return [converter(objs_lookup[i]) for i in range(len(objs_lookup))]
 
@@ -178,6 +184,39 @@ class SatisfactoryParser:
                 path.join(asserts_base_path, f'{match[1]}.png'),
                 path.join(target_base_path, f'{crafting_obj_id}.png')
             )
+
+    def download_assets(self):
+        with requests.Session() as s:
+            r = s.get("https://static.satisfactory-calculator.com/data/json/gameData/en-Stable.json")
+            r.raise_for_status()
+            data = r.json()
+
+            urls = {}
+            for data_group_name in ('itemsData', 'buildingsData', 'toolsData'):
+                for obj_id, obj in data[data_group_name].items():
+                    urls[obj_id] = obj['image']
+
+            for group_name, objects in (('items', self._crafting_objects), ('buildings', self._buildings)):
+                dir_path = path.join(WEBSITE_ROOT, 'website', 'public', 'images', group_name)
+                if not path.isdir(dir_path):
+                    os.mkdir(dir_path)
+
+                for obj_id in objects.keys():
+                    file_path = path.join(dir_path, f'{objects.get_idx(obj_id)}.png')
+
+                    # skip if exists
+                    if path.isfile(file_path):
+                        continue
+
+                    url = urls[obj_id]
+
+                    print('Downloading', url)
+
+                    r = s.get(url)
+                    r.raise_for_status()
+
+                    with open(file_path, 'wb') as f:
+                        f.write(r.content)
 
     @classmethod
     def _preprocess_doc_file(cls, doc_file_path: str) -> tuple[
@@ -338,6 +377,7 @@ class SatisfactoryParser:
                 assert 1 == Fraction(building_obj['mProductionShardBoostMultiplier']) * num_sloop_slots
 
             buildings[building_id] = Building(
+                building_id,
                 building_obj['name'],
                 Fraction(building_obj['mPowerConsumption']),
                 Fraction(building_obj['mPowerConsumptionExponent']),
@@ -434,11 +474,11 @@ class SatisfactoryParser:
 
 
 def main():
-    parent_dir = path.dirname(__file__)
-    obj_manager = ObjectManager(path.join(parent_dir, "known_objects.txt"))
+    obj_manager = ObjectManager(path.join(WEBSITE_ROOT, 'data_generation', 'known_objects.txt'))
     parser = SatisfactoryParser(r"C:\Program Files (x86)\Steam\steamapps\common\Satisfactory\CommunityResources\Docs\en-US.json", obj_manager)
+    parser.download_assets()
     data = parser.serialize()
-    with open(path.join(parent_dir, '..', 'website', 'public', 'game_data.bin'), 'wb') as f:
+    with open(path.join(WEBSITE_ROOT, 'website', 'public', 'game_data.bin'), 'wb') as f:
         f.write(data)
 
 

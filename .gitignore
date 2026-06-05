@@ -3,6 +3,7 @@ __pycache__/
 
 /website/node_modules/
 /website/scripts/GameData/GameDataStructs.*
+/website/public/images/
 /website/public/game_data.bin
 /data_generation/game_data_structs_pb2.py
 dist/
