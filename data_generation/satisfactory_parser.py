@@ -12,7 +12,11 @@ import game_data_structs_pb2 as game_structs
 
 # TODO: parse from "https://static.satisfactory-calculator.com/data/json/gameData/en-Stable.json"???
 
-FORM_MAP = {"RF_GAS": 0, "RF_LIQUID": 1, "RF_SOLID": 2}
+FORM_MAP = {
+    "RF_GAS": game_structs.Form.Gas,
+    "RF_LIQUID": game_structs.Form.Liquid,
+    "RF_SOLID": game_structs.Form.Solid
+}
 
 
 def frac(f: Fraction) -> game_structs.Fraction:

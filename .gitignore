@@ -6,3 +6,4 @@ __pycache__/
 /website/public/game_data.bin
 /data_generation/game_data_structs_pb2.py
 dist/
+.vscode/

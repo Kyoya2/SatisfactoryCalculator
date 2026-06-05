@@ -245,10 +245,10 @@ function createNodeOverlay(node_svg_element, node) {
             alternate_recipes_select.add(new Option(recipe.name));
         }
 
-        alternate_recipes_select.selectedIndex = node.data.selected_recipe_index;
+        alternate_recipes_select.selectedIndex = node.data.obj().recipes.indexOf(node.data.selectedRecipe());
 
         alternate_recipes_select.oninput = function(e) {
-            g_.config.alternate_recipes.set(obj.id, e.target.selectedIndex);
+            g_.config.alternate_recipes.set(obj.id, obj.recipes[e.target.selectedIndex]);
             g_.config.notifyChange();
             generateGraph();
         };
@@ -348,7 +348,7 @@ async function generateGraphUI(product_node, recalc_mult) {
  * @param {boolean} recalc_mult - Whether the display multiplier should be recalculated
  */
 export async function generateGraph(recalc_mult=false) {
-    g_.product_node = generateGraphData(g_.config.product_name);
+    g_.product_node = generateGraphData(g_.config.selected_product);
 
     generateGraphUI(g_.product_node, recalc_mult);
 }
@@ -378,11 +378,11 @@ function updateOverlay() {
 }
 
 /**
- * @param {string} product_name - the name of the new product
+ * @param {GameObjectId} product_id - the ID of the new product
  * @param {boolean} recalc_mult - Whether the display multiplier should be recalculated
  */
-export function updateSelectedProduct(product_name, recalc_mult) {
-    g_.config.product_name = product_name;
+export function updateSelectedProduct(product_id, recalc_mult) {
+    g_.config.selected_product = game_data.crafting_objects[product_id];
     g_.config.notifyChange();
     generateGraph(recalc_mult);
 }
@@ -390,8 +390,8 @@ export function updateSelectedProduct(product_name, recalc_mult) {
 export function resetAlternateRecipes() {
     // Re-render only if a non-alternate recipe is currently selected
     const should_re_render_graph = any(
-        g_.config.alternate_recipes.values(),
-        (selected_recipe_index) => 0 != selected_recipe_index
+        g_.config.alternate_recipes.entries(),
+        ([obj_id, selected_recipe]) => 0 != game_data.crafting_objects[obj_id].recipes.indexOf(selected_recipe)
     );
 
     g_.config.alternate_recipes.clear();

@@ -39,9 +39,8 @@ export class SCNode {
     /**
      * @param {CraftingObject} obj 
      * @param {boolean} is_pure_byproduct 
-     * @param {number=} selected_recipe_index
      */
-    constructor(obj, is_pure_byproduct, selected_recipe_index) {
+    constructor(obj, is_pure_byproduct) {
         /** 
          * @type {CraftingObject} 
          * @private
@@ -53,12 +52,6 @@ export class SCNode {
          * @private
          */
         this._is_pure_byproduct = is_pure_byproduct;
-
-        /**
-         * @type {number=} 
-         * @public
-        */
-        this.selected_recipe_index = selected_recipe_index;
 
         /**
          * The total required production per second of this unit's resource to fully supply its target node's
@@ -96,19 +89,21 @@ export class SCNode {
     /** @returns {Recipe[]} */
     recipes() { return this._obj.recipes; }
 
-    /** @returns {Recipe=} */
+    /** @returns {Recipe} */
     selectedRecipe() {
-        if (undefined === this.selected_recipe_index)
-            return undefined;
+        let selected_recipe = g_.config.alternate_recipes.get(this._obj.id);
+        if (undefined === selected_recipe)
+            selected_recipe = this._obj.recipes[0];
 
-        return this._obj.recipes[this.selected_recipe_index];
+        return selected_recipe;
     }
 
     /** @returns {Fraction} */
     singleMachineProduction() {
         assert(!this.isTrivial() && !this.isPureByproduct());
         const selected_recipe = this.selectedRecipe();
-        return mathjs.divide(selected_recipe.products[this._obj.id], selected_recipe.duration);
+        assert(undefined != selected_recipe);
+        return mathjs.divide(selected_recipe.products.get(this._obj.id), selected_recipe.duration);
     }
 
     /** @returns {Fraction} */

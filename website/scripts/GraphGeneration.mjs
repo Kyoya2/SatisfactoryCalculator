@@ -27,10 +27,10 @@ function calculateOutputFractions(node) {
  * Generates a basic graph according to the given products recipe.
  * The graph mainly describes relationships between different ingredients, and doesn't
  * hold other information.
- * @param {GameObjectId} product_name 
+ * @param {CraftingObject} product
  * @returns {Node<SCNode, MyEdgeInfo>} The product node
  */
-function generateBaseGraph(product_name) {
+function generateBaseGraph(product) {
     /** @type {Graph<SCNode, MyEdgeInfo>} */
     let graph = new Graph(((edge) => !edge.data.is_byproduct));
 
@@ -44,46 +44,34 @@ function generateBaseGraph(product_name) {
 
     /**
      * Calculates only the layout of the graph for the currently selected product
-     * @param {GameObjectId} product_id
+     * @param {CraftingObject} product
      * @returns {Node<SCNode, MyEdgeInfo>}
      */
-    function _generateGraphLayout(product_id) {
-        let node = nodes.get(product_id);
+    function _generateGraphLayout(product) {
+        let node = nodes.get(product.id);
         if (undefined !== node)
             return node;
 
-        /** @type {CraftingObject} */
-        const obj = game_data.crafting_objects[product_id];
-
-        const is_trivial = g_.config.trivial_resources.has(product_id);
+        const is_trivial = g_.config.trivial_resources.has(product.id);
         let selected_recipe;
-        let selected_recipe_index = -1;
         if (!is_trivial) {
-            selected_recipe_index = g_.config.alternate_recipes.get(product_id);
-            if (undefined === selected_recipe_index) {
+            selected_recipe = g_.config.alternate_recipes.get(product.id);
+            if (undefined === selected_recipe) {
                 // "game_data" is generated such that non-alternate recipes are always before
                 // alternate recipes.
-                assert(obj !== undefined);
-                assert(obj.recipes.findIndex(recipe => !recipe.is_alternate) <= 0);
-                selected_recipe_index = 0;
+                assert(product.recipes.findIndex(recipe => !recipe.is_alternate) <= 0);
+                selected_recipe = product.recipes[0];
             }
-
-            selected_recipe = obj.recipes[selected_recipe_index];
         }
 
-        // "selected_recipe_index" is set here because it directly affects the structure of the graph
-        node = graph.createNode(new SCNode(
-            product_id,
-            false,
-            selected_recipe_index
-        ));
+        node = graph.createNode(new SCNode(product, false));
 
-        nodes.set(product_id, node)
+        nodes.set(product.id, node)
 
         if (undefined !== selected_recipe) {
-            const product_amount = selected_recipe.products[product_id];
-            for (const [ingredient_id, amount] of Object.entries(selected_recipe.ingredients)) {
-                const ingredient_node = _generateGraphLayout(ingredient_id);
+            const product_amount = selected_recipe.products.get(product.id);
+            for (const [ingredient_id, amount] of selected_recipe.ingredients.entries()) {
+                const ingredient_node = _generateGraphLayout(game_data.crafting_objects[ingredient_id]);
                 node.add_blink(
                     ingredient_node,
                     {
@@ -99,8 +87,8 @@ function generateBaseGraph(product_name) {
 
             if (g_.config.show_byproducts) {
                 // Process byproducts of the selected recipe
-                for (const [byproduct_id, amount] of Object.entries(selected_recipe.products)) {
-                    if (product_id == byproduct_id)
+                for (const [byproduct_id, amount] of selected_recipe.products.entries()) {
+                    if (product.id == byproduct_id)
                         continue;
 
                     let byproduct_producers = byproducts.get(byproduct_id);
@@ -111,9 +99,9 @@ function generateBaseGraph(product_name) {
 
                     // Since we iterate over each product once, it shouldn't yet be registered
                     // as a producer of the current byproduct
-                    assert(!byproduct_producers.has(product_id));
+                    assert(!byproduct_producers.has(product.id));
 
-                    byproduct_producers.set(product_id, mathjs.divide(amount, product_amount));
+                    byproduct_producers.set(product.id, mathjs.divide(amount, product_amount));
                 }
             }
         }
@@ -121,16 +109,13 @@ function generateBaseGraph(product_name) {
         return node;
     }
 
-    const product_node = _generateGraphLayout(product_name);
+    const product_node = _generateGraphLayout(product);
 
     for (const [byproduct_id, producers] of byproducts.entries()) {
         // If the byproduct is not used anywhere in the recipe tree, create a node for it
         let byproduct_node = nodes.get(byproduct_id);
         if (undefined === byproduct_node) {
-            byproduct_node = graph.createNode(new SCNode(
-                byproduct_id,
-                true
-            ));
+            byproduct_node = graph.createNode(new SCNode(game_data.crafting_objects[byproduct_id], true));
         }
 
         // Connect the byproduct node to all the nodes that produce it
@@ -420,8 +405,12 @@ function calculateGraphByproducts(product_node) {
     assert(all(product_node.graph.links(), (link) => !mathjs.isNegative(link.data.production_required)));
 }
 
-export default function generateGraphData(product_name) {
-    const product_node = generateBaseGraph(product_name);
+/**
+ * @param {CraftingObject} product 
+ * @returns {Node<SCNode, MyEdgeInfo>}
+ */
+export default function generateGraphData(product) {
+    const product_node = generateBaseGraph(product);
     
     calculateGraphProductionRates(product_node);
 

@@ -36,13 +36,13 @@ function initCraftableObjectsSelect() {
             maxOptions: null,
             placeholder: "Select an item...",
 
-            /** @param {string} product_name */
-            onChange: function(product_name) {
+            /** @param {number} product_id */
+            onChange: function(product_id) {
                 // Don't do anything if selection is cleared
-                if ("" == product_name)
+                if (null == product_id)
                     return;
 
-                updateSelectedProduct(product_name, true);
+                updateSelectedProduct(product_id, true);
 
                 // For some reason, the text box stays focused after selecting an option,
                 // which looks ugly, since it's extended vertically as long as it's selected.
@@ -145,6 +145,6 @@ export default function initApp() {
     initPanZoom();
 
     // Generate the graph
-    craftable_objects_select.setValue(g_.config.product_name, true);
-    updateSelectedProduct(g_.config.product_name, false);
+    craftable_objects_select.setValue(g_.config.selected_product.id, true);
+    updateSelectedProduct(g_.config.selected_product.id, false);
 }

@@ -6,7 +6,7 @@ import * as fzstd from 'fzstd';
 /**
  * @typedef {number} GameObjectId
  * 
- * @typedef {{[key: GameObjectId]: Fraction}} CountedItems
+ * @typedef {Map<GameObjectId, Fraction>} CountedItems
  * 
  * @typedef {Omit<GameDataStructs.Building, "power_consumption" | "speed_power_exponent" | "production_power_exponent"> & {
  *      id: GameObjectId,
@@ -68,12 +68,13 @@ async function initGameData() {
     for (const [i, recipe_obj] of deserialized_data.recipes.entries()) {
         recipe_obj.id = i;
 
-        // Convert ingredient and product amounts to mathjs fractions
+        // Convert ingredient and product amounts to Maps of mathjs fractions
         for (const obj_map_name of ["ingredients", "products"]) {
-            const crafting_objs_map = recipe_obj[obj_map_name];
-            for (const [crafting_obj_id, amount] of Object.entries(crafting_objs_map)) {
-                crafting_objs_map[crafting_obj_id] = _convertFrac(amount);
-            }
+            recipe_obj[obj_map_name] = new Map(
+                Object.entries(recipe_obj[obj_map_name]).map(
+                    ([obj_id, amount]) => [Number(obj_id), _convertFrac(amount)]
+                )
+            );
         }
 
         // Convert to mathjs fraction
@@ -92,6 +93,7 @@ async function initGameData() {
         building_obj.production_power_exponent = _convertFrac(building_obj.production_power_exponent);
     }
 
+    // Convert lists of IDs to lists of referenced objects
     for (const crafting_obj_array_name of ["crafting_ingredients", "crafting_products", "trivial_ingredients"]) {
         deserialized_data[crafting_obj_array_name] = deserialized_data[crafting_obj_array_name].map(
             (obj_id) => deserialized_data.crafting_objects[obj_id]
