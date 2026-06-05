@@ -235,10 +235,6 @@ function createNodeOverlay(node_svg_element, node) {
     if (is_trivial || is_pure_byproduct || (obj.recipes.length <= 1)) {
         overlay.querySelector(".node-alternate-recipes").remove();
     } else {
-        let recipe_index = g_.config.alternate_recipes.get(obj.id);
-        if (undefined === recipe_index)
-            recipe_index = 0;
-
         /** @type {HTMLSelectElement} */
         const alternate_recipes_select = overlay.querySelector(".node-alternate-recipes > select");
         for (const recipe of obj.recipes) {
