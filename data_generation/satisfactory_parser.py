@@ -4,7 +4,7 @@ import json
 import shutil
 from os import path
 from fractions import Fraction
-from typing import NamedTuple, Any, TypeAlias, Iterable, Callable
+from typing import NamedTuple, Any, TypeAlias, Iterable, Callable, TypeVar
 
 from object_manager import ObjectManager
 from game_object_lookup import GameObjectLookup, GameObjectId
@@ -73,7 +73,8 @@ class SatisfactoryParser:
     _ALTERNATE_RECIPE_NAME_PREFIX = "Alternate: "
     _MANUAL_CRAFTING_BUILDINGS = {'BP_BuildGun_C', 'FGBuildGun', 'BP_WorkshopComponent_C', 'BP_WorkBenchComponent_C', 'FGBuildableAutomatedWorkBench', 'Build_AutomatedWorkBench_C'}
 
-    def __init__(self, doc_file_path=r"C:\Program Files (x86)\Steam\steamapps\common\Satisfactory\CommunityResources\Docs\en-US.json"):
+    def __init__(self, doc_file_path: str, obj_manager: ObjectManager):
+        self._obj_manager = obj_manager
         self._all_objects, self._categorized_objects = self._preprocess_doc_file(doc_file_path)
         self._recipes = self._process_recipes()
 
@@ -87,44 +88,36 @@ class SatisfactoryParser:
         self._buildings = self._process_buildings()
         self._trivial_ingredients = self._calculate_trivial_ingredients()
 
-    def serialize(self, object_manager: ObjectManager) -> bytes:
-        def generate_lookup(objs: dict[GameObjectId, object]) -> GameObjectLookup:
-            return GameObjectLookup({
-                (i, obj_id): objs[obj_id]
-                for i, obj_id
-                in enumerate(sorted(objs.keys(), key=lambda oid: object_manager.lookup_obj_index(oid)))
-            })
+        self._obj_manager.finalize()
 
-        crafting_objects_lookup = generate_lookup(self._crafting_objects)
-        recipes_lookup = generate_lookup(self._recipes)
-        buildings_lookup = generate_lookup(self._buildings)
-
-        def create_object_list(objs_lookup: GameObjectLookup, converter: Callable[[object], object]):
+    def serialize(self) -> bytes:
+        T = TypeVar('T')
+        def create_object_list(objs_lookup: GameObjectLookup[T], converter: Callable[[T], object]):
             return [converter(objs_lookup[i]) for i in range(len(objs_lookup))]
 
         crafting_objects = create_object_list(
-            crafting_objects_lookup,
+            self._crafting_objects,
             lambda obj: game_structs.CraftingObject(
                 name=obj.name,
-                recipes=[recipes_lookup.get_idx(recipe_id) for recipe_id in obj.recipes],
+                recipes=[self._recipes.get_idx(recipe_id) for recipe_id in obj.recipes],
                 form=FORM_MAP[obj.form]
             )
         )
 
         recipes = create_object_list(
-            recipes_lookup,
+            self._recipes,
             lambda obj: game_structs.Recipe(
                 name=obj.name,
-                ingredients={crafting_objects_lookup.get_idx(oid): frac(amount) for oid, amount in obj.ingredients.items()},
-                products={crafting_objects_lookup.get_idx(oid): frac(amount) for oid, amount in obj.products.items()},
+                ingredients={self._crafting_objects.get_idx(oid): frac(amount) for oid, amount in obj.ingredients.items()},
+                products={self._crafting_objects.get_idx(oid): frac(amount) for oid, amount in obj.products.items()},
                 duration=frac(obj.duration),
                 is_alternate=obj.is_alternate,
-                produced_in=buildings_lookup.get_idx(obj.produced_in)
+                produced_in=self._buildings.get_idx(obj.produced_in)
             )
         )
 
         buildings = create_object_list(
-            buildings_lookup,
+            self._buildings,
             lambda obj: game_structs.Building(
                 name=obj.name,
                 power_consumption=frac(obj.power_consumption),
@@ -134,19 +127,18 @@ class SatisfactoryParser:
             )
         )
 
-        def sort_by_display_name(object_ids: Iterable[GameObjectId]) -> list[GameObjectId]:
-            return list(sorted(object_ids, key=lambda name: self._crafting_objects[name].name))
+        # Generates a list of crafting object IDs, sorted by the display name of the objects
+        def gen_sorted_id_list(object_ids: Iterable[GameObjectId]) -> list[int]:
+            return [self._crafting_objects.get_idx(obj_id) for obj_id in sorted(object_ids, key=lambda name: self._crafting_objects[name].name)]
 
         game_data = game_structs.GameData(
             crafting_objects=crafting_objects,
             recipes=recipes,
             buildings=buildings,
-            crafting_ingredients=[crafting_objects_lookup.get_idx(obj_id) for obj_id in sort_by_display_name(self._crafting_ingredients)],
-            crafting_products=[crafting_objects_lookup.get_idx(obj_id) for obj_id in sort_by_display_name(self._crafting_products)],
-            trivial_ingredients=[crafting_objects_lookup.get_idx(obj_id) for obj_id in sort_by_display_name(self._trivial_ingredients)]
+            crafting_ingredients=gen_sorted_id_list(self._crafting_ingredients),
+            crafting_products=gen_sorted_id_list(self._crafting_products),
+            trivial_ingredients=gen_sorted_id_list(self._trivial_ingredients)
         )
-
-        object_manager.finalize()
 
         game_data = game_data.SerializeToString()
         uncompressed_size = len(game_data)
@@ -218,8 +210,8 @@ class SatisfactoryParser:
 
         return all_objects, categorized_objects
 
-    def _process_recipes(self) -> dict[GameObjectId, Recipe]:
-        recipes: dict[GameObjectId, Recipe] = {}
+    def _process_recipes(self) -> GameObjectLookup[Recipe]:
+        recipes = GameObjectLookup[Recipe](self._obj_manager)
         for recipe_id, recipe in self._categorized_objects['FGRecipe'].items():
             # Ignore recipes that can't be automated
             produced_in = set(self._PRODUCED_IN_REGEX.findall(recipe['mProducedIn'])) - self._MANUAL_CRAFTING_BUILDINGS
@@ -289,7 +281,7 @@ class SatisfactoryParser:
                 else:
                     product_recipes.insert(0, recipe_id)
 
-        return recipes
+        return recipes.finalize()
 
     # "FGRecipe" doesn't contain byproducts of burning fuel (such as uranium fuel rod -> nuclear waste).
     # This function generates recipes based on other information available in the game data.
@@ -335,8 +327,8 @@ class SatisfactoryParser:
 
         return fuel_byproduct_recipes
 
-    def _process_buildings(self) -> dict[GameObjectId, Building]:
-        result = {}
+    def _process_buildings(self) -> GameObjectLookup[Building]:
+        buildings = GameObjectLookup[Building](self._obj_manager)
         crafting_buildings = set(recipe.produced_in for recipe in self._recipes.values())
         for building_id in crafting_buildings:
             building_obj = self._all_objects[building_id]
@@ -345,7 +337,7 @@ class SatisfactoryParser:
             if num_sloop_slots:
                 assert 1 == Fraction(building_obj['mProductionShardBoostMultiplier']) * num_sloop_slots
 
-            result[building_id] = Building(
+            buildings[building_id] = Building(
                 building_obj['name'],
                 Fraction(building_obj['mPowerConsumption']),
                 Fraction(building_obj['mPowerConsumptionExponent']),
@@ -353,10 +345,10 @@ class SatisfactoryParser:
                 num_sloop_slots
             )
 
-        return result
+        return buildings.finalize()
 
-    def _process_crafting_objects(self) -> dict[GameObjectId, CraftingObject]:
-        crafting_objects: dict[GameObjectId, CraftingObject] = {}
+    def _process_crafting_objects(self) -> GameObjectLookup[CraftingObject]:
+        crafting_objects = GameObjectLookup[CraftingObject](self._obj_manager)
         for crafting_obj_id in self._crafting_ingredients | self._crafting_products:
             obj = self._all_objects[crafting_obj_id]
             if 'recipes' not in obj:
@@ -387,7 +379,7 @@ class SatisfactoryParser:
                 form
             )
 
-        return crafting_objects
+        return crafting_objects.finalize()
 
     def _calculate_trivial_ingredients(self) -> set[GameObjectId]:
         # Water is a byproduct of a bunch of things, so it won't be detected by the algorithm below
@@ -443,9 +435,9 @@ class SatisfactoryParser:
 
 def main():
     parent_dir = path.dirname(__file__)
-    parser = SatisfactoryParser()
     obj_manager = ObjectManager(path.join(parent_dir, "known_objects.txt"))
-    data = parser.serialize(obj_manager)
+    parser = SatisfactoryParser(r"C:\Program Files (x86)\Steam\steamapps\common\Satisfactory\CommunityResources\Docs\en-US.json", obj_manager)
+    data = parser.serialize()
     with open(path.join(parent_dir, '..', 'website', 'public', 'game_data.bin'), 'wb') as f:
         f.write(data)
 
