@@ -3,14 +3,16 @@
 // https://tom-select.js.org/docs/
 // https://mermaid.js.org/config/setup/mermaid/interfaces/MermaidConfig.html
 // https://mathjs.org/docs/datatypes/fractions.html
-import game_data from "@/GameData.auto.mjs";
+// https://protobuf.dev/programming-guides/proto3/
+// https://github.com/protobufjs/protobuf.js/
+import game_data from "@/GameData/GameData.mjs";
 import {assert, any, reduce, map, fractionMax, formatFrac} from "@/Utils.mjs";
 import {Graph, Node, Edge} from "@/Graph.mjs";
 import {g_, SCNode} from "@/Common.mjs";
 import generateGraphData from "@/GraphGeneration.mjs";
 import Config from "@/Config.mjs";
 
-/** @import { GameObjectId, Recipe, CraftingObject } from "@/GameData.auto.mjs" */
+/** @import { GameObjectId, Recipe, CraftingObject } from "@/GameData/GameData.mjs" */
 /** @import { MyEdgeInfo } from "@/Common.mjs" */
 
 import mermaid from "mermaid";
@@ -203,7 +205,7 @@ function createNodeOverlay(node_svg_element, node) {
     overlay.querySelector('.node-item-name').textContent = obj.name;
 
     // Initialize image
-    overlay.querySelector('.node-icon').src = `images/game_icons/${obj.id}.png`;
+    overlay.querySelector('.node-icon').src = `images/items/${obj.id}.png`;
 
     //
     // Initialize trivial checkbox
@@ -233,20 +235,16 @@ function createNodeOverlay(node_svg_element, node) {
     if (is_trivial || is_pure_byproduct || (obj.recipes.length <= 1)) {
         overlay.querySelector(".node-alternate-recipes").remove();
     } else {
-        let recipe_index = g_.config.alternate_recipes.get(obj.id);
-        if (undefined === recipe_index)
-            recipe_index = 0;
-
         /** @type {HTMLSelectElement} */
         const alternate_recipes_select = overlay.querySelector(".node-alternate-recipes > select");
-        for (let i = 0; i < obj.recipes.length; ++i) {
-            alternate_recipes_select.add(new Option(game_data.recipes[obj.recipes[i]].name));
+        for (const recipe of obj.recipes) {
+            alternate_recipes_select.add(new Option(recipe.name));
         }
 
-        alternate_recipes_select.selectedIndex = node.data.selected_recipe_index;
+        alternate_recipes_select.selectedIndex = node.data.obj().recipes.indexOf(node.data.selectedRecipe());
 
         alternate_recipes_select.oninput = function(e) {
-            g_.config.alternate_recipes.set(obj.id, e.target.selectedIndex);
+            g_.config.alternate_recipes.set(obj.id, obj.recipes[e.target.selectedIndex]);
             g_.config.notifyChange();
             generateGraph();
         };
@@ -346,7 +344,7 @@ async function generateGraphUI(product_node, recalc_mult) {
  * @param {boolean} recalc_mult - Whether the display multiplier should be recalculated
  */
 export async function generateGraph(recalc_mult=false) {
-    g_.product_node = generateGraphData(g_.config.product_name);
+    g_.product_node = generateGraphData(g_.config.selected_product);
 
     generateGraphUI(g_.product_node, recalc_mult);
 }
@@ -376,11 +374,11 @@ function updateOverlay() {
 }
 
 /**
- * @param {string} product_name - the name of the new product
+ * @param {GameObjectId} product_id - the ID of the new product
  * @param {boolean} recalc_mult - Whether the display multiplier should be recalculated
  */
-export function updateSelectedProduct(product_name, recalc_mult) {
-    g_.config.product_name = product_name;
+export function updateSelectedProduct(product_id, recalc_mult) {
+    g_.config.selected_product = game_data.crafting_objects[product_id];
     g_.config.notifyChange();
     generateGraph(recalc_mult);
 }
@@ -388,8 +386,8 @@ export function updateSelectedProduct(product_name, recalc_mult) {
 export function resetAlternateRecipes() {
     // Re-render only if a non-alternate recipe is currently selected
     const should_re_render_graph = any(
-        g_.config.alternate_recipes.values(),
-        (selected_recipe_index) => 0 != selected_recipe_index
+        g_.config.alternate_recipes.entries(),
+        ([obj_id, selected_recipe]) => 0 != game_data.crafting_objects[obj_id].recipes.indexOf(selected_recipe)
     );
 
     g_.config.alternate_recipes.clear();
@@ -400,7 +398,7 @@ export function resetAlternateRecipes() {
 }
 
 export function resetTrivialResources() {
-    const new_trivial_resources = new Set(game_data.trivial_ingredients);
+    const new_trivial_resources = new Set(game_data.trivial_ingredients.map(obj => obj.id));
 
     const symmetric_diff = new_trivial_resources.symmetricDifference(g_.config.trivial_resources);
 
@@ -475,36 +473,36 @@ function _testAll() {
     g_.config.show_byproducts = true;
 
     // Subtract the default trivial ingredients, because we always keep those as trivial
-    const crafting_obj_ids = new Set(Object.keys(game_data.crafting_objects)).difference(new Set(game_data.trivial_ingredients));
+    const crafting_obj_ids = [...new Set(game_data.crafting_objects.map(obj => obj.id)).difference(new Set(game_data.trivial_ingredients.map(obj => obj.id)))];
 
     const num_trivial_items_combinations = Math.pow(2, crafting_obj_ids.size);
     const num_recipe_combinations = reduce(
         game_data.crafting_products,
-        (product, obj_id) => product * game_data.crafting_objects[obj_id].recipes.length,
+        (product, obj) => product * obj.recipes.length,
         1
     );
 
     // Iterate through all craftable objects
-    for (const crafting_product_name of game_data.crafting_products) {
-        console.time(crafting_product_name);
+    for (const crafting_product of game_data.crafting_products) {
+        console.time(crafting_product.name);
 
         // Iterate through all possible combinations of trivial resources (excluding items that are trivial by default, these
         // will always be selected as trivial for this test)
         for (let i = 0; i < num_trivial_items_combinations; ++i) {
             const str = i.toString(2).padStart(crafting_obj_ids.size, '0');
-            g_.config.trivial_resources = new Set(game_data.trivial_ingredients);
+            g_.config.trivial_resources = new Set(game_data.trivial_ingredients.map(obj => obj.id));
             for (let j = 0; j < str.length; ++j) {
                 if ('1' == str[j])
                      g_.config.trivial_resources.add(crafting_obj_ids[j]);
             }
             
             // Iterate through all possible combinations of selected recipes
-            g_.config.alternate_recipes = new Map(game_data.crafting_products.map((obj_id) => [obj_id, 0]));
+            g_.config.alternate_recipes = new Map(game_data.crafting_products.map(obj => [obj.id, 0]));
             for (let j = 0; j < num_recipe_combinations; ++j) {
-                for (const crafting_prod_id of game_data.crafting_products) {
-                    const num_recipes = game_data.crafting_objects[crafting_prod_id].recipes.length;
-                    const new_recipe_index = (g_.config.alternate_recipes.get(crafting_prod_id) + 1) % num_recipes;
-                    g_.config.alternate_recipes.set(crafting_prod_id, new_recipe_index);
+                for (const crafting_prod of game_data.crafting_products) {
+                    const num_recipes = crafting_prod.recipes.length;
+                    const new_recipe_index = (g_.config.alternate_recipes.get(crafting_prod.id) + 1) % num_recipes;
+                    g_.config.alternate_recipes.set(crafting_prod.id, new_recipe_index);
 
                     // If we overflowed, carry to the next recipe.
                     // Otherwise, stop.
@@ -514,7 +512,7 @@ function _testAll() {
 
                 try
                 {
-                    const data = generateGraphData(crafting_product_name);
+                    const data = generateGraphData(crafting_product);
                 } catch {
                     g_.config.notifyChange();
                     alert("A test has failed, copy the current URL to reproduce");
@@ -528,7 +526,7 @@ function _testAll() {
             
         }
 
-        console.timeEnd(crafting_product_name);
+        console.timeEnd(crafting_product.name);
     }
     
     // Restore previous config

@@ -1,7 +1,6 @@
 import Config from "@/Config.mjs";
 import {assert} from "@/Utils.mjs";
-import game_data from "@/GameData.auto.mjs";
-/** @import { GameObjectId, CountedItem, Recipe, CraftingObject } from "@/GameData.auto.mjs" */
+/** @import { GameObjectId, CountedItem, Recipe, CraftingObject } from "@/GameData/GameData.mjs" */
 /** @import { Graph, Node, Edge } from "@/Graph.mjs" */
 
 import * as mathjs from 'mathjs';
@@ -38,28 +37,21 @@ globalThis.satisfactoryCalculator = g_;
 
 export class SCNode {
     /**
-     * @param {GameObjectId} obj_id 
+     * @param {CraftingObject} obj 
      * @param {boolean} is_pure_byproduct 
-     * @param {number=} selected_recipe_index
      */
-    constructor(obj_id, is_pure_byproduct, selected_recipe_index) {
+    constructor(obj, is_pure_byproduct) {
         /** 
          * @type {CraftingObject} 
          * @private
          */
-        this._obj = game_data.crafting_objects[obj_id];
+        this._obj = obj;
 
         /**
          * @type {boolean}
          * @private
          */
         this._is_pure_byproduct = is_pure_byproduct;
-
-        /**
-         * @type {number=} 
-         * @public
-        */
-        this.selected_recipe_index = selected_recipe_index;
 
         /**
          * The total required production per second of this unit's resource to fully supply its target node's
@@ -94,22 +86,24 @@ export class SCNode {
     /** @returns {boolean} */
     isPureByproduct() { return this._is_pure_byproduct; }
 
-    /** @returns {string[]} */
+    /** @returns {Recipe[]} */
     recipes() { return this._obj.recipes; }
 
-    /** @returns {Recipe=} */
+    /** @returns {Recipe} */
     selectedRecipe() {
-        if (undefined === this.selected_recipe_index)
-            return undefined;
+        let selected_recipe = g_.config.alternate_recipes.get(this._obj.id);
+        if (undefined === selected_recipe)
+            selected_recipe = this._obj.recipes[0];
 
-        return game_data.recipes[this._obj.recipes[this.selected_recipe_index]];
+        return selected_recipe;
     }
 
     /** @returns {Fraction} */
     singleMachineProduction() {
         assert(!this.isTrivial() && !this.isPureByproduct());
         const selected_recipe = this.selectedRecipe();
-        return mathjs.divide(selected_recipe.products[this._obj.id], selected_recipe.duration);
+        assert(undefined != selected_recipe);
+        return mathjs.divide(selected_recipe.products.get(this._obj.id), selected_recipe.duration);
     }
 
     /** @returns {Fraction} */

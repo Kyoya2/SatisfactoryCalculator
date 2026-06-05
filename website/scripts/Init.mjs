@@ -1,8 +1,9 @@
 import {g_} from "@/Common.mjs";
 import {assert, formatFrac, deepFreeze} from "@/Utils.mjs";
 import Config from "@/Config.mjs";
-import game_data from "@/GameData.auto.mjs";
-/** @import { GameObjectId, CountedItem, Recipe, CraftingObject } from "@/GameData.auto.mjs" */
+import game_data from "@/GameData/GameData.mjs";
+
+/** @import { GameObjectId, CountedItem, Recipe, CraftingObject } from "@/GameData/GameData.mjs" */
 
 import TomSelect from "tom-select";
 import * as mathjs from 'mathjs';
@@ -15,30 +16,12 @@ import Panzoom from "@panzoom/panzoom";
 import {updateSelectedProduct, resetAlternateRecipes, resetTrivialResources, updateDisplayMultiplier, updateDisplayMultiplierAuto, toggleShowByproducts} from "@/Main.mjs"
 
 
-function initGameData() {
-    // Transform information to fraction objects
-    for (const recipe of Object.values(game_data.recipes)) {
-        // Recipe durations
-        recipe.duration = fraction(recipe.duration);
-
-        // Product and ingredient amounts
-        for (const counted_items of [recipe.products, recipe.ingredients]) {
-            for (const item_id of Object.keys(counted_items)) {
-                counted_items[item_id] = fraction(counted_items[item_id]);
-            }
-        }
-    }
-
-    // Make "game_data" immutable
-    deepFreeze(game_data);
-}
-
 function initCraftableObjectsSelect() {
     function renderOptionTemplate(class_name) {
         function renderOption(data, escape) {
             return `<div class="${class_name}">
                         <span class="label">${escape(data.text)}</span>
-                        <img class="icon" src="${escape(`images/game_icons/${data.value}.png`)}" />
+                        <img class="icon" src="${escape(`images/items/${data.value}.png`)}" />
                     </div>`;
         }
 
@@ -48,18 +31,18 @@ function initCraftableObjectsSelect() {
     return new TomSelect(
         "#craftableItemSelect",
         {
-            options: game_data.crafting_products.map((obj_id) => ({value: obj_id, text: game_data.crafting_objects[obj_id].name})),
+            options: game_data.crafting_products.map((product_obj) => ({value: product_obj.id, text: product_obj.name})),
             searchField: ["text"],
             maxOptions: null,
             placeholder: "Select an item...",
 
-            /** @param {string} product_name */
-            onChange: function(product_name) {
+            /** @param {number} product_id */
+            onChange: function(product_id) {
                 // Don't do anything if selection is cleared
-                if ("" == product_name)
+                if (null == product_id)
                     return;
 
-                updateSelectedProduct(product_name, true);
+                updateSelectedProduct(product_id, true);
 
                 // For some reason, the text box stays focused after selecting an option,
                 // which looks ugly, since it's extended vertically as long as it's selected.
@@ -140,8 +123,6 @@ export default function initApp() {
     // Must be first!
     g_.config = new Config();
 
-    initGameData();
-
     // If no trivial resources are selected, reset them
     if (0 == g_.config.trivial_resources.size)
         resetTrivialResources();
@@ -164,6 +145,6 @@ export default function initApp() {
     initPanZoom();
 
     // Generate the graph
-    craftable_objects_select.setValue(g_.config.product_name, true);
-    updateSelectedProduct(g_.config.product_name, false);
+    craftable_objects_select.setValue(g_.config.selected_product.id, true);
+    updateSelectedProduct(g_.config.selected_product.id, false);
 }
