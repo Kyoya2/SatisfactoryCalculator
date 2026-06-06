@@ -196,6 +196,12 @@ function calculateGraphByproducts(product_node) {
         if (mathjs.equal(target_node.data.production_required, new_production_required))
             return false;
 
+        console.log(
+            "Production of", target_node.data.obj().name,
+            "was updated from", formatFrac(target_node.data.production_required, "decimal"),
+            "to", formatFrac(new_production_required, "decimal")
+        );
+
         const proportional_prod_multiplier = mathjs.divide(new_production_required, target_node.data.production_required);
         target_node.data.production_required = new_production_required;
 
@@ -227,7 +233,10 @@ function calculateGraphByproducts(product_node) {
         // "production_required" is zero while "total_production_required" is not, we want to convert the node
         // into a pure byproduct instead of deleting it. This is done in "_fixNegatives".
         if (remove_if_zero && mathjs.isZero(target_node.data.total_production_required))
+        {
+            console.log("Removing node", target_node.data.obj().name);
             target_node.remove();
+        }
 
         return true;
     }
@@ -267,6 +276,8 @@ function calculateGraphByproducts(product_node) {
             return false;
         }
 
+        console.log(source_node.data.obj().name, "is a byproduct");
+
         // Recalculate fractions
         if (modified) {
             for (const [parent_node, data] of source_node.blinks()) {
@@ -278,15 +289,20 @@ function calculateGraphByproducts(product_node) {
         }
 
         if (source_node.data.isPureByproduct()) {
+            console.log(source_node.data.obj().name, "is a pure byproduct");
+
             // For "pure" byproducts, we want to display the total production value of the byproducts.
             // Pure byproducts don't affect anything, their production can simply be updated without
             // causing recalculation of anything else
             if (!mathjs.equal(source_node.data.production_required, total_byproduct_prod)) {
                 source_node.data.production_required = total_byproduct_prod;
                 modified = true;
+
+                console.log("Updated production of", source_node.data.obj().name, "to", formatFrac(total_byproduct_prod, "decimal"));
             }
-        }
-        else {
+        } else {
+            console.log(source_node.data.obj().name, "is not a non-pure byproduct");
+
             // For "non-pure" byproducts, we want to display the production that's required *additionally*
             // to the byproduct production
             const new_production_required = mathjs.subtract(source_node.data.total_production_required, total_byproduct_prod);
@@ -309,7 +325,10 @@ function calculateGraphByproducts(product_node) {
         // "production_required" is zero while "total_production_required" is not, we want to convert the node
         // into a pure byproduct instead of deleting it. This is done in "_fixNegatives".
         if (remove_if_zero && mathjs.isZero(source_node.data.total_production_required))
+        {
+            console.log("Removing node", source_node.data.obj().name);
             source_node.remove();
+        }
 
         return modified;
     }
@@ -336,6 +355,7 @@ function calculateGraphByproducts(product_node) {
             return false;
 
         // If we reached here, it means that the current node is over-produced by byproducts.
+        console.log(node.data.obj().name, "is an over-produced byproduct, converting to pure byproduct");
 
         // Convert the node to a pure byproduct.
         // Converting the negative to positive to indicate the over-production.
