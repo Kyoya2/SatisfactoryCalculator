@@ -81,6 +81,14 @@ class SatisfactoryParser:
     _ALTERNATE_RECIPE_NAME_PREFIX = "Alternate: "
     _MANUAL_CRAFTING_BUILDINGS = {'BP_BuildGun_C', 'FGBuildGun', 'BP_WorkshopComponent_C', 'BP_WorkBenchComponent_C', 'FGBuildableAutomatedWorkBench', 'Build_AutomatedWorkBench_C'}
 
+    # Some recipes can't really be automated, because they use resources whose collection/production can't be automated.
+    # For example, the power shard recipes that use power slugs, or the fabric recipe that uses Mycelia.
+    # For this reason, I promote the alternate recipes that CAN be automated to be the main recipes for these items.
+    _FORCED_MAIN_RECIPES = {
+        "Desc_CrystalShard_C": "Recipe_SyntheticPowerShard_C",
+        "Desc_Fabric_C": "Recipe_Alternate_PolyesterFabric_C"
+    }
+
     def __init__(self, doc_file_path: str, obj_manager: ObjectManager):
         self._obj_manager = obj_manager
         self._all_objects, self._categorized_objects = self._preprocess_doc_file(doc_file_path)
@@ -403,22 +411,34 @@ class SatisfactoryParser:
         return buildings.finalize()
 
     def _process_crafting_objects(self) -> GameObjectLookup[CraftingObject]:
+        def _promote_recipe_to_main(recipes, i):
+            recipe_id = recipes[i]
+            recipe_dict = self._recipes[recipe_id]._asdict()
+            recipe_dict['is_alternate'] = False
+            self._recipes[recipe_id] = Recipe(**recipe_dict)
+            del recipes[i]
+            recipes.insert(0, recipe_id)
+
         crafting_objects = GameObjectLookup[CraftingObject](self._obj_manager)
         for crafting_obj_id in self._crafting_ingredients | self._crafting_products:
             obj = self._all_objects[crafting_obj_id]
             if 'recipes' not in obj:
                 obj['recipes'] = []
 
-            # If there's a recipe whose name is just the name of the product, consider it the "main" recipe, even if it
-            # is currently marked as an alternate recipe
-            for i, recipe_id in enumerate(obj['recipes'][1:], 1):
-                recipe = self._recipes[recipe_id]
-                if recipe.name == obj['name']:
-                    recipe_dict = recipe._asdict()
-                    recipe_dict['is_alternate'] = False
-                    self._recipes[recipe_id] = Recipe(**recipe_dict)
-                    del obj['recipes'][i]
-                    obj['recipes'].insert(0, recipe_id)
+            main_recipe_id = self._FORCED_MAIN_RECIPES.get(crafting_obj_id)
+            if main_recipe_id is not None:
+                # If the current item has a forced recipe, promote it to be the main recipe
+                recipes = enumerate(obj['recipes'])
+                predicate = lambda recipe_id: main_recipe_id == recipe_id
+            else:
+                # Otherwise, promote the recipe to be the main one only if the name of the recipe
+                # is the same as the name of the product
+                recipes = enumerate(obj['recipes'][1:], 1)
+                predicate = lambda recipe_id: self._recipes[recipe_id].name == obj['name']
+
+            for i, recipe_id in recipes:
+                if predicate(recipe_id):
+                    _promote_recipe_to_main(obj['recipes'], i)
                     break
 
             # if '/UI/' not in obj['mSmallIcon']:
