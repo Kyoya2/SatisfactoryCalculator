@@ -26,13 +26,13 @@ message Recipe {
     int32 produced_in = 6;                  // Building ID
 }
 
-// TODO: Add "bool consumes_power" to differentiate between power consumers and power producers.
 message Building {
     string name = 1;
-    Fraction power_consumption = 2;             // Base power consumption (MW)
-    Fraction speed_power_exponent = 3;          // Power consumption exponent of under/overclocking
-    Fraction production_power_exponent = 4;     // Power consumption exponent of overslooping
-    int32 num_sloop_slots = 5;                  // Max number of sloops that can be installed in the machine
+    bool generates_power = 2;                    // True if the machine generates power, false if it consumes power
+    Fraction power_consumption = 3;             // Base power consumption (MW)
+    Fraction speed_power_exponent = 4;          // Power consumption exponent of under/overclocking
+    Fraction production_power_exponent = 5;     // Power consumption exponent of overslooping
+    int32 num_sloop_slots = 6;                  // Max number of sloops that can be installed in the machine
 }
 
 message GameData {

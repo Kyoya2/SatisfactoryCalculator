@@ -64,6 +64,7 @@ class CraftingObject(NamedTuple):
 class Building(NamedTuple):
     id: GameObjectId
     name: str
+    generates_power: bool
     power_consumption: Fraction            # Base power consumption (MW)
     speed_power_exponent: Fraction         # Power consumption exponent of under/overclocking
     production_power_exponent: Fraction    # Power consumption exponent of overslooping
@@ -126,6 +127,7 @@ class SatisfactoryParser:
             self._buildings,
             lambda obj: game_structs.Building(
                 name=obj.name,
+                generates_power=obj.generates_power,
                 power_consumption=frac(obj.power_consumption),
                 speed_power_exponent=frac(obj.speed_power_exponent),
                 production_power_exponent=frac(obj.production_power_exponent),
@@ -325,6 +327,7 @@ class SatisfactoryParser:
     # "FGRecipe" doesn't contain byproducts of burning fuel (such as uranium fuel rod -> nuclear waste).
     # This function generates recipes based on other information available in the game data.
     def _generate_fuel_byproduct_recipes(self):
+        self._power_generator_buildings = set()
         fuel_byproduct_recipes = {}
         for obj_id, fuel_burner_building in self._all_objects.items():
             if 'mFuel' not in fuel_burner_building:
@@ -364,6 +367,8 @@ class SatisfactoryParser:
                     fuel_burner_building['id']
                 )
 
+                self._power_generator_buildings.add(fuel_burner_building['id'])
+
         return fuel_byproduct_recipes
 
     def _process_buildings(self) -> GameObjectLookup[Building]:
@@ -379,6 +384,7 @@ class SatisfactoryParser:
             buildings[building_id] = Building(
                 building_id,
                 building_obj['name'],
+                building_id in self._power_generator_buildings,
                 Fraction(building_obj['mPowerConsumption']),
                 Fraction(building_obj['mPowerConsumptionExponent']),
                 Fraction(building_obj['mProductionBoostPowerConsumptionExponent']),
