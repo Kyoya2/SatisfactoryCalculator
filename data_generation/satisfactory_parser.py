@@ -278,7 +278,7 @@ class SatisfactoryParser:
                 recipe_name = f"Build converter: {recipe_name}"
 
             # Force "unpackage" recipes to be alternate
-            if ("Build_Packager_C" == produced_in) and ("Unpackage" in recipe['id']):
+            elif ("Build_Packager_C" == produced_in) and ("Unpackage" in recipe['id']):
                 is_alternate = True
 
             # Strip common prefix for alternate recipes
