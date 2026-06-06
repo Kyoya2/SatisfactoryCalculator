@@ -79,6 +79,8 @@ html, body {
         .node-icon {
             height: 48px;
             width: 48px;
+            margin-top: 2px;
+            margin-right: 2px;
             float: right;
         }
 
