@@ -327,7 +327,6 @@ class SatisfactoryParser:
     # "FGRecipe" doesn't contain byproducts of burning fuel (such as uranium fuel rod -> nuclear waste).
     # This function generates recipes based on other information available in the game data.
     def _generate_fuel_byproduct_recipes(self):
-        self._power_generator_buildings = set()
         fuel_byproduct_recipes = {}
         for obj_id, fuel_burner_building in self._all_objects.items():
             if 'mFuel' not in fuel_burner_building:
@@ -367,8 +366,6 @@ class SatisfactoryParser:
                     fuel_burner_building['id']
                 )
 
-                self._power_generator_buildings.add(fuel_burner_building['id'])
-
         return fuel_byproduct_recipes
 
     def _process_buildings(self) -> GameObjectLookup[Building]:
@@ -381,11 +378,23 @@ class SatisfactoryParser:
             if num_sloop_slots:
                 assert 1 == Fraction(building_obj['mProductionShardBoostMultiplier']) * num_sloop_slots
 
+            if 'mPowerProduction' in building_obj:
+                generates_power = True
+                power = Fraction(building_obj['mPowerProduction'])
+                assert 0 != power
+            else:
+                generates_power = False
+                power = Fraction(building_obj['mPowerConsumption'])
+
+                # For machines that have a fluctuating power consumption, take the max possible value
+                if 0 == power:
+                    power = Fraction(building_obj['mEstimatedMaximumPowerConsumption'])
+
             buildings[building_id] = Building(
                 building_id,
                 building_obj['name'],
-                building_id in self._power_generator_buildings,
-                Fraction(building_obj['mPowerConsumption']),
+                generates_power,
+                power,
                 Fraction(building_obj['mPowerConsumptionExponent']),
                 Fraction(building_obj['mProductionBoostPowerConsumptionExponent']),
                 num_sloop_slots

@@ -357,18 +357,52 @@ function applyDisplayMultiplier(frac) {
 /** Updates the overlay according to the display multiplier */
 function updateOverlay() {
     const graph = g_.product_node.graph;
+
+    /** @type {Fraction[]} */
+    const machine_amounts = new Array(game_data.buildings.length).fill(fraction(0));
+
+    // Update node overlay and calculate amount of machines
     for (const node of graph.nodes()) {
         node.data.html.querySelector('.production-rate-label').textContent = formatFrac(applyDisplayMultiplier(node.data.productionPerMinute()), 'decimal');
 
         if (!node.data.isTrivial() && !node.data.isPureByproduct()) {
             const machines_required = applyDisplayMultiplier(node.data.machinesRequired());
+            const machine = node.data.selectedRecipe().produced_in
+
+            machine_amounts[machine.id] = mathjs.add(machine_amounts[machine.id], machines_required);
+
             node.data.html.querySelector('.machines-required-label').textContent = formatFrac(machines_required, 'decimal');
         }
     }
 
+    // Update edge overlays
     for (const edge of graph.links()) {
-        edge.data.html.querySelector('.edge-production-label').textContent = formatFrac(applyDisplayMultiplier(mathjs.multiply(edge.data.production_required, 60)), false);
+        edge.data.html.querySelector('.edge-production-label').textContent = formatFrac(
+            applyDisplayMultiplier(mathjs.multiply(edge.data.production_required, 60)),
+            'decimal'
+        );
     }
+
+    // Calculate power consumption:
+    let power_consumption = fraction(0);
+    for (const [machine_id, amount] of machine_amounts.entries()) {
+        const machine = game_data.buildings[machine_id];
+        const power = mathjs.multiply(machine.power_consumption, amount);
+
+        const f = machine.generates_power ? mathjs.subtract : mathjs.add;
+
+        power_consumption = f(power_consumption, power);
+    }
+
+    let description = "consumption";
+    if (mathjs.isNegative(power_consumption)) {
+        description = "production";
+        power_consumption = mathjs.unaryMinus(power_consumption);
+    }
+
+    // Note: "power_consumption" already includes the display multiplier, since it was factored in during the
+    //       calculation of machine amounts.
+    g_.html_elements.powerConsumptionLabel.textContent = `Power ${description}: ${formatFrac(power_consumption, 'decimal')} MW`;
 }
 
 /**
@@ -394,7 +428,7 @@ export function resetAlternateRecipes() {
     if (should_re_render_graph)
         generateGraph();
 }
-
+// todo: buildings that consume a variable amount of power
 export function resetTrivialResources() {
     const new_trivial_resources = new Set(game_data.trivial_ingredients.map(obj => obj.id));
 

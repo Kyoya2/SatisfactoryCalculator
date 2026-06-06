@@ -127,7 +127,7 @@ export default function initApp() {
     if (0 == g_.config.trivial_resources.size)
         resetTrivialResources();
 
-    const HTML_ELEMENT_NAMES = ['displayMultiplierInput', 'graphContainer', 'panzoomGraphContainer', 'nodeOverlayTemplate', 'edgeOverlayTemplate'];
+    const HTML_ELEMENT_NAMES = ['displayMultiplierInput', 'graphContainer', 'panzoomGraphContainer', 'nodeOverlayTemplate', 'edgeOverlayTemplate', 'powerConsumptionLabel'];
     for (const name of HTML_ELEMENT_NAMES) {
         g_.html_elements[name] = document.getElementById(name);
     }
