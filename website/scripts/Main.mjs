@@ -6,7 +6,7 @@
 // https://protobuf.dev/programming-guides/proto3/
 // https://github.com/protobufjs/protobuf.js/
 import game_data from "@/GameData/GameData.mjs";
-import {assert, any, reduce, map, fractionMax, formatFrac} from "@/Utils.mjs";
+import {assert, any, reduce, map, fractionMax, formatFrac, parseFrac} from "@/Utils.mjs";
 import {Graph, Node, Edge} from "@/Graph.mjs";
 import {g_, SCNode} from "@/Common.mjs";
 import generateGraphData from "@/GraphGeneration.mjs";
@@ -97,7 +97,7 @@ function toMermaid(graph, stroke_width) {
     return [result, ordered_nodes, ordered_edges];
 }
 
-const FRACTION_CHARACTERS_FILTER_REGEX = /[^\d.\/()]/g;
+const FRACTION_CHARACTERS_FILTER_REGEX = /[^\d.\/(),]/g;
 
 /**
  * @param {HTMLLabelElement} editable_multiplier_label 
@@ -126,14 +126,11 @@ function initEditableMultiplierLabel(editable_multiplier_label) {
             // When enter is pressed, calculate the display multiplier that's required for setting the current label
             // to the value that was entered. Then, apply this display multiplier to the entire graph.
             if ("Enter" == e.key) {
-                let new_value = null;
-
-                // Parsing user input as a fraction, expect parsing errors.
-                try { new_value = fraction(e.target.textContent); } catch (err) {}
+                const new_value = parseFrac(e.target.textContent);
 
                 // Will be null if the user has entered an invalid fraction
                 if (null !== new_value) {
-                    const prev_value = fraction(current_val);
+                    const prev_value = parseFrac(current_val);
                     const mult_mult = mathjs.divide(new_value, prev_value);
 
                     const new_display_mult = mathjs.multiply(g_.config.display_multiplier, mult_mult);
@@ -361,10 +358,11 @@ function applyDisplayMultiplier(frac) {
 function updateOverlay() {
     const graph = g_.product_node.graph;
     for (const node of graph.nodes()) {
-        node.data.html.querySelector('.production-rate-label').textContent = formatFrac(applyDisplayMultiplier(node.data.productionPerMinute()), false);
+        node.data.html.querySelector('.production-rate-label').textContent = formatFrac(applyDisplayMultiplier(node.data.productionPerMinute()), 'decimal');
 
         if (!node.data.isTrivial() && !node.data.isPureByproduct()) {
-            node.data.html.querySelector('.machines-required-label').textContent = formatFrac(applyDisplayMultiplier(node.data.machinesRequired()), false);
+            const machines_required = applyDisplayMultiplier(node.data.machinesRequired());
+            node.data.html.querySelector('.machines-required-label').textContent = formatFrac(machines_required, 'decimal');
         }
     }
 
@@ -419,12 +417,16 @@ export function resetTrivialResources() {
  */
 export function updateDisplayMultiplier(new_value) {
     if (undefined === new_value) {
-        new_value = fraction(g_.html_elements.displayMultiplierInput.value);
-    } else {
-        g_.html_elements.displayMultiplierInput.value = formatFrac(new_value, true, true);
+        new_value = parseFrac(g_.html_elements.displayMultiplierInput.value);
+
+        // Parse error, calculate automatic value
+        if (null == new_value)
+            return updateDisplayMultiplierAuto();
     }
 
-    g_.config.display_multiplier = fraction(new_value);
+    g_.html_elements.displayMultiplierInput.value = formatFrac(new_value, 'try-integer');
+
+    g_.config.display_multiplier = new_value;
     g_.config.notifyChange();
     updateOverlay();
 }

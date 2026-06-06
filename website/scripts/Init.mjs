@@ -59,7 +59,7 @@ function initCraftableObjectsSelect() {
 }
 
 function initDisplayMultiplier() {
-    g_.html_elements.displayMultiplierInput.value = formatFrac(g_.config.display_multiplier, true, true);
+    g_.html_elements.displayMultiplierInput.value = formatFrac(g_.config.display_multiplier, 'try-integer');
 
     /** @type {HTMLInputElement} */
     const update_button = document.getElementById("updateDisplayMultiplier");
