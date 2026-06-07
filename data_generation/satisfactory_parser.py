@@ -208,8 +208,8 @@ class SatisfactoryParser:
 
             for group_name, objects in (('items', self._crafting_objects), ('buildings', self._buildings)):
                 dir_path = path.join(WEBSITE_ROOT, 'website', 'public', 'images', group_name)
-                if not path.isdir(dir_path):
-                    os.mkdir(dir_path)
+
+                os.makedirs(dir_path, exist_ok=True)
 
                 for obj_id in objects.keys():
                     file_path = path.join(dir_path, f'{objects.get_idx(obj_id)}.png')
