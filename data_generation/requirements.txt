@@ -1,2 +1,3 @@
 protobuf
 zstandard
+cryptography

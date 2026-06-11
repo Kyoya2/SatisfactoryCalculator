@@ -1,7 +1,10 @@
 import os
 import re
+import sys
 import json
 import shutil
+from binascii import unhexlify
+
 import requests
 import zstandard
 from os import path
@@ -21,10 +24,6 @@ FORM_MAP = {
     "RF_LIQUID": game_structs.Form.Liquid,
     "RF_SOLID": game_structs.Form.Solid
 }
-
-
-def frac(f: Fraction) -> game_structs.Fraction:
-    return game_structs.Fraction(n=f.numerator, d=f.denominator)
 
 
 # Corresponds to the "NativeClass" element in the JSON.
@@ -89,9 +88,9 @@ class SatisfactoryParser:
         "Desc_Fabric_C": "Recipe_Alternate_PolyesterFabric_C"
     }
 
-    def __init__(self, doc_file_path: str, obj_manager: ObjectManager):
+    def __init__(self, game_data: bytes, obj_manager: ObjectManager):
         self._obj_manager = obj_manager
-        self._all_objects, self._categorized_objects = self._preprocess_doc_file(doc_file_path)
+        self._all_objects, self._categorized_objects = self._preprocess_game_data(game_data)
         self._recipes = self._process_recipes()
 
         self._crafting_ingredients = set()
@@ -109,6 +108,9 @@ class SatisfactoryParser:
     def serialize(self) -> bytes:
         def create_object_list(objs_lookup: GameObjectLookup[T], converter: Callable[[T], object]):
             return [converter(objs_lookup[i]) for i in range(len(objs_lookup))]
+
+        def frac(f: Fraction) -> game_structs.Fraction:
+            return game_structs.Fraction(n=f.numerator, d=f.denominator)
 
         crafting_objects = create_object_list(
             self._crafting_objects,
@@ -229,12 +231,11 @@ class SatisfactoryParser:
                         f.write(r.content)
 
     @classmethod
-    def _preprocess_doc_file(cls, doc_file_path: str) -> tuple[
+    def _preprocess_game_data(cls, game_data: bytes) -> tuple[
         dict[GameObjectId, GameObject],
         dict[GameObjectCategoryName, dict[GameObjectId, GameObject]]
     ]:
-        with open(doc_file_path, 'rb') as f:
-            game_object_categories = json.load(f)
+        game_object_categories = json.loads(game_data)
 
         #
         # Base processing for all objects
@@ -508,13 +509,35 @@ class SatisfactoryParser:
         return display_name
 
 
-def main():
+def generate_data_file(game_data: bytes):
     obj_manager = ObjectManager(path.join(WEBSITE_ROOT, 'data_generation', 'known_objects.txt'))
-    parser = SatisfactoryParser(r"C:\Program Files (x86)\Steam\steamapps\common\Satisfactory\CommunityResources\Docs\en-US.json", obj_manager)
+    parser = SatisfactoryParser(game_data, obj_manager)
     parser.download_assets()
     data = parser.serialize()
     with open(path.join(WEBSITE_ROOT, 'website', 'public', 'game_data.bin'), 'wb') as f:
         f.write(data)
+
+
+def main():
+    if 1 == len(sys.argv):
+        # Local
+        with open(r"C:\Program Files (x86)\Steam\steamapps\common\Satisfactory\CommunityResources\Docs\en-US.json", "rb") as f:
+            game_data = f.read()
+    else:
+        # CI
+        from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+
+        encrypted_data_file_path, key_hex = sys.argv[1:]
+        with open(encrypted_data_file_path, 'rb') as f:
+            nonce = f.read(12)
+            game_data = f.read()
+
+        aes_gcm = AESGCM(unhexlify(key_hex))
+        game_data = aes_gcm.decrypt(nonce, game_data, None)
+
+        game_data = zstandard.decompress(game_data)
+
+    generate_data_file(game_data)
 
 
 if __name__ == '__main__':
