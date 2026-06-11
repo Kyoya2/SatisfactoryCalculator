@@ -1,9 +1,9 @@
 import os
 import re
-import zstd
 import json
 import shutil
 import requests
+import zstandard
 from os import path
 from fractions import Fraction
 from typing import NamedTuple, Any, TypeAlias, Iterable, Callable, TypeVar
@@ -162,7 +162,7 @@ class SatisfactoryParser:
         # Note: I used "lzbench" on GitHub to check which level of zstd compresses this data best.
         #       Level 12 yielded the best result for its decompression time. Compression time is
         #       irrelevant, can take an hour for all I care.
-        game_data = zstd.compress(game_data, 12)
+        game_data = zstandard.compress(game_data, 12)
         compressed_size = len(game_data)
 
         print(f"Compressed from {uncompressed_size} bytes to {compressed_size} bytes. Ratio: {compressed_size/uncompressed_size:.2f}")
