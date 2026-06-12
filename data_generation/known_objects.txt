@@ -471,3 +471,10 @@ Build_Converter_C
 Build_AssemblerMk1_C
 Build_Packager_C
 Build_OilRefinery_C
+Desc_DummyVehicleStack_C
+Desc_Tractor_C
+Desc_Explorer_C
+Desc_Truck_C
+Desc_FluidTruck_C
+Desc_FreightWagon_C
+Desc_DroneTransport_C

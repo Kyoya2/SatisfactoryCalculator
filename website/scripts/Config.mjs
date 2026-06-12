@@ -2,7 +2,7 @@ import * as GameDataStructs from '@/GameData/GameDataStructs.auto.js';
 import game_data from "@/GameData/GameData.mjs";
 import {map} from "@/Utils.mjs"
 import {g_} from './Common.mjs';
-/** @import { GameObjectId, CountedItem, Recipe, CraftingObject } from "@/GameData/GameData.mjs" */
+/** @import { GameObjectId, CountedItem, Recipe, CraftingObject, Vehicle } from "@/GameData/GameData.mjs" */
 
 import * as mathjs from 'mathjs';
 import {fraction} from 'mathjs';
@@ -21,6 +21,13 @@ export default class Config {
 
         /** @type {Set<GameObjectId>} */
         this.trivial_resources = new Set(game_data.trivial_ingredients.map(obj => obj.id));
+
+        /**
+         * If null, the throughput unit is one item. Otherwise, the throughput unit is the
+         * number of stacks that can fit inside the selected vehicle.
+         * @type {?Vehicle}
+         */
+        this.throughput_unit = null;
 
         const search_params = new URLSearchParams(window.location.search);
         
@@ -41,6 +48,9 @@ export default class Config {
                     )
                 );
                 this.trivial_resources = new Set(website_state.trivial_resources);
+
+                if (null != website_state.throughput_unit)
+                    this.throughput_unit = game_data.vehicles[website_state.throughput_unit];
             } catch { debugger; }
         }
 
@@ -64,7 +74,8 @@ export default class Config {
                 .filter(([obj_id, recipe]) => current_graph_items.has(obj_id))
                 .map(([obj_id, recipe]) => [obj_id, recipe.id])
             ),
-            trivial_resources: [...this.trivial_resources.keys()]
+            trivial_resources: [...this.trivial_resources.keys()],
+            throughput_unit: (null == this.throughput_unit) ? null : this.throughput_unit.id
         };
         
         let website_state = GameDataStructs.WebsiteState.encode(data).finish().toBase64({alphabet: "base64url", omitPadding: true});

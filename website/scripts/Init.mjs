@@ -13,7 +13,7 @@ import elkLayouts from '@mermaid-js/layout-elk';
 import Panzoom from "@panzoom/panzoom";
 
 // Must be imported last!!!
-import {updateSelectedProduct, resetAlternateRecipes, resetTrivialResources, updateDisplayMultiplier, updateDisplayMultiplierAuto, toggleShowByproducts} from "@/Main.mjs"
+import {updateSelectedProduct, resetAlternateRecipes, resetTrivialResources, updateDisplayMultiplier, updateDisplayMultiplierAuto, toggleShowByproducts, updateOverlay} from "@/Main.mjs"
 
 
 function initCraftableObjectsSelect() {
@@ -68,6 +68,26 @@ function initDisplayMultiplier() {
     /** @type {HTMLInputElement} */
     const auto_button = document.getElementById("updateDisplayMultiplierAuto");
     auto_button.onclick = updateDisplayMultiplierAuto;
+}
+
+function initThroughputUnitSelect() {
+    /** @type {HTMLSelectElement} */
+    const select = document.getElementById("throughputUnitSelect");
+
+    select.add(new Option("Item"));
+
+    for (const vehicle of game_data.vehicles) {
+        select.add(new Option(vehicle.name));
+    }
+
+    // Index 0 is special, because it's the only unit not affected by the item's stack size
+    select.selectedIndex = (null == g_.config.throughput_unit) ? 0 : g_.config.throughput_unit.id + 1;
+
+    select.oninput = function(e) {
+        g_.config.throughput_unit = (0 == e.target.selectedIndex) ? null : game_data.vehicles[e.target.selectedIndex - 1];
+        g_.config.notifyChange();
+        updateOverlay();
+    };
 }
 
 function initByproductsCheckbox() {
@@ -135,6 +155,8 @@ export default function initApp() {
     const craftable_objects_select = initCraftableObjectsSelect();
 
     initDisplayMultiplier();
+
+    initThroughputUnitSelect();
 
     initByproductsCheckbox();
 

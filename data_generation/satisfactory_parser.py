@@ -19,12 +19,6 @@ import game_data_structs_pb2 as game_structs
 
 WEBSITE_ROOT = path.dirname(path.dirname(__file__))
 
-FORM_MAP = {
-    "RF_GAS": game_structs.Form.Gas,
-    "RF_LIQUID": game_structs.Form.Liquid,
-    "RF_SOLID": game_structs.Form.Solid
-}
-
 
 # Corresponds to the "NativeClass" element in the JSON.
 # For example: "FGItemDescriptor".
@@ -58,16 +52,23 @@ class CraftingObject(NamedTuple):
     name: str
     recipes: list[GameObjectId]
     form: str
+    stack_size: str
 
 
 class Building(NamedTuple):
     id: GameObjectId
     name: str
     generates_power: bool
-    power_consumption: Fraction            # Base power consumption (MW)
-    speed_power_exponent: Fraction         # Power consumption exponent of under/overclocking
-    production_power_exponent: Fraction    # Power consumption exponent of overslooping
-    num_sloop_slots: int                # Max number of sloops that can be installed in the machine
+    power_consumption: Fraction
+    speed_power_exponent: Fraction
+    production_power_exponent: Fraction
+    num_sloop_slots: int
+
+
+class Vehicle(NamedTuple):
+    name: str
+    item_stack_capacity: int
+    fluid_capacity: int
 
 
 class SatisfactoryParser:
@@ -79,6 +80,12 @@ class SatisfactoryParser:
     _PRODUCED_IN_REGEX = re.compile(r'\"[^,]+\.(\w+)\"')
     _ALTERNATE_RECIPE_NAME_PREFIX = "Alternate: "
     _MANUAL_CRAFTING_BUILDINGS = {'BP_BuildGun_C', 'FGBuildGun', 'BP_WorkshopComponent_C', 'BP_WorkBenchComponent_C', 'FGBuildableAutomatedWorkBench', 'Build_AutomatedWorkBench_C'}
+
+    # Sadly, the game files don't contain data about fluid capacities of vehicles (besides the description string
+    _FLUID_VEHICLE_CAPACITIES = {
+        'Desc_FreightWagon_C': 1600,
+        'Desc_FluidTruck_C': 3200
+    }
 
     # Some recipes can't really be automated, because they use resources whose collection/production can't be automated.
     # For example, the power shard recipes that use power slugs, or the fabric recipe that uses Mycelia.
@@ -100,8 +107,9 @@ class SatisfactoryParser:
             self._crafting_products |= set(recipe.products.keys())
 
         self._crafting_objects = self._process_crafting_objects()
-        self._buildings = self._process_buildings()
         self._trivial_ingredients = self._calculate_trivial_ingredients()
+        self._buildings = self._process_buildings()
+        self._vehicles = self._process_vehicles()
 
         self._obj_manager.finalize()
 
@@ -117,7 +125,8 @@ class SatisfactoryParser:
             lambda obj: game_structs.CraftingObject(
                 name=obj.name,
                 recipes=[self._recipes.get_idx(recipe_id) for recipe_id in obj.recipes],
-                form=FORM_MAP[obj.form]
+                form=getattr(game_structs.Form, obj.form),
+                stack_size=getattr(game_structs.StackSize, obj.stack_size)
             )
         )
 
@@ -145,6 +154,15 @@ class SatisfactoryParser:
             )
         )
 
+        vehicles = create_object_list(
+            self._vehicles,
+            lambda obj: game_structs.Vehicle(
+                name=obj.name,
+                item_stack_capacity=obj.item_stack_capacity,
+                fluid_capacity=obj.fluid_capacity
+            )
+        )
+
         # Generates a list of crafting object IDs, sorted by the display name of the objects
         def gen_sorted_id_list(object_ids: Iterable[GameObjectId]) -> list[int]:
             return [self._crafting_objects.get_idx(obj_id) for obj_id in sorted(object_ids, key=lambda name: self._crafting_objects[name].name)]
@@ -153,6 +171,7 @@ class SatisfactoryParser:
             crafting_objects=crafting_objects,
             recipes=recipes,
             buildings=buildings,
+            vehicles=vehicles,
             crafting_ingredients=gen_sorted_id_list(self._crafting_ingredients),
             crafting_products=gen_sorted_id_list(self._crafting_products),
             trivial_ingredients=gen_sorted_id_list(self._trivial_ingredients)
@@ -445,14 +464,12 @@ class SatisfactoryParser:
             # if '/UI/' not in obj['mSmallIcon']:
             #     print(obj['mSmallIcon'])
 
-            form = obj["mForm"]
-            assert form in ("RF_LIQUID", "RF_SOLID", "RF_GAS")
-
             crafting_objects[crafting_obj_id] = CraftingObject(
                 obj['id'],
                 obj['name'],
                 obj['recipes'],
-                form
+                obj["mForm"],
+                obj['mStackSize']
             )
 
         return crafting_objects.finalize()
@@ -469,6 +486,37 @@ class SatisfactoryParser:
         trivial_ingredients -= {'Desc_FicsiteIngot_C', 'Desc_DissolvedSilica_C'}
 
         return trivial_ingredients
+
+    def _process_vehicles(self) -> GameObjectLookup[Vehicle]:
+        vehicles = GameObjectLookup[Vehicle](self._obj_manager)
+
+        vehicles["Desc_DummyVehicleStack_C"] = Vehicle("Stack", 1, 0)
+
+        for vehicle_id, vehicle in self._categorized_objects['FGVehicleDescriptor'].items():
+            if 'mInventorySize' not in vehicle:
+                continue
+
+            item_stack_capacity = int(vehicle.get('mInventorySize'), 0)
+
+            if 1 == item_stack_capacity:
+                item_stack_capacity = 0
+
+            fluid_capacity = self._FLUID_VEHICLE_CAPACITIES.get(vehicle_id, 0)
+
+            # Handle fluid truck and cyber wagon
+            if 1 == item_stack_capacity:
+                item_stack_capacity = 0
+
+            if (0, 0) == (fluid_capacity, item_stack_capacity):
+                continue
+
+            vehicles[vehicle_id] = Vehicle(
+                vehicle['name'],
+                item_stack_capacity,
+                fluid_capacity
+            )
+
+        return vehicles.finalize()
 
     def _parse_crafting_obj_list(self, item_list: str) -> CountedItems:
         items = self._CRAFTING_OBJ_LIST_REGEX.findall(item_list)

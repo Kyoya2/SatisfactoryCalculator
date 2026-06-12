@@ -1,9 +1,17 @@
 syntax = "proto3";
 
 enum Form {
-    Gas = 0;
-    Liquid = 1;
-    Solid = 2;
+    RF_GAS = 0;
+    RF_LIQUID = 1;
+    RF_SOLID = 2;
+}
+
+enum StackSize {
+    SS_FLUID = 0;
+    SS_SMALL = 1;
+    SS_MEDIUM = 2;
+    SS_BIG = 3;
+    SS_HUGE = 4;
 }
 
 message Fraction {
@@ -15,6 +23,7 @@ message CraftingObject {
     string name = 1;
     repeated uint32 recipes = 2;
     Form form = 3;
+    StackSize stack_size = 4;
 }
 
 message Recipe {
@@ -28,17 +37,24 @@ message Recipe {
 
 message Building {
     string name = 1;
-    bool generates_power = 2;                    // True if the machine generates power, false if it consumes power
+    bool generates_power = 2;                   // True if the machine generates power, false if it consumes power
     Fraction power_consumption = 3;             // Base power consumption (MW)
     Fraction speed_power_exponent = 4;          // Power consumption exponent of under/overclocking
     Fraction production_power_exponent = 5;     // Power consumption exponent of overslooping
     uint32 num_sloop_slots = 6;                 // Max number of sloops that can be installed in the machine
 }
 
+message Vehicle {
+    string name = 1;
+    uint32 item_stack_capacity = 2;    // Max number of item stacks this vehicle can carry
+    uint32 fluid_capacity = 3;         // Max amount of fluid (m^3) this vehicle can carry
+}
+
 message GameData {
     repeated CraftingObject crafting_objects = 1;
     repeated Recipe recipes = 2;
     repeated Building buildings = 3;
+    repeated Vehicle vehicles = 4;
     repeated uint32 crafting_ingredients = 5;   // IDs of items used as ingredients in recipes
     repeated uint32 crafting_products = 6;      // IDs of items that can be produced using recipes
     repeated uint32 trivial_ingredients = 7;    // IDs of ingredients that are trivial by default
@@ -50,6 +66,7 @@ message WebsiteState {
     bool show_byproducts = 3;
     map<uint32, uint32> alternate_recipes = 4;  // Maps between an object ID and the ID of the recipe that's currently selected for it.
     repeated uint32 trivial_resources = 5;
+    optional uint32 throughput_unit = 6;
 
     // Field beyond this point must be optional in order to stay compatible
     // with older versions of the website

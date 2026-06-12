@@ -354,8 +354,35 @@ function applyDisplayMultiplier(frac) {
     return mathjs.multiply(frac, g_.config.display_multiplier);
 }
 
+/**
+ * @param {Fraction} frac
+ * @param {CraftingObject} crafting_object
+ * @returns {Fraction}
+ */
+function applyDisplayMultiplierAndThroughputUnit(frac, crafting_object) {
+    let result = applyDisplayMultiplier(frac);
+    if (null != g_.config.throughput_unit) {
+        if (mathjs.isZero(crafting_object.stack_size)) {
+            // Fluid
+            if (mathjs.isZero(g_.config.throughput_unit.fluid_capacity)) 
+                return fraction(0);
+
+            result = mathjs.divide(result, g_.config.throughput_unit.fluid_capacity);
+        } else {
+            // Solid
+            if (mathjs.isZero(g_.config.throughput_unit.item_stack_capacity))
+                return fraction(0);
+            
+            result = mathjs.divide(result, crafting_object.stack_size);
+            result = mathjs.divide(result, g_.config.throughput_unit.item_stack_capacity);
+        }
+    }
+
+    return result;
+}
+
 /** Updates the overlay according to the display multiplier */
-function updateOverlay() {
+export function updateOverlay() {
     const graph = g_.product_node.graph;
 
     /** @type {Fraction[]} */
@@ -363,7 +390,7 @@ function updateOverlay() {
 
     // Update node overlay and calculate amount of machines
     for (const node of graph.nodes()) {
-        node.data.html.querySelector('.production-rate-label').textContent = formatFrac(applyDisplayMultiplier(node.data.productionPerMinute()), 'decimal');
+        node.data.html.querySelector('.production-rate-label').textContent = formatFrac(applyDisplayMultiplierAndThroughputUnit(node.data.productionPerMinute(), node.data.obj()), 'decimal');
 
         if (!node.data.isTrivial() && !node.data.isPureByproduct()) {
             const machines_required = applyDisplayMultiplier(node.data.machinesRequired());
@@ -378,7 +405,13 @@ function updateOverlay() {
     // Update edge overlays
     for (const edge of graph.links()) {
         edge.data.html.querySelector('.edge-production-label').textContent = formatFrac(
-            applyDisplayMultiplier(mathjs.multiply(edge.data.production_required, 60)),
+            applyDisplayMultiplierAndThroughputUnit(
+                mathjs.multiply(edge.data.production_required, 60),
+
+                // Check whether the edge is a byproduct in order to correctly determine the item to use
+                // for adjusting the production value according to the throughput unit
+                (edge.data.is_byproduct ? edge.target : edge.source).data.obj()
+            ),
             'decimal'
         );
     }

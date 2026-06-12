@@ -23,20 +23,40 @@ import * as fzstd from 'fzstd';
  *      produced_in: Building
  * }} Recipe
  *
- * @typedef {Omit<GameDataStructs.CraftingObject, "recipes"> & {
+ * @typedef {Omit<GameDataStructs.CraftingObject, "recipes" | "stack_size"> & {
  *      id: GameObjectId,
- *      recipes: Recipe[]
+ *      recipes: Recipe[],
+ *      stack_size: Fraction
  * }} CraftingObject
+ * 
+ * @typedef {Omit<GameDataStructs.Vehicle, "item_stack_capacity" | "fluid_capacity"> & {
+ *      id: GameObjectId,
+ *      item_stack_capacity: Fraction,
+ *      fluid_capacity: Fraction,
+ * }} Vehicle
  * 
  * @typedef {{
  *      crafting_objects: CraftingObject[],
  *      recipes: Recipe[],
  *      buildings: Building[],
+ *      vehicles: Vehicle[],
  *      crafting_products: CraftingObject[],
  *      crafting_ingredients: CraftingObject[],
  *      trivial_ingredients: CraftingObject[],
  *  }} GameData
  */
+
+
+// Maps between stack size enum value to actual size
+// Depends on the order of the members in "GameDataStructs.StackSize"
+const STACK_SIZES = [
+    fraction(0),    // SS_FLUID
+    fraction(50),   // SS_SMALL
+    fraction(100),  // SS_MEDIUM
+    fraction(200),  // SS_BIG
+    fraction(500),  // SS_HUGE
+];
+
 
 /**
  * @param {GameDataStructs.Fraction} frac
@@ -63,6 +83,9 @@ async function initGameData() {
         
         // Convert recipe ID reference to point to the actual recipe obj
         crafting_obj.recipes = crafting_obj.recipes.map((recipe_id) => deserialized_data.recipes[recipe_id]);
+
+        // Convert stack size to numerical value
+        crafting_obj.stack_size = STACK_SIZES[crafting_obj.stack_size];
     }
 
     for (const [i, recipe_obj] of deserialized_data.recipes.entries()) {
@@ -91,6 +114,14 @@ async function initGameData() {
         building_obj.power_consumption = _convertFrac(building_obj.power_consumption);
         building_obj.speed_power_exponent = _convertFrac(building_obj.speed_power_exponent);
         building_obj.production_power_exponent = _convertFrac(building_obj.production_power_exponent);
+    }
+
+    for (const [i, vehicle_obj] of deserialized_data.vehicles.entries()) {
+        vehicle_obj.id = i;
+
+        // Convert to mathjs fraction
+        vehicle_obj.item_stack_capacity = fraction(vehicle_obj.item_stack_capacity);
+        vehicle_obj.fluid_capacity = fraction(vehicle_obj.fluid_capacity);
     }
 
     // Convert lists of IDs to lists of referenced objects
