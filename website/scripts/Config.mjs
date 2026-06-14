@@ -58,10 +58,12 @@ export default class Config {
     }
 
     notifyChange() {
-        let current_graph_items = new Set();
-        if (null != g_.product_node) {
-            current_graph_items = new Set(map(g_.product_node.graph.nodes(), node => node.data.obj().id));
-        }
+        /** @type {Set<GameObjectId>} */
+        let current_graph_items = new Set(
+            (null == g_.product_node) ?
+            game_data.crafting_objects.map(obj => obj.id) :                 // No product node, don't filter any item
+            map(g_.product_node.graph.nodes(), node => node.data.obj().id)  // Filter items according to the current graph
+        );
 
         const data = {
             product_id: this.selected_product.id,
