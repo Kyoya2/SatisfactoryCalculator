@@ -14,6 +14,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
+        with:
+          lfs: true
 
       - uses: actions/setup-node@v6
 
@@ -42,7 +44,10 @@ jobs:
         run: python protobuf/generate.py
 
       - name: Generate game data client file
-        run: python data_generation/satisfactory_parser.py "data_generation/data_files/493833.bin" ${{ secrets.GAME_DATA_KEY }}
+        shell: bash
+        env:
+          GAME_DATA_KEY: ${{ secrets.GAME_DATA_KEY }}
+        run: python data_generation/satisfactory_parser.py "data_generation/data_files/493833.bin" $GAME_DATA_KEY
 
       - name: Build website
         run: npm run build

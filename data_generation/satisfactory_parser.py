@@ -579,6 +579,7 @@ def main():
         with open(encrypted_data_file_path, 'rb') as f:
             nonce = f.read(12)
             game_data = f.read()
+            print(len(game_data))
 
         aes_gcm = AESGCM(unhexlify(key_hex))
         game_data = aes_gcm.decrypt(nonce, game_data, None)
