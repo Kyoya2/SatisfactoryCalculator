@@ -22,7 +22,7 @@ class GameObjectLookup[T]:
 
         return idx
 
-    def finalize(self) -> GameObjectLookup[T]:
+    def finalize(self) -> 'GameObjectLookup[T]':
         """
         Must be called when finished adding all items to the lookup.
         Will compact the IDs to form a sequence.
