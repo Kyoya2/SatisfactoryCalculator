@@ -14,13 +14,41 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
+        with:
+          lfs: true
 
       - uses: actions/setup-node@v6
 
-      - name: Build
+      - name: Install data generation dependencies
+        run: pip install -r data_generation/requirements.txt
+
+      - name: Install protoc
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq unzip
+
+          URL=$(curl -s https://api.github.com/repos/protocolbuffers/protobuf/releases/latest \
+            | jq -r '.assets[] | select(.name | endswith("linux-x86_64.zip")) | .browser_download_url')
+
+          curl -LO "$URL"
+          unzip "$(basename "$URL")" -d "$HOME/.local"
+
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+      
+      - name: Install website dependencies
         run: |
           cd website
           npm install
+
+      - name: Generate Protobuf files
+        run: python protobuf/generate.py
+
+      - name: Generate game data client file
+        run: python data_generation/satisfactory_parser.py "data_generation/data_files/493833.bin" ${{ secrets.GAME_DATA_KEY }}
+
+      - name: Build website
+        run: |
+          cd website
           npm run build
 
       - uses: actions/upload-pages-artifact@v4

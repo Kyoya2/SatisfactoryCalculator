@@ -13,7 +13,7 @@
   "license": "ISC",
   "author": "Kyoya2",
   "type": "commonjs",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vite",
@@ -23,11 +23,14 @@
   "dependencies": {
     "@mermaid-js/layout-elk": "^0.2.0",
     "@panzoom/panzoom": "^4.6.1",
+    "fzstd": "^0.1.1",
     "mathjs": "^15.1.1",
     "mermaid": "^11.12.3",
+    "protobufjs": "^8.4.2",
     "tom-select": "^2.5.2"
   },
   "devDependencies": {
+    "protobufjs-cli": "^2.4.2",
     "vite": "^7.3.1"
   }
 }

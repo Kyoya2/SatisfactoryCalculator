@@ -1,4 +1,5 @@
-import {Fraction, smaller, format} from 'mathjs';
+import * as mathjs from 'mathjs';
+import {fraction, Fraction} from 'mathjs';
 
 /**
  * @param {boolean} condition
@@ -90,21 +91,60 @@ export function* map(iterable, callback) {
  * @returns {Fraction}
  */
 export function fractionMax(a, b) {
-    if (smaller(a, b))
+    if (mathjs.smaller(a, b))
         return b;
     return a;
 }
 
+// Replace with "," to insert commas in a number with a decimal point, or a formatted
+// fraction. Won't insert commas after the decimal point.
+let _COMMA_NUMBER_FORMAT_REGEX = /(?<!\..*)\B(?=(?:\d{3})+(?!\d))/g;
+
 /**
  * @param {Fraction} frac 
- * @param {boolean} as_ratio?
+ * @param {"ratio" | "decimal" | "try-integer"} format
+ * @param {boolean} commas
  * @returns {string}
  */
-export function formatFrac(frac, as_ratio=true, opt_denom=false) {
-    if (as_ratio && opt_denom && (1 == frac.d))
-        return frac.n.toString();
+export function formatFrac(frac, format="ratio", commas=true) {
+    let result;
+    switch (format) {
+        case "ratio":
+            result = mathjs.format(frac, { fraction: 'ratio' });
+            break;
 
-    return format(frac, { fraction: as_ratio ? 'ratio' : 'decimal' });
+        case "decimal":
+            result = mathjs.format(frac, { fraction: 'decimal' });
+            break;
+
+        case "try-integer":
+            return formatFrac(
+                frac,
+                mathjs.isInteger(frac) ? "decimal" : "ratio",
+                commas
+            );
+
+        default:
+            assert(false);
+    }
+    
+    if (commas)
+        result = result.replace(_COMMA_NUMBER_FORMAT_REGEX, ',');
+
+    return result;
+}
+
+/**
+ * @param {string} str
+ * @returns {Fraction?}
+ */
+export function parseFrac(str) {
+    try
+    {
+        return fraction(str.replaceAll(',', ''));
+    } catch {
+        return null;
+    }
 }
 
 export function deepFreeze(obj) {

@@ -1,5 +1,5 @@
 import CacheManager from "@/CacheManager.mjs";
-import {any, all, filter} from "@/Utils.mjs";
+import {any, all, filter, assert} from "@/Utils.mjs";
 
 /** @template NodeData, EdgeData */
 export class Graph {
@@ -34,10 +34,6 @@ export class Graph {
         );
     }
 
-    _purgeCache() {
-        this._cache_manager.purge();
-    }
-
     /**
      * @param {NodeData} data
      * @returns {Node<NodeData, EdgeData>}
@@ -57,6 +53,10 @@ export class Graph {
         for (const node of this._nodes) {
             yield* node._flinks;
         }
+    }
+
+    _purgeCache() {
+        this._cache_manager.purge();
     }
 
     /**
@@ -141,6 +141,13 @@ export class Edge {
 
         source.graph._purgeCache();
     }
+
+    remove() {
+        this.source._flinks.delete(this);
+        this.target._blinks.delete(this);
+
+        this.source.graph._purgeCache();
+    }
 }
 
 /** @template NodeData, EdgeData */
@@ -176,6 +183,26 @@ export class Node {
      */
     add_blink(node, link_data) { return new Edge(node, this, link_data); }
 
+    /**
+     * Removes the node from the graph, along with all its links.
+     * Doesn't remove nodes that became orphaned due to the removal.
+     */
+    remove() {
+        // Remove links
+        for (const links of [this._flinks, this._blinks]) {
+            for (const link of links) {
+                link.remove();
+            }
+        }
+
+        assert(0 == this._flinks.size);
+        assert(0 == this._blinks.size);
+
+        this.graph._nodes.delete(this);
+
+        this.graph._purgeCache();
+    }
+
     /** @returns {IterableIterator<[Node<NodeData, EdgeData>, EdgeData]>} */
     *flinks() {
         for (const flink of this._flinks) {
@@ -183,11 +210,17 @@ export class Node {
         }
     }
 
+    /** @returns {IterableIterator<Edge<NodeData, EdgeData>>} */
+    *flink_objs() { yield* this._flinks; }
+
     /** @returns {IterableIterator<[Node<NodeData, EdgeData>, EdgeData]>} */
     *blinks() {
         for (const blink of this._blinks) {
             yield [blink.source, blink.data];
         }
     }
+
+    /** @returns {IterableIterator<Edge<NodeData, EdgeData>>} */
+    *blink_objs() { yield* this._blinks; }
 }
 

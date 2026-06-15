@@ -1,8 +1,9 @@
 import {g_} from "@/Common.mjs";
 import {assert, formatFrac, deepFreeze} from "@/Utils.mjs";
 import Config from "@/Config.mjs";
-import game_data from "@/GameData.auto.mjs";
-/** @import { GameObjectId, CountedItem, Recipe, CraftingObject } from "@/GameData.auto.mjs" */
+import game_data from "@/GameData/GameData.mjs";
+
+/** @import { GameObjectId, CountedItem, Recipe, CraftingObject } from "@/GameData/GameData.mjs" */
 
 import TomSelect from "tom-select";
 import * as mathjs from 'mathjs';
@@ -12,33 +13,15 @@ import elkLayouts from '@mermaid-js/layout-elk';
 import Panzoom from "@panzoom/panzoom";
 
 // Must be imported last!!!
-import {generateGraphPhase1, generateGraphPhase2, updateSelectedProduct, resetAlternateRecipes, resetTrivialResources, updateDisplayMultiplier, updateDisplayMultiplierAuto, toggleShowByproducts} from "@/Main.mjs"
+import {updateSelectedProduct, resetAlternateRecipes, resetTrivialResources, updateDisplayMultiplier, updateDisplayMultiplierAuto, toggleShowByproducts, updateOverlay} from "@/Main.mjs"
 
-
-function initGameData() {
-    // Transform information to fraction objects
-    for (const recipe of Object.values(game_data.recipes)) {
-        // Recipe durations
-        recipe.duration = fraction(recipe.duration);
-
-        // Product and ingredient amounts
-        for (const counted_items of [recipe.products, recipe.ingredients]) {
-            for (const item_id of Object.keys(counted_items)) {
-                counted_items[item_id] = fraction(counted_items[item_id]);
-            }
-        }
-    }
-
-    // Make "game_data" immutable
-    deepFreeze(game_data);
-}
 
 function initCraftableObjectsSelect() {
     function renderOptionTemplate(class_name) {
         function renderOption(data, escape) {
             return `<div class="${class_name}">
                         <span class="label">${escape(data.text)}</span>
-                        <img class="icon" src="${escape(`images/game_icons/${data.value}.png`)}" />
+                        <img class="icon" src="${escape(`images/items/${data.value}.png`)}" />
                     </div>`;
         }
 
@@ -48,18 +31,18 @@ function initCraftableObjectsSelect() {
     return new TomSelect(
         "#craftableItemSelect",
         {
-            options: game_data.crafting_products.map((obj_id) => ({value: obj_id, text: game_data.crafting_objects[obj_id].name})),
+            options: game_data.crafting_products.map((product_obj) => ({value: product_obj.id, text: product_obj.name})),
             searchField: ["text"],
             maxOptions: null,
             placeholder: "Select an item...",
 
-            /** @param {string} product_name */
-            onChange: function(product_name) {
+            /** @param {number} product_id */
+            onChange: function(product_id) {
                 // Don't do anything if selection is cleared
-                if ("" == product_name)
+                if (null == product_id)
                     return;
 
-                updateSelectedProduct(product_name, true);
+                updateSelectedProduct(product_id, true);
 
                 // For some reason, the text box stays focused after selecting an option,
                 // which looks ugly, since it's extended vertically as long as it's selected.
@@ -76,7 +59,7 @@ function initCraftableObjectsSelect() {
 }
 
 function initDisplayMultiplier() {
-    g_.html_elements.displayMultiplierInput.value = formatFrac(g_.config.display_multiplier, true, true);
+    g_.html_elements.displayMultiplierInput.value = formatFrac(g_.config.display_multiplier, 'try-integer');
 
     /** @type {HTMLInputElement} */
     const update_button = document.getElementById("updateDisplayMultiplier");
@@ -85,6 +68,26 @@ function initDisplayMultiplier() {
     /** @type {HTMLInputElement} */
     const auto_button = document.getElementById("updateDisplayMultiplierAuto");
     auto_button.onclick = updateDisplayMultiplierAuto;
+}
+
+function initThroughputUnitSelect() {
+    /** @type {HTMLSelectElement} */
+    const select = document.getElementById("throughputUnitSelect");
+
+    select.add(new Option("Item"));
+
+    for (const vehicle of game_data.vehicles) {
+        select.add(new Option(vehicle.name));
+    }
+
+    // Index 0 is special, because it's the only unit not affected by the item's stack size
+    select.selectedIndex = (null == g_.config.throughput_unit) ? 0 : g_.config.throughput_unit.id + 1;
+
+    select.oninput = function(e) {
+        g_.config.throughput_unit = (0 == e.target.selectedIndex) ? null : game_data.vehicles[e.target.selectedIndex - 1];
+        g_.config.notifyChange();
+        updateOverlay();
+    };
 }
 
 function initByproductsCheckbox() {
@@ -140,13 +143,11 @@ export default function initApp() {
     // Must be first!
     g_.config = new Config();
 
-    initGameData();
-
     // If no trivial resources are selected, reset them
     if (0 == g_.config.trivial_resources.size)
         resetTrivialResources();
 
-    const HTML_ELEMENT_NAMES = ['displayMultiplierInput', 'graphContainer', 'panzoomGraphContainer', 'nodeOverlayTemplate', 'edgeOverlayTemplate'];
+    const HTML_ELEMENT_NAMES = ['displayMultiplierInput', 'graphContainer', 'panzoomGraphContainer', 'nodeOverlayTemplate', 'edgeOverlayTemplate', 'powerConsumptionLabel'];
     for (const name of HTML_ELEMENT_NAMES) {
         g_.html_elements[name] = document.getElementById(name);
     }
@@ -154,6 +155,8 @@ export default function initApp() {
     const craftable_objects_select = initCraftableObjectsSelect();
 
     initDisplayMultiplier();
+
+    initThroughputUnitSelect();
 
     initByproductsCheckbox();
 
@@ -164,6 +167,6 @@ export default function initApp() {
     initPanZoom();
 
     // Generate the graph
-    craftable_objects_select.setValue(g_.config.product_name, true);
-    updateSelectedProduct(g_.config.product_name, false);
+    craftable_objects_select.setValue(g_.config.selected_product.id, true);
+    updateSelectedProduct(g_.config.selected_product.id, false);
 }

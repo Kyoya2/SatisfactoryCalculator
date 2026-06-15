@@ -23,11 +23,9 @@
                 <h3>Configuration</h3>
 
                 <label for="craftableItemSelect">Item to craft:</label>
-                <select id="craftableItemSelect"></select><br>
+                <select id="craftableItemSelect"></select>
 
-                <hr>
-
-                <!-------------------------------------------------------------------->
+                <hr><!-------------------------------------------------------------------->
 
                 <label>Additional Options:</label>
                 <br/>
@@ -38,12 +36,23 @@
                 <button type="button" id="updateDisplayMultiplierAuto" title="Calculate the optimal multiplier">Auto</button>
                 <br/>
 
+                <label for="throughputUnitSelect">Throughput unit: </label>
+                <select id="throughputUnitSelect"></select>
+                <br/>
+
                 <input type="checkbox" id="showByproductsCheckbox" switch>
                 <label for="showByproductsCheckbox">Show byproducts</label>
                 <br/>
 
-                <button type="button" id="resetAlternateRecipesButton">Reset alternate recipes</button>
-                <button type="button" id="resetTrivialResources">Reset trivial resources</button><br/>
+                <button type="button" id="resetAlternateRecipesButton">Reset alternate recipes</button><br/>
+
+                <button type="button" id="resetTrivialResources">Reset trivial resources</button>
+
+                <hr><!-------------------------------------------------------------------->
+
+                <label id="powerConsumptionLabel"></label>
+
+                <!-------------------------------------------------------------------->
 
                 <footer style="position: fixed; bottom: 10px; right: 10px; z-index: 9999;">
                     <a href="https://github.com/Kyoya2/SatisfactoryCalculator">
