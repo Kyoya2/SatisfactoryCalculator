@@ -1,3 +1,4 @@
+import os
 import subprocess
 from os import path
 
@@ -13,10 +14,12 @@ subprocess.check_call(
     cwd=path.join(ROOT, "protobuf")
 )
 
+npx = 'npx.cmd' if ('nt' == os.name) else 'npx'
+
 # Generate JS protobuf
 subprocess.check_call(
     [
-        "npx.cmd", "pbjs",  # TODO: support running on Docker
+        npx, "pbjs",  # TODO: support running on Docker
         "-t", "static-module",
         "-w", "esm",
         "-o", path.join(ROOT, "website", "scripts", "GameData", "GameDataStructs.auto.js"),
