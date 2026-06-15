@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ "dev" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "dev" ]
+    branches: [ "main" ]
 
   workflow_dispatch:
 
@@ -55,20 +55,20 @@ jobs:
         with:
           path: website/dist/
 
-#  deploy:
-#    needs: build
-#    permissions:
-#      pages: write      # to deploy to Pages
-#      id-token: write   # to verify the deployment originates from an appropriate source
-#
-#    # Deploy to the github-pages environment
-#    environment:
-#      name: github-pages
-#      url: ${{ steps.deployment.outputs.page_url }}
-#
-#    # Specify runner + deployment step
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Deploy to GitHub Pages
-#        id: deployment
-#        uses: actions/deploy-pages@v4
+  deploy:
+    needs: build
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    # Specify runner + deployment step
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
