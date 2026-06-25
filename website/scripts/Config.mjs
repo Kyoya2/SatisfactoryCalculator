@@ -29,6 +29,9 @@ export default class Config {
          */
         this.throughput_unit = null;
 
+        /** @type {number} */
+        this.max_decimals = -1;
+
         const search_params = new URLSearchParams(window.location.search);
         
         /** @type {*} */

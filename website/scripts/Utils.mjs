@@ -1,6 +1,9 @@
 import * as mathjs from 'mathjs';
 import {fraction, Fraction} from 'mathjs';
 
+import {g_} from "@/Common.mjs";
+
+
 /**
  * @param {boolean} condition
  * @param {string=} message
@@ -114,6 +117,10 @@ export function formatFrac(frac, format="ratio", commas=true) {
             break;
 
         case "decimal":
+            if (-1 != g_.config.max_decimals) {
+                frac = mathjs.round(frac, g_.config.max_decimals);
+            }
+
             result = mathjs.format(frac, { fraction: 'decimal' });
             break;
 

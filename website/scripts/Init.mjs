@@ -58,6 +58,19 @@ function initCraftableObjectsSelect() {
     );
 }
 
+function initMaxDecimalsSelect() {
+    /** @type {HTMLSelectElement} */
+    const select = document.getElementById("maxDecimalsSelect");
+
+    select.value = g_.config.max_decimals.toString();
+    
+    select.oninput = function(e) {
+        g_.config.max_decimals = Number(e.target.value);
+        g_.config.notifyChange();
+        updateOverlay();
+    };
+}
+
 function initDisplayMultiplier() {
     g_.html_elements.displayMultiplierInput.value = formatFrac(g_.config.display_multiplier, 'try-integer');
 
@@ -153,6 +166,8 @@ export default function initApp() {
     }
 
     const craftable_objects_select = initCraftableObjectsSelect();
+
+    initMaxDecimalsSelect();
 
     initDisplayMultiplier();
 
