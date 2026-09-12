@@ -97,9 +97,10 @@ html, body {
             float: right;
         }
 
-        .node-highlighted {
-            background-color: purple;
-        }
+        .node-trivial { background-color: lightblue; }
+        .node-pure-byproduct { background-color: lightgreen; }
+        .node-product { background-color: pink; }
+        .node-highlighted { background-color: purple; }
 
     /* === Edges === */
         .edge-overlay {

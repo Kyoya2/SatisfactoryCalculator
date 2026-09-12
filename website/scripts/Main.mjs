@@ -183,11 +183,11 @@ function createNodeOverlay(node_svg_element, node) {
     const is_trivial = is_pure_byproduct ? false : node.data.isTrivial();
 
     if (is_trivial || is_pure_byproduct) {
-        overlay.style.backgroundColor = is_trivial ? 'lightblue' : 'lightgreen';
+        overlay.classList.add(is_trivial ? 'node-trivial' : 'node-pure-byproduct');
         overlay.querySelector(".machines-required-container").remove();
     }
     else if (g_.product_node == node) {
-        overlay.style.backgroundColor = 'pink';
+        overlay.classList.add('node-product');
     }
 
     // Initialize labels
