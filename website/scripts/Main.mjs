@@ -410,7 +410,15 @@ function processMachineStats() {
         ...g_.buildings_info.entries().map(
             ([machine, nodes_using]) => [
                 machine,
-                reduce(nodes_using.keys(), (sum, node) => mathjs.add(sum, node.machinesRequired()), fraction(0))
+                reduce(
+                    nodes_using.keys(),
+                    (sum, node) => mathjs.add(
+                        sum,
+                        // Round up after applying the display multiplier in order to get an accurate result
+                        mathjs.ceil(applyDisplayMultiplier(node.machinesRequired()))
+                    ),
+                    fraction(0)
+                )
             ]
         )
     ]);
@@ -432,7 +440,7 @@ function processMachineStats() {
 
         row.insertCell().appendChild(img);
         row.insertCell().textContent = machine.name;
-        row.insertCell().textContent = formatFrac(applyDisplayMultiplier(amount), 'decimal');
+        row.insertCell().textContent = formatFrac(amount, 'decimal');
 
         const nodes_using = g_.buildings_info.get(machine);
 
@@ -465,7 +473,7 @@ function processMachineStats() {
         power_consumption = mathjs.unaryMinus(power_consumption);
     }
 
-    g_.html_elements.powerConsumptionLabel.textContent = `Power ${description}: ${formatFrac(applyDisplayMultiplier(power_consumption), 'decimal')} MW`;
+    g_.html_elements.powerConsumptionLabel.textContent = `Power ${description}: ${formatFrac(power_consumption, 'decimal')} MW`;
 }
 
 /** Updates the overlay according to the display multiplier */
