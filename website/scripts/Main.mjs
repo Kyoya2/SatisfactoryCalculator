@@ -396,6 +396,7 @@ function applyDisplayMultiplierAndThroughputUnit(frac, crafting_object) {
     return result;
 }
 
+/* Calculate and display number of machines required and power consumption */
 function processMachineStats() {
     /** @type {HTMLTableElement} */
     const table = document.getElementById("machinesRequiredTable");
@@ -433,6 +434,20 @@ function processMachineStats() {
         row.insertCell().textContent = machine.name;
         row.insertCell().textContent = formatFrac(applyDisplayMultiplier(amount), 'decimal');
 
+        const nodes_using = g_.buildings_info.get(machine);
+
+        row.onmouseenter = function(event) {
+            for (const node of nodes_using)
+                node.html.classList.add("node-highlighted");
+            row.classList.add("node-highlighted");
+        };
+
+        row.onmouseleave = function(event) {
+            for (const node of nodes_using)
+                node.html.classList.remove("node-highlighted");
+            row.classList.remove("node-highlighted");
+        };
+
         new_table_rows.push(row);
 
         const power = mathjs.multiply(machine.power_consumption, amount);
@@ -456,10 +471,6 @@ function processMachineStats() {
 /** Updates the overlay according to the display multiplier */
 export function updateOverlay() {
     const graph = g_.product_node.graph;
-
-    // "Map" between machine ID and quantity
-    /** @type {Fraction[]} */
-    const machine_amounts = new Array(game_data.buildings.length).fill(fraction(0));
 
     // Update node overlay and calculate amount of machines
     for (const node of graph.nodes()) {
