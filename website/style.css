@@ -35,6 +35,18 @@ html, body {
         width: 100%;
     }
 
+    #machinesRequiredTable {
+        width: 100%;
+
+        /* This makes it so that multiple "mouseenter" and "mouseleave" arent fired when the cursor
+           Moves between adjacent cells on the same row. */
+        border-collapse: collapse;
+    }
+
+    #machinesRequiredTable > tr > td > img {
+        width: 35px;
+    }
+
 /* === Graph === */
     #panzoomGraphContainer {
         flex: 1;
@@ -83,6 +95,10 @@ html, body {
             margin-top: 2px;
             margin-right: 2px;
             float: right;
+        }
+
+        .node-highlighted {
+            background-color: purple;
         }
 
     /* === Edges === */

@@ -88,17 +88,6 @@ export function* map(iterable, callback) {
     }
 }
 
-/**
- * @param {Fraction} a 
- * @param {Fraction} b 
- * @returns {Fraction}
- */
-export function fractionMax(a, b) {
-    if (mathjs.smaller(a, b))
-        return b;
-    return a;
-}
-
 // Replace with "," to insert commas in a number with a decimal point, or a formatted
 // fraction. Won't insert commas after the decimal point.
 let _COMMA_NUMBER_FORMAT_REGEX = /(?<!\..*)\B(?=(?:\d{3})+(?!\d))/g;

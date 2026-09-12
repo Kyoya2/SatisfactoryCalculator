@@ -1,10 +1,11 @@
 import Config from "@/Config.mjs";
 import {assert} from "@/Utils.mjs";
-/** @import { GameObjectId, CountedItem, Recipe, CraftingObject } from "@/GameData/GameData.mjs" */
+/** @import { GameObjectId, CountedItem, Recipe, Building, CraftingObject } from "@/GameData/GameData.mjs" */
 /** @import { Graph, Node, Edge } from "@/Graph.mjs" */
 
 import * as mathjs from 'mathjs';
 import {fraction, Fraction} from 'mathjs';
+/** @import { PanzoomObject } from "@panzoom/panzoom" */
 
 /**
  * @typedef {Object} MyEdgeInfo
@@ -16,17 +17,22 @@ import {fraction, Fraction} from 'mathjs';
  * @property {HTMLDivElement} html - The overlay tof the edge's label container
  */
 
+/** @typedef {Map<Building, Set<SCNode>>} BuildingsInfo */
 /**
- * @type {{
- *      html_elements: Object.<string, HTMLElement>,
- *      product_node: Node<SCNode, MyEdgeInfo>,
- *      config: Config,
- *      panzoom: *
- * }}
+ * @typedef {Object} SCGlobals
+ * @property {Object.<string, HTMLElement>} html_elements - Frequently accessed HTML elements mapped by their IDs
+ * @property {Node<SCNode, MyEdgeInfo>} product_node - The node object of the current graph's product
+ * @property {BuildingsInfo} buildings_info - Maps between a building and all crafting objects
+ *  in the current graph that use it.
+ * @property {Config} config - Settings that are saved in the URL
+ * @property {PanzoomObject} panzoom - Graph Panzoom object
  */
+
+/** @type {SCGlobals} */
 export var g_ = {
     html_elements: Object.create(null),
     product_node: null,
+    buildings_info: null,
     config: null,
     panzoom: null
 };

@@ -6,14 +6,14 @@
 // https://protobuf.dev/programming-guides/proto3/
 // https://github.com/protobufjs/protobuf.js/
 import game_data from "@/GameData/GameData.mjs";
-import {assert, any, reduce, map, fractionMax, formatFrac, parseFrac} from "@/Utils.mjs";
+import {assert, any, reduce, map, formatFrac, parseFrac} from "@/Utils.mjs";
 import {Graph, Node, Edge} from "@/Graph.mjs";
 import {g_, SCNode} from "@/Common.mjs";
 import generateGraphData from "@/GraphGeneration.mjs";
 import Config from "@/Config.mjs";
 
-/** @import { GameObjectId, Recipe, CraftingObject } from "@/GameData/GameData.mjs" */
-/** @import { MyEdgeInfo } from "@/Common.mjs" */
+/** @import { GameObjectId, Recipe, CraftingObject, Building } from "@/GameData/GameData.mjs" */
+/** @import { MyEdgeInfo, BuildingsInfo } from "@/Common.mjs" */
 
 import mermaid from "mermaid";
 import * as mathjs from 'mathjs';
@@ -279,11 +279,11 @@ function createEdgeOverlay(edge_label_element, edge_path_element, edge) {
 
 /**
  * Generates the UI for the given graph
- * @param {Node<SCNode, MyEdgeInfo>} product_node
+ * @param {Graph<SCNode, MyEdgeInfo>} graph
  * @param {boolean} recalc_mult - Whether the display multiplier should be recalculated
  */
-async function generateGraphUI(product_node, recalc_mult) {
-    const [graph_mermaid, ordered_nodes, ordered_edges] = toMermaid(product_node.graph, 2);
+async function generateGraphUI(graph, recalc_mult) {
+    const [graph_mermaid, ordered_nodes, ordered_edges] = toMermaid(graph, 2);
     const render_result = await mermaid.render('graphSvg', graph_mermaid);
 
     g_.html_elements.graphContainer.innerHTML = render_result.svg;
@@ -329,13 +329,36 @@ async function generateGraphUI(product_node, recalc_mult) {
 }
 
 /**
+ * 
+ * @param {Graph<SCNode, MyEdgeInfo>} graph
+ * @returns {BuildingsInfo}
+ */
+function generateBuildingsInfo(graph) {
+    /** @type {BuildingsInfo} */
+    const buildings_info = new Map();
+
+    for (const node of graph.nodes()) {
+        if (node.data.isTrivial() || node.data.isPureByproduct())
+            continue;
+
+        const machine = node.data.selectedRecipe().produced_in;
+        const nodes = buildings_info.getOrInsertComputed(machine, () => new Set());
+        nodes.add(node.data);
+    }
+
+    return buildings_info;
+}
+
+/**
  * Regenerates the entire graph. Should only be called if the structure of the graph was changed.
  * @param {boolean} recalc_mult - Whether the display multiplier should be recalculated
  */
 export async function generateGraph(recalc_mult=false) {
     g_.product_node = generateGraphData(g_.config.selected_product);
 
-    generateGraphUI(g_.product_node, recalc_mult);
+    const graph = g_.product_node.graph;
+    g_.buildings_info = generateBuildingsInfo(graph)
+    generateGraphUI(graph, recalc_mult);
 }
 
 /**
@@ -373,25 +396,91 @@ function applyDisplayMultiplierAndThroughputUnit(frac, crafting_object) {
     return result;
 }
 
+/* Calculate and display number of machines required and power consumption */
+function processMachineStats() {
+    /** @type {HTMLTableElement} */
+    const table = document.getElementById("machinesRequiredTable");
+
+    /** @type {HTMLTableRowElement[]} */
+    const new_table_rows = [];
+
+    // Map between machine and amount required
+    /** @type {Map<Building, Fraction>} */
+    const machine_amounts = new Map([
+        ...g_.buildings_info.entries().map(
+            ([machine, nodes_using]) => [
+                machine,
+                reduce(nodes_using.keys(), (sum, node) => mathjs.add(sum, node.machinesRequired()), fraction(0))
+            ]
+        )
+    ]);
+
+    // Sort the entries by building amounts in descending order
+    const sorted = [...machine_amounts.entries()].sort((a, b) => mathjs.unaryMinus(mathjs.compare(a[1], b[1])));
+
+    let power_consumption = fraction(0);
+    for (const [machine, amount] of sorted) {
+        // Since the array was sorted in reverse, we can assume that there's only zeroes left
+        // when we encounter a zero.
+        if (mathjs.isZero(amount))
+            break;
+
+        const img = document.createElement('img');
+        img.src = `images/buildings/${machine.id}.png`;
+
+        const row = table.insertRow();
+
+        row.insertCell().appendChild(img);
+        row.insertCell().textContent = machine.name;
+        row.insertCell().textContent = formatFrac(applyDisplayMultiplier(amount), 'decimal');
+
+        const nodes_using = g_.buildings_info.get(machine);
+
+        row.onmouseenter = function(event) {
+            for (const node of nodes_using)
+                node.html.classList.add("node-highlighted");
+            row.classList.add("node-highlighted");
+        };
+
+        row.onmouseleave = function(event) {
+            for (const node of nodes_using)
+                node.html.classList.remove("node-highlighted");
+            row.classList.remove("node-highlighted");
+        };
+
+        new_table_rows.push(row);
+
+        const power = mathjs.multiply(machine.power_consumption, amount);
+        if (machine.generates_power)
+            power_consumption = mathjs.subtract(power_consumption, power);
+        else
+            power_consumption = mathjs.add(power_consumption, power);
+    }
+
+    table.replaceChildren(...new_table_rows);
+
+    let description = "consumption";
+    if (mathjs.isNegative(power_consumption)) {
+        description = "production";
+        power_consumption = mathjs.unaryMinus(power_consumption);
+    }
+
+    g_.html_elements.powerConsumptionLabel.textContent = `Power ${description}: ${formatFrac(applyDisplayMultiplier(power_consumption), 'decimal')} MW`;
+}
+
 /** Updates the overlay according to the display multiplier */
 export function updateOverlay() {
     const graph = g_.product_node.graph;
-
-    /** @type {Fraction[]} */
-    const machine_amounts = new Array(game_data.buildings.length).fill(fraction(0));
 
     // Update node overlay and calculate amount of machines
     for (const node of graph.nodes()) {
         node.data.html.querySelector('.production-rate-label').textContent = formatFrac(applyDisplayMultiplierAndThroughputUnit(node.data.productionPerMinute(), node.data.obj()), 'decimal');
 
-        if (!node.data.isTrivial() && !node.data.isPureByproduct()) {
-            const machines_required = applyDisplayMultiplier(node.data.machinesRequired());
-            const machine = node.data.selectedRecipe().produced_in
+        if (node.data.isTrivial() || node.data.isPureByproduct())
+            continue;
 
-            machine_amounts[machine.id] = mathjs.add(machine_amounts[machine.id], machines_required);
-
-            node.data.html.querySelector('.machines-required-label').textContent = formatFrac(machines_required, 'decimal');
-        }
+        const machines_required = applyDisplayMultiplier(node.data.machinesRequired());
+        node.data.html.querySelector('.machines-required-label').textContent = formatFrac(machines_required, 'decimal');
     }
 
     // Update edge overlays
@@ -408,26 +497,7 @@ export function updateOverlay() {
         );
     }
 
-    // Calculate power consumption:
-    let power_consumption = fraction(0);
-    for (const [machine_id, amount] of machine_amounts.entries()) {
-        const machine = game_data.buildings[machine_id];
-        const power = mathjs.multiply(machine.power_consumption, amount);
-
-        const f = machine.generates_power ? mathjs.subtract : mathjs.add;
-
-        power_consumption = f(power_consumption, power);
-    }
-
-    let description = "consumption";
-    if (mathjs.isNegative(power_consumption)) {
-        description = "production";
-        power_consumption = mathjs.unaryMinus(power_consumption);
-    }
-
-    // Note: "power_consumption" already includes the display multiplier, since it was factored in during the
-    //       calculation of machine amounts.
-    g_.html_elements.powerConsumptionLabel.textContent = `Power ${description}: ${formatFrac(power_consumption, 'decimal')} MW`;
+    processMachineStats();
 }
 
 /**
