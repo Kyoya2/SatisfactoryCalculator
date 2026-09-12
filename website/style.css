@@ -35,6 +35,14 @@ html, body {
         width: 100%;
     }
 
+    #machinesRequiredTable {
+        width: 100%;
+    }
+
+    #machinesRequiredTable > tr > td > img {
+        width: 35px;
+    }
+
 /* === Graph === */
     #panzoomGraphContainer {
         flex: 1;

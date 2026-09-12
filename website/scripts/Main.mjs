@@ -12,7 +12,7 @@ import {g_, SCNode} from "@/Common.mjs";
 import generateGraphData from "@/GraphGeneration.mjs";
 import Config from "@/Config.mjs";
 
-/** @import { GameObjectId, Recipe, CraftingObject } from "@/GameData/GameData.mjs" */
+/** @import { GameObjectId, Recipe, CraftingObject, Building } from "@/GameData/GameData.mjs" */
 /** @import { MyEdgeInfo } from "@/Common.mjs" */
 
 import mermaid from "mermaid";
@@ -373,10 +373,48 @@ function applyDisplayMultiplierAndThroughputUnit(frac, crafting_object) {
     return result;
 }
 
+/**
+ * 
+ * @param {Fraction[]} machine_amounts Mapping between building ID and amount of required machines of this kind
+ */
+function updateMachinesRequiredTable(machine_amounts) {
+    /** @type {HTMLTableElement} */
+    const table = document.getElementById("machinesRequiredTable");
+
+    /** @type {HTMLTableRowElement[]} */
+    const new_table_rows = [];
+
+    // Sort the entries by building amounts in descending order
+    const sorted = [...machine_amounts.entries()].sort((a, b) => mathjs.unaryMinus(mathjs.compare(a[1], b[1])));
+
+    for (const [machine_id, amount] of sorted) {
+        // Since the array was sorted in reverse, we can assume that there's only zeroes left
+        // when we encounter a zero.
+        if (mathjs.isZero(amount))
+            break;
+
+        const machine = game_data.buildings[machine_id];
+
+        const img = document.createElement('img');
+        img.src = `images/buildings/${machine.id}.png`;
+
+        const row = table.insertRow();
+
+        row.insertCell().appendChild(img);
+        row.insertCell().textContent = machine.name;
+        row.insertCell().textContent = formatFrac(amount, 'decimal');
+
+        new_table_rows.push(row);
+    }
+
+    table.replaceChildren(...new_table_rows);
+}
+
 /** Updates the overlay according to the display multiplier */
 export function updateOverlay() {
     const graph = g_.product_node.graph;
 
+    // "Map" between machine ID and quantity
     /** @type {Fraction[]} */
     const machine_amounts = new Array(game_data.buildings.length).fill(fraction(0));
 
@@ -408,15 +446,20 @@ export function updateOverlay() {
         );
     }
 
+    updateMachinesRequiredTable(machine_amounts);
+
     // Calculate power consumption:
     let power_consumption = fraction(0);
     for (const [machine_id, amount] of machine_amounts.entries()) {
+        if (mathjs.isZero(amount))
+            continue;
+
         const machine = game_data.buildings[machine_id];
         const power = mathjs.multiply(machine.power_consumption, amount);
-
-        const f = machine.generates_power ? mathjs.subtract : mathjs.add;
-
-        power_consumption = f(power_consumption, power);
+        if (machine.generates_power)
+            power_consumption = mathjs.subtract(power_consumption, power);
+        else
+            power_consumption = mathjs.add(power_consumption, power);
     }
 
     let description = "consumption";
