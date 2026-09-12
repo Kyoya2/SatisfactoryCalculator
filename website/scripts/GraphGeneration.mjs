@@ -1,5 +1,5 @@
 import game_data from "@/GameData/GameData.mjs";
-import {assert, any, all, reduce, map, fractionMax, formatFrac} from "@/Utils.mjs";
+import {assert, any, all, reduce, map, formatFrac} from "@/Utils.mjs";
 import {Graph, Node, Edge} from "@/Graph.mjs";
 import {g_, SCNode} from "@/Common.mjs";
 

@@ -6,7 +6,7 @@
 // https://protobuf.dev/programming-guides/proto3/
 // https://github.com/protobufjs/protobuf.js/
 import game_data from "@/GameData/GameData.mjs";
-import {assert, any, reduce, map, fractionMax, formatFrac, parseFrac} from "@/Utils.mjs";
+import {assert, any, reduce, map, formatFrac, parseFrac} from "@/Utils.mjs";
 import {Graph, Node, Edge} from "@/Graph.mjs";
 import {g_, SCNode} from "@/Common.mjs";
 import generateGraphData from "@/GraphGeneration.mjs";
