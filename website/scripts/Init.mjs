@@ -43,12 +43,12 @@ function initCraftableObjectsSelect() {
                     return;
 
                 updateSelectedProduct(product_id, true);
-
-                // For some reason, the text box stays focused after selecting an option,
-                // which looks ugly, since it's extended vertically as long as it's selected.
-                // Deselect it!
-                this.blur();
             },
+
+            // When the dropdown closes (when selecting an item or pressing ESC), the text box stays
+            // focused after selecting an option, which looks ugly, since it's extended vertically as
+            // long as it's selected. Put it out of focus to fix this.
+            onDropdownClose: function(dropdown) { this.blur(); },
 
             render: {
                 option: renderOptionTemplate("product-select-option"),
