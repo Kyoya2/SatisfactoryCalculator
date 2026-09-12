@@ -5,6 +5,7 @@ import {assert} from "@/Utils.mjs";
 
 import * as mathjs from 'mathjs';
 import {fraction, Fraction} from 'mathjs';
+/** @import { PanzoomObject } from "@panzoom/panzoom" */
 
 /**
  * @typedef {Object} MyEdgeInfo
@@ -17,13 +18,14 @@ import {fraction, Fraction} from 'mathjs';
  */
 
 /**
- * @type {{
- *      html_elements: Object.<string, HTMLElement>,
- *      product_node: Node<SCNode, MyEdgeInfo>,
- *      config: Config,
- *      panzoom: *
- * }}
+ * @typedef {Object} SCGlobals
+ * @property {Object.<string, HTMLElement>} html_elements - Frequently accessed HTML elements mapped by their IDs
+ * @property {Node<SCNode, MyEdgeInfo>} product_node - The node object of the current graph's product
+ * @property {Config} config - Settings that are saved in the URL
+ * @property {PanzoomObject} panzoom - Graph Panzoom object
  */
+
+/** @type {SCGlobals} */
 export var g_ = {
     html_elements: Object.create(null),
     product_node: null,
